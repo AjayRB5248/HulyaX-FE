@@ -1,0 +1,16 @@
+.light-theme {
+  body {
+    color: $text-color;
+  }
+  .header-section {
+    background-color: $header-color;
+
+    .menu li a {
+        color: $text-color;
+
+        &:hover, &:active {
+            color: $hover-color;
+        }
+    }
+  }
+}

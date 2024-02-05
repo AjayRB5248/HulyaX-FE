@@ -42,7 +42,7 @@ export default function MainLayout({ children, headless }: Props) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className={`${mainFont.className} ${headless ? "headless-layout" : ""}`}>
+      <div className={`${mainFont.className} ${headless ? "headless-layout" : ""} light-theme`}>
         {/* <Preloader /> */}
         <Header />
         {children}
