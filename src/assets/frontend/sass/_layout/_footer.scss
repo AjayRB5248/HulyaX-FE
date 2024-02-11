@@ -14,7 +14,7 @@
     mask-repeat: no-repeat;
     mask-size: cover;
     -webkit-mask-size: cover;
-    background: $bg-three;
+    
     @include breakpoint(lg) {
       top: 120px;
     }

@@ -45,7 +45,7 @@ const PopularCategories = () => {
                 <h4 className="event-title">Sacar Australia Tour 2024</h4>
               </div>
 
-              <div className="event-bottom-card d-flex flex-column mt-3 p-4">
+              <div className="event-bottom-card d-flex flex-column p-4">
                 <div className="artist d-flex align-items-center">
                   <Image src={Sacar} alt="Artist Profile" className="artist-profile-img" />
                   <h4 className="artist-name ml-3">
@@ -68,7 +68,7 @@ const PopularCategories = () => {
                 <h4 className="event-title">Pink Summer Carnival</h4>
               </div>
 
-              <div className="event-bottom-card d-flex flex-column mt-3 p-4">
+              <div className="event-bottom-card d-flex flex-column p-4">
                 <div className="artist d-flex align-items-center">
                   <Image src={Olivia} alt="Artist Profile" className="artist-profile-img" />
                   <h4 className="artist-name ml-3">
@@ -91,7 +91,7 @@ const PopularCategories = () => {
                 <h4 className="event-title">Rebirth Australia Tour</h4>
               </div>
 
-              <div className="event-bottom-card d-flex flex-column mt-3 p-4">
+              <div className="event-bottom-card d-flex flex-column p-4">
                 <div className="artist d-flex align-items-center">
                   <Image src={Neetesh} alt="Artist Profile" className="artist-profile-img" />
                   <h4 className="artist-name ml-3">
