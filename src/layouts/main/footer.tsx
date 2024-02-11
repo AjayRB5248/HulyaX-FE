@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import FooterLogo from "src/assets/frontend/images/hulyalogo.png";
+import FooterLogo from "src/assets/frontend/images/hulyalogo-dark.png";
 import FooterBackground from "src/assets/frontend/images/event1.jpg";
 
 const socialIcons = [
