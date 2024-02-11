@@ -31,9 +31,9 @@
         position: relative;
         a {
           color: #e9eeff;
-          font-size: 16px;
+          font-size: 14px;
           font-weight: 700;
-          text-transform: uppercase;
+          // text-transform: uppercase;
           padding: 5px;
           text-decoration: none;
         }
@@ -108,7 +108,7 @@
           position: relative;
           &::before {
             width: calc(100% - 10px);
-            height: 2px;
+            height: 4px;
             background: $theme-color;
             top: calc(100% + 30px);
             position: absolute;
@@ -116,6 +116,7 @@
             @include transform(scaleX(0));
             @include transition($transition);
             transform-origin: left;
+            border-radius: 2px;
           }
           &:hover,
           &.active {
@@ -270,6 +271,7 @@
   z-index: 99;
   &.header-active {
     background: $bg-three;
+    box-shadow: 0px 0px 9px #a6a6a6;
     border: none;
     animation-name: fadeInDown;
     -webkit-animation-name: fadeInDown;
