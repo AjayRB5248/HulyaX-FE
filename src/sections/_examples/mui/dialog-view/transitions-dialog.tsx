@@ -1,14 +1,13 @@
 import { forwardRef } from 'react';
 // @mui
-import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 // hooks
-import { useBoolean } from 'src/hooks/use-boolean';
 
 // ----------------------------------------------------------------------
 
@@ -18,37 +17,61 @@ const Transition = forwardRef(
       children: React.ReactElement;
     },
     ref: React.Ref<unknown>
-  ) => <Slide direction="up" ref={ref} {...props} />
+  ) => <Slide direction='up' ref={ref} {...props} />
 );
 
-export default function TransitionsDialog() {
-  const dialog = useBoolean();
+type IPropsType = {
+  value: boolean;
+  isLoading?: boolean;
+  onFalse: () => void;
+  onTrue: () => void;
+  children?: React.ReactNode;
+  falseText?: string;
+  trueText?: string;
+  title?: string;
+  trueActionType?: 'text' | 'outlined' | 'contained' | 'soft';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+};
 
+export default function TransitionsDialog({
+  value,
+  onFalse,
+  children,
+  onTrue,
+  falseText = 'Disagree',
+  trueText = 'Agree',
+  title = 'Do Something',
+  trueActionType = 'contained',
+  size = 'sm',
+  isLoading = false,
+}: IPropsType) {
   return (
     <div>
-      <Button variant="outlined" color="success" onClick={dialog.onTrue}>
-        Transitions Dialogs
-      </Button>
-
       <Dialog
         keepMounted
-        open={dialog.value}
+        open={value}
         TransitionComponent={Transition}
-        onClose={dialog.onFalse}
+        onClose={!isLoading ? onFalse : () => {}}
+        maxWidth={size}
+        fullWidth
       >
-        <DialogTitle>{`Use Google's location service?`}</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
 
         <DialogContent sx={{ color: 'text.secondary' }}>
-          Let Google help apps determine location. This means sending anonymous location data to
-          Google, even when no apps are running.
+          {children}
         </DialogContent>
 
         <DialogActions>
-          <Button variant="outlined" onClick={dialog.onFalse}>
-            Disagree
+          <Button variant='outlined' onClick={onFalse} disabled={isLoading}>
+            {falseText}
           </Button>
-          <Button variant="contained" onClick={dialog.onFalse} autoFocus>
-            Agree
+          <Button
+            variant={trueActionType}
+            onClick={onTrue}
+            disabled={isLoading}
+            autoFocus
+          >
+            {trueText}
           </Button>
         </DialogActions>
       </Dialog>

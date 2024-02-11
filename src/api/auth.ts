@@ -16,7 +16,8 @@ export const useLogin = () => {
       const userData = res.data?.user;
       const accessToken = res.data?.tokens?.access?.token;
       const refreshToken = res.data?.tokens?.refresh?.token;
-
+      const userRole = res.data?.user.role;
+      localStorage.setItem(userRole, userRole);
       storeTokens(accessToken, refreshToken, userData);
 
       login(userData, accessToken, refreshToken);

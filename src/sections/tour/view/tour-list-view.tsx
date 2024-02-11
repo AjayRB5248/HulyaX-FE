@@ -1,36 +1,41 @@
 'use client';
 
 import orderBy from 'lodash/orderBy';
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 // @mui
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
 // routes
-import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
+import { paths } from 'src/routes/paths';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // utils
 import { fTimestamp } from 'src/utils/format-time';
 // _mock
-import { _tours, _tourGuides, TOUR_SERVICE_OPTIONS, TOUR_SORT_OPTIONS } from 'src/_mock';
+import {
+  TOUR_SERVICE_OPTIONS,
+  TOUR_SORT_OPTIONS,
+  _tourGuides,
+  _tours,
+} from 'src/_mock';
 // assets
 import { countries } from 'src/assets/data';
 // components
-import Iconify from 'src/components/iconify';
-import EmptyContent from 'src/components/empty-content';
-import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
+import EmptyContent from 'src/components/empty-content';
+import Iconify from 'src/components/iconify';
+import { useSettingsContext } from 'src/components/settings';
 // types
-import { ITourItem, ITourFilters, ITourFilterValue } from 'src/types/tour';
+import { ITourFilterValue, ITourFilters, ITourItem } from 'src/types/tour';
 //
-import TourList from '../tour-list';
-import TourSort from '../tour-sort';
-import TourSearch from '../tour-search';
+import { useEvents } from 'src/api/events';
 import TourFilters from '../tour-filters';
 import TourFiltersResult from '../tour-filters-result';
-import { useEvents } from 'src/api/events';
+import TourList from '../tour-list';
+import TourSearch from '../tour-search';
+import TourSort from '../tour-sort';
 
 // ----------------------------------------------------------------------
 
@@ -47,16 +52,18 @@ const defaultFilters: ITourFilters = {
 export default function TourListView() {
   const settings = useSettingsContext();
 
-  const {events, loading , error}=useEvents();
+  const { events, loading, error } = useEvents();
 
   const openFilters = useBoolean();
 
   const [sortBy, setSortBy] = useState('latest');
 
-  const [search, setSearch] = useState<{ query: string; results: ITourItem[] }>({
-    query: '',
-    results: [],
-  });
+  const [search, setSearch] = useState<{ query: string; results: ITourItem[] }>(
+    {
+      query: '',
+      results: [],
+    }
+  );
 
   const [filters, setFilters] = useState(defaultFilters);
 
@@ -100,7 +107,8 @@ export default function TourListView() {
 
       if (inputValue) {
         const results = _tours.filter(
-          (tour) => tour.name.toLowerCase().indexOf(search.query.toLowerCase()) !== -1
+          (tour) =>
+            tour.name.toLowerCase().indexOf(search.query.toLowerCase()) !== -1
         );
 
         setSearch((prevState) => ({
@@ -119,7 +127,7 @@ export default function TourListView() {
   const renderFilters = (
     <Stack
       spacing={3}
-      justifyContent="space-between"
+      justifyContent='space-between'
       alignItems={{ xs: 'flex-end', sm: 'center' }}
       direction={{ xs: 'column', sm: 'row' }}
     >
@@ -130,7 +138,7 @@ export default function TourListView() {
         hrefItem={(id: string) => paths.dashboard.tour.details(id)}
       />
 
-      <Stack direction="row" spacing={1} flexShrink={0}>
+      <Stack direction='row' spacing={1} flexShrink={0}>
         <TourFilters
           open={openFilters.value}
           onOpen={openFilters.onTrue}
@@ -149,7 +157,11 @@ export default function TourListView() {
           dateError={dateError}
         />
 
-        <TourSort sort={sortBy} onSort={handleSortBy} sortOptions={TOUR_SORT_OPTIONS} />
+        <TourSort
+          sort={sortBy}
+          onSort={handleSortBy}
+          sortOptions={TOUR_SORT_OPTIONS}
+        />
       </Stack>
     </Stack>
   );
@@ -169,7 +181,7 @@ export default function TourListView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="List"
+        heading='List'
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           {
@@ -182,8 +194,8 @@ export default function TourListView() {
           <Button
             component={RouterLink}
             href={paths.dashboard.tour.new}
-            variant="contained"
-            startIcon={<Iconify icon="mingcute:add-line" />}
+            variant='contained'
+            startIcon={<Iconify icon='mingcute:add-line' />}
           >
             New Event
           </Button>
@@ -204,7 +216,7 @@ export default function TourListView() {
         {canReset && renderResults}
       </Stack>
 
-      {notFound && <EmptyContent title="No Data" filled sx={{ py: 10 }} />}
+      {notFound && <EmptyContent title='No Data' filled sx={{ py: 10 }} />}
 
       <TourList tours={dataFiltered} />
     </Container>
@@ -253,7 +265,9 @@ const applyFilter = ({
   }
 
   if (destination.length) {
-    inputData = inputData.filter((tour) => destination.includes(tour.destination));
+    inputData = inputData.filter((tour) =>
+      destination.includes(tour.destination)
+    );
   }
 
   if (tourGuideIds.length) {
@@ -263,7 +277,9 @@ const applyFilter = ({
   }
 
   if (services.length) {
-    inputData = inputData.filter((tour) => tour.services.some((item) => services.includes(item)));
+    inputData = inputData.filter((tour) =>
+      tour.services.some((item) => services.includes(item))
+    );
   }
 
   return inputData;

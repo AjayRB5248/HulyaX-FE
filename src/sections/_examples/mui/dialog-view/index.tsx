@@ -9,14 +9,13 @@ import { paths } from 'src/routes/paths';
 // components
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 //
-import FormDialog from './form-dialog';
+import ComponentBlock from '../../component-block';
 import AlertDialog from './alert-dialog';
+import FormDialog from './form-dialog';
+import FullScreenDialog from './full-screen-dialog';
+import MaxWidthDialog from './max-width-dialog';
 import ScrollDialog from './scroll-dialog';
 import SimpleDialogs from './simple-dialog';
-import MaxWidthDialog from './max-width-dialog';
-import FullScreenDialog from './full-screen-dialog';
-import TransitionsDialog from './transitions-dialog';
-import ComponentBlock from '../../component-block';
 
 // ----------------------------------------------------------------------
 
@@ -26,12 +25,13 @@ export default function DialogView() {
       <Box
         sx={{
           py: 5,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === 'light' ? 'grey.200' : 'grey.800',
         }}
       >
         <Container>
           <CustomBreadcrumbs
-            heading="Dialog"
+            heading='Dialog'
             links={[
               {
                 name: 'Components',
@@ -46,31 +46,27 @@ export default function DialogView() {
 
       <Container sx={{ my: 10 }}>
         <Masonry columns={{ xs: 1, md: 3 }} spacing={3}>
-          <ComponentBlock title="Simple">
+          <ComponentBlock title='Simple'>
             <SimpleDialogs />
           </ComponentBlock>
 
-          <ComponentBlock title="Alerts">
+          <ComponentBlock title='Alerts'>
             <AlertDialog />
           </ComponentBlock>
 
-          <ComponentBlock title="Transitions">
-            <TransitionsDialog />
-          </ComponentBlock>
-
-          <ComponentBlock title="Form">
+          <ComponentBlock title='Form'>
             <FormDialog />
           </ComponentBlock>
 
-          <ComponentBlock title="Full Screen">
+          <ComponentBlock title='Full Screen'>
             <FullScreenDialog />
           </ComponentBlock>
 
-          <ComponentBlock title="Max Width Dialog">
+          <ComponentBlock title='Max Width Dialog'>
             <MaxWidthDialog />
           </ComponentBlock>
 
-          <ComponentBlock title="Scrolling Content Dialogs">
+          <ComponentBlock title='Scrolling Content Dialogs'>
             <ScrollDialog />
           </ComponentBlock>
         </Masonry>
