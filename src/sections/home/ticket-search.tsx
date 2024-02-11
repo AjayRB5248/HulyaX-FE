@@ -134,12 +134,12 @@ const TicketSearch = () => {
 
   return (
     <section className="search-ticket-section padding-top pt-lg-0">
-      <div className="container">
+      <div className="container-fluid">
         <div className="search-tab bg_img" style={{ backgroundImage: `url(${TicketSearchBg.src})` }}>
           <div className="row align-items-center mb--20">
             <div className="col-lg-6 mb-20">
               <div className="search-ticket-header">
-                <h6 className="category">welcome to Hulya Events</h6>
+                {/* <h6 className="category">welcome to Hulya Events</h6> */}
                 <h3 className="title">what are you looking for</h3>
               </div>
             </div>

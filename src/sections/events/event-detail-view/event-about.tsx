@@ -3,8 +3,8 @@ import React from "react";
 
 const EventAbout: React.FC<any> = ({ eventName, eventDescription, eventPrimaryImg }) => {
   return (
-    <section className="event-about padding-top padding-bottom">
-      <div className="container">
+    <section className="event-about section-wrapper">
+      <div className="container-fluid">
         <div className="row justify-content-between flex-wrap-reverse">
           <div className="col-lg-7 col-xl-6">
             <div className="event-about-content">

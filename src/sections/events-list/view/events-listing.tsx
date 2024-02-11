@@ -11,15 +11,12 @@ const EventsListing = () => {
   const { events } = useEventsContext();
 
   return (
-    <section className="event-section padding-top padding-bottom">
-      <div className="container">
+    <section className="event-section section-wrapper">
+      <div className="container-fluid">
         <div className="row flex-wrap-reverse justify-content-center">
           <div className="col-sm-10 col-md-8 col-lg-3">
-            <WidgetBanner imgUrl={FeaturedAd1} imgAlt="Featured" />
-
             <WidgetCheckbox />
-
-            <WidgetBanner imgUrl={FeaturedAd1} imgAlt="Featured Image 02" />
+            <WidgetBanner imgUrl={FeaturedAd1} imgAlt="Featured" />
           </div>
           <div className="col-lg-9 mb-50 mb-lg-0">
             <div className="filter-tab">
@@ -38,6 +35,7 @@ const EventsListing = () => {
                         city={eachEventVenue.city}
                         timeZone={eachEventVenue.timeZone}
                         slug={event.slug}
+                        artists={event.artists}
                       />
                     ))
                   )

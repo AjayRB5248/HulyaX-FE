@@ -7,7 +7,7 @@ import EventIcon3 from "src/assets/frontend/images/event/icon/event-icon01.png";
 const EventBookSearch: React.FC<any> = ({ eventName, venues }) => {
   return (
     <section className="event-book-search padding-top pt-lg-0">
-      <div className="container">
+      <div className="container-fluid">
         <div className="event-search bg_img" data-background="./assets/images/ticket/ticket-bg01.jpg">
           <div className="event-search-top">
             <div className="left">
