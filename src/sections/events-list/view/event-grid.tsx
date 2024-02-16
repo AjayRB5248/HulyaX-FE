@@ -1,7 +1,7 @@
 import moment from "moment";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import VenueIcon from "src/assets/frontend/images/icons/location.png";
+import VenueIcon from "src/assets/frontend/images/icons/icons8-location-48.png";
 
 import SACAR from "src/assets/frontend/images/artists/Sacar.jpeg";
 
@@ -18,7 +18,7 @@ const EventGridItem: React.FC<{
   return (
     <div className="col-sm-6 col-lg-4">
       <div className="event-item ml-0 mr-0">
-        <div className="event-top-card">
+        <div className="event-top-card" style={{ height: "320px" }}>
           <div className="event-date">
             <h6 className="date-title">{moment(date).format("D MMM")}</h6>
           </div>
@@ -29,7 +29,7 @@ const EventGridItem: React.FC<{
           </Link>
         </div>
 
-        <div className="event-bottom-card d-flex flex-column mt-3 p-4">
+        <div className="event-bottom-card d-flex flex-column p-3">
           <div className="artist d-flex align-items-center">
             <Image src={SACAR} alt="Artist Profile" className="artist-profile-img" />
             <h4 className="artist-name ml-3">

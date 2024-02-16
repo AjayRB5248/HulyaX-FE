@@ -5,6 +5,11 @@
     margin-left: auto;
     padding-right: 15px;
     padding-left: 15px;
+
+    @include breakpoint(max-sm) {
+      width: 100%;
+    }
+  
   }
 
   @media (min-width: 1500px) {
@@ -64,7 +69,7 @@
   }
 
   .banner-section {
-    padding: 140px 0 110.38px;
+    // padding: 140px 0 110.38px;
 
     .banner-animation {
       color: $main-theme-color;
@@ -102,6 +107,14 @@
     height: 40px;
     border: 0;
     color: #fff;
+  }
+}
+
+@include breakpoint(max-sm) {
+  .theme-button {
+    padding: 10px;
+    height: 30px;
+    font-size: 12px;
   }
 }
 

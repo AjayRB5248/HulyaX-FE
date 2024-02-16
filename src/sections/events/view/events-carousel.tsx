@@ -100,7 +100,7 @@ const EventsCarousel: React.FC = () => {
   const filteredEvents = events.filter((event: any) => !event.tags?.includes(activeTab));
 
   return (
-    <section className="event-section bg-four section-wrapper">
+    <section className="event-section section-wrapper">
       <div className="container-fluid">
         {/* New Design */}
         <div className="section-header-2">

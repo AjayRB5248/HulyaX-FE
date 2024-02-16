@@ -37,10 +37,10 @@
   }
   @include breakpoint(max-sm) {
     .title {
-      font-size: 36px;
+      font-size: 22px;
     }
     p {
-      font-size: 20px;
+      font-size: 12px;
       &:last-child {
         margin-bottom: -7px !important;
       }
@@ -48,16 +48,16 @@
   }
 }
 .banner-section {
-  padding: 250px 0 316px;
+  padding: 140px 0 110.38px;
   position: relative;
   @include breakpoint(max-lg) {
-    padding: 229px 0 164px;
+    padding: 140px 0 110.38px;
   }
   @include breakpoint(max-md) {
-    padding: 220px 0 151px;
+    padding: 100px 0 30.31px;
   }
   @include breakpoint(max-sm) {
-    padding: 212px 0 140px;
+    padding: 100px 0 30.31px;
   }
   &::before {
     @extend %pa;

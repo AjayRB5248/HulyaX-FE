@@ -133,7 +133,7 @@ const TicketSearch = () => {
   }, [selectedCity, selectedDate, selectedLocation, activeTab]);
 
   return (
-    <section className="search-ticket-section padding-top pt-lg-0">
+    <section className="search-ticket-section section-wrapper">
       <div className="container-fluid">
         <div className="search-tab bg_img" style={{ backgroundImage: `url(${TicketSearchBg.src})` }}>
           <div className="row align-items-center mb--20">

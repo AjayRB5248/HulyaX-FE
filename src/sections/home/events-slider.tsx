@@ -17,11 +17,37 @@ const EventsSlider = () => {
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     speed: 3000,
     autoplaySpeed: 2000,
     cssEase: "linear",
     pauseOnHover: true,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   const secondSliderSettings = {
@@ -32,11 +58,11 @@ const EventsSlider = () => {
   };
   return (
     <section className="section-wrapper events-slider-wrapper">
-      <div className="section-title">
-        <h4 className="title">Trending Now</h4>
-        <p>Explore What's Trending Now: Stay ahead of the curve with the latest and hottest trends.</p>
-      </div>
       <div className="container-fluid">
+        <div className="section-title">
+          <h4 className="title">Trending Now</h4>
+          <p>Explore What's Trending Now: Stay ahead of the curve with the latest and hottest trends.</p>
+        </div>
         <Slider {...settings}>
           <div className="slider-item">
             <div className="event-item">
@@ -48,7 +74,7 @@ const EventsSlider = () => {
                 <h4 className="event-title">Pink Summer Carnival</h4>
               </div>
 
-              <div className="event-bottom-card d-flex flex-column mt-3 p-4">
+              <div className="event-bottom-card d-flex flex-column p-4">
                 <div className="artist d-flex align-items-center">
                   <Image src={Olivia} alt="Artist Profile" className="artist-profile-img" />
                   <h4 className="artist-name ml-3">
@@ -77,7 +103,7 @@ const EventsSlider = () => {
                 <h4 className="event-title">Sacar Australia Tour 2024</h4>
               </div>
 
-              <div className="event-bottom-card d-flex flex-column mt-3 p-4">
+              <div className="event-bottom-card d-flex flex-column p-4">
                 <div className="artist d-flex align-items-center">
                   <Image src={Sacar} alt="Artist Profile" className="artist-profile-img" />
                   <h4 className="artist-name ml-3">
@@ -106,7 +132,7 @@ const EventsSlider = () => {
                 <h4 className="event-title">Rebirth Australia Tour</h4>
               </div>
 
-              <div className="event-bottom-card d-flex flex-column mt-3 p-4">
+              <div className="event-bottom-card d-flex flex-column p-4">
                 <div className="artist d-flex align-items-center">
                   <Image src={Neetesh} alt="Artist Profile" className="artist-profile-img" />
                   <h4 className="artist-name ml-3">
@@ -135,7 +161,7 @@ const EventsSlider = () => {
                 <h4 className="event-title">Pink Summer Carnival</h4>
               </div>
 
-              <div className="event-bottom-card d-flex flex-column mt-3 p-4">
+              <div className="event-bottom-card d-flex flex-column p-4">
                 <div className="artist d-flex align-items-center">
                   <Image src={Olivia} alt="Artist Profile" className="artist-profile-img" />
                   <h4 className="artist-name ml-3">
@@ -155,7 +181,7 @@ const EventsSlider = () => {
           </div>
         </Slider>
 
-        <Slider {...secondSliderSettings}>
+        <Slider {...secondSliderSettings} className="d-none d-sm-block">
           <div className="slider-item">
             <div className="event-item">
               <div className="event-top-card">
@@ -166,7 +192,7 @@ const EventsSlider = () => {
                 <h4 className="event-title">Pink Summer Carnival</h4>
               </div>
 
-              <div className="event-bottom-card d-flex flex-column mt-3 p-4">
+              <div className="event-bottom-card d-flex flex-column p-4">
                 <div className="artist d-flex align-items-center">
                   <Image src={Olivia} alt="Artist Profile" className="artist-profile-img" />
                   <h4 className="artist-name ml-3">
@@ -195,7 +221,7 @@ const EventsSlider = () => {
                 <h4 className="event-title">Sacar Australia Tour 2024</h4>
               </div>
 
-              <div className="event-bottom-card d-flex flex-column mt-3 p-4">
+              <div className="event-bottom-card d-flex flex-column p-4">
                 <div className="artist d-flex align-items-center">
                   <Image src={Sacar} alt="Artist Profile" className="artist-profile-img" />
                   <h4 className="artist-name ml-3">
@@ -224,7 +250,7 @@ const EventsSlider = () => {
                 <h4 className="event-title">Rebirth Australia Tour</h4>
               </div>
 
-              <div className="event-bottom-card d-flex flex-column mt-3 p-4">
+              <div className="event-bottom-card d-flex flex-column p-4">
                 <div className="artist d-flex align-items-center">
                   <Image src={Neetesh} alt="Artist Profile" className="artist-profile-img" />
                   <h4 className="artist-name ml-3">
@@ -253,7 +279,7 @@ const EventsSlider = () => {
                 <h4 className="event-title">Pink Summer Carnival</h4>
               </div>
 
-              <div className="event-bottom-card d-flex flex-column mt-3 p-4">
+              <div className="event-bottom-card d-flex flex-column p-4">
                 <div className="artist d-flex align-items-center">
                   <Image src={Olivia} alt="Artist Profile" className="artist-profile-img" />
                   <h4 className="artist-name ml-3">

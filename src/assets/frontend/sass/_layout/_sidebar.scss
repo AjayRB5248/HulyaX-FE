@@ -118,18 +118,20 @@
     }
   }
   .widget-header {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     @extend %flex;
     justify-content: space-between;
     align-items: flex-end;
+    align-items: center;
+    font-size: 14px;
+
     .clear-check {
       color: $lallu-color;
     }
     @include breakpoint(sm) {
       margin-bottom: 30px;
       .m-title {
-        font-size: 28px;
-        margin-top: -9px;
+        font-size: 14px;
       }
     }
     .m-title {
@@ -140,8 +142,9 @@
   }
   &.widget-check {
     .widget-1-body {
-      border: none;
-      background-color: rgb(3, 32, 85);
+      background-color: $theme-white-color;
+      border: $theme-border;
+      color: $theme-text-color;
     }
     .subtitle {
       font-size: 18px;
@@ -158,7 +161,7 @@
       margin-top: 39px;
       padding-top: 11px;
       border-top: 1px solid rgb(31, 43, 114);
-      margin-bottom: -9px;
+
       a {
         color: $body-color;
         text-transform: uppercase;
@@ -226,7 +229,7 @@
           @extend %pa;
           width: 14px;
           height: 14px;
-          border: 1px solid $white-color;
+          border: $theme-border;
           @include border-radius(1px);
           left: -14px;
           top: 2px;

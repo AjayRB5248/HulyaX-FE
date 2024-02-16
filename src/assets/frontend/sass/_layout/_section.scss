@@ -1,6 +1,10 @@
 .section-wrapper {
   padding-top: 60px;
 
+  @include breakpoint(max-sm) {
+    padding-top: 30px;
+  }
+
   .section-title {
     text-align: center;
     color: $theme-text-color;
@@ -36,11 +40,28 @@
     text-align: center;
     margin-top: 2rem;
     color: $theme-text-color;
+
+    .name {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .title {
+      font-size: 12px;
+    }
+  }
+
+  @include breakpoint(max-sm) {
+    .artist-profile img {
+      height: 60px;
+      width: 60px;
+    }
   }
 }
 
 .event-section {
   .section-header-2 {
+    color: $theme-text-color;
     margin: 0px 0 30px;
 
     .title {
@@ -51,6 +72,19 @@
 
     p {
       font-size: 16px;
+    }
+
+    @include breakpoint(max-md) {
+      .title {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+
+      .tab-menu {
+      }
     }
   }
 }
@@ -214,6 +248,8 @@
     max-width: 280px;
     margin-left: auto;
     margin-right: auto;
+    height: 20rem;
+    margin-bottom: 4px;
   }
 
   &.featured {
@@ -228,6 +264,19 @@
     }
   }
 }
+
+@include breakpoint(max-sm) {
+  .events-row div:nth-child(2) > .row > {
+    div:nth-of-type(odd) {
+      padding-right: 2px;
+    }
+
+    div:nth-of-type(even) {
+      padding-left: 2px;
+    }
+  }
+}
+
 .movie-rating-percent {
   @extend %flex;
   li {
@@ -587,8 +636,29 @@
     margin: -5px;
     li {
       width: auto;
-      padding: 5px 30px;
+      padding: 5px 15px;
       margin: 5px;
+    }
+  }
+
+  @include breakpoint(max-sm) {
+    li {
+      min-height: auto;
+      padding: 5px;
+      margin: 2px;
+
+      span {
+        padding-left: 5px;
+      }
+
+      .tab-thumb {
+        width: auto;
+
+        img {
+          height: 20px;
+          width: auto;
+        }
+      }
     }
   }
 }
@@ -3735,10 +3805,16 @@
   padding: 30px;
   background-image: -webkit-linear-gradient(299deg, rgb(85, 96, 255) 17%, rgb(170, 82, 161) 63%, rgb(255, 67, 67) 100%);
   // margin-top: 60px;
+  border-radius: 12px;
 
   @include breakpoint(max-sm) {
     padding-left: 15px;
     padding-right: 15px;
+    padding: 20px;
+
+    .content .title {
+      font-size: 24px !important;
+    }
   }
   .apps-bg {
     background-size: contain;
@@ -3811,7 +3887,7 @@
   }
   @include breakpoint(max-sm) {
     margin: -5px;
-    margin-bottom: 30px;
+    // margin-bottom: 30px;
     li {
       padding: 5px;
     }
@@ -4497,9 +4573,9 @@
 @media (max-width: 575px) {
   .event-grid {
     &.featured {
-      height: 100%;
+      height: 30rem;
       max-width: 100%;
-      padding-bottom: 30px;
+      // padding-bottom: 30px;
     }
   }
 }
@@ -4569,7 +4645,7 @@
         top: 20px;
         left: 0;
         padding: 8px;
-        width: 60px;
+        width: 70px;
         border-radius: 0 30px 30px 0px;
         z-index: 1;
         background-image: -webkit-linear-gradient(
@@ -4578,25 +4654,27 @@
           rgb(170, 82, 161) 63%,
           rgb(255, 67, 67) 100%
         );
-        font-size: 14px;
 
         .date-title {
           margin-bottom: 0;
+          font-size: 14px;
+          font-weight: bold;
+          text-transform: uppercase;
         }
       }
     }
 
     .event-bottom-card {
       color: $theme-text-color;
-      gap: 20px;
+      gap: 10px;
 
       .artist {
         border-bottom: 1px dashed #a1a1a1;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
 
         .artist-profile-img {
-          height: 60px;
-          width: 60px;
+          height: 45px;
+          width: 45px;
           border-radius: 50%;
         }
 
@@ -4633,6 +4711,23 @@
       height: 40px;
       border: 0;
       color: #fff;
+    }
+
+    @include breakpoint(max-sm) {
+      .artist {
+        .artist-name {
+          font-size: 14px !important;
+
+          .artist-position {
+            font-size: 12px !important;
+          }
+        }
+      }
+
+      .theme-button {
+        padding: 12px;
+        height: 30px;
+      }
     }
   }
 }
@@ -4732,6 +4827,28 @@
         font-weight: 900;
         text-shadow: $theme-text-shadow;
       }
+    }
+  }
+}
+
+@include breakpoint(max-md) {
+  .section--popular-categories .event-item {
+    margin-left: 0px;
+    flex-direction: column !important;
+
+    .event-top-card {
+      width: 100%;
+
+      .event-title {
+        font-size: 14px;
+        left: 10px;
+      }
+    }
+
+    .event-bottom-card {
+      width: 100%;
+      gap: 5px;
+      padding: 10px !important;
     }
   }
 }
@@ -4842,5 +4959,34 @@
   to {
     transform: scale(1.5);
     opacity: 0;
+  }
+}
+
+// Events Listing
+.event-listing-row {
+  position: relative;
+  width: 100%;
+
+  .widget-wrapper {
+    position: sticky;
+    top: 0;
+    padding-left: 3%;
+  }
+
+  .event-list-wrapper {
+    .filter-area {
+      position: sticky;
+      top: 0;
+    }
+
+    .event-list-row.scrollable {
+      overflow-y: auto;
+      max-height: 100rem;
+      overflow-x: hidden;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
 }
