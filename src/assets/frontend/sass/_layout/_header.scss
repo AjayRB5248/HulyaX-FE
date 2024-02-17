@@ -143,18 +143,19 @@
     li {
       &.header-button {
         a {
-          background-image: -moz-linear-gradient(
-            169deg,
-            rgb(85, 96, 255) 17%,
-            rgb(170, 82, 161) 63%,
-            rgb(255, 67, 67) 100%
-          );
-          background-image: -webkit-linear-gradient(
-            169deg,
-            rgb(85, 96, 255) 17%,
-            rgb(170, 82, 161) 63%,
-            rgb(255, 67, 67) 100%
-          );
+          // background-image: -moz-linear-gradient(
+          //   169deg,
+          //   rgb(85, 96, 255) 17%,
+          //   rgb(170, 82, 161) 63%,
+          //   rgb(255, 67, 67) 100%
+          // );
+          // background-image: -webkit-linear-gradient(
+          //   169deg,
+          //   rgb(85, 96, 255) 17%,
+          //   rgb(170, 82, 161) 63%,
+          //   rgb(255, 67, 67) 100%
+          // );
+          background-color: $main-theme-color;
           padding: 10px 49px;
           font-weight: 600;
           @include border-radius(25px);
@@ -165,18 +166,19 @@
         }
 
         .primary-theme-btn {
-          background-image: -moz-linear-gradient(
-            169deg,
-            rgb(85, 96, 255) 17%,
-            rgb(170, 82, 161) 63%,
-            rgb(255, 67, 67) 100%
-          );
-          background-image: -webkit-linear-gradient(
-            169deg,
-            rgb(85, 96, 255) 17%,
-            rgb(170, 82, 161) 63%,
-            rgb(255, 67, 67) 100%
-          );
+          // background-image: -moz-linear-gradient(
+          //   169deg,
+          //   rgb(85, 96, 255) 17%,
+          //   rgb(170, 82, 161) 63%,
+          //   rgb(255, 67, 67) 100%
+          // );
+          // background-image: -webkit-linear-gradient(
+          //   169deg,
+          //   rgb(85, 96, 255) 17%,
+          //   rgb(170, 82, 161) 63%,
+          //   rgb(255, 67, 67) 100%
+          // );
+          background-color: $main-theme-color;
         }
 
         .secondary-theme-btn {

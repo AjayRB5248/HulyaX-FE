@@ -585,18 +585,19 @@
         &:hover,
         &.active {
           color: $white-color;
-          background-image: -moz-linear-gradient(
-            169deg,
-            rgb(85, 96, 255) 17%,
-            rgb(170, 82, 161) 63%,
-            rgb(255, 67, 67) 100%
-          );
-          background-image: -webkit-linear-gradient(
-            169deg,
-            rgb(85, 96, 255) 17%,
-            rgb(170, 82, 161) 63%,
-            rgb(255, 67, 67) 100%
-          );
+          // background-image: -moz-linear-gradient(
+          //   169deg,
+          //   rgb(85, 96, 255) 17%,
+          //   rgb(170, 82, 161) 63%,
+          //   rgb(255, 67, 67) 100%
+          // );
+          // background-image: -webkit-linear-gradient(
+          //   169deg,
+          //   rgb(85, 96, 255) 17%,
+          //   rgb(170, 82, 161) 63%,
+          //   rgb(255, 67, 67) 100%
+          // );
+          background-color: $main-theme-color;
         }
       }
     }

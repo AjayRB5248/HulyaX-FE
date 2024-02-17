@@ -129,8 +129,9 @@
   background-color: $bg-five;
 }
 %primary-bg {
-  background-image: -moz-linear-gradient(45deg, rgb(245, 70, 70) 0%, rgb(245, 61, 161) 100%);
-  background-image: -webkit-linear-gradient(45deg, rgb(245, 70, 70) 0%, rgb(245, 61, 161) 100%);
+  // background-image: -moz-linear-gradient(45deg, rgb(245, 70, 70) 0%, rgb(245, 61, 161) 100%);
+  // background-image: -webkit-linear-gradient(45deg, rgb(245, 70, 70) 0%, rgb(245, 61, 161) 100%);
+  background-color: $main-theme-color;
 }
 .section-header-1 {
   margin-bottom: 30px;
@@ -187,7 +188,8 @@
       margin: 0 5px 10px;
       @include transition($transition);
       &.active {
-        background: $theme-bg;
+        // background: $theme-bg;
+        background-color: $main-theme-color;
       }
       &:hover {
         box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);

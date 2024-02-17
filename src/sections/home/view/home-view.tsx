@@ -19,7 +19,7 @@ export default function HomeView() {
   return (
     <MainLayout>
       <Banner />
-      <TicketSearch />
+      {/* <TicketSearch /> */}
       <EventsCarousel />
       <NewsLetter />
       <EventsSlider />
