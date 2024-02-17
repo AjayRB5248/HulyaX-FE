@@ -128,6 +128,9 @@
 .bg-five {
   background-color: $bg-five;
 }
+.bg-six {
+  background-color: $bg-six;
+}
 %primary-bg {
   // background-image: -moz-linear-gradient(45deg, rgb(245, 70, 70) 0%, rgb(245, 61, 161) 100%);
   // background-image: -webkit-linear-gradient(45deg, rgb(245, 70, 70) 0%, rgb(245, 61, 161) 100%);
@@ -161,7 +164,7 @@
   }
 }
 .color-theme {
-  color: $theme-color;
+  color: $main-theme-color;
 }
 .mb--20 {
   margin-bottom: -20px;
@@ -278,6 +281,6 @@
     }
   }
 }
-.bg-six {
-  background-color: #011c57;
-}
+// .bg-six {
+//   background-color: #011c57;
+// }

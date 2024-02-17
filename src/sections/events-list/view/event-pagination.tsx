@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 interface EventPaginationProps {
-  totalPages: number;
-  currentPage: number;
-  onPageChange: (page: number) => void;
+  totalPages?: number;
+  currentPage?: number;
+  onPageChange?: (page: number) => void;
 }
 
 const EventPagination: React.FC<EventPaginationProps> = ({ totalPages, currentPage, onPageChange }) => (

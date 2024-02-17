@@ -208,7 +208,7 @@
         opacity: 0;
         z-index: -9;
         &:checked ~ label::before {
-          color: $white-color;
+          color: $main-theme-color;
           content: "\f00c";
           font-family: "Font Awesome 5 Free";
           font-weight: 600;

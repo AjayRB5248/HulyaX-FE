@@ -1,6 +1,11 @@
-const FilterMain = () => {
+import React from "react";
+
+interface FilterProps {
+  isSticky?: boolean;
+}
+const FilterMain: React.FC<FilterProps> = ({ isSticky }) => {
   return (
-    <div className="filter-area">
+    <div className={`filter-area ${isSticky ? "sticky" : ""}`}>
       <div className="filter-main">
         <div className="left w-100 justify-content-between">
           <div className="item">

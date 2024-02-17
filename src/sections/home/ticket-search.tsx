@@ -20,6 +20,7 @@ interface Filters {
   category: string;
 }
 
+// TODO: Which categories to show on search bar ?
 const ticketTabItems = [
   {
     label: "All",
@@ -30,6 +31,7 @@ const ticketTabItems = [
   ...EVENT_CATEGORIES.filter((eachEventCategory) => eachEventCategory.isFeatured),
 ];
 
+// TODO: City and Venue Data
 const selectFields = [
   {
     label: "city",
