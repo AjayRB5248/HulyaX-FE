@@ -37,7 +37,7 @@ const WidgetCheckbox: React.FC = () => {
   };
 
   return (
-    <div className="widget-1 widget-check">
+    <div className="widget-1 widget-check d-none d-md-block">
       <div className="widget-header">
         <h5 className="m-title mb-0">Filter By</h5>{" "}
         <a href="#0" className="clear-check">

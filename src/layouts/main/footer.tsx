@@ -34,7 +34,7 @@ export default function Footer() {
     <footer className="footer-section">
       <div className="newslater-section padding-bottom mt-50">
         <div className="container">
-          <div className="newslater-container bg_img">
+          <div className="newslater-container bg_img" style={{ backgroundImage: `url(${FooterBackground.src})` }}>
             <div className="newslater-wrapper">
               <h5 className="cate">subscribe to Hulya </h5>
               <h3 className="title">to get exclusive benefits</h3>

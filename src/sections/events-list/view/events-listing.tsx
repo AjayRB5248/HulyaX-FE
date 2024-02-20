@@ -46,6 +46,24 @@ const EventsListing = () => {
           </div>
         </div>
       </div>
+
+      {/* Bottom Menu */}
+      <div className="bottom-menu d-none d-md-none">
+        <div className="row no-gutters h-100 align-items-center">
+          <div className="col-6">
+            <div className="filterby">
+              <i className="fa fa-filter"></i>
+              Show Filter
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="sortby">
+              <i className="fa fa-sort"></i>
+              Sort By
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
