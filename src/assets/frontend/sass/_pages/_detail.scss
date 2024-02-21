@@ -1,0 +1,151 @@
+/******************* Event Details Styles Starts Here *******************/
+.details-banner {
+  padding-top: 235px;
+  padding-bottom: 20px;
+  position: relative;
+  background-position: top center;
+
+  &:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 18, 50, 0.4);
+  }
+  &.seat-plan-banner {
+    &::before {
+      background: linear-gradient(-90deg, rgba(0, 18, 50, 0.13489145658263302) 0%, rgba(0, 18, 50, 1) 100%);
+      background: -webkit-linear-gradient(-90deg, rgba(0, 18, 50, 0.13489145658263302) 0%, rgba(0, 18, 50, 1) 100%);
+    }
+  }
+}
+.details-banner-wrapper {
+  position: relative;
+  z-index: 1;
+  .details-banner-thumb {
+    position: absolute;
+    top: -4px;
+    left: 0;
+    display: none;
+    border: 2px solid rgb(255 255 255);
+    overflow: hidden;
+    border-radius: 12px;
+    @include border-radius(5px);
+    &::after {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+    @include breakpoint(lg) {
+      width: calc(25% - 28px);
+      display: block;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .video-popup {
+      width: 81px;
+      height: 81px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include transform(translate(-50%, -50%));
+      z-index: 1;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
+.details-banner-content {
+  .title {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    font-weight: 800;
+    color: $theme-white-color;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  .tags {
+    margin-bottom: 21px;
+    span,
+    a {
+      font-size: 14px;
+      color: $primary-color;
+      text-transform: uppercase;
+      &::after {
+        content: " ,";
+      }
+      &:last-child {
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+  .button {
+    margin-bottom: 13px;
+    border: 1px solid rgba(163, 177, 198, 0.2);
+    font-size: 13px;
+    background: $theme-white-color;
+    color: $main-theme-color;
+    text-transform: uppercase;
+    padding: 3px 17px;
+    font-weight: 600;
+    @include border-radius(18px);
+    @include transition($transition);
+    &:hover {
+      -webkit-box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
+      box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
+    }
+  }
+  .social-and-duration {
+    margin-top: 20px;
+    @extend %flex;
+    justify-content: space-between;
+    .duration-area {
+      @extend %flex;
+      margin: -5px -10px 0;
+      .item {
+        font-size: 16px;
+        color: $theme-white-color;
+        text-shadow: $theme-text-shadow;
+        i {
+          margin-right: 5px;
+        }
+        margin: 5px 10px;
+      }
+    }
+  }
+  .social-share {
+    @extend %flex;
+    margin: -5px -5px 0;
+    li {
+      padding: 0;
+      margin: 5px;
+      a {
+        color: #cfcfcf;
+        padding: 0 5px;
+        font-size: 14px;
+        &:hover {
+          color: $theme-color;
+        }
+      }
+    }
+    @include breakpoint(lg) {
+      margin: -5px -10px 0px;
+      li {
+        margin: 5px 10px;
+      }
+    }
+  }
+}
+
+/*******************  Event Details Styles Ends Here *******************/
