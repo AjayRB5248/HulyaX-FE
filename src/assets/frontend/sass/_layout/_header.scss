@@ -213,7 +213,7 @@
       @include breakpoint(sm) {
         padding-left: 45px;
         &::-webkit-scrollbar-thumb {
-          background-color: #000000;
+          background-color: $main-theme-color;
         }
         &::-webkit-scrollbar {
           width: 3px;

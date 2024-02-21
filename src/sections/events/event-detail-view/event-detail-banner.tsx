@@ -36,7 +36,7 @@ const EventDetailBanner: React.FC<EventDetailBannerProps> = ({
         <div className="details-banner-wrapper">
           <div className="details-banner-thumb">
             {/* TODO: Show First !isPrimary Image */}
-            <Image src={MainImg} alt="movie" width={400} height={400} />
+            <Image src={MainImg} alt="movie" width={300} height={200} />
             {videoUrl && (
               <Link href={videoUrl} className="video-popup">
                 <Image src={VideoPlayButton} alt="movie" />
