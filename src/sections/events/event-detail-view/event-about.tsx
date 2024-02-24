@@ -1,13 +1,11 @@
 import Image from "next/image";
 import React from "react";
-
-import SacarPoster from "src/assets/frontend/images/event/SacarPoster.jpeg";
-import NeeteshPoster from "src/assets/frontend/images/event/NeeteshConcert.jpg";
 import Slider from "react-slick";
 import { SliderGallery } from "src/components/slider-gallery";
+import EventSponsors from "./event-sponsors";
 
-
-const EventAbout: React.FC<any> = ({ eventName, eventDescription, eventPrimaryImg, eventImages }) => {
+const EventAbout: React.FC<any> = ({ eventDescription, eventImages, sponsors }) => {
+    console.log(sponsors, "sponsors")
   return (
     <section className="movie-details-section padding-top padding-bottom">
       <div className="container-fluid">
@@ -81,84 +79,20 @@ const EventAbout: React.FC<any> = ({ eventName, eventDescription, eventPrimaryIm
 
               <div className="tab summery-review">
                 <ul className="tab-menu">
-                  <li className="active">summery</li>
+                  <li className="active">Event Details</li>
                   <li>
                     user review <span>147</span>
                   </li>
                 </ul>
                 <div className="tab-area">
                   <div className="tab-item active">
-                    <div className="item">
-                      <h5 className="sub-title">Synopsis</h5>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula eros sit amet est
-                        tincidunt aliquet. Fusce laoreet ligula ac ultrices eleifend. Donec hendrerit fringilla odio, ut
-                        feugiat mi convallis nec. Fusce elit ex, blandit vitae mattis sit amet, iaculis ac elit. Ut diam
-                        mauris, viverra sit amet dictum vel, aliquam ac quam. Ut mi nisl, fringilla sit amet erat et,
-                        convallis porttitor ligula. Sed auctor, orci id luctus venenatis, dui dolor euismod risus, et
-                        pharetra orci lectus quis sapien. Duis blandit ipsum ac consectetur scelerisque.{" "}
-                      </p>
-                    </div>
+                    {/* Event Description */}
+                    <div className="item" dangerouslySetInnerHTML={{ __html: eventDescription }} />
+                    {/* Sponsors and Organizers */}
+                    <EventSponsors sponsors={sponsors} />
+
+
                     {/* <div className="item">
-                                    <div className="header">
-                                        <h5 className="sub-title">cast</h5>
-                                        <div className="navigation">
-                                            <div className="cast-prev"><i className="flaticon-double-right-arrows-angles"></i></div>
-                                            <div className="cast-next"><i className="flaticon-double-right-arrows-angles"></i></div>
-                                        </div>
-                                    </div>
-                                    <div className="casting-slider owl-carousel">
-                                        <div className="cast-item">
-                                            <div className="cast-thumb">
-                                                <a href="#0">
-                                                    <img src="./assets/images/cast/cast01.jpg" alt="cast">
-                                                </a>
-                                            </div>
-                                            <div className="cast-content">
-                                                <h6 className="cast-title"><a href="#0">Bill Hader</a></h6>
-                                                <span className="cate">actor</span>
-                                                <p>As Richie Tozier</p>
-                                            </div>
-                                        </div>
-                                        <div className="cast-item">
-                                            <div className="cast-thumb">
-                                                <a href="#0">
-                                                    <img src="./assets/images/cast/cast02.jpg" alt="cast">
-                                                </a>
-                                            </div>
-                                            <div className="cast-content">
-                                                <h6 className="cast-title"><a href="#0">nora hardy</a></h6>
-                                                <span className="cate">actor</span>
-                                                <p>As raven</p>
-                                            </div>
-                                        </div>
-                                        <div className="cast-item">
-                                            <div className="cast-thumb">
-                                                <a href="#0">
-                                                    <img src="./assets/images/cast/cast03.jpg" alt="cast">
-                                                </a>
-                                            </div>
-                                            <div className="cast-content">
-                                                <h6 className="cast-title"><a href="#0">alvin peters</a></h6>
-                                                <span className="cate">actor</span>
-                                                <p>As magneto</p>
-                                            </div>
-                                        </div>
-                                        <div className="cast-item">
-                                            <div className="cast-thumb">
-                                                <a href="#0">
-                                                    <img src="./assets/images/cast/cast04.jpg" alt="cast">
-                                                </a>
-                                            </div>
-                                            <div className="cast-content">
-                                                <h6 className="cast-title"><a href="#0">josh potter</a></h6>
-                                                <span className="cate">actor</span>
-                                                <p>As quicksilver</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="item">
                                     <div className="header">
                                         <h5 className="sub-title">crew</h5>
                                         <div className="navigation">

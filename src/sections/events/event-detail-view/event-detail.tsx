@@ -8,6 +8,7 @@ import EventAbout from "./event-about";
 import EventVenues from "./event-venues";
 import EventBanner from "./event-banner";
 
+
 const mockDetail = {
   _id: "65bdbed4b7dd4b1bfeae1a02",
   status: "PLANNED",
@@ -58,8 +59,22 @@ const mockDetail = {
   tags: ["Music", "Concerts"],
   isDeleted: false,
   eventName: "SACAR Evolution Tour 2024",
-  eventDescription:
-    '<h2>What Is An Event Description?</h2><p>An event description is a piece of text or copy, outlining the details of your event. These details come together to create a compelling statement which will help to draw in your target audience and even gain new guests! Your event description should be able to answer the 5 W’s (who, what, when, where and why) and also give your audience a reason to attend your event.&nbsp;</p><h2>Examples Of Effective Event Descriptions</h2><p>To better help you understand how to write an effective event description, take a look at these examples:&nbsp;</p><p><strong>Example 1:</strong></p><p><strong>Springfield Firefighters Car Wash Fundraiser</strong></p><p>Saturday July 22, 2023</p><p>9:00 AM to 2:00 PM</p><p>Springfield High School (Directly across from the Fluff ‘N Fold Laundromat)</p><p>The Springfield Fire Department needs your help in raising money for new water and diving equipment. Stop by, have your car washed, make a donation to the fire department and receive a coupon to Barry’s Pizza, Subway or Chipotle!</p><p><strong>ALL PROCEEDS GO DIRECTLY TOWARDS NEW WATER AND DIVE EQUIPMENT FOR THE FIRE DEPARTMENT</strong></p><p>Hosted by: Springfield Police And Fire Departments and The Panther Booster Club</p><p>For More Information, contact Officer Bob Smith at 731-555-9208 or visit&nbsp;<a href="http://www.pantherbooster.com/" rel="noopener noreferrer" target="_blank" style="color: var(--dark-salmon); background-color: transparent;">www.pantherbooster.com</a>&nbsp;to make a donation.</p><p><strong>Example 2:</strong></p><p><strong>Fighting For A Cure: Virtual Webinar Series</strong></p><p>Dr. John Brown is hosting a virtual webinar series dedicated to educating his audience on the breakthroughs in cancer research and potentially life saving drugs. Dr. Brown will also be presenting research from oncologists all over the world.&nbsp;</p><p><strong>Date: March 9, March 16, March 23, 2023</strong></p><p><strong>Time: 4:00 PM (EST)</strong></p><p><br></p><p><br></p>',
+  eventDescription: `<h3><b> Title: Waves of Harmony: A Musical Extravaganza in Australia</b> </h4>
+    <br />
+    <p>
+    Australia, renowned for its vibrant cultural scene and love for music, is set to host an electrifying concert event that promises to captivate hearts and minds alike. Titled "Waves of Harmony," this musical extravaganza is slated to be an unforgettable experience for music enthusiasts from all walks of life.
+    
+    Taking place against the backdrop of Australia's stunning landscapes, the concert venue itself becomes an integral part of the experience. Whether nestled amidst lush greenery, overlooking serene waters, or set against the majestic backdrop of the Outback, each location adds its unique charm to the event, enhancing the overall ambiance and creating an immersive musical journey.
+    
+    The lineup features an eclectic mix of local talents and internationally acclaimed artists, representing a diverse range of musical genres. From soul-stirring symphonies to foot-stomping beats, the performances promise to showcase the rich tapestry of musical expression. Audiences can expect to be swept away by the melodic melodies, intricate harmonies, and infectious rhythms that reverberate through the air, creating an atmosphere of pure magic and joy.
+    
+    Moreover, "Waves of Harmony" goes beyond mere entertainment, aiming to foster a sense of community and connection among attendees. With interactive workshops, collaborative jam sessions, and opportunities for audience participation, the event encourages individuals to actively engage with music, fostering a deeper appreciation for its power to unite and inspire.
+    
+    But the magic of "Waves of Harmony" extends beyond the confines of the concert venue. Embracing principles of sustainability and environmental stewardship, the event strives to minimize its ecological footprint, implementing eco-friendly practices and promoting awareness of environmental issues. Through initiatives such as carbon offset programs, recycling efforts, and support for local conservation projects, "Waves of Harmony" aims to leave a positive impact on both the musical landscape and the planet.
+    
+    As the sun sets and the stars emerge overhead, "Waves of Harmony" reaches its crescendo, culminating in a grand finale that leaves audiences spellbound and uplifted. Amidst the applause and cheers, there lingers a sense of gratitude—for the music that unites us, the beauty that surrounds us, and the shared moments that enrich our lives.
+    
+    In the heart of Australia, amidst the rhythm of the land and the melody of the skies, "Waves of Harmony" invites you to join in a celebration of music, unity, and the boundless possibilities of the human spirit. So, mark your calendars, and prepare to embark on a musical journey like no other. </p>`,
   eventOwner: "65bd3a9a2df35039deafb516",
   artists: [
     {
@@ -130,6 +145,14 @@ const mockDetail = {
   __v: 0,
 };
 
+// TODO: Add Sponsors/Organizers in API
+const sponsors = [
+  {
+    _id: "65bdbed4b7dd4b1bfeae1a03",
+    imageUrl: "",
+  },
+];
+
 const EventDetail = () => {
   const pathname = usePathname();
 
@@ -180,10 +203,14 @@ const EventDetail = () => {
           eventImages={eventDetail?.eventImages}
           venues={eventDetail?.venues}
         />
-        
+
         <EventVenues venues={eventDetail?.venues} />
 
-        <EventAbout  eventImages={eventDetail?.eventImages} />
+        <EventAbout
+          eventImages={eventDetail?.eventImages}
+          eventDescription={eventDetail?.eventDescription}
+          sponsors={sponsors}
+        />
 
         <div style={{ height: "100rem" }}></div>
         {/* <EventAbout
