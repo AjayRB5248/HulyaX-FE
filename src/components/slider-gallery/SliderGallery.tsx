@@ -20,6 +20,7 @@ const SliderGallery: React.FC<GalleryComponentProps> = ({ eventImages }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
 
   const openLightbox = (index: number) => {
+    console.log(index, "index!!!!");
     setSelectedImageIndex(index);
     setLightboxOpen(true);
   };
@@ -80,7 +81,14 @@ const SliderGallery: React.FC<GalleryComponentProps> = ({ eventImages }) => {
           </div>
         ))}
       </Slider>
-      {lightboxOpen && <Lightbox open={lightboxOpen} close={() => setLightboxOpen(false)} slides={lightboxImages} />}
+      {lightboxOpen && (
+        <Lightbox
+          open={lightboxOpen}
+          close={() => setLightboxOpen(false)}
+          slides={lightboxImages}
+          index={selectedImageIndex}
+        />
+      )}
     </div>
   );
 };

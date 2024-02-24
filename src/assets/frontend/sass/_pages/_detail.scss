@@ -26,7 +26,7 @@
   z-index: 1;
   .details-banner-thumb {
     position: absolute;
-    top: -4px;
+    top: -15px;
     left: 0;
     display: none;
     border: 2px solid rgb(255 255 255);
@@ -42,8 +42,9 @@
       right: 0;
     }
     @include breakpoint(lg) {
-      width: calc(25% - 28px);
+      width: calc(20% - 60px);
       display: block;
+      left: 6%;
     }
     img {
       width: 100%;
@@ -287,7 +288,7 @@
       }
       .thumb {
         overflow: hidden;
-        height: 180px;
+        height: 150px;
         width: 98% !important;
         @include border-radius(5px);
 
