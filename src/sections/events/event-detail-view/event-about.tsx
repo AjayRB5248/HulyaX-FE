@@ -3,9 +3,10 @@ import React from "react";
 import Slider from "react-slick";
 import { SliderGallery } from "src/components/slider-gallery";
 import EventSponsors from "./event-sponsors";
+import EventArtists from "./event-artists";
 
 const EventAbout: React.FC<any> = ({ eventDescription, eventImages, sponsors }) => {
-    console.log(sponsors, "sponsors")
+  console.log(sponsors, "sponsors");
   return (
     <section className="movie-details-section padding-top padding-bottom">
       <div className="container-fluid">
@@ -90,7 +91,8 @@ const EventAbout: React.FC<any> = ({ eventDescription, eventImages, sponsors }) 
                     <div className="item" dangerouslySetInnerHTML={{ __html: eventDescription }} />
                     {/* Sponsors and Organizers */}
                     <EventSponsors sponsors={sponsors} />
-
+                    {/* Artists */}
+                    <EventArtists sponsors={sponsors} />
 
                     {/* <div className="item">
                                     <div className="header">
