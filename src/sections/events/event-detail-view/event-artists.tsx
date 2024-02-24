@@ -7,18 +7,26 @@ import Artist02 from "src/assets/frontend/images/artists/Neetesh.jpeg";
 import Artist03 from "src/assets/frontend/images/artists/Olivia.png";
 import Artist04 from "src/assets/frontend/images/artists/LANA.jpg";
 
-// TODO: Add Image URL in Artists
+// TODO: Add Image URL , Artist Title in Artists
 const mockArtists = [
   {
+    _id: "65bdbed4b7dd4b1bfeae1a03",
+    artistName: "Sacar KANDEL",
     imageUrl: Artist01,
   },
   {
+    _id: "65bdbed4b7dd4b1bfeae1a03",
+    artistName: "Sacar KANDEL",
     imageUrl: Artist02,
   },
   {
+    _id: "65bdbed4b7dd4b1bfeae1a03",
+    artistName: "Sacar KANDEL",
     imageUrl: Artist03,
   },
   {
+    _id: "65bdbed4b7dd4b1bfeae1a03",
+    artistName: "Sacar KANDEL",
     imageUrl: Artist04,
   },
 ];
@@ -37,11 +45,15 @@ const EventArtists: React.FC<any> = ({ artists }) => {
           </div>
         </div>
       </div>
-      <div className="sponsors-grid">
+      <div className="artists-grid">
         {mockArtists?.map((eachArtist: any, index: number) => (
-          <div className="sponsors-item" key={index}>
-            <div className="sponsors-thumb">
-              <Image src={eachArtist.imageUrl} height={50} width={50} alt="Sponsors" style={{ objectFit: "cover" }} />
+          <div className="artists-item" key={index}>
+            <div className="artists-thumb">
+              <Image src={eachArtist.imageUrl} height={50} width={50} alt="artists" style={{ objectFit: "cover" }} />
+            </div>
+            <div className="artists-content">
+              <h5 className="title">{eachArtist.artistName}</h5>
+              <span className="cate">Musician/Actor</span>
             </div>
           </div>
         ))}
