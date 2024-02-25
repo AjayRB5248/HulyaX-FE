@@ -276,7 +276,7 @@
   .movie-details {
     background: #fff;
     padding: 20px;
-    border-radius: 6px;
+    margin-left: 10px;
 
     .details-banner-content .title {
       text-transform: uppercase;
@@ -428,17 +428,21 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
+
 .sponsors-item,
 .artists-item {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   .sponsors-thumb,
   .artists-thumb {
     width: 130px;
     height: 130px;
     @include border-radius(50%);
     border: 1px solid rgba($color: $theme-color, $alpha: 0.5);
-    margin: 0 auto;
-    margin-bottom: 30px;
+    margin: none;
+    margin-bottom: 10px;
     padding: 10px;
     a {
       display: block;
@@ -472,6 +476,177 @@
       font-size: 14px;
       margin-bottom: 0 !important;
       color: $primary-color;
+    }
+  }
+
+  .sponsors-thumb {
+    border: 1px solid #f5f5f5;
+    border-radius: 4px;
+    width: 95%;
+
+    img {
+      border: none;
+    }
+  }
+}
+
+.sponsors-grid {
+  @include breakpoint(max-sm) {
+    grid-template-columns: repeat(3, 1fr);
+
+    .sponsors-thumb {
+      height: 100%;
+      
+      img {
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.artists-grid {
+  @include breakpoint(max-sm) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 24px;
+
+    .artists-thumb {
+      width: 60px;
+      height: 60px;
+    }
+
+    .artists-content {
+      .title {
+        font-size: 12px;
+      }
+
+      span {
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+/*Ticket-Area CSS*/
+
+.book-ticket--area {
+  // border-bottom: 1px dashed $stroke-border;
+  margin-bottom: 30px;
+  .ticket-item {
+    padding: 6px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid #f5f5;
+
+    margin-bottom: 15px;
+
+    text-align: center;
+    position: relative;
+    background: url(../../css/img/ticket-bg04.png) $white-color no-repeat center top;
+    background-size: cover;
+
+    @include breakpoint(max-sm) {
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      max-width: 350px;
+    }
+    .ticket-thumb {
+      width: 20px;
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    .ticket-content {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .ticket-title {
+      margin-left: 10px;
+      font-weight: 800;
+      font-size: 12px;
+      color: $bg-two;
+      width: 60%;
+      text-align: left;
+    }
+    .amount {
+      font-size: 20px;
+      margin-left: 10px;
+      color: $main-theme-color;
+      sup {
+        font-weight: 400;
+        font-size: 70%;
+        top: -7px;
+        @include breakpoint(max-sm) {
+          top: -9px;
+        }
+      }
+    }
+    .t-button {
+      position: absolute;
+      left: 99%;
+      top: -4px;
+
+      bottom: 0;
+
+      @include transform(translateX(-50%) translateY(50%));
+      width: 25px;
+      line-height: 25px;
+      height: 25px;
+      @include border-radius(50%);
+      color: $white-color;
+      background-image: -moz-linear-gradient(
+        169deg,
+        rgb(85, 96, 255) 17%,
+        rgb(170, 82, 161) 63%,
+        rgb(255, 67, 67) 100%
+      );
+      background-image: -webkit-linear-gradient(
+        169deg,
+        rgb(85, 96, 255) 17%,
+        rgb(170, 82, 161) 63%,
+        rgb(255, 67, 67) 100%
+      );
+    }
+    &.two {
+      background: url(../../css/img/ticket-bg05.png) $white-color no-repeat center top;
+      background-size: cover;
+    }
+    &.three {
+      background: url(../../css/img/ticket-bg06.png) $white-color no-repeat center top;
+      background-size: cover;
+    }
+    .hot {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 24px;
+      height: 68px;
+      width: 40px;
+      background: #d52f84;
+      color: $white-color;
+      @extend %flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      text-transform: uppercase;
+      padding-bottom: 10px;
+      clip-path: polygon(50% 0%, 100% 0, 100% 100%, 50% 80%, 0 100%, 0 0);
+    }
+    @include breakpoint(lg) {
+      @include breakpoint(max-xl) {
+        .amount {
+        }
+        .hot {
+          right: 13px;
+        }
+      }
     }
   }
 }
