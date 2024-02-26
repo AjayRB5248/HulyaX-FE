@@ -1,7 +1,7 @@
 import { Skeleton } from "@mui/material";
 import Image, { StaticImageData } from "next/image";
 import React, { useState } from "react";
-import { useTicketsView } from "src/api/tickets";
+import { usePurchaseTickets, useTicketsView } from "src/api/tickets";
 
 interface IEventTickets {
   eventId: string;
@@ -20,6 +20,7 @@ const ticketIcons: Record<string, StaticImageData> = {
 
 const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName }) => {
   const { tickets, isLoading } = useTicketsView(eventId, venueName);
+  const purchaseEventMutation = usePurchaseTickets();
 
   const [ticketQuantities, setTicketQuantities] = useState<{ [key: string]: number }>({});
 
@@ -54,11 +55,35 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName }) => {
       totalQuantity += quantity;
     });
 
-    return totalQuantity; // Return the calculated total quantity
+    return totalQuantity;
   };
 
   const getTicketIcon = (type: string): StaticImageData => {
     return ticketIcons[type?.toUpperCase()] || Ticket01;
+  };
+
+  const handlePurchaseTickets = async (
+    eventId: string,
+    tickets: {
+      ticketId: string;
+      quantity: number;
+    }[]
+  ) => {
+    const ticketsToBook = [];
+
+    for (const ticketId in ticketQuantities) {
+      if (ticketQuantities.hasOwnProperty(ticketId)) {
+        ticketsToBook.push({
+          ticketId,
+          quantity: ticketQuantities[ticketId],
+        });
+      }
+    }
+
+    await purchaseEventMutation.mutateAsync({
+      eventId,
+      tickets: ticketsToBook,
+    });
   };
 
   return (
@@ -111,7 +136,7 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName }) => {
       </li>
 
       {/* Book Ticket */}
-      <button className="theme-button btn-book-ticket mb-10">
+      <button className="theme-button btn-book-ticket mb-10" onClick={() => handlePurchaseTickets(eventId, [])}>
         book tickets
         <i className="fa fa-ticket-alt ml-2"></i>
       </button>

@@ -88,5 +88,6 @@ export const endpoints = {
   },
   tickets: {
     list: `tickets/view-tickets`,
+    purchase: `tickets/purchase-ticket`,
   },
 };
