@@ -1,5 +1,5 @@
 import React from "react";
-import moment from "moment";
+import moment from "moment-timezone";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 
@@ -30,13 +30,15 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
 }) => {
   const pathname = usePathname();
 
+  const featuredImage = eventImages[0]?.imageurl;
+
   return (
-    <section className="details-banner bg_img" style={{ backgroundImage: `url(${PosterSampleImg.src})` }}>
+    <section className="details-banner bg_img" style={{ backgroundImage: `url(${bannerImg})` }}>
       <div className="container-fluid">
         <div className="details-banner-wrapper">
           <div className="details-banner-thumb">
             {/* TODO: Show First !isPrimary Image */}
-            <Image src={MainImg} alt="movie" width={300} height={200} />
+            <Image src={featuredImage} alt="movie" width={300} height={200} />
             {videoUrl && (
               <Link href={videoUrl} className="video-popup">
                 <Image src={VideoPlayButton} alt="movie" />
@@ -57,7 +59,8 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
                 <div className="item">
                   <span className="mr-4">Starts From:</span>
                   <i className="fas fa-calendar-alt"></i>
-                  <span>{moment(venues[0].eventDate).format("MMM DD, YYYY")}</span>
+                  {/* TODO: Earliest date ? */}
+                  <span>{moment(venues?.[0]?.eventDate).tz(venues?.[0]?.timeZone).format("MMM DD, YYYY")}</span>
                 </div>
                 <div className="item">
                   <i className="far fa-clock"></i>

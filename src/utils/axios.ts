@@ -88,5 +88,6 @@ export const endpoints = {
     remove: (id: string) => `/event/${id}/disable`,
     removeItem: (id: string) => `/events/edit/remove-event-items/${id}`,
     addItem: (id: string) => `/events/edit/add-event-items/${id}`,
+    detailsBySlug: (slug: string) => `/events/slug/${slug}`
   },
 };

@@ -12,9 +12,10 @@ const EventGridItem: React.FC<{
   venue: string;
   city: string;
   timeZone: string;
+  eventId: string;
   slug: string;
   artists: any;
-}> = ({ imageUrl, date, title, venue, city, timeZone, slug, artists }) => {
+}> = ({ eventId, imageUrl, date, title, venue, city, timeZone, slug, artists }) => {
   return (
     <div className="col-sm-6 col-lg-4">
       <div className="event-item ml-0 mr-0">
@@ -22,7 +23,7 @@ const EventGridItem: React.FC<{
           <div className="event-date">
             <h6 className="date-title">{moment(date).format("D MMM")}</h6>
           </div>
-          <Link href={`/event-detail/${slug}`}>
+          <Link href={`/events/${slug}`}>
             <Image src={imageUrl} alt="Event Poster" width={800} height={1200} />
 
             <h4 className="event-title">{title}</h4>

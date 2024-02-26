@@ -33,6 +33,7 @@ const EventsListing = () => {
                       venue={eachEventVenue.venueName}
                       city={eachEventVenue.city}
                       timeZone={eachEventVenue.timeZone}
+                      eventId={event._id}
                       slug={event.slug}
                       artists={event.artists}
                     />

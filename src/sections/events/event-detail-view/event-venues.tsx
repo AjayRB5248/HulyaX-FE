@@ -35,10 +35,10 @@ const EventVenues: React.FC<any> = ({ venues }) => {
               </div>
             </div>
           </div>
-          <a href="#0" className="custom-button">
+          {/* <a href="#0" className="custom-button">
             <i className="fa fa-ticket-alt mr-2"></i>
             book tickets
-          </a>
+          </a> */}
         </div>
       </div>
     </section>

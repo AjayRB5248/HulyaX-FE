@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useFetchEvents } from "src/api/events";
+import { useEventDetailsBySlug, useFetchEvents } from "src/api/events";
 import { usePathname } from "src/routes/hook/use-pathname";
 import EventsService from "src/services/events";
 import { useEventsContext } from "src/context/EventsContextProvider";
@@ -8,6 +8,9 @@ import EventAbout from "./event-about";
 import EventVenues from "./event-venues";
 import EventBanner from "./event-banner";
 
+import { useRouter } from "src/routes/hook/use-router";
+import { useParams } from "src/routes/hook/use-params";
+import { CircularProgress } from "@mui/material";
 
 const mockDetail = {
   _id: "65bdbed4b7dd4b1bfeae1a02",
@@ -88,21 +91,21 @@ const mockDetail = {
       venueName: "Opera House",
       city: "Sydney",
       timeZone: "Australia/Broken_Hill",
-      eventDate: "2024-02-03T04:16:50.471Z",
+      eventDate: ["2024-02-05T04:16:50.471Z", "2024-02-08T08:16:50.471Z"],
     },
     {
       _id: "65bdbed4b7dd4b1bfeae1a05",
       venueName: "Rangasala",
       city: "Melbourne",
       timeZone: "Australia/Canberra",
-      eventDate: "2024-02-03T04:17:36.605Z",
+      eventDate: ["2024-04-05T04:16:50.471Z", "2024-04-08T08:16:50.471Z"],
     },
     {
       _id: "65bdbed4b7dd4b1bfeae1a06",
       venueName: "TU Ground",
       city: "Perth",
       timeZone: "Australia/Yancowinna",
-      eventDate: "2024-02-03T04:17:42.576Z",
+      eventDate: ["2024-02-10T09:16:50.471Z", "2024-06-09T08:16:50.471Z"],
     },
   ],
   eventImages: [
@@ -154,72 +157,42 @@ const sponsors = [
 ];
 
 const EventDetail = () => {
-  const pathname = usePathname();
+  const params = useParams();
+  let slug = params.slug as string;
 
-  const [slug, setSlug] = useState<string | null>(null);
+  console.log(slug, "slug");
 
-  const [eventDetail, setEventDetail] = useState<any>();
+  const { event, isLoading } = useEventDetailsBySlug(slug);
+  console.log(isLoading, event, "event====");
 
-  useEffect(() => {
-    if (pathname) {
-      const parts = pathname.split("/").filter((part: string) => !!part);
-      const slugPart = parts[parts.length - 1];
+  const posterImage = event?.eventImages?.find((eachEventImg: any) => eachEventImg.isPrimary).imageurl;
 
-      setSlug(slugPart);
-    }
-  }, [pathname]);
+  console.log(event, "event====");
 
-  useEffect(() => {
-    if (slug) {
-      // const fetchEventData = async () => {
-      //   try {
-      //     const eventData = await EventsService.list().then((res) => res.data?.events);
+  return Object.keys(event).length === 0 && isLoading ? (
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "200px" }}>
+      <CircularProgress />
+    </div>
+  ) : (
+    <>
+      <EventBanner
+        bannerImg={posterImage}
+        eventName={event?.eventName}
+        eventTags={event?.tags}
+        videoUrl={event?.videoUrl}
+        eventImages={event?.eventImages}
+        venues={event?.venues}
+      />
 
-      //     const foundEventDetail = eventData?.find((eachEvent: any) => eachEvent.slug === slug);
-      //     console.log(foundEventDetail, "foundEventDetail");
+      <EventVenues venues={event?.venues} />
 
-      //     if (foundEventDetail) setEventDetail(foundEventDetail);
-      //   } catch (error) {
-      //     console.error("Error fetching event data:", error);
-      //   }
-      // };
-
-      // fetchEventData();
-
-      setEventDetail(mockDetail);
-    }
-  }, [slug]);
-
-  const posterImage = eventDetail?.eventImages?.find((eachEventImg: any) => eachEventImg.isPrimary).imageurl;
-
-  return (
-    eventDetail && (
-      <>
-        <EventBanner
-          bannerImg={posterImage}
-          eventName={eventDetail?.eventName}
-          eventTags={eventDetail?.tags}
-          videoUrl={eventDetail?.videoUrl}
-          eventImages={eventDetail?.eventImages}
-          venues={eventDetail?.venues}
-        />
-
-        <EventVenues venues={eventDetail?.venues} />
-
-        <EventAbout
-          eventImages={eventDetail?.eventImages}
-          eventDescription={eventDetail?.eventDescription}
-          sponsors={sponsors}
-        />
-
-        <div style={{ height: "100rem" }}></div>
-        {/* <EventAbout
-        eventName={eventDetail?.eventName}
-        eventDescription={eventDetail?.eventDescription}
-        eventPrimaryImg={primaryBannerImg}
-      /> */}
-      </>
-    )
+      <EventAbout
+        eventImages={event?.eventImages}
+        eventDescription={event?.eventDescription}
+        sponsors={sponsors}
+        venues={event?.venues}
+      />
+    </>
   );
 };
 

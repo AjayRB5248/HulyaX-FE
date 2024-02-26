@@ -12,6 +12,7 @@ const EventsService = {
     axiosInstance.delete(endpoints.events.removeItem(id), { data }),
   addItem: (id: string, data: any) =>
     axiosInstance.post(endpoints.events.addItem(id), data),
+  fetchSingleEventBySlug: (slug: string) => axiosInstance.get(endpoints.events.detailsBySlug(slug)),
 };
 
 export default EventsService;
