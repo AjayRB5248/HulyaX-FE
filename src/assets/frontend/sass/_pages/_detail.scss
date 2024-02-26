@@ -273,6 +273,16 @@
   color: $theme-text-color;
   background: #f7f7f7;
 
+  @include breakpoint(max-sm) {
+    padding: 10px 0;
+    background: #fff;
+
+    .movie-details {
+      margin: 0;
+      padding: 10px !important;
+    }
+  }
+
   .movie-details {
     background: #fff;
     padding: 20px;
@@ -376,6 +386,14 @@
         text-transform: uppercase;
         font-weight: bold;
       }
+
+      p {
+        font-size: 12px;
+        color: $theme-text-color;
+        line-height: 1.5;
+        font-weight: 400;
+        text-align: justify;
+      }
       margin-bottom: 40px;
       @include breakpoint(sm) {
         margin-bottom: 60px;
@@ -465,7 +483,9 @@
   .artists-content {
     text-transform: capitalize;
     .title {
-      font-size: 18px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 1rem;
     }
     .cate {
       color: $theme-color;
@@ -473,6 +493,8 @@
       font-size: 12px;
       margin-bottom: 17px;
       line-height: 1.5;
+      text-align: center;
+      
       &:last-child {
         margin-bottom: 0;
       }
@@ -573,7 +595,7 @@
     }
 
     .ticket-title {
-      flex:  1;
+      flex: 1;
       margin-left: 10px;
       font-weight: 800;
       font-size: 12px;
@@ -581,7 +603,7 @@
       text-align: left;
     }
     .amount {
-      flex:1;
+      flex: 1;
       font-size: 18px;
       margin-left: 10px;
       color: $main-theme-color;
@@ -597,7 +619,7 @@
       }
     }
 
-    .quantity-selector  {
+    .quantity-selector {
       flex: 1;
       width: 100%;
 
@@ -607,7 +629,6 @@
         font-weight: 700;
       }
     }
-
 
     .t-button {
       cursor: pointer;
@@ -655,6 +676,32 @@
   }
 }
 
+.ticket-quantity {
+  border-top: 1px dashed #11326f;
+}
+
+.ticket-price,
+.ticket-quantity {
+  .ticket-title {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .price {
+    color: $main-theme-color;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .quantity {
+    background: #f3f9ff;
+    padding: 8px 20px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 6px;
+  }
+}
+
 .info-message {
   color: #fc7c00;
   font-size: 12px;
@@ -667,6 +714,10 @@
   border: 1px solid #f5f5f5;
   border-bottom-style: dashed;
   padding-bottom: 10px;
+
+  @include breakpoint(max-sm) {
+    margin-top: 10px;
+  }
 
   .btn-book-ticket {
     max-width: 100%;

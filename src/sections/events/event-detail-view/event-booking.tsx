@@ -101,48 +101,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues }) => {
         {showTickets && showTickets.selectedVenue ? (
           <EventTickets eventId={eventId} venueName={showTickets.selectedVenue} />
         ) : null}
-
-        {/* Tickets Price */}
-        <li>
-          <h6 className="subtitle mb-0">
-            <span>Tickets Price</span>
-            <span>$150</span>
-          </h6>
-        </li>
       </ul>
-      <ul className="side-shape">
-        <li>
-          <h6 className="subtitle">
-            <span>combos</span>
-            <span>$57</span>
-          </h6>
-          <span className="info">
-            <span>2 Nachos Combo</span>
-          </span>
-        </li>
-        <li>
-          <h6 className="subtitle">
-            <span>food & bevarage</span>
-          </h6>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <span className="info">
-            <span>price</span>
-            <span>$207</span>
-          </span>
-          <span className="info">
-            <span>vat</span>
-            <span>$15</span>
-          </span>
-        </li>
-      </ul>
-
-      <button className="theme-button btn-book-ticket mb-10">
-        book tickets
-        <i className="fa fa-ticket-alt ml-2"></i>
-      </button>
     </div>
   );
 };
