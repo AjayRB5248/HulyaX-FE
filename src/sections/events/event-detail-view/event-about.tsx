@@ -11,11 +11,11 @@ const EventAbout: React.FC<any> = ({ eventId, eventDescription, eventImages, spo
     <section className="movie-details-section padding-top padding-bottom">
       <div className="container-fluid">
         <div className="row justify-content-center flex-wrap-reverse mb--50 no-gutters">
-          <div className="col-lg-4 col-sm-10 col-md-6 mb-50">
+          <div className="col-lg-5 col-sm-10 col-md-6 mb-50">
             <EventBooking eventId={eventId} venues={venues} />
           </div>
 
-          <div className="col-lg-8 mb-50">
+          <div className="col-lg-7 mb-50">
             <div className="movie-details">
               <h3 className="title font-weight-bold mb-4">Gallery</h3>
               <SliderGallery eventImages={eventImages} />

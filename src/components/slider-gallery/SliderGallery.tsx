@@ -28,7 +28,7 @@ const SliderGallery: React.FC<GalleryComponentProps> = ({ eventImages }) => {
     dots: false,
     arrows: false,
     infinite: false,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
     speed: 3000,

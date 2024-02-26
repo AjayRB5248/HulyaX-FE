@@ -25,6 +25,8 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName }) => {
     return ticketIcons[type?.toUpperCase()] || Ticket01;
   };
 
+
+
   return (
     <div className="book-ticket--area row justify-content-center">
       {tickets && tickets.length > 0 ? (
@@ -40,9 +42,9 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName }) => {
                   <sup>$</sup>
                   {eachTicket.price}
                 </h2>
-                <a href="#0" className="t-button">
+                <span className="t-button">
                   <i className="fas fa-plus"></i>
-                </a>
+                </span>
               </div>
             </div>
           </div>
@@ -50,6 +52,7 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName }) => {
       ) : isLoading ? (
         <Skeleton animation="wave" />
       ) : (
+        // TODO: Tickets Sold out messages info here
         <p className="info-message">No Tickets Available, Please choose other venue!</p>
       )}
     </div>
