@@ -20,7 +20,6 @@ const SliderGallery: React.FC<GalleryComponentProps> = ({ eventImages }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
 
   const openLightbox = (index: number) => {
-    console.log(index, "index!!!!");
     setSelectedImageIndex(index);
     setLightboxOpen(true);
   };
@@ -63,8 +62,6 @@ const SliderGallery: React.FC<GalleryComponentProps> = ({ eventImages }) => {
       },
     ],
   };
-
-  console.log(eventImages[selectedImageIndex].imageurl, "issue here???");
 
   const lightboxImages = eventImages.map((image) => ({
     src: image.imageurl,

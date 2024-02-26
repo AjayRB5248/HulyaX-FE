@@ -12,7 +12,7 @@ const EventVenues: React.FC<any> = ({ venues }) => {
         <div className="book-wrapper offset-lg-3">
           <div className="left-side">
             {venues?.map((eachVenue: any) => (
-              <div className="item">
+              <div className="item" key={eachVenue._id}>
                 <div className="item-thumb">
                   <Image src={VenueIcon} alt={eachVenue.venueName} className="venue-icon" />
                 </div>

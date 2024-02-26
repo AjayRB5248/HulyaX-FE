@@ -121,7 +121,6 @@ const TicketSearch = () => {
       .catch((err) => {
         console.log(err, "err===");
       });
-    console.log(events, "events====");
     setEvents(events);
   };
 

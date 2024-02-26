@@ -295,7 +295,7 @@
       .slick-track {
         float: left;
       }
-      
+
       .thumb {
         overflow: hidden;
         height: 150px;
@@ -501,7 +501,7 @@
 
     .sponsors-thumb {
       height: 100%;
-      
+
       img {
         object-fit: cover;
       }
@@ -654,6 +654,11 @@
       }
     }
   }
+}
+
+.info-message {
+  color: #fc7c00;
+  font-size: 12px;
 }
 
 /*******************  Event Details Styles Ends Here *******************/

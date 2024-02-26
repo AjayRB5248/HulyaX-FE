@@ -4,18 +4,16 @@ import React, { useEffect, useState } from "react";
 import SelectField from "src/components/select-field/select-field";
 import withNiceSelect from "src/layouts/_common/nice-select/withNiceSelect";
 
-import Ticket01 from "src/assets/frontend/images/event/ticket/ticket01.png";
-import Ticket02 from "src/assets/frontend/images/event/ticket/ticket02.png";
-import Ticket03 from "src/assets/frontend/images/event/ticket/ticket03.png";
+import { useTicketsView } from "src/api/tickets";
+import EventTickets from "./event-tickets";
 
-const EventBooking: React.FC<any> = ({ venues }) => {
-  console.log(venues, "venues");
-
+const EventBooking: React.FC<any> = ({ eventId, venues }) => {
   const [venuesOptions, setVenuesOptions] = useState<any>([]);
-  const [selectedVenue, setSelectedVenue] = useState<string>();
+  const [selectedVenue, setSelectedVenue] = useState<string>(venues?.[0]?.venueName);
   const [eventDate, setEventDate] = useState<any>(
     moment(venues?.[0]?.eventDate).tz(venues?.[0]?.timeZone).format("DD MMM ddd, hh:mm A")
   );
+  const [showTickets, setShowTickets] = useState<any>({});
 
   // TODO: If there is multiple dates in array to select from
   // const [venueDatesOptions, setVenueDatesOptions] = useState<any>(
@@ -28,15 +26,21 @@ const EventBooking: React.FC<any> = ({ venues }) => {
   const handleVenueChange = (value: any) => {
     setSelectedVenue(value);
 
-    const selectedVenue = venues.find((eachVenue: any) => eachVenue.venueName === value);
+    const selectedEventVenue = venues.find((eachVenue: any) => eachVenue.venueName === value);
 
     if (selectedVenue) {
-      setVenueDatesOptions(
-        selectedVenue?.eventDate?.map((eachDate: string) => ({
-          value: eachDate,
-          label: moment(eachDate).tz(selectedVenue.timeZone).format("DD MMM ddd, hh:mm A"),
-        }))
-      );
+      const selectedEventDate = moment(selectedEventVenue.eventDate)
+        .tz(selectedEventVenue.timeZone)
+        .format("DD MMM ddd, hh:mm A");
+
+      setEventDate(selectedEventDate);
+
+      // setVenueDatesOptions(
+      //   selectedVenue?.eventDate?.map((eachDate: string) => ({
+      //     value: eachDate,
+      //     label: moment(eachDate).tz(selectedVenue.timeZone).format("DD MMM ddd, hh:mm A"),
+      //   }))
+      // );
     }
   };
 
@@ -44,7 +48,9 @@ const EventBooking: React.FC<any> = ({ venues }) => {
     console.log("Selected Venue Date:", value);
   };
 
-  const handleFindTickets = () => {};
+  const handleFindTickets = () => {
+    setShowTickets({ eventId, selectedVenue });
+  };
 
   useEffect(() => {
     if (venues && venues.length > 0) {
@@ -90,60 +96,11 @@ const EventBooking: React.FC<any> = ({ venues }) => {
           Find Tickets
           <i className="fa fa-ticket-alt ml-3"></i>
         </button>
+
         {/* Tickets Type */}
-        <div className="book-ticket--area row justify-content-center">
-          <div className="col-12">
-            <div className="ticket-item">
-              <div className="ticket-thumb">
-                <Image src={Ticket01} alt="event" />
-              </div>
-              <div className="ticket-content">
-                <span className="ticket-title">Standard Ticket</span>
-                <h2 className="amount">
-                  <sup>$</sup>49
-                </h2>
-                <a href="#0" className="t-button">
-                  <i className="fas fa-plus"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="col-12">
-            <div className="ticket-item two">
-              <div className="hot">
-                <span>hot</span>
-              </div>
-              <div className="ticket-thumb">
-                <Image src={Ticket02} alt="event" />
-              </div>
-              <div className="ticket-content">
-                <span className="ticket-title">Premium Ticket</span>
-                <h2 className="amount">
-                  <sup>$</sup>79
-                </h2>
-                <a href="#0" className="t-button">
-                  <i className="fas fa-check"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="col-12">
-            <div className="ticket-item three">
-              <div className="ticket-thumb">
-                <Image src={Ticket03} alt="event" />
-              </div>
-              <div className="ticket-content">
-                <span className="ticket-title">VIP Ticket</span>
-                <h2 className="amount">
-                  <sup>$</sup>99
-                </h2>
-                <a href="#0" className="t-button">
-                  <i className="fas fa-plus"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+        {showTickets && showTickets.selectedVenue ? (
+          <EventTickets eventId={eventId} venueName={showTickets.selectedVenue} />
+        ) : null}
 
         {/* Tickets Price */}
         <li>

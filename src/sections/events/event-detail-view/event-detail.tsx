@@ -160,14 +160,9 @@ const EventDetail = () => {
   const params = useParams();
   let slug = params.slug as string;
 
-  console.log(slug, "slug");
-
   const { event, isLoading } = useEventDetailsBySlug(slug);
-  console.log(isLoading, event, "event====");
-
+  
   const posterImage = event?.eventImages?.find((eachEventImg: any) => eachEventImg.isPrimary).imageurl;
-
-  console.log(event, "event====");
 
   return Object.keys(event).length === 0 && isLoading ? (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "200px" }}>
@@ -191,6 +186,7 @@ const EventDetail = () => {
         eventDescription={event?.eventDescription}
         sponsors={sponsors}
         venues={event?.venues}
+        eventId={event?._id}
       />
     </>
   );
