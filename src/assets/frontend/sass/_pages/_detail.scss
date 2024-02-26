@@ -573,14 +573,15 @@
     }
 
     .ticket-title {
+      flex:  1;
       margin-left: 10px;
       font-weight: 800;
       font-size: 12px;
       color: $bg-two;
-      width: 60%;
       text-align: left;
     }
     .amount {
+      flex:1;
       font-size: 18px;
       margin-left: 10px;
       color: $main-theme-color;
@@ -595,32 +596,27 @@
         }
       }
     }
+
+    .quantity-selector  {
+      flex: 1;
+      width: 100%;
+
+      .value {
+        width: 40%;
+        font-size: 14px;
+        font-weight: 700;
+      }
+    }
+
+
     .t-button {
       cursor: pointer;
-      position: absolute;
-      left: 99%;
-      top: -4px;
-
-      bottom: 0;
-
-      @include transform(translateX(-50%) translateY(50%));
       width: 25px;
       line-height: 25px;
       height: 25px;
       @include border-radius(50%);
       color: $white-color;
-      background-image: -moz-linear-gradient(
-        169deg,
-        rgb(85, 96, 255) 17%,
-        rgb(170, 82, 161) 63%,
-        rgb(255, 67, 67) 100%
-      );
-      background-image: -webkit-linear-gradient(
-        169deg,
-        rgb(85, 96, 255) 17%,
-        rgb(170, 82, 161) 63%,
-        rgb(255, 67, 67) 100%
-      );
+      background: $main-theme-color;
     }
     &.two {
       background: url(../../css/img/ticket-bg05.png) $white-color no-repeat center top;
