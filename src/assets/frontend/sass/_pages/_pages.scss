@@ -1,0 +1,48 @@
+// Success Booking Page
+
+.success-booking-page {
+  margin: 140px 0 100px auto;
+  color: $theme-text-color;
+
+  .confirmation-title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  .message {
+    font-size: 16px;
+    width: 60%;
+    margin: auto;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #6f6f6f;
+  }
+
+  .view-tickets-btn {
+    margin-top: 20px;
+    border-radius: 30px;
+  }
+
+  img {
+    object-fit: contain;
+  }
+
+  @include breakpoint(max-sm) {
+    margin: 80px auto;
+
+    img {
+      height: 300px;
+    }
+
+    .confirmation-title {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+
+    .message {
+      width: 80%;
+      font-size: 12px;
+    }
+  }
+}
