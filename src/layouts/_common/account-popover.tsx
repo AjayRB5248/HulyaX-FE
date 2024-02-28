@@ -1,26 +1,23 @@
 import { m } from 'framer-motion';
 // @mui
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
+import MenuItem from '@mui/material/MenuItem';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { alpha } from '@mui/material/styles';
 // routes
-import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hook';
 // hooks
-import { useMockedUser } from 'src/hooks/use-mocked-user';
 // auth
-import { useAuthContext } from 'src/auth/hooks';
 // components
-import { varHover } from 'src/components/animate';
-import { useSnackbar } from 'src/components/snackbar';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { useLogout } from 'src/api/auth';
 import { useAuth } from 'src/auth/context/users/auth-context';
+import { varHover } from 'src/components/animate';
+import CustomPopover, { usePopover } from 'src/components/custom-popover';
+import { useSnackbar } from 'src/components/snackbar';
 
 // ----------------------------------------------------------------------
 
@@ -38,26 +35,18 @@ export default function AccountPopover() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
-
   const popover = usePopover();
 
   const logoutMutation = useLogout();
 
-  const logOut = async () => {
-    await logoutMutation.mutateAsync({
-      refreshToken,
-    });
-    router.push("/");
-  };
-
   const handleLogout = async () => {
     try {
-      await logOut();
+      localStorage.clear();
       popover.onClose();
-      router.replace("/");
+      router.replace('/');
     } catch (error) {
       console.error(error);
-      enqueueSnackbar("Unable to logout!", { variant: "error" });
+      enqueueSnackbar('Unable to logout!', { variant: 'error' });
     }
   };
 
@@ -70,8 +59,8 @@ export default function AccountPopover() {
     <>
       <IconButton
         component={m.button}
-        whileTap="tap"
-        whileHover="hover"
+        whileTap='tap'
+        whileHover='hover'
         variants={varHover(1.05)}
         onClick={popover.onOpen}
         sx={{
@@ -95,13 +84,17 @@ export default function AccountPopover() {
         />
       </IconButton>
 
-      <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 200, p: 0 }}>
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        sx={{ width: 200, p: 0 }}
+      >
         <Box sx={{ p: 2, pb: 1.5 }}>
-          <Typography variant="subtitle2" noWrap>
+          <Typography variant='subtitle2' noWrap>
             {user?.name}
           </Typography>
 
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+          <Typography variant='body2' sx={{ color: 'text.secondary' }} noWrap>
             {user?.email}
           </Typography>
         </Box>
@@ -110,7 +103,10 @@ export default function AccountPopover() {
 
         <Stack sx={{ p: 1 }}>
           {OPTIONS.map((option) => (
-            <MenuItem key={option.label} onClick={() => handleClickItem(option.linkTo)}>
+            <MenuItem
+              key={option.label}
+              onClick={() => handleClickItem(option.linkTo)}
+            >
               {option.label}
             </MenuItem>
           ))}

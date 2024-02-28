@@ -6,11 +6,11 @@ import { useResponsive } from 'src/hooks/use-responsive';
 // components
 import { useSettingsContext } from 'src/components/settings';
 //
-import Main from './main';
 import Header from './header';
+import Main from './main';
+import NavHorizontal from './nav-horizontal';
 import NavMini from './nav-mini';
 import NavVertical from './nav-vertical';
-import NavHorizontal from './nav-horizontal';
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +33,9 @@ export default function DashboardLayout({ children }: Props) {
 
   const renderHorizontal = <NavHorizontal />;
 
-  const renderNavVertical = <NavVertical openNav={nav.value} onCloseNav={nav.onFalse} />;
+  const renderNavVertical = (
+    <NavVertical openNav={nav.value} onCloseNav={nav.onFalse} />
+  );
 
   if (isHorizontal) {
     return (

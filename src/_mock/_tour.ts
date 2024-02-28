@@ -54,7 +54,6 @@ export const TOUR_SERVICE_OPTIONS = [
   { value: 'Commemorative ticket', label: 'Commemorative ticket' },
 ];
 
-
 const CONTENT = `
 <h6>Description</h6>
 <br/>
@@ -110,7 +109,9 @@ export const _tourGuides = [...Array(12)].map((_, index) => ({
   phoneNumber: _mock.phoneNumber(index),
 }));
 
-export const TRAVEL_IMAGES = [...Array(16)].map((_, index) => _mock.image.travel(index));
+export const TRAVEL_IMAGES = [...Array(16)].map((_, index) =>
+  _mock.image.travel(index)
+);
 
 export const _tours = [...Array(12)].map((_, index) => {
   const available = {
@@ -138,8 +139,7 @@ export const _tours = [...Array(12)].map((_, index) => {
       'Early entry',
       'Parking pass',
       'Commemorative ticket',
-    ]
-  
+    ];
 
   const tourGuides =
     (index === 0 && _tourGuides.slice(0, 1)) ||

@@ -89,4 +89,16 @@ export const endpoints = {
     removeItem: (id: string) => `/events/edit/remove-event-items/${id}`,
     addItem: (id: string) => `/events/edit/add-event-items/${id}`,
   },
+  users: {
+    list: (queryParameters = {}) => {
+      let url = '/users';
+      const params = new URLSearchParams(queryParameters).toString();
+      if (params) {
+        url += `?${params}`;
+      }
+      return url;
+    },
+    remove: (id: string) => `/users/${id}`,
+    update: (id: string) => `/users/${id}`,
+  },
 };

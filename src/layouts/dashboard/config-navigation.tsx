@@ -4,15 +4,16 @@ import { paths } from 'src/routes/paths';
 // locales
 import { useLocales } from 'src/locales';
 // components
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
-import SvgColor from 'src/components/svg-color';
 import { useAuth } from 'src/auth/context/users/auth-context';
+import SvgColor from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
 
 const icon = (name: string) => (
-  <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
+  <SvgColor
+    src={`/assets/icons/navbar/${name}.svg`}
+    sx={{ width: 1, height: 1 }}
+  />
   // OR
   // <Iconify icon="fluent:mail-24-filled" />
   // https://icon-sets.iconify.design/solar/
@@ -53,21 +54,24 @@ const ICONS = {
 export function useNavData() {
   const { t } = useLocales();
   const { user, refreshToken } = useAuth();
+  const roles = ['companyAdmin', 'superAdmin'];
 
   const data = useMemo(
     () => [
-      // OVERVIEW
-      // ----------------------------------------------------------------------
       {
         subheader: t('overview'),
         show: true,
         items: [
-          { title: t('booking'), path: paths.dashboard.general.booking, icon: ICONS.booking },
+          {
+            title: t('Dashboard'),
+            path: paths.dashboard.general.booking,
+            icon: ICONS.booking,
+          },
           {
             title: t('Events'),
             path: paths.dashboard.tour.root,
             icon: ICONS.tour,
-            show: true,
+            show: roles.includes(user?.role ?? ''),
             children: [
               { title: t('list'), path: paths.dashboard.tour.root },
               { title: t('create'), path: paths.dashboard.tour.new },
@@ -77,40 +81,30 @@ export function useNavData() {
             title: t('users'),
             path: paths.dashboard.user.root,
             icon: ICONS.tour,
-            show: true,
+            show: user?.role === 'superAdmin',
             children: [
               { title: t('list'), path: paths.dashboard.user.list },
               { title: t('details'), path: paths.dashboard.user.root },
             ],
           },
-          {
-            title: t('blogs'),
-            path: paths.dashboard.post.root,
-            icon: ICONS.blog,
-            show: true,
-            children: [
-              { title: t('list'), path: paths.dashboard.post.root },
-              { title: t('create'), path: paths.dashboard.post.new },
-            ],
-          },
         ],
       },
-      {
-        subheader: 'administration',
-        show: user?.role==='superAdmin',
-        items: [
-          {
-            title: 'all events',
-            path: paths.dashboard.general.booking,
-            icon: ICONS.booking,
-          },
-          {
-            title: 'companies',
-            path: paths.dashboard.user.list,
-            icon: ICONS.booking,
-          },
-        ],
-      },
+      // {
+      //   subheader: 'administration',
+      //   show: user?.role === 'superAdmin',
+      //   items: [
+      //     {
+      //       title: 'all events',
+      //       path: paths.dashboard.general.booking,
+      //       icon: ICONS.booking,
+      //     },
+      //     {
+      //       title: 'companies',
+      //       path: paths.dashboard.user.list,
+      //       icon: ICONS.booking,
+      //     },
+      //   ],
+      // },
     ],
     [t]
   );

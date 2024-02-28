@@ -3,21 +3,21 @@
 import { useEffect } from 'react';
 // @mui
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Drawer from '@mui/material/Drawer';
+import Stack from '@mui/material/Stack';
 // hooks
 import { useResponsive } from 'src/hooks/use-responsive';
 // hooks
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 // components
 import Logo from 'src/components/logo';
+import { NavSectionVertical } from 'src/components/nav-section';
 import Scrollbar from 'src/components/scrollbar';
 import { usePathname } from 'src/routes/hook';
-import { NavSectionVertical } from 'src/components/nav-section';
 //
+import { NavToggleButton } from '../_common';
 import { NAV } from '../config-layout';
 import { useNavData } from './config-navigation';
-import { NavToggleButton, NavUpgrade } from '../_common';
 
 // ----------------------------------------------------------------------
 
@@ -55,22 +55,15 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
     >
       <Logo sx={{ mt: 3, ml: 4, mb: 1 }} />
 
-      <NavSectionVertical
-        data={navData}
-        config={{
-          currentRole: user?.role || 'admin',
-        }}
-      />
+      <NavSectionVertical data={navData.filter((nav) => nav.items)} />
 
       <Box sx={{ flexGrow: 1 }} />
-
-      <NavUpgrade />
     </Scrollbar>
   );
 
   return (
     <Box
-      component="nav"
+      component='nav'
       sx={{
         flexShrink: { lg: 0 },
         width: { lg: NAV.W_VERTICAL },

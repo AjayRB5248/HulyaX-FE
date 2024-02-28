@@ -1,11 +1,11 @@
-import { memo, useState, useCallback } from 'react';
+import { memo, useCallback, useState } from 'react';
 // @mui
+import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
 import Stack from '@mui/material/Stack';
-import Collapse from '@mui/material/Collapse';
 //
-import { NavSectionProps, NavListProps, NavConfigProps } from '../types';
 import { navVerticalConfig } from '../config';
+import { NavConfigProps, NavListProps, NavSectionProps } from '../types';
 import { StyledSubheader } from './styles';
 
 import NavList from './nav-list';
@@ -13,16 +13,24 @@ import NavList from './nav-list';
 // ----------------------------------------------------------------------
 
 function NavSectionVertical({ data, config, sx, ...other }: NavSectionProps) {
+  data.forEach((section) => {
+    section.items = section.items.filter((item) => item.show !== false);
+  });
+
   return (
     <Stack sx={sx} {...other}>
-      {data.filter((d) => d.show).map((group, index) => (
-        <Group
-          key={group.subheader || index}
-          subheader={group.subheader}
-          items={group.items}
-          config={navVerticalConfig(config)}
-        />
-      ))}
+      {data
+        .filter((d) => d.show === true)
+        .map((group, index) => {
+          return (
+            <Group
+              key={group.subheader || index}
+              subheader={group.subheader}
+              items={group.items}
+              config={navVerticalConfig(config)}
+            />
+          );
+        })}
     </Stack>
   );
 }
@@ -58,7 +66,12 @@ function Group({ subheader, items, config }: GroupProps) {
     <List disablePadding sx={{ px: 2 }}>
       {subheader ? (
         <>
-          <StyledSubheader disableGutters disableSticky onClick={handleToggle} config={config}>
+          <StyledSubheader
+            disableGutters
+            disableSticky
+            onClick={handleToggle}
+            config={config}
+          >
             {subheader}
           </StyledSubheader>
 

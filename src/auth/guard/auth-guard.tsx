@@ -1,8 +1,8 @@
-import { useRouter } from "src/routes/hook/use-router";
-import { useAuth } from "../context/users/auth-context";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'src/routes/hook/use-router';
+import { useAuth } from '../context/users/auth-context';
 
-import { paths } from "src/routes/paths";
+import { paths } from 'src/routes/paths';
 
 type Props = {
   children: React.ReactNode;
@@ -19,8 +19,10 @@ export default function AuthGuard({ children }: Props) {
   const [checked, setChecked] = useState(false);
 
   const checkAuth = useCallback(() => {
-    if (!user || user.role === "customer") {
-      const searchParams = new URLSearchParams({ returnTo: window.location.pathname }).toString();
+    if (!user || user.role === 'customer') {
+      const searchParams = new URLSearchParams({
+        returnTo: window.location.pathname,
+      }).toString();
       const loginPath = loginPaths.company;
 
       router.replace(`${loginPath}?${searchParams}`);

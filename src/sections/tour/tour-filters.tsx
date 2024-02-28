@@ -1,263 +1,113 @@
-import { useCallback } from 'react';
 // @mui
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
 import Badge from '@mui/material/Badge';
-import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
-import Tooltip from '@mui/material/Tooltip';
-import Checkbox from '@mui/material/Checkbox';
-import TextField from '@mui/material/TextField';
+import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Autocomplete from '@mui/material/Autocomplete';
-import FormControlLabel from '@mui/material/FormControlLabel';
 // types
-import { ITourFilters, ITourGuide, ITourFilterValue } from 'src/types/tour';
 // components
+import { LoadingButton } from '@mui/lab';
+import { Input } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 
-// ----------------------------------------------------------------------
+type TFilter = {
+  venueName: string;
+  artist: string;
+  eventDate: Date;
+};
 
 type Props = {
   open: boolean;
   onOpen: VoidFunction;
   onClose: VoidFunction;
-  //
-  filters: ITourFilters;
-  onFilters: (name: string, value: ITourFilterValue) => void;
-  //
-  canReset: boolean;
-  onResetFilters: VoidFunction;
-  //
-  serviceOptions: string[];
-  tourGuideOptions: ITourGuide[];
-  destinationOptions: {
-    code: string;
-    label: string;
-    phone: string;
-    suggested?: boolean;
-  }[];
-  //
-  dateError: boolean;
+  filters: TFilter;
+  setFilters: any;
+  handleFilter?: VoidFunction;
+  handelFilterReset?: VoidFunction;
 };
 
 export default function TourFilters({
   open,
   onOpen,
   onClose,
-  //
   filters,
-  onFilters,
-  //
-  canReset,
-  onResetFilters,
-  //
-  destinationOptions,
-  tourGuideOptions,
-  serviceOptions,
-  //
-  dateError,
+  setFilters,
+  handleFilter,
+  handelFilterReset,
 }: Props) {
-  const handleFilterServices = useCallback(
-    (newValue: string) => {
-      const checked = filters.services.includes(newValue)
-        ? filters.services.filter((value) => value !== newValue)
-        : [...filters.services, newValue];
-      onFilters('services', checked);
-    },
-    [filters.services, onFilters]
-  );
-
-  const handleFilterStartDate = useCallback(
-    (newValue: Date | null) => {
-      onFilters('startDate', newValue);
-    },
-    [onFilters]
-  );
-
-  const handleFilterEndDate = useCallback(
-    (newValue: Date | null) => {
-      onFilters('endDate', newValue);
-    },
-    [onFilters]
-  );
-
-  const handleFilterDestination = useCallback(
-    (newValue: string[]) => {
-      onFilters('destination', newValue);
-    },
-    [onFilters]
-  );
-
-  const handleFilterTourGuide = useCallback(
-    (newValue: ITourGuide[]) => {
-      onFilters('tourGuides', newValue);
-    },
-    [onFilters]
-  );
-
   const renderHead = (
     <Stack
-      direction="row"
-      alignItems="center"
-      justifyContent="space-between"
+      direction='row'
+      alignItems='center'
+      justifyContent='space-between'
       sx={{ py: 2, pr: 1, pl: 2.5 }}
     >
-      <Typography variant="h6" sx={{ flexGrow: 1 }}>
+      <Typography variant='h6' sx={{ flexGrow: 1 }}>
         Filters
       </Typography>
 
-      <Tooltip title="Reset">
-        <IconButton onClick={onResetFilters}>
-          <Badge color="error" variant="dot" invisible={!canReset}>
-            <Iconify icon="solar:restart-bold" />
-          </Badge>
-        </IconButton>
-      </Tooltip>
-
       <IconButton onClick={onClose}>
-        <Iconify icon="mingcute:close-line" />
+        <Iconify icon='mingcute:close-line' />
       </IconButton>
     </Stack>
   );
 
+  const handelFieldChange = (e: any) => {
+    setFilters((prev: TFilter) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   const renderDateRange = (
     <Stack>
-      <Typography variant="subtitle2" sx={{ mb: 1.5 }}>
-        Durations
+      <Typography variant='subtitle2' sx={{ mb: 1.5 }}>
+        Events Date
       </Typography>
       <Stack spacing={2.5}>
-        <DatePicker label="Start date" value={filters.startDate} onChange={handleFilterStartDate} />
-
         <DatePicker
-          label="End date"
-          value={filters.endDate}
-          onChange={handleFilterEndDate}
-          slotProps={{
-            textField: {
-              error: dateError,
-              helperText: dateError && 'End date must be later than start date',
-            },
-          }}
+          label='Date'
+          value={filters.eventDate}
+          onChange={(e) =>
+            handelFieldChange({ target: { value: e, name: 'eventDate' } })
+          }
         />
       </Stack>
     </Stack>
   );
 
-  const renderDestination = (
+  const renderVenueField = (
     <Stack>
-      <Typography variant="subtitle2" sx={{ mb: 1.5 }}>
-        Destination
+      <Typography variant='subtitle2' sx={{ mb: 1.5 }}>
+        Venue Name
       </Typography>
-
-      <Autocomplete
-        multiple
-        disableCloseOnSelect
-        options={destinationOptions.map((option) => option.label)}
-        getOptionLabel={(option) => option}
-        value={filters.destination}
-        onChange={(event, newValue) => handleFilterDestination(newValue)}
-        renderInput={(params) => <TextField placeholder="Select Destination" {...params} />}
-        renderOption={(props, option) => {
-          const { code, label, phone } = destinationOptions.filter(
-            (country) => country.label === option
-          )[0];
-
-          if (!label) {
-            return null;
-          }
-
-          return (
-            <li {...props} key={label}>
-              <Iconify
-                key={label}
-                icon={`circle-flags:${code.toLowerCase()}`}
-                width={28}
-                sx={{ mr: 1 }}
-              />
-              {label} ({code}) +{phone}
-            </li>
-          );
-        }}
-        renderTags={(selected, getTagProps) =>
-          selected.map((option, index) => (
-            <Chip
-              {...getTagProps({ index })}
-              key={option}
-              label={option}
-              size="small"
-              variant="soft"
-            />
-          ))
-        }
-      />
-    </Stack>
-  );
-
-  const renderTourGuide = (
-    <Stack>
-      <Typography variant="subtitle2" sx={{ mb: 1.5 }}>
-        Tour Guide
-      </Typography>
-
-      <Autocomplete
-        multiple
-        disableCloseOnSelect
-        options={tourGuideOptions}
-        value={filters.tourGuides}
-        onChange={(event, newValue) => handleFilterTourGuide(newValue)}
-        getOptionLabel={(option) => option.name}
-        renderInput={(params) => <TextField placeholder="Select Tour Guides" {...params} />}
-        renderOption={(props, tourGuide) => (
-          <li {...props} key={tourGuide.id}>
-            <Avatar
-              key={tourGuide.id}
-              alt={tourGuide.avatarUrl}
-              src={tourGuide.avatarUrl}
-              sx={{ width: 24, height: 24, flexShrink: 0, mr: 1 }}
-            />
-
-            {tourGuide.name}
-          </li>
-        )}
-        renderTags={(selected, getTagProps) =>
-          selected.map((tourGuide, index) => (
-            <Chip
-              {...getTagProps({ index })}
-              key={tourGuide.id}
-              size="small"
-              variant="soft"
-              label={tourGuide.name}
-              avatar={<Avatar alt={tourGuide.name} src={tourGuide.avatarUrl} />}
-            />
-          ))
-        }
-      />
-    </Stack>
-  );
-
-  const renderServices = (
-    <Stack>
-      <Typography variant="subtitle2" sx={{ mb: 1 }}>
-        Services
-      </Typography>
-      {serviceOptions.map((option) => (
-        <FormControlLabel
-          key={option}
-          control={
-            <Checkbox
-              checked={filters.services.includes(option)}
-              onClick={() => handleFilterServices(option)}
-            />
-          }
-          label={option}
+      <Stack spacing={2.5}>
+        <Input
+          type='text'
+          name='venueName'
+          value={filters.venueName}
+          onChange={handelFieldChange}
         />
-      ))}
+      </Stack>
+    </Stack>
+  );
+  const renderArtistField = (
+    <Stack>
+      <Typography variant='subtitle2' sx={{ mb: 1.5 }}>
+        Artist Name
+      </Typography>
+      <Stack spacing={2.5}>
+        <Input
+          type='text'
+          name='artist'
+          value={filters.artist}
+          onChange={handelFieldChange}
+        />
+      </Stack>
     </Stack>
   );
 
@@ -265,10 +115,10 @@ export default function TourFilters({
     <>
       <Button
         disableRipple
-        color="inherit"
+        color='inherit'
         endIcon={
-          <Badge color="error" variant="dot" invisible={!canReset}>
-            <Iconify icon="ic:round-filter-list" />
+          <Badge color='error' variant='dot' invisible={true}>
+            <Iconify icon='ic:round-filter-list' />
           </Badge>
         }
         onClick={onOpen}
@@ -277,7 +127,7 @@ export default function TourFilters({
       </Button>
 
       <Drawer
-        anchor="right"
+        anchor='right'
         open={open}
         onClose={onClose}
         slotProps={{
@@ -293,15 +143,26 @@ export default function TourFilters({
 
         <Scrollbar sx={{ px: 2.5, py: 3 }}>
           <Stack spacing={3}>
+            {renderVenueField}
+            {renderArtistField}
             {renderDateRange}
-
-            {renderDestination}
-
-            {renderTourGuide}
-
-            {renderServices}
           </Stack>
         </Scrollbar>
+
+        <Divider />
+        <Stack
+          direction='row'
+          alignItems='center'
+          justifyContent='space-between'
+          sx={{ py: 2, pr: 1, pl: 2.5 }}
+        >
+          <LoadingButton onClick={handelFilterReset} variant='outlined'>
+            Reset Filter
+          </LoadingButton>
+          <LoadingButton onClick={handleFilter} variant='contained'>
+            Apply Filter
+          </LoadingButton>
+        </Stack>
       </Drawer>
     </>
   );

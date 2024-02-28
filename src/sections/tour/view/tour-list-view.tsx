@@ -1,129 +1,40 @@
 'use client';
 
-import orderBy from 'lodash/orderBy';
-import { useCallback, useState } from 'react';
-// @mui
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
-// routes
+import { useState } from 'react';
+import { useEvents } from 'src/api/events';
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
+import Iconify from 'src/components/iconify';
+import { LoadingScreen } from 'src/components/loading-screen';
+import { useSettingsContext } from 'src/components/settings';
+import { useBoolean } from 'src/hooks/use-boolean';
 import { RouterLink } from 'src/routes/components';
 import { paths } from 'src/routes/paths';
-// hooks
-import { useBoolean } from 'src/hooks/use-boolean';
-// utils
-import { fTimestamp } from 'src/utils/format-time';
-// _mock
-import {
-  TOUR_SERVICE_OPTIONS,
-  TOUR_SORT_OPTIONS,
-  _tourGuides,
-  _tours,
-} from 'src/_mock';
-// assets
-import { countries } from 'src/assets/data';
-// components
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-import EmptyContent from 'src/components/empty-content';
-import Iconify from 'src/components/iconify';
-import { useSettingsContext } from 'src/components/settings';
-// types
-import { ITourFilterValue, ITourFilters, ITourItem } from 'src/types/tour';
-//
-import { useEvents } from 'src/api/events';
 import TourFilters from '../tour-filters';
-import TourFiltersResult from '../tour-filters-result';
 import TourList from '../tour-list';
-import TourSearch from '../tour-search';
-import TourSort from '../tour-sort';
 
-// ----------------------------------------------------------------------
-
-const defaultFilters: ITourFilters = {
-  destination: [],
-  tourGuides: [],
-  services: [],
-  startDate: null,
-  endDate: null,
+const defaultFilter = {
+  venueName: '',
+  artist: '',
+  eventDate: '',
 };
-
-// ----------------------------------------------------------------------
-
 export default function TourListView() {
   const settings = useSettingsContext();
-
-  const { events, loading, error } = useEvents();
+  const [filters, setFilters] = useState(defaultFilter);
+  const { events, loading, error, refetch } = useEvents(filters);
 
   const openFilters = useBoolean();
 
-  const [sortBy, setSortBy] = useState('latest');
+  const handelFilter = () => {
+    refetch();
+    openFilters.onFalse();
+  };
 
-  const [search, setSearch] = useState<{ query: string; results: ITourItem[] }>(
-    {
-      query: '',
-      results: [],
-    }
-  );
-
-  const [filters, setFilters] = useState(defaultFilters);
-
-  const dateError =
-    filters.startDate && filters.endDate
-      ? filters.startDate.getTime() > filters.endDate.getTime()
-      : false;
-
-  const dataFiltered = applyFilter({
-    inputData: _tours,
-    filters,
-    sortBy,
-    dateError,
-  });
-
-  const canReset =
-    !!filters.destination.length ||
-    !!filters.tourGuides.length ||
-    !!filters.services.length ||
-    (!!filters.startDate && !!filters.endDate);
-
-  const notFound = !dataFiltered.length && canReset;
-
-  const handleFilters = useCallback((name: string, value: ITourFilterValue) => {
-    setFilters((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }, []);
-
-  const handleSortBy = useCallback((newValue: string) => {
-    setSortBy(newValue);
-  }, []);
-
-  const handleSearch = useCallback(
-    (inputValue: string) => {
-      setSearch((prevState) => ({
-        ...prevState,
-        query: inputValue,
-      }));
-
-      if (inputValue) {
-        const results = _tours.filter(
-          (tour) =>
-            tour.name.toLowerCase().indexOf(search.query.toLowerCase()) !== -1
-        );
-
-        setSearch((prevState) => ({
-          ...prevState,
-          results,
-        }));
-      }
-    },
-    [search.query]
-  );
-
-  const handleResetFilters = useCallback(() => {
-    setFilters(defaultFilters);
-  }, []);
-
+  const handelFilterReset = () => {
+    setFilters(defaultFilter);
+  };
   const renderFilters = (
     <Stack
       spacing={3}
@@ -131,51 +42,20 @@ export default function TourListView() {
       alignItems={{ xs: 'flex-end', sm: 'center' }}
       direction={{ xs: 'column', sm: 'row' }}
     >
-      <TourSearch
-        query={search.query}
-        results={search.results}
-        onSearch={handleSearch}
-        hrefItem={(id: string) => paths.dashboard.tour.details(id)}
-      />
+      <div />
 
       <Stack direction='row' spacing={1} flexShrink={0}>
         <TourFilters
           open={openFilters.value}
           onOpen={openFilters.onTrue}
           onClose={openFilters.onFalse}
-          //
+          setFilters={setFilters}
           filters={filters}
-          onFilters={handleFilters}
-          //
-          canReset={canReset}
-          onResetFilters={handleResetFilters}
-          //
-          serviceOptions={TOUR_SERVICE_OPTIONS.map((option) => option.label)}
-          tourGuideOptions={_tourGuides}
-          destinationOptions={countries}
-          //
-          dateError={dateError}
-        />
-
-        <TourSort
-          sort={sortBy}
-          onSort={handleSortBy}
-          sortOptions={TOUR_SORT_OPTIONS}
+          handleFilter={handelFilter}
+          handelFilterReset={handelFilterReset}
         />
       </Stack>
     </Stack>
-  );
-
-  const renderResults = (
-    <TourFiltersResult
-      filters={filters}
-      onResetFilters={handleResetFilters}
-      //
-      canReset={canReset}
-      onFilters={handleFilters}
-      //
-      results={dataFiltered.length}
-    />
   );
 
   return (
@@ -212,75 +92,10 @@ export default function TourListView() {
         }}
       >
         {renderFilters}
-
-        {canReset && renderResults}
       </Stack>
 
-      {notFound && <EmptyContent title='No Data' filled sx={{ py: 10 }} />}
-
-      <TourList tours={dataFiltered} />
+      {/* {<EmptyContent title='No Data' filled sx={{ py: 10 }} />} */}
+      {loading ? <LoadingScreen /> : <TourList tours={events} />}
     </Container>
   );
 }
-
-// ----------------------------------------------------------------------
-
-const applyFilter = ({
-  inputData,
-  filters,
-  sortBy,
-  dateError,
-}: {
-  inputData: ITourItem[];
-  filters: ITourFilters;
-  sortBy: string;
-  dateError: boolean;
-}) => {
-  const { services, destination, startDate, endDate, tourGuides } = filters;
-
-  const tourGuideIds = tourGuides.map((tourGuide) => tourGuide.id);
-
-  // SORT BY
-  if (sortBy === 'latest') {
-    inputData = orderBy(inputData, ['createdAt'], ['desc']);
-  }
-
-  if (sortBy === 'oldest') {
-    inputData = orderBy(inputData, ['createdAt'], ['asc']);
-  }
-
-  if (sortBy === 'popular') {
-    inputData = orderBy(inputData, ['totalViews'], ['desc']);
-  }
-
-  // FILTERS
-  if (!dateError) {
-    if (startDate && endDate) {
-      inputData = inputData.filter(
-        (tour) =>
-          fTimestamp(tour.available.startDate) >= fTimestamp(startDate) &&
-          fTimestamp(tour.available.endDate) <= fTimestamp(endDate)
-      );
-    }
-  }
-
-  if (destination.length) {
-    inputData = inputData.filter((tour) =>
-      destination.includes(tour.destination)
-    );
-  }
-
-  if (tourGuideIds.length) {
-    inputData = inputData.filter((tour) =>
-      tour.tourGuides.some((filterItem) => tourGuideIds.includes(filterItem.id))
-    );
-  }
-
-  if (services.length) {
-    inputData = inputData.filter((tour) =>
-      tour.services.some((item) => services.includes(item))
-    );
-  }
-
-  return inputData;
-};

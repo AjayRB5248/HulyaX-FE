@@ -1,8 +1,6 @@
 // utils
-import { paramCase } from 'src/utils/change-case';
 import { _id, _postTitles } from 'src/_mock/assets';
-
-// ----------------------------------------------------------------------
+import { paramCase } from 'src/utils/change-case';
 
 const MOCK_ID = _id[1];
 
@@ -59,7 +57,7 @@ export const paths = {
       newPassword: `${ROOTS.AUTH}/amplify/new-password`,
       forgotPassword: `${ROOTS.AUTH}/amplify/forgot-password`,
     },
-    company:{
+    company: {
       login: `${ROOTS.AUTH}/company/login`,
       register: `${ROOTS.AUTH}/company/register`,
     },
@@ -151,7 +149,8 @@ export const paths = {
       root: `${ROOTS.DASHBOARD}/post`,
       new: `${ROOTS.DASHBOARD}/post/new`,
       details: (title: string) => `${ROOTS.DASHBOARD}/post/${paramCase(title)}`,
-      edit: (title: string) => `${ROOTS.DASHBOARD}/post/${paramCase(title)}/edit`,
+      edit: (title: string) =>
+        `${ROOTS.DASHBOARD}/post/${paramCase(title)}/edit`,
       demo: {
         details: `${ROOTS.DASHBOARD}/post/${paramCase(MOCK_TITLE)}`,
         edit: `${ROOTS.DASHBOARD}/post/${paramCase(MOCK_TITLE)}/edit`,
@@ -179,10 +178,6 @@ export const paths = {
       new: `${ROOTS.DASHBOARD}/event/new`,
       details: (id: string) => `${ROOTS.DASHBOARD}/event/${id}`,
       edit: (id: string) => `${ROOTS.DASHBOARD}/event/${id}/edit`,
-      demo: {
-        details: `${ROOTS.DASHBOARD}/event/${MOCK_ID}`,
-        edit: `${ROOTS.DASHBOARD}/event/${MOCK_ID}/edit`,
-      },
     },
   },
 };

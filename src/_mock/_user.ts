@@ -11,6 +11,10 @@ export const USER_STATUS_OPTIONS = [
   { value: 'banned', label: 'Banned' },
   { value: 'rejected', label: 'Rejected' },
 ];
+export const USER_ROLE_OPTIONS = [
+  { value: 'superAdmin', label: 'Super Admin' },
+  { value: 'customer', label: 'Customer' },
+];
 
 export const _userAbout = {
   id: _mock.id(1),
@@ -100,7 +104,11 @@ export const _userCards = [...Array(21)].map((_, index) => ({
 
 export const _userPayment = [...Array(3)].map((_, index) => ({
   id: _mock.id(index),
-  cardNumber: ['**** **** **** 1234', '**** **** **** 5678', '**** **** **** 7878'][index],
+  cardNumber: [
+    '**** **** **** 1234',
+    '**** **** **** 5678',
+    '**** **** **** 7878',
+  ][index],
   cardType: ['mastercard', 'visa', 'visa'][index],
   primary: index === 1,
 }));
@@ -154,5 +162,8 @@ export const _userList = [...Array(20)].map((_, index) => ({
   avatarUrl: _mock.image.avatar(index),
   phoneNumber: _mock.phoneNumber(index),
   status:
-    (index % 2 && 'pending') || (index % 3 && 'banned') || (index % 4 && 'rejected') || 'active',
+    (index % 2 && 'pending') ||
+    (index % 3 && 'banned') ||
+    (index % 4 && 'rejected') ||
+    'active',
 }));

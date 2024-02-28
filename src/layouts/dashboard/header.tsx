@@ -1,9 +1,8 @@
 // @mui
-import { useTheme } from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
+import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
 // theme
 import { bgBlur } from 'src/theme/css';
 // hooks
@@ -11,15 +10,10 @@ import { useOffSetTop } from 'src/hooks/use-off-set-top';
 import { useResponsive } from 'src/hooks/use-responsive';
 // components
 import Logo from 'src/components/logo';
-import SvgColor from 'src/components/svg-color';
 import { useSettingsContext } from 'src/components/settings';
 //
+import { AccountPopover, SettingsButton } from '../_common';
 import { HEADER, NAV } from '../config-layout';
-import {
-  Searchbar,
-  AccountPopover,
-  SettingsButton,
-} from '../_common';
 
 // ----------------------------------------------------------------------
 
@@ -46,22 +40,13 @@ export default function Header({ onOpenNav }: Props) {
     <>
       {lgUp && isNavHorizontal && <Logo sx={{ mr: 2.5 }} />}
 
-      {!lgUp && (
-        <IconButton onClick={onOpenNav}>
-          <SvgColor src="/assets/icons/navbar/ic_menu_item.svg" />
-        </IconButton>
-      )}
-
-      <Searchbar />
-
       <Stack
         flexGrow={1}
-        direction="row"
-        alignItems="center"
-        justifyContent="flex-end"
+        direction='row'
+        alignItems='center'
+        justifyContent='flex-end'
         spacing={{ xs: 0.5, sm: 1 }}
       >
-
         <SettingsButton />
 
         <AccountPopover />
