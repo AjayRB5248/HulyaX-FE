@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import Image from "next/image";
 
-import Lightbox from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
+import Lightbox, { useLightBox } from "../lightbox";
 
 interface EventImage {
   isPrimary: boolean;
@@ -16,14 +15,6 @@ interface GalleryComponentProps {
 }
 
 const SliderGallery: React.FC<GalleryComponentProps> = ({ eventImages }) => {
-  const [lightboxOpen, setLightboxOpen] = useState<boolean>(false);
-  const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
-
-  const openLightbox = (index: number) => {
-    setSelectedImageIndex(index);
-    setLightboxOpen(true);
-  };
-
   const settings = {
     dots: false,
     arrows: false,
@@ -63,30 +54,25 @@ const SliderGallery: React.FC<GalleryComponentProps> = ({ eventImages }) => {
     ],
   };
 
-  const lightboxImages = eventImages.map((image) => ({
-    src: image.imageurl,
-    alt: "event",
+  const slides = eventImages.map((slide) => ({
+    src: slide.imageurl,
   }));
+
+  const lightbox = useLightBox(slides);
 
   return (
     <div>
       <Slider {...settings} className="details-photos">
         {eventImages.map((image, index) => (
           <div className="thumb" key={image._id}>
-            <div className="img-pop" onClick={() => openLightbox(index)}>
+            <div className="img-pop" onClick={() => lightbox.onOpen(image.imageurl)}>
               <Image src={image.imageurl} alt="event" width={200} height={200} />
             </div>
           </div>
         ))}
       </Slider>
-      {lightboxOpen && (
-        <Lightbox
-          open={lightboxOpen}
-          close={() => setLightboxOpen(false)}
-          slides={lightboxImages}
-          index={selectedImageIndex}
-        />
-      )}
+
+      <Lightbox index={lightbox.selected} slides={slides} open={lightbox.open} close={lightbox.onClose} />
     </div>
   );
 };
