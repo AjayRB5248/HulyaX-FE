@@ -27,7 +27,7 @@ import { useLogout } from "src/api/auth";
 const OPTIONS = [
   {
     label: "My Profile",
-    linkTo: "/",
+    linkTo: "/user/profile",
   },
   {
     label: "View Purchased Tickets",
