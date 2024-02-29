@@ -46,3 +46,23 @@
     }
   }
 }
+
+// User Profile Section
+.user-profile-section {
+  padding-top: 100px;
+
+  .user-profile {
+    &--tab-item {
+      max-width: calc(100% / 4);
+      margin-right: 0!important;
+
+      &.Mui-selected {
+        color: $main-theme-color;
+      }
+
+      &:focus {
+        outline: none!important;
+      }
+    }
+  }
+}
