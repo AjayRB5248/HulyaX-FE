@@ -87,7 +87,7 @@ const tabItems = [
   },
   {
     id: 3,
-    title: "Exclusive",
+    title: "Past Events",
   },
 ];
 
