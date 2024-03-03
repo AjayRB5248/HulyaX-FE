@@ -19,29 +19,30 @@ import AccountBilling from "../account-billing";
 import AccountSocialLinks from "../account-social-links";
 import AccountNotifications from "../account-notifications";
 import AccountChangePassword from "../account-change-password";
+import { Grid } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
 const TABS = [
   {
     value: "general",
-    label: "General",
+    label: "Personal Details",
     icon: <Iconify icon="solar:user-id-bold" width={24} />,
   },
   {
     value: "tickets",
     label: "My Purchased Tickets",
-    icon: <Iconify icon="solar:bill-list-bold" width={24} />,
+    icon: <Iconify icon="solar:ticket-sale-bold" width={24} />,
   },
   {
     value: "changePhoneNumber",
     label: "Change Phone Number",
-    icon: <Iconify icon="solar:bell-bing-bold" width={24} />,
+    icon: <Iconify icon="solar:smartphone-rotate-orientation-bold-duotone" width={24} />,
   },
   {
     value: "changePassword",
     label: "Change Password",
-    icon: <Iconify icon="solar:share-bold" width={24} />,
+    icon: <Iconify icon="solar:lock-password-bold-duotone" width={24} />,
   },
 ];
 
@@ -59,34 +60,47 @@ export default function AccountView() {
   return (
     <section className="user-profile-section">
       <Container maxWidth={settings.themeStretch ? false : "lg"}>
-        <Tabs
-          value={currentTab}
-          onChange={handleChangeTab}
-          sx={{
-            mb: { xs: 3, md: 5 },
-          }}
-        >
-          {TABS.map((tab) => (
-            <Tab key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} className="user-profile--tab-item" />
-          ))}
-        </Tabs>
+        <Grid container spacing={2}>
+          <Grid item lg={3}>
+            <Tabs
+              orientation="vertical"
+              value={currentTab}
+              onChange={handleChangeTab}
+              sx={{
+                mb: { xs: 3, md: 5 },
+              }}
+            >
+              {TABS.map((tab) => (
+                <Tab
+                  key={tab.value}
+                  label={tab.label}
+                  icon={tab.icon}
+                  value={tab.value}
+                  className="user-profile--tab-item"
+                />
+              ))}
+            </Tabs>
+          </Grid>
 
-        {currentTab === "general" && <AccountGeneral />}
+          <Grid item lg={9}>
+            {currentTab === "general" && <AccountGeneral />}
 
-        {currentTab === "billing" && (
-          <AccountBilling
-            plans={_userPlans}
-            cards={_userPayment}
-            invoices={_userInvoices}
-            addressBook={_userAddressBook}
-          />
-        )}
+            {currentTab === "billing" && (
+              <AccountBilling
+                plans={_userPlans}
+                cards={_userPayment}
+                invoices={_userInvoices}
+                addressBook={_userAddressBook}
+              />
+            )}
 
-        {currentTab === "notifications" && <AccountNotifications />}
+            {currentTab === "notifications" && <AccountNotifications />}
 
-        {currentTab === "social" && <AccountSocialLinks socialLinks={_userAbout.socialLinks} />}
+            {currentTab === "social" && <AccountSocialLinks socialLinks={_userAbout.socialLinks} />}
 
-        {currentTab === "security" && <AccountChangePassword />}
+            {currentTab === "security" && <AccountChangePassword />}
+          </Grid>
+        </Grid>
       </Container>
     </section>
   );

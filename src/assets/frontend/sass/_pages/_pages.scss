@@ -49,17 +49,20 @@
 
 // User Profile Section
 .user-profile-section {
-  background: #f7fbff;
+  // background: #f7fbff;
   padding-top: 15rem;
   padding-bottom: 10rem;
 
   .user-profile {
     &--tab-item {
-      max-width: calc(100% / 4);
+      font-size: 12px;
+      max-width: 100%;
       margin-right: 0 !important;
+      justify-content: flex-start;
 
       &.Mui-selected {
         color: $main-theme-color;
+        background: #f4f4f4;
       }
 
       &:focus {
@@ -72,6 +75,10 @@
         font-size: 12px;
       }
     }
+  }
+
+  .MuiTabs-indicator {
+    background: $main-theme-color;
   }
 
   .text-verified,

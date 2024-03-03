@@ -23,49 +23,31 @@ import FormProvider, { RHFSwitch, RHFTextField, RHFUploadAvatar, RHFAutocomplete
 import { getUserData } from "src/utils/token-management";
 import { Chip } from "@mui/material";
 import Link from "next/link";
+import { useUpdateUserProfile } from "src/api/user";
 
 // ----------------------------------------------------------------------
 
 export default function AccountGeneral() {
   const { enqueueSnackbar } = useSnackbar();
 
-  // const { user } = useMockedUser();
+  const updateProfileMutation = useUpdateUserProfile();
 
   const userData = getUserData();
   const user = JSON.parse(userData);
 
-  console.log(typeof user, "user===");
-
   const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required("Name is required"),
+    name: Yup.string().required("Name is required"),
     email: Yup.string().required("Email is required").email("Email must be a valid email address"),
-    photoURL: Yup.mixed<any>().nullable().required("Avatar is required"),
-    phoneNumber: Yup.string().required("Phone number is required"),
-    country: Yup.string().required("Country is required"),
-    address: Yup.string().required("Address is required"),
-    state: Yup.string().required("State is required"),
-    city: Yup.string().required("City is required"),
-    zipCode: Yup.string().required("Zip code is required"),
-    about: Yup.string().required("About is required"),
-    // not required
-    isPublic: Yup.boolean(),
+    profilePicture: Yup.mixed<any>().nullable().required("Avatar is required"),
+    mobileNumber: Yup.string().required("Phone number is required"),
   });
 
   const defaultValues = {
-    displayName: user?.name || "",
+    name: user?.name || "",
     email: user?.email || "",
-    photoURL: user?.profilePicture || null,
-    phoneNumber: user?.mobileNumber || "",
-    country: user?.country || "",
-    address: user?.address || "",
-    state: user?.state || "",
-    city: user?.city || "",
-    zipCode: user?.zipCode || "",
-    about: user?.about || "",
-    isPublic: user?.isPublic || false,
+    profilePicture: user?.profilePicture || null,
+    mobileNumber: user?.mobileNumber || "",
   };
-
-  console.log(defaultValues, "defaultValues!!!");
 
   const methods = useForm({
     resolver: yupResolver(UpdateUserSchema),
@@ -81,8 +63,10 @@ export default function AccountGeneral() {
   const onSubmit = handleSubmit(async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      enqueueSnackbar("Update success!");
       console.info("DATA", data);
+
+      // TODO: Update Profile Mutation
+      await updateProfileMutation.mutateAsync(data);
     } catch (error) {
       console.error(error);
     }
@@ -97,7 +81,7 @@ export default function AccountGeneral() {
       });
 
       if (file) {
-        setValue("photoURL", newFile, { shouldValidate: true });
+        setValue("profilePicture", newFile, { shouldValidate: true });
       }
     },
     [setValue]
@@ -109,7 +93,7 @@ export default function AccountGeneral() {
         <Grid xs={12} md={4}>
           <Card sx={{ pt: 10, pb: 5, px: 3, textAlign: "center" }}>
             <RHFUploadAvatar
-              name="photoURL"
+              name="profilePicture"
               maxSize={3145728}
               onDrop={handleDrop}
               helperText={
@@ -150,9 +134,9 @@ export default function AccountGeneral() {
                 sm: "repeat(2, 1fr)",
               }}
             >
-              <RHFTextField name="displayName" label="Name" />
-              <RHFTextField name="email" label="Email Address" />
-              <RHFTextField name="phoneNumber" label="Phone Number" />
+              <RHFTextField name="name" label="Name" required />
+              <RHFTextField name="email" label="Email Address" required />
+              <RHFTextField name="mobileNumber" label="Phone Number" required />
 
               {/* TODO: Implement Verify phone Number Link */}
               {user.isNumberVerified ? (
@@ -164,31 +148,6 @@ export default function AccountGeneral() {
                   Verify Your Phone Number <i className="fa fa-warning ml-2"></i>{" "}
                 </Link>
               )}
-
-              {/* <RHFAutocomplete
-                name="country"
-                label="Country"
-                options={countries.map((country) => country.label)}
-                getOptionLabel={(option) => option}
-                renderOption={(props, option) => {
-                  const { code, label, phone } = countries.filter((country) => country.label === option)[0];
-
-                  if (!label) {
-                    return null;
-                  }
-
-                  return (
-                    <li {...props} key={label}>
-                      <Iconify key={label} icon={`circle-flags:${code.toLowerCase()}`} width={28} sx={{ mr: 1 }} />
-                      {label} ({code}) +{phone}
-                    </li>
-                  );
-                }}
-              />
-
-              <RHFTextField name="state" label="State/Region" />
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="zipCode" label="Zip/Code" /> */}
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
