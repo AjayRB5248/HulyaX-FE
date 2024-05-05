@@ -1,0 +1,146 @@
+.light-theme {
+  .container-fluid {
+    width: 90%; /* Set to 90% width by default */
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+
+    @include breakpoint(max-sm) {
+      width: 100%;
+    }
+  
+  }
+
+  .theme--container-xl {
+    width: 98%;
+  }
+
+  @media (min-width: 1500px) {
+    .container-fluid {
+      width: 70%;
+    }
+  }
+
+  body {
+    color: $theme-text-color;
+  }
+  .header-section {
+    background-color: $theme-white-color;
+    padding: 14px 0;
+
+    .menu {
+      &.active {
+        background: $theme-white-color;
+      }
+
+      li {
+        a {
+          color: $theme-text-color;
+
+          &:hover,
+          &:active {
+            color: $main-theme-color;
+          }
+
+          &::before {
+            top: calc(100% + 18px);
+            background: $main-theme-color;
+          }
+        }
+
+        &.header-button a {
+          color: $theme-white-color;
+        }
+
+        ul li a {
+          color: $theme-text-color;
+
+          &:hover,
+          &:active {
+            color: $main-theme-color;
+          }
+        }
+      }
+    }
+
+    .logo {
+      width: 120px;
+    }
+  }
+  .header-bar span {
+    background-color: $main-theme-color;
+  }
+
+  .banner-section {
+    // padding: 140px 0 110.38px;
+
+    .banner-animation {
+      // color: $main-theme-color;
+      color: $theme-white-color;
+    }
+  }
+
+  .bg-four {
+    background-color: $theme-white-color;
+    color: $theme-text-color;
+  }
+
+  .section-header-2 .tab-menu li.active {
+    color: $theme-white-color;
+  }
+}
+
+.theme-button {
+  // background-image: -webkit-linear-gradient(169deg, rgb(85, 96, 255) 17%, rgb(170, 82, 161) 63%, rgb(255, 67, 67) 100%);
+  background-color: $main-theme-color;
+  max-width: fit-content;
+  border-radius: 6px;
+  padding: 15px 30px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 0;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  color: #fff;
+
+  &:hover {
+    box-shadow: 0px 10px 15px 0px rgb(0 94 132 / 35%);
+  }
+
+  &--sm {
+    font-size: 12px;
+    padding: 18px;
+    height: 40px;
+    border: 0;
+    color: #fff;
+  }
+}
+
+@include breakpoint(max-sm) {
+  .theme-button {
+    padding: 10px;
+    height: 30px;
+    font-size: 12px;
+  }
+}
+
+.banner-slider {
+  position: relative;
+  background: #001232;
+
+  .slick-dots {
+    bottom: 10px;
+  }
+
+  li {
+    button:before {
+      color: $theme-white-color;
+      font-size: 10px;
+    }
+
+    &.slick-active button:before {
+      color: $main-theme-color;
+    }
+  }
+}

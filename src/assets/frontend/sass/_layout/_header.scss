@@ -1,3 +1,7 @@
+header {
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
+}
+
 .header-wrapper {
   @extend %flex;
   justify-content: space-between;
@@ -31,9 +35,9 @@
         position: relative;
         a {
           color: #e9eeff;
-          font-size: 16px;
+          font-size: 14px;
           font-weight: 700;
-          text-transform: uppercase;
+          // text-transform: uppercase;
           padding: 5px;
           text-decoration: none;
         }
@@ -108,7 +112,7 @@
           position: relative;
           &::before {
             width: calc(100% - 10px);
-            height: 2px;
+            height: 4px;
             background: $theme-color;
             top: calc(100% + 30px);
             position: absolute;
@@ -116,6 +120,7 @@
             @include transform(scaleX(0));
             @include transition($transition);
             transform-origin: left;
+            border-radius: 2px;
           }
           &:hover,
           &.active {
@@ -142,18 +147,19 @@
     li {
       &.header-button {
         a {
-          background-image: -moz-linear-gradient(
-            169deg,
-            rgb(85, 96, 255) 17%,
-            rgb(170, 82, 161) 63%,
-            rgb(255, 67, 67) 100%
-          );
-          background-image: -webkit-linear-gradient(
-            169deg,
-            rgb(85, 96, 255) 17%,
-            rgb(170, 82, 161) 63%,
-            rgb(255, 67, 67) 100%
-          );
+          // background-image: -moz-linear-gradient(
+          //   169deg,
+          //   rgb(85, 96, 255) 17%,
+          //   rgb(170, 82, 161) 63%,
+          //   rgb(255, 67, 67) 100%
+          // );
+          // background-image: -webkit-linear-gradient(
+          //   169deg,
+          //   rgb(85, 96, 255) 17%,
+          //   rgb(170, 82, 161) 63%,
+          //   rgb(255, 67, 67) 100%
+          // );
+          background-color: $main-theme-color;
           padding: 10px 49px;
           font-weight: 600;
           @include border-radius(25px);
@@ -164,18 +170,19 @@
         }
 
         .primary-theme-btn {
-          background-image: -moz-linear-gradient(
-            169deg,
-            rgb(85, 96, 255) 17%,
-            rgb(170, 82, 161) 63%,
-            rgb(255, 67, 67) 100%
-          );
-          background-image: -webkit-linear-gradient(
-            169deg,
-            rgb(85, 96, 255) 17%,
-            rgb(170, 82, 161) 63%,
-            rgb(255, 67, 67) 100%
-          );
+          // background-image: -moz-linear-gradient(
+          //   169deg,
+          //   rgb(85, 96, 255) 17%,
+          //   rgb(170, 82, 161) 63%,
+          //   rgb(255, 67, 67) 100%
+          // );
+          // background-image: -webkit-linear-gradient(
+          //   169deg,
+          //   rgb(85, 96, 255) 17%,
+          //   rgb(170, 82, 161) 63%,
+          //   rgb(255, 67, 67) 100%
+          // );
+          background-color: $main-theme-color;
         }
 
         .secondary-theme-btn {
@@ -210,7 +217,7 @@
       @include breakpoint(sm) {
         padding-left: 45px;
         &::-webkit-scrollbar-thumb {
-          background-color: #000000;
+          background-color: $main-theme-color;
         }
         &::-webkit-scrollbar {
           width: 3px;
@@ -270,6 +277,7 @@
   z-index: 99;
   &.header-active {
     background: $bg-three;
+    box-shadow: 0px 0px 9px #a6a6a6;
     border: none;
     animation-name: fadeInDown;
     -webkit-animation-name: fadeInDown;

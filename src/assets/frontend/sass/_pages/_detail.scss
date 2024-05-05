@@ -1,0 +1,801 @@
+/******************* Event Details Styles Starts Here *******************/
+.details-banner {
+  padding-top: 235px;
+  padding-bottom: 20px;
+  position: relative;
+  background-position: top center;
+
+  &:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 18, 50, 0.4);
+  }
+  &.seat-plan-banner {
+    &::before {
+      background: linear-gradient(-90deg, rgba(0, 18, 50, 0.13489145658263302) 0%, rgba(0, 18, 50, 1) 100%);
+      background: -webkit-linear-gradient(-90deg, rgba(0, 18, 50, 0.13489145658263302) 0%, rgba(0, 18, 50, 1) 100%);
+    }
+  }
+}
+.details-banner-wrapper {
+  position: relative;
+  z-index: 1;
+  .details-banner-thumb {
+    position: absolute;
+    top: -15px;
+    left: 0;
+    display: none;
+    border: 2px solid rgb(255 255 255);
+    overflow: hidden;
+    border-radius: 12px;
+    @include border-radius(5px);
+    &::after {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+    @include breakpoint(lg) {
+      width: calc(20% - 60px);
+      display: block;
+      left: 6%;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .video-popup {
+      width: 81px;
+      height: 81px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include transform(translate(-50%, -50%));
+      z-index: 1;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
+.details-banner-content {
+  .title {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    font-weight: 800;
+    color: $theme-white-color;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  .tags {
+    margin-bottom: 21px;
+    span,
+    a {
+      font-size: 14px;
+      color: $primary-color;
+      text-transform: uppercase;
+      &::after {
+        content: " ,";
+      }
+      &:last-child {
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+  .button {
+    margin-bottom: 13px;
+    border: 1px solid rgba(163, 177, 198, 0.2);
+    font-size: 13px;
+    background: $theme-white-color;
+    color: $main-theme-color;
+    text-transform: uppercase;
+    padding: 3px 17px;
+    font-weight: 600;
+    @include border-radius(18px);
+    @include transition($transition);
+    &:hover {
+      -webkit-box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
+      box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
+    }
+  }
+  .social-and-duration {
+    margin-top: 20px;
+    @extend %flex;
+    justify-content: space-between;
+    .duration-area {
+      @extend %flex;
+      margin: -5px -10px 0;
+      .item {
+        font-size: 16px;
+        color: $theme-white-color;
+        text-shadow: $theme-text-shadow;
+        i {
+          margin-right: 5px;
+        }
+        margin: 5px 10px;
+      }
+    }
+  }
+  .social-share {
+    @extend %flex;
+    margin: -5px -5px 0;
+    li {
+      padding: 0;
+      margin: 5px;
+      a {
+        color: #cfcfcf;
+        padding: 0 5px;
+        font-size: 14px;
+        &:hover {
+          color: $theme-color;
+        }
+      }
+    }
+    @include breakpoint(lg) {
+      margin: -5px -10px 0px;
+      li {
+        margin: 5px 10px;
+      }
+    }
+  }
+}
+
+.book-section {
+  padding: 47px 0;
+  background-image: -webkit-linear-gradient(0deg, rgb(4 120 166) 0%, rgb(67 188 255) 100%);
+
+  .book-wrapper {
+    @extend %flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: -30px;
+    .left-side {
+      @extend %flex;
+      margin: -10px -15px;
+      margin-bottom: 20px;
+      .item {
+        margin: 10px 15px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .item-content {
+          .email-link {
+            color: $main-theme-color;
+            font-weight: 700;
+          }
+        }
+
+        .venue-icon,
+        .contact-icon {
+          height: 30px;
+          width: 30px;
+        }
+
+        p {
+          a {
+            color: $body-color;
+          }
+        }
+        .item-header {
+          @extend %flex;
+          align-items: center;
+          margin-bottom: 18px;
+          justify-content: center;
+          .thumb {
+            width: 30px;
+            @extend %flex;
+            align-items: center;
+            margin-right: 10px;
+            img {
+              max-width: 100%;
+            }
+          }
+          .counter-item {
+            display: inline-flex;
+            font-size: 18px;
+            font-weight: 600;
+            &.odometer {
+              &::after {
+                content: "%";
+              }
+            }
+          }
+          .title {
+            margin: 0;
+          }
+          .rated {
+            margin-left: 10px;
+            i {
+              font-size: 12px;
+              color: $lallu-color;
+            }
+            &.rate-it {
+              margin-right: 10px;
+              margin-left: 0;
+              i {
+                color: #223c6e;
+              }
+            }
+          }
+        }
+      }
+    }
+    @include breakpoint(lg) {
+      @include breakpoint(max-xl) {
+        .left-side {
+          margin: -10px;
+          margin-bottom: 20px;
+          .item {
+            margin: 10px;
+          }
+        }
+      }
+    }
+    .custom-button {
+      background: #fff;
+      color: $main-theme-color;
+      font-weight: 900;
+      border-radius: 2px;
+
+      &:hover {
+        box-shadow: none;
+      }
+
+      margin-bottom: 30px;
+      @include breakpoint(max-lg) {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    @include breakpoint(max-lg) {
+      justify-content: center;
+      .left-side {
+        justify-content: center;
+        @media screen and (max-width: 422px) {
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}
+
+.movie-details-section {
+  color: $theme-text-color;
+  background: #f7f7f7;
+
+  @include breakpoint(max-sm) {
+    padding: 10px 0;
+    background: #fff;
+
+    .movie-details {
+      margin: 0;
+      padding: 10px !important;
+    }
+  }
+
+  .movie-details {
+    background: #fff;
+    padding: 20px;
+    margin-left: 10px;
+
+    .details-banner-content .title {
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      @include breakpoint(sm) {
+        font-size: 28px;
+        margin-bottom: 23px;
+      }
+    }
+    .details-photos {
+      margin-bottom: 40px;
+      @include breakpoint(sm) {
+        margin-bottom: 60px;
+      }
+
+      .slick-track {
+        float: left;
+      }
+
+      .thumb {
+        overflow: hidden;
+        height: 150px;
+        width: 98% !important;
+        @include border-radius(5px);
+
+        .img-pop {
+          cursor: pointer;
+          height: 100%;
+        }
+
+        a {
+          display: block;
+          height: 100%;
+        }
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+    .summery-review {
+      .tab-menu {
+        padding: 10px 0;
+        @extend %flex;
+        border-top: 1px solid $stroke-border;
+        border-bottom: 1px solid $stroke-border;
+        margin-bottom: 40px;
+        li {
+          font-weight: 600;
+          color: $white-color;
+          text-transform: uppercase;
+          margin-right: 30px;
+          position: relative;
+          &::after,
+          &::before {
+            width: 100%;
+            @extend %pa;
+            background: $theme-color;
+            height: 3px;
+            left: 0;
+            width: 0;
+            @include transition($transition);
+          }
+          &::after {
+            top: -12px;
+          }
+          &::before {
+            bottom: -12px;
+          }
+          @include breakpoint(sm) {
+            margin-right: 60px;
+          }
+          &:last-child {
+            margin-right: 0;
+          }
+          span {
+            &::before {
+              content: "(";
+            }
+            &::after {
+              content: ")";
+            }
+          }
+          &.active {
+            color: $theme-color;
+            &::after,
+            &::before {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+    .item {
+      .sub-title {
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+
+      p {
+        font-size: 12px;
+        color: $theme-text-color;
+        line-height: 1.5;
+        font-weight: 400;
+        text-align: justify;
+      }
+      margin-bottom: 40px;
+      @include breakpoint(sm) {
+        margin-bottom: 60px;
+      }
+      .header {
+        @extend %flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 14px;
+        border-bottom: 1px dashed $stroke-border;
+        margin-bottom: 30px;
+        @include breakpoint(sm) {
+          margin-bottom: 40px;
+        }
+        .sub-title,
+        .navigation {
+          margin: 0;
+        }
+        .navigation {
+          @extend %flex;
+          > * {
+            margin-left: 10px;
+            cursor: pointer;
+            color: #283a60;
+            @include transition($transition);
+            &:first-child {
+              @include transform(rotate(180deg));
+            }
+            &:hover {
+              color: $theme-color;
+            }
+            &:last-child {
+              color: $theme-color;
+            }
+          }
+        }
+      }
+      &:last-child {
+        margin-bottom: -5px;
+      }
+    }
+  }
+}
+
+.yarl__navigation_next,
+.yarl__navigation_prev {
+  width: auto;
+  height: auto;
+}
+
+// Sponsors Section Design
+
+.sponsors-grid,
+.artists-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.sponsors-item,
+.artists-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .sponsors-thumb,
+  .artists-thumb {
+    width: 130px;
+    height: 130px;
+    @include border-radius(50%);
+    border: 1px solid rgba($color: $theme-color, $alpha: 0.5);
+    margin: none;
+    margin-bottom: 10px;
+    padding: 10px;
+    a {
+      display: block;
+      height: 100%;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: none;
+      @include border-radius(50%);
+      border: 4px solid $theme-color;
+    }
+  }
+  .sponsors-content,
+  .artists-content {
+    text-transform: capitalize;
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+    .cate {
+      color: $theme-color;
+      display: block;
+      font-size: 12px;
+      margin-bottom: 17px;
+      line-height: 1.5;
+      text-align: center;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    p {
+      font-size: 14px;
+      margin-bottom: 0 !important;
+      color: $primary-color;
+    }
+  }
+
+  .sponsors-thumb {
+    border: 1px solid #f5f5f5;
+    border-radius: 4px;
+    width: 95%;
+
+    img {
+      border: none;
+    }
+  }
+}
+
+.sponsors-grid {
+  @include breakpoint(max-sm) {
+    grid-template-columns: repeat(3, 1fr);
+
+    .sponsors-thumb {
+      height: 100%;
+
+      img {
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.artists-grid {
+  @include breakpoint(max-sm) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 24px;
+
+    .artists-thumb {
+      width: 60px;
+      height: 60px;
+    }
+
+    .artists-content {
+      .title {
+        font-size: 12px;
+      }
+
+      span {
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+/*Ticket-Area CSS*/
+
+.book-ticket--area {
+  // border-bottom: 1px dashed $stroke-border;
+  margin-bottom: 30px;
+  .ticket-item {
+    padding: 16px 8px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid #f5f5;
+
+    margin-bottom: 15px;
+
+    text-align: center;
+    position: relative;
+    background: url(../../css/img/ticket-bg04.png) $white-color no-repeat center top;
+    background-size: cover;
+
+    @include breakpoint(max-sm) {
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      max-width: 350px;
+    }
+    .ticket-thumb {
+      width: 20px;
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    .ticket-content {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .ticket-title {
+      flex: 1;
+      margin-left: 10px;
+      font-weight: 800;
+      font-size: 12px;
+      color: $bg-two;
+      text-align: left;
+    }
+    .amount {
+      flex: 1;
+      font-size: 18px;
+      margin-left: 10px;
+      color: $main-theme-color;
+      margin-bottom: 0;
+
+      sup {
+        font-weight: 400;
+        font-size: 70%;
+        top: -7px;
+        @include breakpoint(max-sm) {
+          top: -9px;
+        }
+      }
+    }
+
+    .quantity-selector {
+      flex: 1;
+      width: 100%;
+
+      .value {
+        width: 40%;
+        font-size: 14px;
+        font-weight: 700;
+      }
+    }
+
+    .t-button {
+      cursor: pointer;
+      width: 25px;
+      line-height: 25px;
+      height: 25px;
+      @include border-radius(50%);
+      color: $white-color;
+      background: $main-theme-color;
+    }
+    &.two {
+      background: url(../../css/img/ticket-bg05.png) $white-color no-repeat center top;
+      background-size: cover;
+    }
+    &.three {
+      background: url(../../css/img/ticket-bg06.png) $white-color no-repeat center top;
+      background-size: cover;
+    }
+    .hot {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 24px;
+      height: 68px;
+      width: 40px;
+      background: #d52f84;
+      color: $white-color;
+      @extend %flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      text-transform: uppercase;
+      padding-bottom: 10px;
+      clip-path: polygon(50% 0%, 100% 0, 100% 100%, 50% 80%, 0 100%, 0 0);
+    }
+    @include breakpoint(lg) {
+      @include breakpoint(max-xl) {
+        .amount {
+        }
+        .hot {
+          right: 13px;
+        }
+      }
+    }
+  }
+}
+
+.ticket-quantity {
+  border-top: 1px dashed #11326f;
+}
+
+.ticket-price,
+.ticket-quantity {
+  .ticket-title {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .price {
+    color: $main-theme-color;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .quantity {
+    background: #f3f9ff;
+    padding: 8px 20px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 6px;
+  }
+}
+
+.info-message {
+  color: #fc7c00;
+  font-size: 12px;
+}
+
+/*Booking Summery*/
+.booking-summery {
+  background: $theme-white-color;
+  padding: 15px;
+  border: 1px solid #f5f5f5;
+  border-bottom-style: dashed;
+  padding-bottom: 10px;
+
+  @include breakpoint(max-sm) {
+    margin-top: 10px;
+  }
+
+  .btn-book-ticket {
+    max-width: 100%;
+    padding: 14px;
+    width: 100%;
+    text-align: center;
+    border-radius: 0;
+    margin-bottom: 0;
+    height: auto;
+  }
+
+  .title {
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .title {
+    text-align: center;
+    border-bottom: 1px dashed $stroke-border;
+    padding-bottom: 23px;
+    margin-bottom: 35px;
+  }
+  ul {
+    border-bottom: 1px dashed $stroke-border;
+    li {
+      padding: 0;
+      margin-bottom: 30px;
+
+      .subtitle {
+        text-transform: uppercase;
+        @extend %flex;
+        justify-content: space-between;
+        margin-bottom: 7px;
+        &:last-child {
+          margin-bottom: -5px !important;
+        }
+      }
+      .info {
+        @extend %flex;
+        justify-content: space-between;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: $main-theme-color;
+        float: none;
+        border-color: #dedede;
+
+        &:last-child {
+          margin-bottom: -14px;
+        }
+
+        .form-group {
+          width: 100%;
+        }
+
+        &.nice-select.open .list {
+          width: 100%;
+
+          li {
+            margin-top: 0;
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  @include breakpoint(sm) {
+    .title {
+      font-size: 28px;
+      margin-top: -9px;
+      margin-bottom: 40px;
+    }
+  }
+  margin-top: 60px;
+  @include breakpoint(lg) {
+    margin-top: 0;
+  }
+}
+
+/*******************  Event Details Styles Ends Here *******************/

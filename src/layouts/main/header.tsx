@@ -2,7 +2,7 @@ import Navbar from "./nav";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Logo from "src/assets/frontend/images/hulyalogo.png";
+import Logo from "src/assets/frontend/images/hulyalogo-dark.png";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);

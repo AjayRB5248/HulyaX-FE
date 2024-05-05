@@ -33,16 +33,17 @@ const navigationItems: NavItem[] = [
     href: "/",
   },
   {
-    label: "Explore Events",
+    label: "Explore",
     href: "/events/",
     submenu: [],
   },
   {
-    label: "Event Categories",
+    label: "Events",
     href: "",
     submenu: eventCategories,
   },
-  { label: "Hot Tickets", href: "/hot-tickets" },
+  { label: "Trending Now", href: "/trending-now" },
+  { label: "About Us", href: "/about-us" },
 ];
 
 interface NavbarProps {
@@ -78,7 +79,7 @@ const Navbar: React.FC<NavbarProps> = ({ isToggleMenuActive }) => {
               {item.submenu && item.submenu.length > 0 ? (
                 <>
                   <a
-                    href={`#${index}`}
+                    href="javascript:void(0)"
                     className={`${item.href === pathname ? "active" : ""}`}
                     onClick={() => handleMenuItemClick(index)}
                   >
@@ -103,6 +104,11 @@ const Navbar: React.FC<NavbarProps> = ({ isToggleMenuActive }) => {
             </li>
           </>
         ))}
+        {!user && (
+          <li className="header-button secondary-theme-btn pr-0">
+            <a href="/login-as">Join Us</a>
+          </li>
+        )}
         {/* Sign Up Link */}
         <li className="header-button primary-theme-btn pr-0 d-none">
           <a href="">
@@ -110,12 +116,14 @@ const Navbar: React.FC<NavbarProps> = ({ isToggleMenuActive }) => {
             Buy Ticket
           </a>
         </li>
-        {!user && (
+      </ul>
+      {/* {!user && (
+        <ul className="menu">
           <li className="header-button secondary-theme-btn pr-0">
             <a href="/login-as">Join Us</a>
           </li>
-        )}
-      </ul>
+        </ul>
+      )} */}
 
       {user && <UserAccountPopover />}
     </>

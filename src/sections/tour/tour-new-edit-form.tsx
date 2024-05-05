@@ -117,7 +117,7 @@ export default function TourNewEditForm({ currentTour }: Props) {
       images: mappedImages?.map((item: any) => item?.imageurl),
       tags:
         currentTour?.tags &&
-        currentTour?.tags[0].split(',').filter((item) => item !== ''),
+        currentTour?.tags[0]?.split(',').filter((item) => item !== ''),
     }),
     [currentTour]
   );

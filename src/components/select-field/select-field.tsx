@@ -5,14 +5,24 @@ import withNiceSelect from "src/layouts/_common/nice-select/withNiceSelect";
 import moment from "moment";
 
 interface SelectFieldProps {
-  imageSrc: StaticImageData;
-  altText: string;
+  imageSrc?: StaticImageData;
+  altText?: any;
   label: string;
   options: { value: string; label: string }[];
   onSelectChange: (fieldLabel: string, value: string) => void;
+  className?: string;
+  defaultValue?: any;
 }
 
-const SelectField: React.FC<SelectFieldProps> = ({ imageSrc, altText, label, options, onSelectChange }) => {
+const SelectField: React.FC<SelectFieldProps> = ({
+  imageSrc,
+  altText,
+  label,
+  options,
+  onSelectChange,
+  className,
+  defaultValue,
+}) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -27,10 +37,14 @@ const SelectField: React.FC<SelectFieldProps> = ({ imageSrc, altText, label, opt
 
   return (
     <div className="form-group">
-      <div className="thumb">
-        <Image src={imageSrc} alt={altText} />
-      </div>
-      <span className="type">{label}</span>
+      {imageSrc && (
+        <>
+          <div className="thumb">
+            <Image src={imageSrc} alt={altText} />
+          </div>
+          <span className="type">{label}</span>
+        </>
+      )}
       {label === "date" ? (
         <div className="position-relative">
           <DatePicker value={selectedDate} onChange={handleDateChange} className="custom-date-picker" />
@@ -41,8 +55,12 @@ const SelectField: React.FC<SelectFieldProps> = ({ imageSrc, altText, label, opt
           )}
         </div>
       ) : (
-        <select className="select-bar" onChange={handleSelectChange}>
-          {options.map((option) => (
+        <select
+          className={`${className ? className : "select-bar"}`}
+          onChange={handleSelectChange}
+          value={defaultValue}
+        >
+          {options?.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>

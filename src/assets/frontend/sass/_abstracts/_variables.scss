@@ -5,10 +5,10 @@ $bootstrap-sass-asset-helper: false !default;
 
 $title-color: #ffffff;
 $title-two: #292929;
-$theme-color: #31d7a9;
-$theme-two: #05b29d ;
+$theme-color: #0678a6;
+$theme-two: #05b29d;
 $theme-three: #00acea;
-$body-color :#dbe2fb;
+$body-color: #dbe2fb;
 $primary-color: #9aace5;
 $border-color: #2d4186;
 $widget-border: #1a2a47;
@@ -17,13 +17,14 @@ $filter-border: #1f2b72;
 // $grey-color: #696969;
 $ash-color: #fafafa;
 $white-color: #ffffff;
-$lallu-color : #f1481f;
-$bg-two : #001232;
-$bg-one : #032055;
-$bg-three : rgb(10, 30, 94);
-$bg-four : #001539;
-$bg-five : #01173f;
-$theme-bg: -webkit-linear-gradient(169deg, rgba(85,96,255,1) 0%, rgba(255,67,67,1) 100%);
+$lallu-color: #f1481f;
+$bg-two: #001232;
+$bg-one: #032055;
+$bg-three: rgb(10, 30, 94);
+$bg-four: #001539;
+$bg-five: #01173f;
+$bg-six: #111215;
+$theme-bg: -webkit-linear-gradient(169deg, rgba(85, 96, 255, 1) 0%, rgba(255, 67, 67, 1) 100%);
 // social-media icons color
 $whatsapp: #25d366;
 $facebook: #3b5998;
@@ -46,19 +47,19 @@ $nell: #212fb4;
 $navy: #d8e0f3;
 $placeholder: #a1a1a2;
 $name-dec: #3f485d;
-$futbol : #db3776;
-$vimeo : #1ab7ea;
+$futbol: #db3776;
+$vimeo: #1ab7ea;
 //== Typography
 
 // font-family
-$Body: 'Open Sans', sans-serif;
-$body: 'Open Sans', sans-serif;
-$Heading: 'Open Sans', sans-serif;
-$heading: 'Open Sans', sans-serif;
+$Body: "Open Sans", sans-serif;
+$body: "Open Sans", sans-serif;
+$Heading: "Open Sans", sans-serif;
+$heading: "Open Sans", sans-serif;
 
 // font-size
 $fs-base: 18px;
-$fs-large: 16px; 
+$fs-large: 16px;
 $fs-small: 14px;
 $fs-h1: 50px;
 $fs-h2: 30px;
@@ -74,8 +75,18 @@ $fs-sm-h4: 30px;
 $fs-sm-h5: 24px;
 $fs-sm-h6: 18px;
 
- //Description line height
- $lh-p: 28px; //28px;
+//Description line height
+$lh-p: 28px; //28px;
 
- //  transition
+//  transition
 $transition: all ease 0.3s;
+
+// Theme Palette
+$theme-white-color: #fff;
+$theme-text-color: #3e3e3e;
+$main-theme-color: #0678a6;
+$theme-border: 1px solid #d2d2d2;
+$theme-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+$theme-button-bg: -webkit-linear-gradient(169deg, rgb(85, 96, 255) 17%, rgb(170, 82, 161) 63%, rgb(255, 67, 67) 100%);
+$theme-light-color:#f0f8ff;
+$theme-border-radius: 12px;

@@ -28,7 +28,7 @@ const EventCarouselItem: React.FC<EventCarouselItemProps> = ({ events }) => {
     items: 4,
     loop: true,
     margin: 10,
-    autoplay: true,
+    autoplay: false,
     autoplayTimeout: 3000,
     nav: false,
     dots: false,
