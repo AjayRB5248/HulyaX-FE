@@ -15,7 +15,7 @@ axiosInstance.interceptors.request.use(
     try {
       const accessToken = getAccessToken();
       if (accessToken) {
-        config.headers["Authorization"] = `Bearer ${accessToken}`;
+        config.headers["Authorization"] = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjM3OWI2MGExNDY0YjJiY2MyYWMzM2UiLCJpYXQiOjE3MTQ5MjA2NzYsImV4cCI6MTcxNDk1MDY3NiwidHlwZSI6ImFjY2VzcyJ9.KC4Ficzu1DGGv4HBEV1gDycwTeU3FZFYK6nYsxTXP0A`;
       }
       // config.headers['Content-Type'] = 'application/json';
       return config;

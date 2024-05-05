@@ -11,7 +11,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues }) => {
   const [venuesOptions, setVenuesOptions] = useState<any>([]);
   const [selectedVenue, setSelectedVenue] = useState<string>(venues?.[0]?.venueName);
   const [eventDate, setEventDate] = useState<any>(
-    moment(venues?.[0]?.eventDate).tz(venues?.[0]?.timeZone).format("DD MMM ddd, hh:mm A")
+    moment(venues?.[0]?.eventDate).tz(venues?.[0]?.timeZone)?.format("DD MMM ddd, hh:mm A")
   );
   const [showTickets, setShowTickets] = useState<any>({});
 

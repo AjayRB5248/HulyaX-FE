@@ -20,6 +20,7 @@ import AccountSocialLinks from "../account-social-links";
 import AccountNotifications from "../account-notifications";
 import AccountChangePassword from "../account-change-password";
 import { Grid } from "@mui/material";
+import { OrderListView } from "src/sections/order/view";
 
 // ----------------------------------------------------------------------
 
@@ -59,7 +60,7 @@ export default function AccountView() {
 
   return (
     <section className="user-profile-section">
-      <Container maxWidth={settings.themeStretch ? false : "lg"}>
+      <Container maxWidth={settings.themeStretch ? false : "xl"} className="theme--container-xl">
         <Grid container spacing={2}>
           <Grid item lg={3}>
             <Tabs
@@ -84,6 +85,8 @@ export default function AccountView() {
 
           <Grid item lg={9}>
             {currentTab === "general" && <AccountGeneral />}
+
+            {currentTab === "tickets" &&  <OrderListView /> }
 
             {currentTab === "billing" && (
               <AccountBilling

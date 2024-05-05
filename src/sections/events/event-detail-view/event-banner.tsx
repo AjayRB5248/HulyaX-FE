@@ -30,7 +30,7 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
 }) => {
   const pathname = usePathname();
 
-  const featuredImage = eventImages[0]?.imageurl;
+  const featuredImage = eventImages?.[0]?.imageurl;
 
   return (
     <section className="details-banner bg_img" style={{ backgroundImage: `url(${bannerImg})` }}>
@@ -60,7 +60,7 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
                   <span className="mr-4">Starts From:</span>
                   <i className="fas fa-calendar-alt"></i>
                   {/* TODO: Earliest date ? */}
-                  <span>{moment(venues?.[0]?.eventDate).tz(venues?.[0]?.timeZone).format("MMM DD, YYYY")}</span>
+                  <span>{moment(venues?.[0]?.eventDate).tz(venues?.[0]?.timeZone)?.format("MMM DD, YYYY")}</span>
                 </div>
                 <div className="item">
                   <i className="far fa-clock"></i>
