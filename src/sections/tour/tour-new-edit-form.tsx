@@ -253,11 +253,11 @@ export default function TourNewEditForm({ currentTour }: Props) {
       formData.append(`ticketSettings[${index}][type]`, ticket.type);
       formData.append(
         `ticketSettings[${index}][price]`,
-        ticket.price.toString()
+        ticket?.price?.toString()
       );
       formData.append(
         `ticketSettings[${index}][totalSeats]`,
-        ticket.totalSeats.toString()
+        ticket?.totalSeats?.toString()
       );
     });
 

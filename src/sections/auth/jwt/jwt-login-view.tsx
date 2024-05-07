@@ -26,8 +26,6 @@ import { useForgotPassword, useLogin } from 'src/api/auth';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
 import Iconify from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
-
 export default function JwtRegisterView() {
   const router = useRouter();
 
@@ -75,6 +73,7 @@ export default function JwtRegisterView() {
       };
 
       await loginMutation.mutateAsync(loginPayload);
+      console.log(loginMutation.data, 'this is data');
 
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
