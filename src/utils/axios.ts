@@ -102,8 +102,8 @@ export const endpoints = {
     list: `tickets/view-tickets`,
     purchase: `tickets/purchase-ticket`,
   },
-  // TODO: Add Update/Edit Profile Endpoint
   user: {
-    updateProfile: `update-profile`
+    updateProfile:(id:string) => `users/${id}`,
+    updateAvatar: `users/profile-picture`,
   }
 };

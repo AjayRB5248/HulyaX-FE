@@ -1,8 +1,10 @@
 import axiosInstance, { endpoints } from "src/utils/axios";
 
 const UserService = {
-  updateProfile: (name: string, email: string, profilePicture: string, mobileNumber: string) =>
-    axiosInstance.post(endpoints.user.updateProfile, { name, email, profilePicture, mobileNumber }),
+  updateProfile: (id:string, name: string, email: string) =>
+    axiosInstance.patch(endpoints.user.updateProfile(id), { name, email }),
+  updateAvatar:(formData: string) =>
+    axiosInstance.post(endpoints.user.updateAvatar, formData),
 };
 
 export default UserService;
