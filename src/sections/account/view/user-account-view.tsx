@@ -21,6 +21,7 @@ import AccountNotifications from "../account-notifications";
 import AccountChangePassword from "../account-change-password";
 import { Grid } from "@mui/material";
 import { OrderListView } from "src/sections/order/view";
+import AccountChangePhoneNumber from "../account-change-phoneNumber";
 
 // ----------------------------------------------------------------------
 
@@ -97,11 +98,11 @@ export default function AccountView() {
               />
             )}
 
-            {currentTab === "notifications" && <AccountNotifications />}
+            {currentTab === "changePhoneNumber" && <AccountChangePhoneNumber />}
 
             {currentTab === "social" && <AccountSocialLinks socialLinks={_userAbout.socialLinks} />}
 
-            {currentTab === "security" && <AccountChangePassword />}
+            {currentTab === "changePassword" && <AccountChangePassword />}
           </Grid>
         </Grid>
       </Container>

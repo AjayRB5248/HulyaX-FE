@@ -34,7 +34,7 @@ const EventGridItem: React.FC<{
           <div className="artist d-flex align-items-center">
             <Image src={SACAR} alt="Artist Profile" className="artist-profile-img" />
             <h4 className="artist-name ml-3">
-              {artists[0].artistName}
+              {artists[0]?.artistName}
               <p className="artist-position">Artist/SongWriter</p>
             </h4>
             {/* <button className="theme-button">Buy Ticket</button> */}

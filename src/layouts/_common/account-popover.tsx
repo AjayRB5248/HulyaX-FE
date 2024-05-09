@@ -8,16 +8,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { alpha } from '@mui/material/styles';
-// routes
-import { useRouter } from 'src/routes/hook';
-// hooks
-// auth
-// components
 import { useLogout } from 'src/api/auth';
 import { useAuth } from 'src/auth/context/users/auth-context';
 import { varHover } from 'src/components/animate';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { useSnackbar } from 'src/components/snackbar';
+import { useRouter } from 'src/routes/hook';
 
 // ----------------------------------------------------------------------
 
