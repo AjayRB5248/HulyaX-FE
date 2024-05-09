@@ -12,13 +12,19 @@ import NewsLetter from "src/layouts/main/newsletter";
 import EventsSlider from "../events-slider";
 import PopularCategories from "../popular-categories";
 import BannerSlider from "../banner-slider";
+import { EVENTS_MOCK_DATA } from "src/_mock/_events";
 
 export default function HomeView() {
   const { events } = useFetchEvents();
 
+  const EVENTS_MOCK = EVENTS_MOCK_DATA?.events;
+  
   return (
     <MainLayout>
-      <Banner />
+      <Banner
+        // events={events?.events}
+        events={EVENTS_MOCK}
+      />
       {/* <TicketSearch /> */}
       <EventsCarousel />
       <NewsLetter />

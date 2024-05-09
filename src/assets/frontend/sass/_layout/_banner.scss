@@ -65,7 +65,7 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba($color: $bg-two, $alpha: 0.4);
+    background: rgba($color: $bg-two, $alpha: 0.2);
     z-index: 2;
   }
   .banner-bg {
@@ -82,6 +82,10 @@
     p {
       margin-left: auto;
       margin-right: auto;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
     }
     &.event-content {
       p {

@@ -18,11 +18,48 @@ const settings = {
   // autoplay: true,
 };
 
-const Banner = () => {
+const Banner = (events: any) => {
   const { days, hours, minutes, seconds } = useCountdownDate(new Date("07/07/2024 21:30"));
+
+  const featuredEvents = events?.events?.filter((eachEvent: any) => eachEvent.tags?.includes("FEATURED"));
 
   return (
     <Slider {...settings} className="banner-slider">
+      {Array.isArray(featuredEvents) &&
+        featuredEvents.map((featuredEvent: any) => {
+          const posterImage = featuredEvent.eventImages?.find((eventImg: any) => eventImg?.isPrimary)?.imageurl;
+          return (
+            <div className="banner-section">
+              <div className="banner-bg bg_img bg-fixed" style={{ backgroundImage: `url(${posterImage})` }}></div>
+              <div className="container">
+                <div className="banner-content">
+                  <h1 className="title  cd-headline clip">
+                    <span className="d-block">{featuredEvent.eventName}</span>
+                  </h1>
+                  <p>{featuredEvent.eventDescription}</p>
+                  <Stack
+                    direction="row"
+                    justifyContent="start"
+                    alignItems="center"
+                    divider={<Box sx={{ mx: { xs: 1, sm: 2.5 } }}>:</Box>}
+                    sx={{ typography: "h2" }}
+                    className="mt-5"
+                  >
+                    <TimeBlock label="Days" value={days} />
+
+                    <TimeBlock label="Hours" value={hours} />
+
+                    <TimeBlock label="Minutes" value={minutes} />
+
+                    <TimeBlock label="Seconds" value={seconds} />
+                  </Stack>
+                  <button className="mt-5 theme-button">Buy Ticket Now</button>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
       <div className="banner-section">
         <div className="banner-bg bg_img bg-fixed" style={{ backgroundImage: `url(${BannerBg.src})` }}></div>
         <div className="container">

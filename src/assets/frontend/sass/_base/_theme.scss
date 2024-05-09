@@ -131,7 +131,7 @@
   background: #001232;
 
   .slick-dots {
-    bottom: 10px;
+    bottom: 20px;
   }
 
   li {
@@ -141,7 +141,7 @@
     }
 
     &.slick-active button:before {
-      color: $main-theme-color;
+      color: $theme-white-color;
     }
   }
 }
