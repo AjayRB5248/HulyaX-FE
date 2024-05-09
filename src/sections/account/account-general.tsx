@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // @mui
@@ -10,36 +10,28 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
-// hooks
-import { useMockedUser } from "src/hooks/use-mocked-user";
-// utils
-import { fData } from "src/utils/format-number";
-// assets
-import { countries } from "src/assets/data";
-// components
-import Iconify from "src/components/iconify";
 import { useSnackbar } from "src/components/snackbar";
-import FormProvider, { RHFSwitch, RHFTextField, RHFUploadAvatar, RHFAutocomplete } from "src/components/hook-form";
+import FormProvider, { RHFTextField, RHFUploadAvatar } from "src/components/hook-form";
 import { getUserData } from "src/utils/token-management";
 import { Chip } from "@mui/material";
 import Link from "next/link";
-import { useUpdateUserProfile } from "src/api/user";
+import { useUpdateUserAvatar, useUpdateUserProfile } from "src/api/user";
 
 // ----------------------------------------------------------------------
 
 export default function AccountGeneral() {
   const { enqueueSnackbar } = useSnackbar();
 
-  const updateProfileMutation = useUpdateUserProfile();
-
   const userData = getUserData();
   const user = JSON.parse(userData);
+  const updateProfileMutation = useUpdateUserProfile(user?.id);
+  const updateAvatarMutation = useUpdateUserAvatar();
 
   const UpdateUserSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     email: Yup.string().required("Email is required").email("Email must be a valid email address"),
-    profilePicture: Yup.mixed<any>().nullable().required("Avatar is required"),
-    mobileNumber: Yup.string().required("Phone number is required"),
+    profilePicture: Yup.mixed().nullable(),
+    // mobileNumber: Yup.string().required("Phone number is required"),
   });
 
   const defaultValues = {
@@ -58,19 +50,19 @@ export default function AccountGeneral() {
     setValue,
     handleSubmit,
     formState: { isSubmitting },
+    formState: { errors },
+    watch
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      console.info("DATA", data);
-
-      // TODO: Update Profile Mutation
-      await updateProfileMutation.mutateAsync(data);
+      await updateProfileMutation.mutateAsync({email: data?.email, name: data?.name});
     } catch (error) {
       console.error(error);
     }
   });
+
+  const watchedFields= watch();
 
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -86,6 +78,24 @@ export default function AccountGeneral() {
     },
     [setValue]
   );
+
+  const onSubmitAvatar = async (data:{profilePicture:string}) => {
+    try {
+      const formData = new FormData();
+      formData.append('profile-picture', data.profilePicture);
+      await updateAvatarMutation.mutateAsync(formData);
+      enqueueSnackbar("Profile picture updated successfully", { variant: "success" });
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar("Failed to update profile picture", { variant: "error" });
+    }
+  };
+
+  useEffect(() => {
+    if (watchedFields?.profilePicture && watchedFields?.profilePicture !== user?.profilePicture) {
+      handleSubmit(() => onSubmitAvatar({profilePicture: watchedFields.profilePicture}))();
+    }
+  }, [watchedFields?.profilePicture, handleSubmit, user?.profilePicture]);
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit} className="user-profile--form">
@@ -106,13 +116,13 @@ export default function AccountGeneral() {
                     textAlign: "center",
                   }}
                 >
-                  {user.name}
+                  {user?.name}
                 </Typography>
               }
             />
 
             <Button variant="soft" color="success" sx={{ mt: 3, width: "max-content", height: "auto" }}>
-              {user.isNumberVerified ? (
+              {user?.isNumberVerified ? (
                 <span>
                   Hulya Verified User <i className="fa fa-check-circle ml-2"></i>{" "}
                 </span>
@@ -136,10 +146,10 @@ export default function AccountGeneral() {
             >
               <RHFTextField name="name" label="Name" required />
               <RHFTextField name="email" label="Email Address" required />
-              <RHFTextField name="mobileNumber" label="Phone Number" required />
+              <RHFTextField name="mobileNumber" label="Phone Number" disabled/>
 
               {/* TODO: Implement Verify phone Number Link */}
-              {user.isNumberVerified ? (
+              {user?.isNumberVerified ? (
                 <span className="text-success text-verified">
                   Phone Number Verified <i className="fa fa-check-circle ml-2"></i>{" "}
                 </span>

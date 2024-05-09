@@ -7,11 +7,9 @@ import FooterLogo from 'src/assets/frontend/images/hulyalogo-dark.png';
 import axiosInstance from 'src/utils/axios';
 
 const socialIcons = [
-  { iconClass: 'fab fa-facebook-f', href: '#0' },
-  { iconClass: 'fab fa-twitter', href: '#0', isActive: true },
-  { iconClass: 'fab fa-pinterest-p', href: '#0' },
-  { iconClass: 'fab fa-google', href: '#0' },
-  { iconClass: 'fab fa-instagram', href: '#0' },
+  { iconClass: 'fab fa-facebook-f', href: 'https://www.facebook.com/profile.php?id=61555048269687&mibextid=LQQJ4d', target: '_blank' },
+  { iconClass: 'fab fa-google', href: 'mailto:info@hulyaevents.com.au', target: '_blank' },
+  { iconClass: 'fab fa-instagram', href: 'https://www.instagram.com/events.hulya?igshid=dDZsdWFmNmQ0b2tw&utm_source=qr', target: '_blank' },
 ];
 
 const footerLinks = [
@@ -29,15 +27,24 @@ export default function Footer() {
 
   const renderLink = (item: any, key: any) => (
     <li key={key}>
-      <Link href={item.href}>
+      <Link href={item.href} target={item.target || '_self'}>
         {item.label || <i className={item.iconClass}></i>}
       </Link>
     </li>
   );
 
   const handelSubscribe = (e: any): void => {
+    const emailRegex = /\S+@\S+\.\S+/;
     e.preventDefault();
-    if (!email) return;
+    if (!email) {
+      enqueueSnackbar('Please enter an email address.', { variant: 'warning' });
+      return;
+    }
+    if (!emailRegex.test(email)) {
+      enqueueSnackbar('Please enter a valid email address.', { variant: 'error' });
+      return;
+    }
+  
     axiosInstance
       .post(`/subscribe`, { email })
       .then((response: any) => {

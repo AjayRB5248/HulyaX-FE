@@ -92,7 +92,7 @@ export default function UserAccountPopover() {
         }}
       >
         <Avatar
-          src={mockedUser?.photoURL}
+          src={user?.profilePicture}
           alt={user?.name?.split(' ')[0]}
           sx={{
             width: 36,
