@@ -48,7 +48,7 @@
   }
 }
 .banner-section {
-  padding: 140px 0 110.38px;
+  padding: 190px 0 110.38px;
   position: relative;
   @include breakpoint(max-lg) {
     padding: 140px 0 110.38px;
@@ -70,9 +70,9 @@
   }
   .banner-bg {
     position: absolute;
-    top: 0;
+    top: 90px;
     left: 0;
-    bottom: 0;
+    bottom: -60px;
     right: 0;
     opacity: 0.3;
   }
