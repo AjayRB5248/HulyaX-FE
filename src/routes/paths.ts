@@ -60,6 +60,7 @@ export const paths = {
     company: {
       login: `${ROOTS.AUTH}/company/login`,
       register: `${ROOTS.AUTH}/company/register`,
+      forgotPassword: `${ROOTS.AUTH}/company/forgot-password`,
     },
     jwt: {
       login: `${ROOTS.AUTH}/jwt/login`,

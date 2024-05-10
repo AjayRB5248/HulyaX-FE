@@ -118,7 +118,15 @@ export default function Footer() {
                 <Link href='#0'>Hulya Events</Link>
               </p>
             </div>
-            <ul className='links'>{footerLinks.map(renderLink)}</ul>
+            {/* <ul className='links'>{footerLinks.map(renderLink)}</ul> */}
+            <p>
+                Contact US:
+                <a href='mailto:info@hulyaevents.com.au'>info@hulyaevents.com.au</a>
+              </p>
+              <p>
+                For Business Queries:
+                <a href="tel:+61411235494">+61411235494</a>
+              </p>
           </div>
         </div>
       </div>

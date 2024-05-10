@@ -123,12 +123,13 @@ export default function JwtRegisterView() {
       <Stack spacing={2.5}>
         {!!errorMsg && <Alert severity='error'>{errorMsg}</Alert>}
 
-        <RHFTextField name='email' label='Email address' />
+        <RHFTextField name='email' label='Email address'  InputLabelProps={{ shrink: true }}/>
 
         <RHFTextField
           name='password'
           label='Password'
           type={password.value ? 'text' : 'password'}
+          InputLabelProps={{ shrink: true }}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
@@ -151,7 +152,8 @@ export default function JwtRegisterView() {
           color='inherit'
           underline='always'
           sx={{ alignSelf: 'flex-end', cursor: 'pointer' }}
-          onClick={forgotPassword}
+          // onClick={forgotPassword}
+          href={paths.auth.company.forgotPassword}
         >
           Forgot password?
         </Link>

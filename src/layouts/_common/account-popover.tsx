@@ -20,7 +20,7 @@ import { useRouter } from 'src/routes/hook';
 const OPTIONS = [
   {
     label: 'Home',
-    linkTo: '/',
+    linkTo: '/dashboard',
   },
 ];
 
