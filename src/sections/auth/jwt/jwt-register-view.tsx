@@ -132,16 +132,17 @@ export default function JwtRegisterView() {
       <Stack spacing={2.5}>
         {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
 
-        <RHFTextField name="name" label="Company Name" />
+        <RHFTextField InputLabelProps={{ shrink: true }} name="name" label="Company Name" />
 
-        <RHFTextField name="email" label="Email address" />
+        <RHFTextField InputLabelProps={{ shrink: true }} name="email" label="Email address" />
 
-        <RHFTextField name="mobileNumber" label="Phone" />
+        <RHFTextField  InputLabelProps={{ shrink: true }} name="mobileNumber" label="Phone" />
 
         <RHFTextField
           name="password"
           label="Password"
           type={password.value ? "text" : "password"}
+          InputLabelProps={{ shrink: true }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -157,6 +158,7 @@ export default function JwtRegisterView() {
           name="confirmPassword"
           label="Confirm New Password"
           type={password.value ? "text" : "password"}
+          InputLabelProps={{ shrink: true }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

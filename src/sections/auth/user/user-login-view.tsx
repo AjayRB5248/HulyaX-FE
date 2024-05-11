@@ -12,6 +12,8 @@ import { useState } from "react";
 
 import { useRouter } from "src/routes/hook";
 import { LoadingButton } from "@mui/lab";
+import Link from "next/link";
+import { paths } from "src/routes/paths";
 
 interface FormData {
   email: string;
@@ -113,7 +115,7 @@ const UserRegisterView: React.FC = () => {
             </FormProvider>
 
             <div className="option">
-              New user? <a href="/auth/user/register">Sign Up Now</a>
+              New user? <Link href={paths.auth.user.register}>Sign Up Now</Link>
             </div>
           </div>
         </div>
