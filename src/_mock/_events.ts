@@ -63,7 +63,7 @@ export const EVENTS_MOCK_DATA = {
       ],
       eventName: "AXIX - ROAD To '24 Australia Tour",
       eventDescription:
-        "Axis Band, pioneers of Nepali rock music, have etched their mark on the nation's cultural landscape since their incep:on in the early 2000s. Rising to prominence with their debut album 'Prarambha' in 2005, they seamlessly fused tradi:onal Nepali instruments with contemporary rock, earning acclaim and a dedicated following. Hits like 'Prarambha' and 'Aama' showcased their ability to blend powerful messages with cap:va:ng melodies. Their evolu:on con:nued with albums like 'An:m Yatra' and 'Umeed,' solidifying their reputa:on for dynamic performances and socially conscious lyrics. Axis Band's impact extends beyond music, championing causes and inspiring change within Nepali society. Don't miss their longawaited show in Australia this July, a performance prepared with me:culous care and passion, promising an unforgeMable experience for all who aMend.",
+        "Axis Band, pioneers of Nepali rock music, have etched their mark on the nation's cultural landscape since their inception in the early 2000s. Rising to prominence with their debut album 'Prarambha' in 2005, they seamlessly fused tradi:onal Nepali instruments with contemporary rock, earning acclaim and a dedicated following. Hits like 'Prarambha' and 'Aama' showcased their ability to blend powerful messages with cap:va:ng melodies. Their evolu:on con:nued with albums like 'An:m Yatra' and 'Umeed,' solidifying their reputa:on for dynamic performances and socially conscious lyrics. Axis Band's impact extends beyond music, championing causes and inspiring change within Nepali society. Don't miss their longawaited show in Australia this July, a performance prepared with me:culous care and passion, promising an unforgeMable experience for all who aMend.",
       eventOwner: "65b647e557b8f91495bb6161",
       artists: [
         {
@@ -81,14 +81,14 @@ export const EVENTS_MOCK_DATA = {
           venueName: "Sydney Opera House",
           city: "Sydney",
           timeZone: "Australia",
-          eventDate: "2024-02-27T00:00:00.000Z",
+          eventDate: "2024-06-29T00:00:00.000Z",
         },
         {
           _id: "65ba2f3983f474115e07ef66",
           venueName: "Melbourne Opera House",
           city: "Melbourne",
           timeZone: "Australia",
-          eventDate: "2024-02-28T00:00:00.000Z",
+          eventDate: "2024-06-29T00:00:00.000Z",
         },
       ],
       eventImages: [
