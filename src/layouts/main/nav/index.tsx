@@ -118,15 +118,15 @@ const Navbar: React.FC<NavbarProps> = ({ isToggleMenuActive }) => {
         ))}
         {!user && (
           <li className='header-button secondary-theme-btn pr-0'>
-            <a href='/login-as'>Join Us</a>
+            <Link href='/login-as'>Join Us</Link>
           </li>
         )}
         {/* Sign Up Link */}
         <li className='header-button primary-theme-btn pr-0 d-none'>
-          <a href=''>
+          <Link href=''>
             <i className='fa fa-ticket-alt mr-2'></i>
             Buy Ticket
-          </a>
+          </Link>
         </li>
       </ul>
       {/* {!user && (

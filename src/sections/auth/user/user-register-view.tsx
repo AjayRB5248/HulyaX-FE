@@ -9,9 +9,10 @@ import * as Yup from "yup";
 
 import PhoneInput from "react-phone-number-input";
 import { useState } from "react";
-
+import Link from "next/link";
 import { useRouter } from "src/routes/hook";
 import { LoadingButton } from "@mui/lab";
+import { paths } from "src/routes/paths";
 
 interface FormData {
   name: string;
@@ -174,7 +175,7 @@ const UserRegisterView: React.FC = () => {
             {/* Form Ends */}
 
             <div className="option">
-              Already have an account? <a href="/auth/user/login">Login</a>
+              Already have an account? <Link href={paths.auth.user.login}>Login</Link>
             </div>
             <div className="or d-none">
               <span>Or</span>
