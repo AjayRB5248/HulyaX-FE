@@ -8,26 +8,32 @@ import { TypeAnimation } from "react-type-animation";
 import Stack from "@mui/material/Stack";
 import { Box } from "@mui/system";
 import { useCountdownDate } from "src/hooks/use-countdown";
+import moment from "moment";
+import Link from "next/link";
 
 const settings = {
   dots: true,
-  infinite: true,
-  speed: 500,
+  infinite: false,
+  speed: 1000,
   slidesToShow: 1,
   slidesToScroll: 1,
   // autoplay: true,
 };
 
 const Banner = (events: any) => {
-  const { days, hours, minutes, seconds } = useCountdownDate(new Date("07/07/2024 21:30"));
-
   const featuredEvents = events?.events?.filter((eachEvent: any) => eachEvent.tags?.includes("FEATURED"));
+
+  const { days, hours, minutes, seconds } = useCountdownDate(new Date("07/07/2024 21:30"));
 
   return (
     <Slider {...settings} className="banner-slider">
       {Array.isArray(featuredEvents) &&
         featuredEvents.map((featuredEvent: any) => {
           const posterImage = featuredEvent.eventImages?.find((eventImg: any) => eventImg?.isPrimary)?.imageurl;
+
+          const eventStartDate = moment(featuredEvent.venues?.[0]?.eventDate).format("MM/DD/YYYY HH:mm");
+          const { days, hours, minutes, seconds } = useCountdownDate(new Date(eventStartDate));
+
           return (
             <div className="banner-section">
               <div className="banner-bg bg_img bg-fixed" style={{ backgroundImage: `url(${posterImage})` }}></div>
@@ -53,7 +59,9 @@ const Banner = (events: any) => {
 
                     <TimeBlock label="Seconds" value={seconds} />
                   </Stack>
-                  <button className="mt-5 theme-button">Buy Ticket Now</button>
+                  <Link href={`/events/${featuredEvent.slug}`}>
+                    <button className="mt-5 theme-button">Buy Ticket Now</button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -106,7 +114,7 @@ const Banner = (events: any) => {
           <div className="banner-content">
             <h1 className="title  cd-headline clip">
               {/* <span className="d-block">book your</span> tickets for {""} */}
-              <span className="d-block">SACAR Ft. CAREY Austrlia Tour</span>
+              <span className="d-block">SACAR Ft. CAREY Australia Tour</span>
 
               {/* <TypeAnimation
                 sequence={["AXIX", 1000, "Sports", 1000, "Events", 1000, "Movies", 1000]}
@@ -154,7 +162,7 @@ function TimeBlock({ label, value }: TimeBlockProps) {
   return (
     <div className="counter--timeblock">
       <Box> {value} </Box>
-      <Box sx={{ color: "text.secondary", typography: "body1" }}>{label}</Box>
+      <Box sx={{ color: "white", typography: "body1" }}>{label}</Box>
     </div>
   );
 }
