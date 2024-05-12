@@ -45,6 +45,7 @@ export default function UserTableRow({
     isEmailVerified,
     isNumberVerified,
     id,
+    isApproved
   } = row;
   const removeUserMutation = useRemoveUser();
 
@@ -69,6 +70,17 @@ export default function UserTableRow({
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{mobileNumber}</TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{role}</TableCell>
+        <TableCell
+          sx={{
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {isApproved ? (
+            <Icon icon='material-symbols:verified' style={{ color: 'green' }} />
+          ) : (
+            <Icon icon='carbon:close-filled' style={{ color: '#8B0000' }} />
+          )}
+        </TableCell>
         <TableCell
           sx={{
             whiteSpace: 'nowrap',

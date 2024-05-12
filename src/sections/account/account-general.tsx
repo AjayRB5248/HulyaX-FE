@@ -16,6 +16,10 @@ import { getUserData } from "src/utils/token-management";
 import { Chip } from "@mui/material";
 import Link from "next/link";
 import { useUpdateUserAvatar, useUpdateUserProfile } from "src/api/user";
+import VerifyOTPModal from "./otp-verify-modal";
+import { useBoolean } from "src/hooks/use-boolean";
+import { sendOTP, verifyOTP } from "src/api/auth";
+import { useRouter } from "src/routes/hook/use-router";
 
 // ----------------------------------------------------------------------
 
@@ -24,8 +28,12 @@ export default function AccountGeneral() {
 
   const userData = getUserData();
   const user = JSON.parse(userData);
+  const verifyMobile = useBoolean()
   const updateProfileMutation = useUpdateUserProfile(user?.id);
   const updateAvatarMutation = useUpdateUserAvatar();
+  const sendOTPMutation = sendOTP();
+  const verifyOTPMutation = verifyOTP();
+  const router = useRouter();
 
   const UpdateUserSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -61,6 +69,55 @@ export default function AccountGeneral() {
       console.error(error);
     }
   });
+
+  const handleOtpVerifyModal = async () => {
+    try {
+      let generatedOTPRes;
+      if (user) {
+        const payloadForGeneratingOTP = {
+          email: user?.email,
+          tokenType: "OTP_MOBILE",
+        };
+        generatedOTPRes = await sendOTPMutation.mutateAsync(payloadForGeneratingOTP);
+      }
+      if(generatedOTPRes){
+        verifyMobile.onTrue()
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleVerifyMobileNumber = async (data:any)=>{
+    try {
+      let verifiedOTPRes;
+      if (user) {
+        const payloadForGeneratingOTP = {
+          email: user?.email,
+          otp: data?.otp,
+        };
+        verifiedOTPRes = await verifyOTPMutation.mutateAsync(payloadForGeneratingOTP);
+      }
+      verifyMobile.onFalse()
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const generateOTPCode = async () => {
+    try {
+      let generatedOTPRes;
+      if (user) {
+        const payloadForGeneratingOTP = {
+          email: user?.email,
+          tokenType: "OTP_MOBILE",
+        };
+        generatedOTPRes = await sendOTPMutation.mutateAsync(payloadForGeneratingOTP);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const watchedFields= watch();
 
@@ -99,6 +156,12 @@ export default function AccountGeneral() {
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit} className="user-profile--form">
+        <VerifyOTPModal
+          open={verifyMobile.value}
+          onClose={verifyMobile.onFalse}
+          onOk={handleVerifyMobileNumber}
+          generateOTPCode={generateOTPCode}
+        />
       <Grid container spacing={3}>
         <Grid xs={12} md={4}>
           <Card sx={{ pt: 10, pb: 5, px: 3, textAlign: "center" }}>
@@ -120,7 +183,6 @@ export default function AccountGeneral() {
                 </Typography>
               }
             />
-
             <Button variant="soft" color="success" sx={{ mt: 3, width: "max-content", height: "auto" }}>
               {user?.isNumberVerified ? (
                 <span>
@@ -154,9 +216,9 @@ export default function AccountGeneral() {
                   Phone Number Verified <i className="fa fa-check-circle ml-2"></i>{" "}
                 </span>
               ) : (
-                <Link className="text-warning verify-phone-link" href="/">
+                <Button className="text-warning verify-phone-link" onClick={handleOtpVerifyModal}>
                   Verify Your Phone Number <i className="fa fa-warning ml-2"></i>{" "}
-                </Link>
+                </Button>
               )}
             </Box>
 

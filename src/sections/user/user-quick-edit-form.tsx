@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 // @mui
@@ -24,6 +24,8 @@ import FormProvider, {
   RHFTextField,
 } from 'src/components/hook-form';
 import { useSnackbar } from 'src/components/snackbar';
+import { Checkbox, FormControlLabel } from '@mui/material';
+import { useApproveCompany } from 'src/api/superAdmin';
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +42,8 @@ export default function UserQuickEditForm({
 }: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const userUpdateMutation = useUpdateUser();
+  const approveCompanyMutation=useApproveCompany()
+  const [isCompanyApproved, setIsCompanyApproved] = useState(currentUser?.isApproved ?? false);
 
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -71,15 +75,15 @@ export default function UserQuickEditForm({
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit(async (data:any) => {
     try {
-      delete data.role;
-      delete data.mobileNumber;
+      delete data?.role;
+      delete data?.mobileNumber;
 
       await userUpdateMutation
         .mutateAsync({
           data,
-          id: currentUser?.id,
+          userId: currentUser?.id,
         })
         .then(() => {
           reset();
@@ -91,6 +95,22 @@ export default function UserQuickEditForm({
     }
   });
 
+  console.log({currentUser})
+
+  const handleApprovalChange = async (event:any) => {
+    const isChecked = event.target.checked;
+  
+    setIsCompanyApproved(isChecked);
+  
+    const payload = {
+      userId: currentUser?.id,
+      isApproved: isChecked
+    };
+  
+    await approveCompanyMutation.mutateAsync(payload);
+    onClose()
+  };
+  
   return (
     <Dialog
       fullWidth
@@ -105,13 +125,13 @@ export default function UserQuickEditForm({
         <DialogTitle>Quick Update</DialogTitle>
 
         <DialogContent>
-          {/* <Alert variant='outlined' severity='info' sx={{ mb: 3 }}>
-            Account is waiting for confirmation
-          </Alert> */}
+          {currentUser?.role==='companyAdmin' && !currentUser?.isApproved && <Alert variant='outlined' severity='info' sx={{ mb: 3 }}>
+            Company is waiting for confirmation
+          </Alert>}
 
           <Box
             rowGap={3}
-            columnGap={2}
+            columnGap={3}
             display='grid'
             gridTemplateColumns={{
               xs: 'repeat(1, 1fr)',
@@ -119,19 +139,16 @@ export default function UserQuickEditForm({
             }}
             sx={{marginTop: 2}}
           >
-            <RHFSelect name='role' label='Role' disabled>
-              {USER_ROLE_OPTIONS.map((status) => (
-                <MenuItem key={status.value} value={status.value}>
-                  {status.label}
-                </MenuItem>
-              ))}
-            </RHFSelect>
-
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }} />
 
             <RHFTextField name='name' label='Full Name' />
             <RHFTextField name='email' label='Email Address' />
             <RHFTextField name='mobileNumber' label='Mobile Number' disabled />
+            {currentUser?.role === 'companyAdmin' && (
+              <FormControlLabel
+                control={<Checkbox checked={isCompanyApproved} onChange={handleApprovalChange} />}
+                label="Approve Company"
+              />
+            )}
           </Box>
         </DialogContent>
 

@@ -43,6 +43,7 @@ const TABLE_HEAD = [
   { id: 'email', label: 'Email', width: 100 },
   { id: 'phoneNumber', label: 'Phone Number', width: 180 },
   { id: 'role', label: 'Role', width: 180 },
+  { id: 'isApproved', label: 'Approved', width: 100 },
   { id: 'emailVerified', label: 'Email Verified', width: 100 },
   { id: 'phoneVerified', label: 'Phone Verified', width: 100 },
   { id: 'Action', width: 88 },
@@ -96,7 +97,7 @@ export default function UserListView() {
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
             { name: 'User', href: paths.dashboard.user.list },
-            { name: 'List' },
+            { name: 'List' }, 
           ]}
           action={
             <Button
@@ -158,7 +159,7 @@ export default function UserListView() {
           </TableContainer>
 
           <TablePaginationCustom
-            count={users?.totalResults}
+            count={filteredUsers?.length}
             page={table.page}
             rowsPerPage={table.rowsPerPage}
             onPageChange={table.onChangePage}

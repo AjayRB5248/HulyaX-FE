@@ -96,7 +96,7 @@ export const endpoints = {
       return url;
     },
     remove: (id: string) => `/users/${id}`,
-    update: (id: string) => `/users/${id}`,
+    update: (userId: string) => `/users/${userId}`,
   },
   tickets: {
     list: `tickets/view-tickets`,
@@ -105,6 +105,7 @@ export const endpoints = {
   user: {
     updateProfile:(id:string) => `users/${id}`,
     updateAvatar: `users/profile-picture`,
+    changePassword:(id:string) =>`users/${id}`
   },
   artist: {
     createArtist: `/artist`,
@@ -117,5 +118,8 @@ export const endpoints = {
       }
       return url;
     },
+  },
+  superAdmin:{
+    approveCompany:'/superadmin/approve-company'
   }
 };
