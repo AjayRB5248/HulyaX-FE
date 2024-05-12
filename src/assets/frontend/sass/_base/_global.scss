@@ -392,3 +392,12 @@ template {
     cursor: pointer;
   }
 }
+
+.primary-text {
+  color: $main-theme-color;
+}
+
+p {
+  font-size: 12px!important;
+  color: $theme-text-color;
+}

@@ -26,6 +26,9 @@
 .account-section {
   min-height: 100vh;
   margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.register-section {
     .account-area {
@@ -261,7 +264,7 @@
 
     .otp-code-input-wrapper input {
       font-size: 20px;
-      color: $white-color;
+      color: $theme-text-color;
     }
 
     .verify-otp-button {
@@ -271,8 +274,17 @@
       &:hover,
       &:active {
         background-color: transparent;
-        color: #fff;
+        color: $main-theme-color;
       }
     }
+  }
+}
+
+.link-text {
+  font-weight: 600;
+
+  a {
+    color: $main-theme-color!important;
+    font-size: 12px;
   }
 }

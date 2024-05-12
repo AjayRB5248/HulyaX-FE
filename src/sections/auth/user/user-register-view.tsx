@@ -85,7 +85,7 @@ const UserRegisterView: React.FC = () => {
         name: data?.name,
         email: data?.email,
         password: data?.password,
-        mobileNumber: data?.mobileNumber,
+        mobileNumber: data?.mobileNumber?.replace(/\s/g, ""),
       };
       await registerMutation.mutateAsync(registerPayload);
 
@@ -132,10 +132,11 @@ const UserRegisterView: React.FC = () => {
 
               {/* Enable only AU country code */}
               <Input
-                country="AU"
+                country="NP"
                 international
                 withCountryCallingCode
                 value={phoneNumber}
+                {...methods.register("mobileNumber")}
                 onChange={(val) => {
                   setPhoneNumber(val?.toString());
                 }}

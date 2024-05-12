@@ -63,9 +63,9 @@ export const useRegister = () => {
     },
     {
       onSuccess: (data: any) => {
-        notify.enqueueSnackbar('User Data Saved Successfully!', {
-          variant: 'success',
-        });
+        // notify.enqueueSnackbar('User Data Saved Successfully!', {
+        //   variant: 'success',
+        // });
       },
       onError: (error: any) => {
         notify.enqueueSnackbar(

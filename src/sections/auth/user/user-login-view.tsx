@@ -60,21 +60,6 @@ const UserRegisterView: React.FC = () => {
     }
   });
 
-  const forgotPassword = async () => {
-    setLoggedInUser(methods.getValues());
-    try {
-      const payload = {
-        email: loggedInUser?.email,
-        tokenType: "OTP_RESET_PASSWORD",
-      };
-      await forgotPasswordMutation.mutateAsync(payload);
-
-      router.push("/auth/user/forgot-password");
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <section
       className="account-section d-flex align-items-center justify-content-center"
@@ -104,10 +89,7 @@ const UserRegisterView: React.FC = () => {
           </div>
 
           <div className="option text-right">
-            <a href="javascript:void(0)" onClick={forgotPassword}>
-              {" "}
-              Forgot Password?{" "}
-            </a>
+            <Link href="/auth/user/forgot-password"> Forgot Password? </Link>
           </div>
 
           <div className="form-group text-center">
@@ -118,7 +100,7 @@ const UserRegisterView: React.FC = () => {
         </FormProvider>
 
         <div className="option">
-          New user?  <Link href={paths.auth.user.register}>Sign Up Now</Link>
+          New user? <Link href={paths.auth.user.register}>Sign Up Now</Link>
         </div>
       </div>
     </section>
