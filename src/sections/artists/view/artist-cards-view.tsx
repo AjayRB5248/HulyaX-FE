@@ -13,20 +13,19 @@ import { RouterLink } from 'src/routes/components';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 //
-import UserCardList from '../user-card-list';
-
+import UserCardList from '../artist-card-list';
 // ----------------------------------------------------------------------
 
-export default function UserCardsView() {
+export default function ArtistCardsView() {
   const settings = useSettingsContext();
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="User Cards"
+        heading="Artist Cards"
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
-          { name: 'User', href: paths.dashboard.user.list },
+          { name: 'Artist', href: paths.dashboard.artist.list },
           { name: 'Cards' },
         ]}
         action={
@@ -36,7 +35,7 @@ export default function UserCardsView() {
             variant="contained"
             startIcon={<Iconify icon="mingcute:add-line" />}
           >
-            New User
+            New Artist
           </Button>
         }
         sx={{ mb: { xs: 3, md: 5 } }}

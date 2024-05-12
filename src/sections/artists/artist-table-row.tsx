@@ -16,7 +16,8 @@ import Iconify from 'src/components/iconify';
 //
 import { Icon } from '@iconify/react';
 import { useRemoveUser } from 'src/api/users';
-import UserQuickEditForm from './user-quick-edit-form';
+import UserQuickEditForm from './artist-quick-edit-form';
+import { Avatar } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +29,7 @@ type Props = {
   onDeleteRow: VoidFunction;
 };
 
-export default function UserTableRow({
+export default function ArtistTableRow({
   row,
   selected,
   onEditRow,
@@ -38,12 +39,8 @@ export default function UserTableRow({
 }: any) {
   const {
     name,
-    role,
-    status,
-    email,
-    mobileNumber,
-    isEmailVerified,
-    isNumberVerified,
+    genre,
+    artistProfile,
     id,
   } = row;
   const removeUserMutation = useRemoveUser();
@@ -63,34 +60,9 @@ export default function UserTableRow({
   return (
     <>
       <TableRow hover selected={selected}>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{name}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{email}</TableCell>
-
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{mobileNumber}</TableCell>
-
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{role}</TableCell>
-        <TableCell
-          sx={{
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {isEmailVerified ? (
-            <Icon icon='material-symbols:verified' style={{ color: 'green' }} />
-          ) : (
-            <Icon icon='carbon:close-filled' style={{ color: '#8B0000' }} />
-          )}
-        </TableCell>
-        <TableCell
-          sx={{
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {isNumberVerified ? (
-            <Icon icon='material-symbols:verified' style={{ color: 'green' }}/>
-          ) : (
-            <Icon icon='carbon:close-filled' style={{ color: '#8B0000' }} />
-          )}
-        </TableCell>
+       <Avatar alt={name} src={"https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/428606958_979593436857040_9093732891230991285_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=aPL6CFQzV48Q7kNvgE3Yce6&_nc_ht=scontent.fktm8-1.fna&oh=00_AYAkN99FZB-s60tHaxQ6nftUke8YTLFWSwJyBQWCyNy7Eg&oe=66452EB0"} sx={{ mr: 2 }} />
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>Sacar Adhikari</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>Musician</TableCell>
 
         <TableCell align='right' sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <Tooltip title='Quick Edit' placement='top' arrow>

@@ -16,7 +16,6 @@ const WidgetCheckbox: React.FC = () => {
       setCheckedCategories([...checkedCategories, category]);
     }
 
-    console.log(category, checkedCategories, "category -- checkedCategories");
 
     const queryData = {
       eventName: "",

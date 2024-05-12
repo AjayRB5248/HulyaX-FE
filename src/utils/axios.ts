@@ -105,5 +105,17 @@ export const endpoints = {
   user: {
     updateProfile:(id:string) => `users/${id}`,
     updateAvatar: `users/profile-picture`,
+  },
+  artist: {
+    createArtist: `/artist`,
+    updateArtist:(id:string)=> `artist/${id}`,
+    list: (queryParameters = {}) => {
+      let url = "/artists";
+      const params = new URLSearchParams(queryParameters).toString();
+      if (params) {
+        url += `?${params}`;
+      }
+      return url;
+    },
   }
 };
