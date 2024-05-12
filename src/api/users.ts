@@ -50,9 +50,9 @@ export function useUpdateUser() {
   return useMutation(
     ['user/update'],
     async (item: any) => {
-      const { data, id } = item;
+      const { data, userId } = item;
 
-      const response = await UsersService.update(id, data);
+      const response = await UsersService.update(userId, data);
       return response?.data;
     },
     {

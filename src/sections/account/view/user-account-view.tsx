@@ -36,11 +36,11 @@ const TABS = [
     label: "My Purchased Tickets",
     icon: <Iconify icon="solar:ticket-sale-bold" width={24} />,
   },
-  {
-    value: "changePhoneNumber",
-    label: "Change Phone Number",
-    icon: <Iconify icon="solar:smartphone-rotate-orientation-bold-duotone" width={24} />,
-  },
+  // {
+  //   value: "changePhoneNumber",
+  //   label: "Change Phone Number",
+  //   icon: <Iconify icon="solar:smartphone-rotate-orientation-bold-duotone" width={24} />,
+  // },
   {
     value: "changePassword",
     label: "Change Password",
@@ -98,7 +98,7 @@ export default function AccountView() {
               />
             )}
 
-            {currentTab === "changePhoneNumber" && <AccountChangePhoneNumber />}
+            {/* {currentTab === "changePhoneNumber" && <AccountChangePhoneNumber />} */}
 
             {currentTab === "social" && <AccountSocialLinks socialLinks={_userAbout.socialLinks} />}
 

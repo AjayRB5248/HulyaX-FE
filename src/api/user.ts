@@ -53,3 +53,26 @@ export function useUpdateUserAvatar() {
     }
   );
 }
+
+export function useChangePassword(id:any) {
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
+  return useMutation(
+    ["changePassword"],
+    async (data: any) => {
+      const response = await UserService.changePassword(id,data.password,data.newPassword,data.confirmPassword);
+      return response?.data?.user;
+    },
+    {
+      onError: (error: any) => {
+        enqueueSnackbar(error.response.data.message || "Error updating profile", {
+          variant: "error",
+        });
+      },
+      onSuccess: () => {
+        enqueueSnackbar("Password Changed Successfully!", { variant: "success" });
+      },
+    }
+  );
+}

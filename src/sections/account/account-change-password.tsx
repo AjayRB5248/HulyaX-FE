@@ -13,31 +13,35 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import Iconify from 'src/components/iconify';
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
+import { useChangePassword } from 'src/api/user';
+import { useAuth } from 'src/auth/context/users/auth-context';
 
 // ----------------------------------------------------------------------
 
 export default function AccountChangePassword() {
   const { enqueueSnackbar } = useSnackbar();
+  const {user} = useAuth()
 
   const password = useBoolean();
+  const changePasswordMutation=useChangePassword(user?.id)
 
   const ChangePassWordSchema = Yup.object().shape({
-    oldPassword: Yup.string().required('Old Password is required'),
+    password: Yup.string().required('Old Password is required'),
     newPassword: Yup.string()
       .required('New Password is required')
       .min(6, 'Password must be at least 6 characters')
       .test(
         'no-match',
         'New password must be different than old password',
-        (value, { parent }) => value !== parent.oldPassword
+        (value, { parent }) => value !== parent.password
       ),
-    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword')], 'Passwords must match'),
+      confirmPassword: Yup.string().oneOf([Yup.ref('newPassword')], 'Passwords must match'),
   });
 
   const defaultValues = {
-    oldPassword: '',
+    password: '',
     newPassword: '',
-    confirmNewPassword: '',
+    confirmPassword: '',
   };
 
   const methods = useForm({
@@ -53,10 +57,12 @@ export default function AccountChangePassword() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await changePasswordMutation.mutateAsync({
+        password: data.password,
+        newPassword: data.newPassword,
+        confirmPassword: data.confirmPassword,
+      });
       reset();
-      enqueueSnackbar('Update success!');
-      console.info('DATA', data);
     } catch (error) {
       console.error(error);
     }
@@ -66,7 +72,7 @@ export default function AccountChangePassword() {
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Stack component={Card} spacing={3} sx={{ p: 3 }}>
         <RHFTextField
-          name="oldPassword"
+          name="password"
           type={password.value ? 'text' : 'password'}
           label="Old Password"
           InputProps={{
@@ -102,7 +108,7 @@ export default function AccountChangePassword() {
         />
 
         <RHFTextField
-          name="confirmNewPassword"
+          name="confirmPassword"
           type={password.value ? 'text' : 'password'}
           label="Confirm New Password"
           InputProps={{
