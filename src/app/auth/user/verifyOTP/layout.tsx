@@ -16,7 +16,7 @@ export default function Layout({ children }: Props) {
   return (
     // <GuestGuard>
     <QueryClientProvider client={queryClient}>
-      <MainLayout headless>{children}</MainLayout>
+      <MainLayout>{children}</MainLayout>
     </QueryClientProvider>
     // </GuestGuard>
   );

@@ -99,7 +99,7 @@ const UserResetPassword = () => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton onClick={password.onToggle} edge="end">
+              <IconButton onClick={password.onToggle} edge="end" style={{ height: 30, width: 30 }}>
                 <Iconify icon={password.value ? "solar:eye-bold" : "solar:eye-closed-bold"} />
               </IconButton>
             </InputAdornment>
@@ -114,7 +114,7 @@ const UserResetPassword = () => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton onClick={password.onToggle} edge="end">
+              <IconButton onClick={password.onToggle} edge="end" style={{ height: 30, width: 30 }}>
                 <Iconify icon={password.value ? "solar:eye-bold" : "solar:eye-closed-bold"} />
               </IconButton>
             </InputAdornment>
@@ -156,7 +156,9 @@ const UserResetPassword = () => {
           <PasswordIcon sx={{ height: 96 }} />
 
           <Stack spacing={1} sx={{ my: 5 }}>
-            <Typography variant="h3" className="primary-text">Reset Your Password</Typography>
+            <Typography variant="h3" className="primary-text">
+              Reset Your Password
+            </Typography>
 
             <Typography sx={{ color: "text.secondary", fontSize: "12px" }}>
               We&apos;ve sent a 8-digit confirmation code to your phone number.
