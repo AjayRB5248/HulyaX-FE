@@ -84,7 +84,27 @@ export function useNavData() {
             show: user?.role === 'superAdmin',
             children: [
               { title: t('list'), path: paths.dashboard.user.list },
-              { title: t('details'), path: paths.dashboard.user.root },
+              { title: t('create'), path: paths.dashboard.user.new },
+            ],
+          },
+          {
+            title: t('Artists'),
+            path: paths.dashboard.artist.root,
+            icon: ICONS.tour,
+            show: user?.role === 'superAdmin',
+            children: [
+              { title: t('list'), path: paths.dashboard.artist.list },
+              { title: t('create'), path: paths.dashboard.artist.new },
+            ],
+          },
+          {
+            title: t('Venues'),
+            path: paths.dashboard.venue.root,
+            icon: ICONS.tour,
+            show: user?.role === 'superAdmin',
+            children: [
+              { title: t('list'), path: paths.dashboard.venue.list },
+              { title: t('create'), path: paths.dashboard.venue.new },
             ],
           },
         ],

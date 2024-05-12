@@ -25,7 +25,7 @@ type Props = {
   roleOptions: string[];
 };
 
-export default function UserTableToolbar({
+export default function ArtistTableToolbar({
   filters,
   onFilters,
   //
@@ -36,16 +36,6 @@ export default function UserTableToolbar({
   const handleFilterName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       onFilters('name', event.target.value);
-    },
-    [onFilters]
-  );
-
-  const handleFilterRole = useCallback(
-    (event: SelectChangeEvent<string[]>) => {
-      onFilters(
-        'role',
-        typeof event.target.value === 'string' ? event.target.value.split(',') : event.target.value
-      );
     },
     [onFilters]
   );
@@ -64,6 +54,7 @@ export default function UserTableToolbar({
           pr: { xs: 2.5, md: 1 },
         }}
       >
+
         <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
           <TextField
             fullWidth

@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 // @mui
@@ -11,51 +11,44 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import MenuItem from '@mui/material/MenuItem';
-// _mock
-import { USER_ROLE_OPTIONS } from 'src/_mock';
-// types
-import { IUserItem } from 'src/types/user';
-// assets
-// components
-import { useUpdateUser } from 'src/api/users';
 import FormProvider, {
   RHFSelect,
   RHFTextField,
+  RHFUploadAvatar,
 } from 'src/components/hook-form';
 import { useSnackbar } from 'src/components/snackbar';
+import { Typography } from '@mui/material';
+import { IArtistItem } from 'src/types/artist';
+import { useCreateArtistProfile } from 'src/api/artists';
+import { fData } from 'src/utils/format-number';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   open: boolean;
   onClose: VoidFunction;
-  currentUser?: IUserItem;
+  currentUser?: IArtistItem;
 };
 
-export default function UserQuickEditForm({
+export default function VenueQuickEditForm({
   currentUser,
   open,
   onClose,
 }: Props) {
   const { enqueueSnackbar } = useSnackbar();
-  const userUpdateMutation = useUpdateUser();
+  const astistUpdateMutation = useCreateArtistProfile();
 
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    email: Yup.string()
-      .required('Email is required')
-      .email('Email must be a valid email address'),
-    mobileNumber: Yup.string().required('Phone number is required'),
-    role: Yup.string().required('Role is required'),
+    genre: Yup.string().required('Artist Genre is required'),
+    artisrProfile: Yup.string().required('Artist profile is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
       name: currentUser?.name || '',
-      email: currentUser?.email || '',
-      mobileNumber: currentUser?.mobileNumber || '',
-      role: currentUser?.role || '',
+      genre: currentUser?.genre || '',
+      artisrProfile: currentUser?.artisrProfile || '',
     }),
     [currentUser]
   );
@@ -67,16 +60,16 @@ export default function UserQuickEditForm({
 
   const {
     reset,
+    watch,
+    control,
+    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      delete data.role;
-      delete data.mobileNumber;
-
-      await userUpdateMutation
+      await astistUpdateMutation
         .mutateAsync({
           data,
           id: currentUser?.id,
@@ -91,6 +84,21 @@ export default function UserQuickEditForm({
     }
   });
 
+  const handleDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
+
+      const newFile = Object.assign(file, {
+        preview: URL.createObjectURL(file),
+      });
+
+      if (file) {
+        setValue('artisrProfile', newFile, { shouldValidate: true });
+      }
+    },
+    [setValue]
+  );
+
   return (
     <Dialog
       fullWidth
@@ -102,12 +110,9 @@ export default function UserQuickEditForm({
       }}
     >
       <FormProvider methods={methods} onSubmit={onSubmit}>
-        <DialogTitle>Quick Update</DialogTitle>
+        <DialogTitle>Artist Update</DialogTitle>
 
-        <DialogContent>
-          {/* <Alert variant='outlined' severity='info' sx={{ mb: 3 }}>
-            Account is waiting for confirmation
-          </Alert> */}
+        <DialogContent >
 
           <Box
             rowGap={3}
@@ -117,22 +122,33 @@ export default function UserQuickEditForm({
               xs: 'repeat(1, 1fr)',
               sm: 'repeat(2, 1fr)',
             }}
-            sx={{marginTop: 2}}
+            sx={{ mt: 3 }}
           >
-            <RHFSelect name='role' label='Role' disabled>
-              {USER_ROLE_OPTIONS.map((status) => (
-                <MenuItem key={status.value} value={status.value}>
-                  {status.label}
-                </MenuItem>
-              ))}
-            </RHFSelect>
-
+            <RHFUploadAvatar
+                name="artisrProfile"
+                maxSize={3145728}
+                onDrop={handleDrop}
+                helperText={
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      mt: 3,
+                      mx: 'auto',
+                      display: 'block',
+                      textAlign: 'center',
+                      color: 'text.disabled',
+                    }}
+                  >
+                    Allowed *.jpeg, *.jpg, *.png, *.gif
+                    <br /> max size of {fData(3145728)}
+                  </Typography>
+                }
+              />
             <Box sx={{ display: { xs: 'none', sm: 'block' } }} />
 
             <RHFTextField name='name' label='Full Name' />
-            <RHFTextField name='email' label='Email Address' />
-            <RHFTextField name='mobileNumber' label='Mobile Number' disabled />
-          </Box>
+            <RHFTextField name='genre' label='Genre' />
+            </Box>
         </DialogContent>
 
         <DialogActions>
