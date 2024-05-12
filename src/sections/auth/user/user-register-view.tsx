@@ -8,6 +8,8 @@ import FormProvider from "src/components/hook-form";
 import * as Yup from "yup";
 
 import PhoneInput from "react-phone-number-input";
+import Input from "react-phone-number-input/input";
+
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "src/routes/hook";
@@ -124,6 +126,37 @@ const UserRegisterView: React.FC = () => {
             </div>
 
             <div className="form-group">
+              <label htmlFor="mobileNumber">
+                Mobile Number<span>*</span>
+              </label>
+
+              {/* Enable only AU country code */}
+              <Input
+                country="AU"
+                international
+                withCountryCallingCode
+                value={phoneNumber}
+                onChange={(val) => {
+                  setPhoneNumber(val?.toString());
+                }}
+              />
+
+              {/* <PhoneInput
+                international
+                placeholder="Enter phone number"
+                {...methods.register("mobileNumber")}
+                defaultCountry="AU"
+                disableDropdown
+                value={phoneNumber}
+                onChange={(val) => {
+                  setPhoneNumber(val?.toString());
+                }}
+              /> */}
+
+              <p className="text-danger">{methods.formState.errors.mobileNumber?.message}</p>
+            </div>
+
+            <div className="form-group">
               <label htmlFor="password">
                 Password<span>*</span>
               </label>
@@ -142,30 +175,6 @@ const UserRegisterView: React.FC = () => {
                 {...methods.register("confirmPassword")}
               />
               <p className="text-danger">{methods.formState.errors.confirmPassword?.message}</p>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="mobileNumber">
-                Mobile Number<span>*</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Enter Your Mobile Number"
-                id="mobileNumber"
-                {...methods.register("mobileNumber")}
-              />
-
-              {/* <PhoneInput
-                  international
-                  placeholder="Enter phone number"
-                  {...methods.register("mobileNumber")}
-                  defaultCountry="AU"
-                  value={phoneNumber}
-                  onChange={(val) => {
-                    setPhoneNumber(val?.toString());
-                  }}
-                /> */}
-              <p className="text-danger">{methods.formState.errors.mobileNumber?.message}</p>
             </div>
 
             <div className="form-group text-center mt-5">
