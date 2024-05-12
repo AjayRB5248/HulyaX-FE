@@ -33,18 +33,16 @@ import { IUserTableFilters } from 'src/types/user';
 //
 import { TableBody } from '@mui/material';
 import { useUsers } from 'src/api/users';
-import UserTableRow from '../user-table-row';
-import UserTableToolbar from '../user-table-toolbar';
+import ArtistTableRow from '../artist-table-row';
+import ArtistTableToolbar from '../artist-table-toolbar';
+import { useArtists } from 'src/api/artists';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
+  { id: 'profile', label: 'Profile Picture', width: 250 },
   { id: 'name', label: 'Name' },
-  { id: 'email', label: 'Email', width: 100 },
-  { id: 'phoneNumber', label: 'Phone Number', width: 180 },
-  { id: 'role', label: 'Role', width: 180 },
-  { id: 'emailVerified', label: 'Email Verified', width: 100 },
-  { id: 'phoneVerified', label: 'Phone Verified', width: 100 },
+  { id: 'genre', label: 'Genre', width: 200 },
   { id: 'Action', width: 88 },
 ];
 
@@ -60,20 +58,49 @@ export default function UserListView() {
   const table = useTable({
     defaultRowsPerPage: 10,
   });
-  const { users } = useUsers();
+  // const { artists } = useArtists();
+  const artists = [
+    {
+        name: "Sacar Adhikari",
+        avatarSrc: "https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/428606958_979593436857040_9093732891230991285_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=aPL6CFQzV48Q7kNvgE3Yce6&_nc_ht=scontent.fktm8-1.fna&oh=00_AYAkN99FZB-s60tHaxQ6nftUke8YTLFWSwJyBQWCyNy7Eg&oe=66452EB0",
+        genre: "Musician"
+    },
+    {
+        name: "Alina Bhattarai",
+        avatarSrc: "https://example.com/avatars/alina.jpg",
+        genre: "Visual Artist"
+    },
+    {
+        name: "Rajesh Hamal",
+        avatarSrc: "https://example.com/avatars/rajesh.jpg",
+        genre: "Actor"
+    },
+    {
+        name: "Nisha Adhikari",
+        avatarSrc: "https://example.com/avatars/nisha.jpg",
+        occupation: "Actress"
+    },
+    {
+        name: "Bikash Khatiwada",
+        avatarSrc: "https://example.com/avatars/bikash.jpg",
+        occupation: "Poet"
+    },
+    {
+        name: "Ani Choying",
+        avatarSrc: "https://example.com/avatars/ani.jpg",
+        genre: "Singer"
+    }
+];
+
   const settings = useSettingsContext();
 
   const confirm = useBoolean();
 
   const [filters, setFilters] = useState(defaultFilters);
 
-  const handleFilters = () => {
-  };
+  const handleFilters = () => {};
 
-  const handleFilterStatus = () => {
-   
-  };
-
+  const handleFilterStatus = () => {};
 
   return (
     <>
@@ -82,7 +109,7 @@ export default function UserListView() {
           heading='List'
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
-            { name: 'User', href: paths.dashboard.user.root },
+            { name: 'Artist', href: paths.dashboard.artist.list },
             { name: 'List' },
           ]}
           action={
@@ -92,7 +119,7 @@ export default function UserListView() {
               variant='contained'
               startIcon={<Iconify icon='mingcute:add-line' />}
             >
-              New User
+              New Artist
             </Button>
           }
           sx={{
@@ -111,11 +138,9 @@ export default function UserListView() {
             }}
           >
             <Tab iconPosition='end' value={'all'} label={'All'}></Tab>
-            <Tab iconPosition='end' value={'customer'} label={'Customer'}></Tab>
-            <Tab iconPosition='end' value={'company'} label={'Business User'}></Tab>
           </Tabs>
 
-          <UserTableToolbar
+          <ArtistTableToolbar
             filters={filters}
             onFilters={handleFilters}
             roleOptions={_roles}
@@ -128,23 +153,23 @@ export default function UserListView() {
                   order={table.order}
                   orderBy={table.orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={users?.totalResults}
+                  rowCount={artists?.length}
                   numSelected={table.selected.length}
                 />
 
                 <TableBody>
-                  {users?.results?.map((row: any) => (
-                    <UserTableRow key={row.id} row={row} />
+                  {artists?.map((row: any) => (
+                    <ArtistTableRow key={row.id} row={row} />
                   ))}
 
-                  <TableNoData notFound={users?.totalResults === 0} />
+                  <TableNoData notFound={artists?.length === 0} />
                 </TableBody>
               </Table>
             </Scrollbar>
           </TableContainer>
 
           <TablePaginationCustom
-            count={users?.totalResults}
+            count={artists?.length}
             page={table.page}
             rowsPerPage={table.rowsPerPage}
             onPageChange={table.onChangePage}
