@@ -94,66 +94,68 @@ const UserRegisterView: React.FC = () => {
     }
   });
   return (
-    <section className="account-section bg_img" style={{ backgroundImage: `url(${LoginBg.src})` }}>
+    <section
+      className="account-section register-section d-flex align-items-center justify-content-center"
+      // style={{ backgroundImage: `url(${LoginBg.src})` }}
+    >
       <div className="container">
-        <div className="padding-top padding-bottom">
-          <div className="account-area">
-            <div className="section-header-3">
-              <span className="cate">Welcome to Hulya Events </span>
-              <h4 className="title">Elevate Your Experience – Register Today for Hassle-Free Event Ticketing!</h4>
+        <div className="account-area">
+          <div className="section-header-3">
+            <span className="cate">Welcome to Hulya Events </span>
+            <h4 className="title">Elevate Your Experience – Register Today for Hassle-Free Event Ticketing!</h4>
+          </div>
+
+          {/* Form Starts */}
+          <FormProvider methods={methods} onSubmit={onSubmit} className={"account-form"}>
+            <div className="form-group">
+              <label htmlFor="fullName">
+                Full Name<span>*</span>
+              </label>
+              <input type="text" placeholder="Enter Your Full Name" id="fullName" {...methods.register("name")} />
+              <p className="text-danger">{methods.formState.errors.name?.message}</p>
             </div>
 
-            {/* Form Starts */}
-            <FormProvider methods={methods} onSubmit={onSubmit} className={"account-form"}>
-              <div className="form-group">
-                <label htmlFor="fullName">
-                  Full Name<span>*</span>
-                </label>
-                <input type="text" placeholder="Enter Your Full Name" id="fullName" {...methods.register("name")} />
-                <p className="text-danger">{methods.formState.errors.name?.message}</p>
-              </div>
+            <div className="form-group">
+              <label htmlFor="email">
+                Email<span>*</span>
+              </label>
+              <input type="text" placeholder="Enter Your Email" id="email" {...methods.register("email")} />
+              <p className="text-danger">{methods.formState.errors.email?.message}</p>
+            </div>
 
-              <div className="form-group">
-                <label htmlFor="email">
-                  Email<span>*</span>
-                </label>
-                <input type="text" placeholder="Enter Your Email" id="email" {...methods.register("email")} />
-                <p className="text-danger">{methods.formState.errors.email?.message}</p>
-              </div>
+            <div className="form-group">
+              <label htmlFor="password">
+                Password<span>*</span>
+              </label>
+              <input type="password" placeholder="Password" id="password" {...methods.register("password")} />
+              <p className="text-danger">{methods.formState.errors.password?.message}</p>
+            </div>
 
-              <div className="form-group">
-                <label htmlFor="password">
-                  Password<span>*</span>
-                </label>
-                <input type="password" placeholder="Password" id="password" {...methods.register("password")} />
-                <p className="text-danger">{methods.formState.errors.password?.message}</p>
-              </div>
+            <div className="form-group">
+              <label htmlFor="pass2">
+                Confirm Password<span>*</span>
+              </label>
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                id="pass2"
+                {...methods.register("confirmPassword")}
+              />
+              <p className="text-danger">{methods.formState.errors.confirmPassword?.message}</p>
+            </div>
 
-              <div className="form-group">
-                <label htmlFor="pass2">
-                  Confirm Password<span>*</span>
-                </label>
-                <input
-                  type="password"
-                  placeholder="Confirm Password"
-                  id="pass2"
-                  {...methods.register("confirmPassword")}
-                />
-                <p className="text-danger">{methods.formState.errors.confirmPassword?.message}</p>
-              </div>
+            <div className="form-group">
+              <label htmlFor="mobileNumber">
+                Mobile Number<span>*</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Enter Your Mobile Number"
+                id="mobileNumber"
+                {...methods.register("mobileNumber")}
+              />
 
-              <div className="form-group">
-                <label htmlFor="mobileNumber">
-                  Mobile Number<span>*</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter Your Mobile Number"
-                  id="mobileNumber"
-                  {...methods.register("mobileNumber")}
-                />
-
-                {/* <PhoneInput
+              {/* <PhoneInput
                   international
                   placeholder="Enter phone number"
                   {...methods.register("mobileNumber")}
@@ -163,41 +165,40 @@ const UserRegisterView: React.FC = () => {
                     setPhoneNumber(val?.toString());
                   }}
                 /> */}
-                <p className="text-danger">{methods.formState.errors.mobileNumber?.message}</p>
-              </div>
-
-              <div className="form-group text-center mt-5">
-                <LoadingButton type="submit" className="btn-loading" loadingPosition="start" loading={isSubmitting}>
-                  <span>Sign Up</span>
-                </LoadingButton>
-              </div>
-            </FormProvider>
-            {/* Form Ends */}
-
-            <div className="option">
-              Already have an account? <Link href={paths.auth.user.login}>Login</Link>
+              <p className="text-danger">{methods.formState.errors.mobileNumber?.message}</p>
             </div>
-            <div className="or d-none">
-              <span>Or</span>
+
+            <div className="form-group text-center mt-5">
+              <LoadingButton type="submit" className="btn-loading" loadingPosition="start" loading={isSubmitting}>
+                <span>Sign Up</span>
+              </LoadingButton>
             </div>
-            <ul className="social-icons d-none">
-              <li>
-                <a href="#0">
-                  <i className="fab fa-facebook-f"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#0" className="active">
-                  <i className="fab fa-twitter"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#0">
-                  <i className="fab fa-google"></i>
-                </a>
-              </li>
-            </ul>
+          </FormProvider>
+          {/* Form Ends */}
+
+          <div className="option">
+            Already have an account? <Link href={paths.auth.user.login}>Login</Link>
           </div>
+          <div className="or d-none">
+            <span>Or</span>
+          </div>
+          <ul className="social-icons d-none">
+            <li>
+              <a href="#0">
+                <i className="fab fa-facebook-f"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#0" className="active">
+                <i className="fab fa-twitter"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#0">
+                <i className="fab fa-google"></i>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </section>

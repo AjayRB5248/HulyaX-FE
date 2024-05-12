@@ -77,7 +77,7 @@ const UserRegisterView: React.FC = () => {
 
   return (
     <section
-      className="account-section d-flex align-items-center justify-content-center h-100vh mt-50"
+      className="account-section d-flex align-items-center justify-content-center"
       // style={{ backgroundImage: `url(${LoginBg.src})` }}
     >
       <div className="account-area">
