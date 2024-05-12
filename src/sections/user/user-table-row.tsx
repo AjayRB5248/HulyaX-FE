@@ -75,9 +75,9 @@ export default function UserTableRow({
           }}
         >
           {isEmailVerified ? (
-            <Icon icon='material-symbols:verified' />
+            <Icon icon='material-symbols:verified' style={{ color: 'green' }} />
           ) : (
-            <Icon icon='carbon:close-filled' />
+            <Icon icon='carbon:close-filled' style={{ color: '#8B0000' }} />
           )}
         </TableCell>
         <TableCell
@@ -86,9 +86,9 @@ export default function UserTableRow({
           }}
         >
           {isNumberVerified ? (
-            <Icon icon='material-symbols:verified' />
+            <Icon icon='material-symbols:verified' style={{ color: 'green' }}/>
           ) : (
-            <Icon icon='carbon:close-filled' />
+            <Icon icon='carbon:close-filled' style={{ color: '#8B0000' }} />
           )}
         </TableCell>
 

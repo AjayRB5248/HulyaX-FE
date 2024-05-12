@@ -67,13 +67,26 @@ export default function UserListView() {
 
   const [filters, setFilters] = useState(defaultFilters);
 
-  const handleFilters = () => {
+  const handleFilters = (filterName:any, value:any) => {
+    setFilters((currentFilters) => ({
+      ...currentFilters,
+      [filterName]: value.trim().toLowerCase()
+    }));
   };
 
-  const handleFilterStatus = () => {
-   
+  const handleFilterStatus = (event:any, newValue:any) => {
+    setFilters((currentFilters) => ({
+      ...currentFilters,
+      status: newValue,
+      role: newValue === 'all' ? [] : [newValue],  
+    }));
   };
 
+  const filteredUsers = users?.results?.filter((user:any) => 
+    (filters.role.length === 0 || filters.role.includes(user.role)) &&
+    (user.name.toLowerCase().includes(filters.name) || user.email.toLowerCase().includes(filters.name))
+  );
+  
 
   return (
     <>
@@ -82,7 +95,7 @@ export default function UserListView() {
           heading='List'
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
-            { name: 'User', href: paths.dashboard.user.root },
+            { name: 'User', href: paths.dashboard.user.list },
             { name: 'List' },
           ]}
           action={
@@ -111,8 +124,9 @@ export default function UserListView() {
             }}
           >
             <Tab iconPosition='end' value={'all'} label={'All'}></Tab>
-            <Tab iconPosition='end' value={'customer'} label={'Customer'}></Tab>
-            <Tab iconPosition='end' value={'company'} label={'Business User'}></Tab>
+            <Tab iconPosition='end' value={'customer'} label={'Customers'}></Tab>
+            <Tab iconPosition='end' value={'companyAdmin'} label={'Business Users'}></Tab>
+            <Tab iconPosition='end' value={'superAdmin'} label={'Super Admins'}></Tab>
           </Tabs>
 
           <UserTableToolbar
@@ -133,7 +147,7 @@ export default function UserListView() {
                 />
 
                 <TableBody>
-                  {users?.results?.map((row: any) => (
+                {filteredUsers?.map((row:any) => (
                     <UserTableRow key={row.id} row={row} />
                   ))}
 

@@ -98,9 +98,18 @@ export default function UserListView() {
 
   const [filters, setFilters] = useState(defaultFilters);
 
-  const handleFilters = () => {};
-
+  const handleFilters = (filterName:any, value:any) => {
+    setFilters((currentFilters) => ({
+      ...currentFilters,
+      [filterName]: value.trim().toLowerCase()
+    }));
+  };
   const handleFilterStatus = () => {};
+
+  const filteredUsers = artists.filter(artist => 
+    artist.name.toLowerCase().includes(filters.name)
+  );
+
 
   return (
     <>
@@ -158,7 +167,7 @@ export default function UserListView() {
                 />
 
                 <TableBody>
-                  {artists?.map((row: any) => (
+                  {filteredUsers?.map((row: any) => (
                     <ArtistTableRow key={row.id} row={row} />
                   ))}
 

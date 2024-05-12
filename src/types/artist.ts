@@ -4,3 +4,8 @@ export type IArtistItem = {
     genre: string;
     artisrProfile:string;
 }
+
+export type IArtistTableFilters = {
+    name: string;
+    genre: string;
+  };
