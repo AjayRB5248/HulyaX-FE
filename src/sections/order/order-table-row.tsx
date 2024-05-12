@@ -24,11 +24,12 @@ import Iconify from "src/components/iconify";
 import { ConfirmDialog } from "src/components/custom-dialog";
 import CustomPopover, { usePopover } from "src/components/custom-popover";
 import { Tooltip } from "@mui/material";
+import moment from "moment";
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  row: IOrderItem;
+  row: any;
   selected: boolean;
   onViewRow: VoidFunction;
   onSelectRow: VoidFunction;
@@ -44,13 +45,81 @@ export default function OrderTableRow({ row, selected, onViewRow, onSelectRow, o
 
   const popover = usePopover();
 
-  const renderPrimary = (
-    <TableRow hover selected={selected}>
-      <TableCell padding="checkbox">
-        <Checkbox checked={selected} onClick={onSelectRow} />
-      </TableCell>
+  // const renderPrimary = (
+  //   <TableRow hover selected={selected}>
+  //     <TableCell padding="checkbox">
+  //       <Checkbox checked={selected} onClick={onSelectRow} />
+  //     </TableCell>
 
-      <TableCell>
+  //     <TableCell>
+  //       <Box
+  //         onClick={onViewRow}
+  //         sx={{
+  //           cursor: "pointer",
+  //           "&:hover": {
+  //             textDecoration: "underline",
+  //           },
+  //         }}
+  //       >
+  //         {row?._id}
+  //       </Box>
+  //     </TableCell>
+
+
+  //     <TableCell>
+  //       <ListItemText
+  //         primary={format(new Date(row?.bookedDate), "dd MMM yyyy")}
+  //         secondary={format(new Date(new Date(row?.bookedDate), "p")}
+  //         primaryTypographyProps={{ typography: "body2", noWrap: true }}
+  //         secondaryTypographyProps={{
+  //           mt: 0.5,
+  //           component: "span",
+  //           typography: "caption",
+  //         }}
+  //       />
+  //     </TableCell>
+
+
+
+  //     <TableCell>
+  //       <Label
+  //         variant="soft"
+  //         color={
+  //           (row?.status === "completed" && "success") ||
+  //           (row?.status === "pending" && "warning") ||
+  //           (row?.status === "cancelled" && "error") ||
+  //           "default"
+  //         }
+  //       >
+  //         {row?.status}
+  //       </Label>
+  //     </TableCell>
+  //     <TableCell>
+  //       <Label
+  //         variant="soft"
+  //         color={
+  //           (row?.status === "completed" && "success") ||
+  //           (row?.status === "pending" && "warning") ||
+  //           (row?.status === "cancelled" && "error") ||
+  //           "default"
+  //         }
+  //       >
+  //         {row?.status}
+  //       </Label>
+  //     </TableCell>
+
+    
+  //   </TableRow>
+  // );
+
+
+
+  return (
+    <>
+     <TableRow>
+     <TableCell></TableCell>
+     
+     <TableCell>
         <Box
           onClick={onViewRow}
           sx={{
@@ -60,165 +129,32 @@ export default function OrderTableRow({ row, selected, onViewRow, onSelectRow, o
             },
           }}
         >
-          {orderNumber}
+          {row?._id}
         </Box>
       </TableCell>
 
-      <TableCell sx={{ display: "flex", alignItems: "center" }}>
-        <Avatar alt={customer.name} src={customer.avatarUrl} sx={{ mr: 2 }} />
+     <TableCell>
+        {row?.eventData?.eventName}
+     </TableCell>
 
-        <ListItemText
-          primary={customer.name}
-          secondary={customer.email}
-          primaryTypographyProps={{ typography: "body2" }}
-          secondaryTypographyProps={{ component: "span", color: "text.disabled" }}
-        />
-      </TableCell>
+     <TableCell>
+        {moment(row?.bookedDate)?.format()}
+     </TableCell>
 
-      <TableCell>
-        <ListItemText
-          primary={format(new Date(createdAt), "dd MMM yyyy")}
-          secondary={format(new Date(createdAt), "p")}
-          primaryTypographyProps={{ typography: "body2", noWrap: true }}
-          secondaryTypographyProps={{
-            mt: 0.5,
-            component: "span",
-            typography: "caption",
-          }}
-        />
-      </TableCell>
+     <TableCell>
+        {row?.eventData?.artists?.join(',')}
+     </TableCell>
 
-      <TableCell align="center"> {totalQuantity} </TableCell>
+     <TableCell>
+        {row?.eventData?.venues}
+     </TableCell>
 
-      <TableCell> {fCurrency(subTotal)} </TableCell>
+     <TableCell>
+        {row?.status}
+     </TableCell>
 
-      <TableCell>
-        <Label
-          variant="soft"
-          color={
-            (status === "completed" && "success") ||
-            (status === "pending" && "warning") ||
-            (status === "cancelled" && "error") ||
-            "default"
-          }
-        >
-          {status}
-        </Label>
-      </TableCell>
+     </TableRow>
 
-      <TableCell align="right" sx={{ px: 1, whiteSpace: "nowrap" }}>
-        <Stack direction="row" style={{ display: "flex", width: "100%" }}>
-          <IconButton
-            color={collapse.value ? "inherit" : "default"}
-            onClick={collapse.onToggle}
-            style={{
-              flex: "1",
-              ...(collapse.value && {
-                bgcolor: "action.hover",
-              }),
-            }}
-          >
-            <Iconify icon="eva:arrow-ios-downward-fill" />
-          </IconButton>
-
-          <Tooltip title="Download">
-            <IconButton
-              color="primary"
-              style={{
-                flex: "1",
-              }}
-            >
-              <Iconify icon="eva:download-outline" />
-            </IconButton>
-          </Tooltip>
-        </Stack>
-      </TableCell>
-    </TableRow>
-  );
-
-  const renderSecondary = (
-    <TableRow>
-      <TableCell sx={{ p: 0, border: "none" }} colSpan={8}>
-        <Collapse in={collapse.value} timeout="auto" unmountOnExit sx={{ bgcolor: "background.neutral" }}>
-          <Stack component={Paper} sx={{ m: 1.5 }}>
-            {items.map((item) => (
-              <Stack
-                key={item.id}
-                direction="row"
-                alignItems="center"
-                sx={{
-                  p: (theme) => theme.spacing(1.5, 2, 1.5, 1.5),
-                  "&:not(:last-of-type)": {
-                    borderBottom: (theme) => `solid 2px ${theme.palette.background.neutral}`,
-                  },
-                }}
-              >
-                <Avatar src={item.coverUrl} variant="rounded" sx={{ width: 48, height: 48, mr: 2 }} />
-
-                <ListItemText
-                  primary={item.name}
-                  secondary={item.sku}
-                  primaryTypographyProps={{
-                    typography: "body2",
-                  }}
-                  secondaryTypographyProps={{
-                    component: "span",
-                    color: "text.disabled",
-                    mt: 0.5,
-                  }}
-                />
-
-                <Box>x{item.quantity}</Box>
-
-                <Box sx={{ width: 110, textAlign: "right" }}>{fCurrency(item.price)}</Box>
-              </Stack>
-            ))}
-          </Stack>
-        </Collapse>
-      </TableCell>
-    </TableRow>
-  );
-
-  return (
-    <>
-      {renderPrimary}
-
-      {renderSecondary}
-
-      <CustomPopover open={popover.open} onClose={popover.onClose} arrow="right-top" sx={{ width: 140 }}>
-        <MenuItem
-          onClick={() => {
-            confirm.onTrue();
-            popover.onClose();
-          }}
-          sx={{ color: "error.main" }}
-        >
-          <Iconify icon="solar:trash-bin-trash-bold" />
-          Delete
-        </MenuItem>
-
-        <MenuItem
-          onClick={() => {
-            onViewRow();
-            popover.onClose();
-          }}
-        >
-          <Iconify icon="solar:eye-bold" />
-          View
-        </MenuItem>
-      </CustomPopover>
-
-      <ConfirmDialog
-        open={confirm.value}
-        onClose={confirm.onFalse}
-        title="Delete"
-        content="Are you sure want to delete?"
-        action={
-          <Button variant="contained" color="error" onClick={onDeleteRow}>
-            Delete
-          </Button>
-        }
-      />
     </>
   );
 }

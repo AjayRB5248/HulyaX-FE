@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 // @mui
 import { alpha } from "@mui/material/styles";
 import Tab from "@mui/material/Tab";
@@ -45,18 +45,20 @@ import { IOrderItem, IOrderTableFilters, IOrderTableFilterValue } from "src/type
 import OrderTableRow from "../order-table-row";
 import OrderTableToolbar from "../order-table-toolbar";
 import OrderTableFiltersResult from "../order-table-filters-result";
+import axiosInstance from "src/utils/axios";
+import { useQuery } from "@tanstack/react-query";
 
 // ----------------------------------------------------------------------
 
 const STATUS_OPTIONS = [{ value: "all", label: "All" }, ...ORDER_STATUS_OPTIONS];
 
 const TABLE_HEAD = [
-  { id: "orderNumber", label: "Ticket #", width: 116 },
-  { id: "name", label: "Event Name" },
-  { id: "createdAt", label: "Date", width: 140 },
-  { id: "totalQuantity", label: "Seats", width: 120, align: "center" },
-  { id: "totalAmount", label: "Price", width: 140 },
-  { id: "status", label: "Status", width: 110 },
+  { id: "_id", label: "Ticket #", width: 116 },
+  { id: "eventData.eventName", label: "Event Name" },
+  { id: "bookedDate", label: "Date", width: 140 },
+  { id: "eventData.artists", label: "Artists", width: 140 },
+  { id: "eventData.venues", label: "Venues", width: 140 },
+  { id: "eventData.status", label: "Status", width: 110 },
   { id: "", width: 88 },
 ];
 
@@ -67,11 +69,28 @@ const defaultFilters: IOrderTableFilters = {
   endDate: null,
 };
 
-// ----------------------------------------------------------------------
+
+const myPurchasedTicket = () => {
+  return new Promise((resolve, reject) => {
+    axiosInstance.post('/tickets/show-purchased-ticket', {})
+      .then(response => {
+        if (response.status === 201) {
+          
+          resolve(response.data);
+        } else {
+          reject(new Error(`Unexpected status code: ${response.status}`));
+        }
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
 
 export default function OrderListView() {
   const table = useTable({ defaultOrderBy: "orderNumber" });
-
+  const [data, setData] = useState([])
   const settings = useSettingsContext();
 
   const router = useRouter();
@@ -135,9 +154,6 @@ export default function OrderListView() {
     });
   }, [dataFiltered.length, dataInPage.length, table, tableData]);
 
-  const handleResetFilters = useCallback(() => {
-    setFilters(defaultFilters);
-  }, []);
 
   const handleViewRow = useCallback(
     (id: string) => {
@@ -146,48 +162,21 @@ export default function OrderListView() {
     [router]
   );
 
-  const handleFilterStatus = useCallback(
-    (event: React.SyntheticEvent, newValue: string) => {
-      handleFilters("status", newValue);
-    },
-    [handleFilters]
-  );
+
+  useEffect(() => {
+    if(data.length == 0){
+      myPurchasedTicket().then((res:any) => {
+        setData(res?.ticket)
+      })
+    }
+  }, [])
+
 
   return (
     <>
       <Container maxWidth={settings.themeStretch ? false : "lg"}>
         <Card>
-          {/* {canReset && (
-            <OrderTableFiltersResult
-              filters={filters}
-              onFilters={handleFilters}
-              //
-              onResetFilters={handleResetFilters}
-              //
-              results={dataFiltered.length}
-              sx={{ p: 2.5, pt: 0 }}
-            />
-          )} */}
-
           <TableContainer sx={{ position: "relative", overflow: "unset" }}>
-            {/* <TableSelectedAction
-              dense={table.dense}
-              numSelected={table.selected.length}
-              rowCount={tableData.length}
-              onSelectAllRows={(checked) =>
-                table.onSelectAllRows(
-                  checked,
-                  tableData.map((row) => row.id)
-                )
-              }
-              action={
-                <Tooltip title="Delete">
-                  <IconButton color="primary" onClick={confirm.onTrue}>
-                    <Iconify icon="solar:trash-bin-trash-bold" />
-                  </IconButton>
-                </Tooltip>
-              }
-            /> */}
 
             <Scrollbar>
               <Table size={table.dense ? "small" : "medium"} sx={{ minWidth: 960 }}>
@@ -207,16 +196,10 @@ export default function OrderListView() {
                 />
 
                 <TableBody>
-                  {dataFiltered
-                    .slice(table.page * table.rowsPerPage, table.page * table.rowsPerPage + table.rowsPerPage)
-                    .map((row) => (
+                  {data.map((row) => (
                       <OrderTableRow
                         key={row.id}
                         row={row}
-                        selected={table.selected.includes(row.id)}
-                        onSelectRow={() => table.onSelectRow(row.id)}
-                        onDeleteRow={() => handleDeleteRow(row.id)}
-                        onViewRow={() => handleViewRow(row.id)}
                       />
                     ))}
 

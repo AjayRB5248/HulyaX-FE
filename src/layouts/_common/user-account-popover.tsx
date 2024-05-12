@@ -69,8 +69,10 @@ export default function UserAccountPopover() {
   };
 
   const handleClickItem = (path: string) => {
+    console.log(path, 'this is data');
+    
+    router.replace(path);
     popover.onClose();
-    router.push(path);
   };
 
   return (
