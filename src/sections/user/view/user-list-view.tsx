@@ -61,7 +61,8 @@ export default function UserListView() {
   const table = useTable({
     defaultRowsPerPage: 10,
   });
-  const { users } = useUsers();
+  const { users, totalResults, loading } = useUsers({page:table?.page, limit:table?.rowsPerPage});
+
   const settings = useSettingsContext();
 
   const confirm = useBoolean();
@@ -83,7 +84,7 @@ export default function UserListView() {
     }));
   };
 
-  const filteredUsers = users?.results?.filter((user:any) => 
+  const filteredUsers = users?.filter((user:any) => 
     (filters.role.length === 0 || filters.role.includes(user.role)) &&
     (user.name.toLowerCase().includes(filters.name) || user.email.toLowerCase().includes(filters.name))
   );
@@ -159,11 +160,15 @@ export default function UserListView() {
           </TableContainer>
 
           <TablePaginationCustom
-            count={filteredUsers?.length}
+            count={totalResults} 
             page={table.page}
             rowsPerPage={table.rowsPerPage}
-            onPageChange={table.onChangePage}
-            onRowsPerPageChange={table.onChangeRowsPerPage}
+            onPageChange={(event, newPage) => table.setPage(newPage)}
+            onRowsPerPageChange={(event) => {
+            const newRowsPerPage = parseInt(event.target.value, 10);
+            table.setRowsPerPage(newRowsPerPage);
+            table.setPage(0); 
+            }}
           />
         </Card>
       </Container>
