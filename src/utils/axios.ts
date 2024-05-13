@@ -105,7 +105,7 @@ export const endpoints = {
   user: {
     updateProfile:(id:string) => `users/${id}`,
     updateAvatar: `users/profile-picture`,
-    changePassword:(id:string) =>`users/${id}`
+    changePassword:`users/update-password`
   },
   artist: {
     createArtist: `/artist`,

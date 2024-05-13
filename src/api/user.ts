@@ -54,14 +54,14 @@ export function useUpdateUserAvatar() {
   );
 }
 
-export function useChangePassword(id:any) {
+export function useChangePassword() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
   return useMutation(
     ["changePassword"],
     async (data: any) => {
-      const response = await UserService.changePassword(id,data.password,data.newPassword,data.confirmPassword);
+      const response = await UserService.changePassword(data.password,data.newPassword,data.confirmPassword);
       return response?.data?.user;
     },
     {

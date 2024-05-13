@@ -20,10 +20,9 @@ import { useAuth } from 'src/auth/context/users/auth-context';
 
 export default function AccountChangePassword() {
   const { enqueueSnackbar } = useSnackbar();
-  const {user} = useAuth()
 
   const password = useBoolean();
-  const changePasswordMutation=useChangePassword(user?.id)
+  const changePasswordMutation=useChangePassword()
 
   const ChangePassWordSchema = Yup.object().shape({
     password: Yup.string().required('Old Password is required'),

@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // @mui
@@ -13,7 +13,6 @@ import Typography from "@mui/material/Typography";
 import { useSnackbar } from "src/components/snackbar";
 import FormProvider, { RHFTextField, RHFUploadAvatar } from "src/components/hook-form";
 import { getUserData } from "src/utils/token-management";
-import { Chip } from "@mui/material";
 import Link from "next/link";
 import { useUpdateUserAvatar, useUpdateUserProfile } from "src/api/user";
 import VerifyOTPModal from "./otp-verify-modal";
@@ -34,6 +33,7 @@ export default function AccountGeneral() {
   const sendOTPMutation = sendOTP();
   const verifyOTPMutation = verifyOTP();
   const router = useRouter();
+  const [loading,setLoading] = useState(false)
 
   const UpdateUserSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -70,21 +70,28 @@ export default function AccountGeneral() {
     }
   });
 
+  const sendOTPCode= async (tokenType:string) => {
+    if (user) {
+      const payload = {
+        email: user.email,
+        tokenType: tokenType,
+      };
+      return await sendOTPMutation.mutateAsync(payload);
+    }
+    return null;
+  };
+
   const handleOtpVerifyModal = async () => {
+    setLoading(true);
     try {
-      let generatedOTPRes;
-      if (user) {
-        const payloadForGeneratingOTP = {
-          email: user?.email,
-          tokenType: "OTP_MOBILE",
-        };
-        generatedOTPRes = await sendOTPMutation.mutateAsync(payloadForGeneratingOTP);
-      }
-      if(generatedOTPRes){
-        verifyMobile.onTrue()
+      const generatedOTPRes = await sendOTPCode("OTP_MOBILE");
+      if (generatedOTPRes) {
+        verifyMobile.onTrue();
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -98,24 +105,22 @@ export default function AccountGeneral() {
         };
         verifiedOTPRes = await verifyOTPMutation.mutateAsync(payloadForGeneratingOTP);
       }
-      verifyMobile.onFalse()
+      if(verifiedOTPRes){
+        verifyMobile.onFalse()
+      }
     } catch (error) {
       console.error(error);
     }
   }
 
   const generateOTPCode = async () => {
+    setLoading(true);
     try {
-      let generatedOTPRes;
-      if (user) {
-        const payloadForGeneratingOTP = {
-          email: user?.email,
-          tokenType: "OTP_MOBILE",
-        };
-        generatedOTPRes = await sendOTPMutation.mutateAsync(payloadForGeneratingOTP);
-      }
+      const generatedOTPRes = await sendOTPCode("OTP_MOBILE");
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -210,20 +215,18 @@ export default function AccountGeneral() {
               <RHFTextField name="email" label="Email Address" required />
               <RHFTextField name="mobileNumber" label="Phone Number" disabled/>
 
-              {/* TODO: Implement Verify phone Number Link */}
               {user?.isNumberVerified ? (
                 <span className="text-success text-verified">
                   Phone Number Verified <i className="fa fa-check-circle ml-2"></i>{" "}
                 </span>
               ) : (
-                <Button className="text-warning verify-phone-link" onClick={handleOtpVerifyModal}>
+                <Button className="text-warning verify-phone-link" onClick={handleOtpVerifyModal} disabled={loading}>
                   Verify Your Phone Number <i className="fa fa-warning ml-2"></i>{" "}
                 </Button>
               )}
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-              {/* <RHFTextField name="about" multiline rows={4} label="About" /> */}
 
               <LoadingButton type="submit" variant="contained" loading={isSubmitting} className="btn-save">
                 Save Changes
