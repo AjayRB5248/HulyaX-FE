@@ -65,7 +65,7 @@ export default function TourListView() {
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           {
-            name: 'Tour',
+            name: 'Event',
             href: paths.dashboard.tour.root,
           },
           { name: 'List' },
