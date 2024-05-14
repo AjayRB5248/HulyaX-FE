@@ -1,50 +1,21 @@
-import { format } from "date-fns";
 // @mui
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
-import Collapse from "@mui/material/Collapse";
-import MenuItem from "@mui/material/MenuItem";
-import TableRow from "@mui/material/TableRow";
-import Checkbox from "@mui/material/Checkbox";
-import TableCell from "@mui/material/TableCell";
-import IconButton from "@mui/material/IconButton";
-import ListItemText from "@mui/material/ListItemText";
+import Box from '@mui/material/Box';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
 // hooks
-import { useBoolean } from "src/hooks/use-boolean";
 // utils
-import { fCurrency } from "src/utils/format-number";
 // types
-import { IOrderItem } from "src/types/order";
 // components
-import Label from "src/components/label";
-import Iconify from "src/components/iconify";
-import { ConfirmDialog } from "src/components/custom-dialog";
-import CustomPopover, { usePopover } from "src/components/custom-popover";
-import { Tooltip } from "@mui/material";
-import moment from "moment";
+import moment from 'moment';
+import Label from 'src/components/label';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   row: any;
-  selected: boolean;
-  onViewRow: VoidFunction;
-  onSelectRow: VoidFunction;
-  onDeleteRow: VoidFunction;
 };
 
-export default function OrderTableRow({ row, selected, onViewRow, onSelectRow, onDeleteRow }: Props) {
-  const { items, status, orderNumber, createdAt, customer, totalQuantity, subTotal } = row;
-
-  const confirm = useBoolean();
-
-  const collapse = useBoolean();
-
-  const popover = usePopover();
-
+export default function OrderTableRow({ row }: Props) {
   // const renderPrimary = (
   //   <TableRow hover selected={selected}>
   //     <TableCell padding="checkbox">
@@ -65,7 +36,6 @@ export default function OrderTableRow({ row, selected, onViewRow, onSelectRow, o
   //       </Box>
   //     </TableCell>
 
-
   //     <TableCell>
   //       <ListItemText
   //         primary={format(new Date(row?.bookedDate), "dd MMM yyyy")}
@@ -79,8 +49,6 @@ export default function OrderTableRow({ row, selected, onViewRow, onSelectRow, o
   //       />
   //     </TableCell>
 
-
-
   //     <TableCell>
   //       <Label
   //         variant="soft"
@@ -108,53 +76,57 @@ export default function OrderTableRow({ row, selected, onViewRow, onSelectRow, o
   //       </Label>
   //     </TableCell>
 
-    
   //   </TableRow>
   // );
 
-
-
   return (
     <>
-     <TableRow>
-     <TableCell></TableCell>
-     
-     <TableCell>
-        <Box
-          onClick={onViewRow}
-          sx={{
-            cursor: "pointer",
-            "&:hover": {
-              textDecoration: "underline",
-            },
-          }}
-        >
-          {row?._id}
-        </Box>
-      </TableCell>
+      <TableRow>
+        <TableCell>
+          <Box
+            // onClick={onViewRow}
+            sx={{
+              cursor: 'pointer',
+              '&:hover': {
+                textDecoration: 'underline',
+              },
+            }}
+          >
+            {row?._id}
+          </Box>
+        </TableCell>
 
-     <TableCell>
-        {row?.eventData?.eventName}
-     </TableCell>
+        <TableCell>{row?.eventData?.eventName}</TableCell>
 
-     <TableCell>
-        {moment(row?.bookedDate)?.format()}
-     </TableCell>
+        <TableCell>{moment(row?.bookedDate)?.format()}</TableCell>
 
-     <TableCell>
-        {row?.eventData?.artists?.join(',')}
-     </TableCell>
+        <TableCell>
+          {row?.eventData?.artists
+            ?.map((item: any) => item?.artistName)
+            .join(', ')}
+        </TableCell>
+        <TableCell>
+          {row?.eventData?.venues
+            ?.map((item: any) => item?.venueName)
+            .join(', ')}
+        </TableCell>
 
-     <TableCell>
-        {row?.eventData?.venues}
-     </TableCell>
-
-     <TableCell>
-        {row?.status}
-     </TableCell>
-
-     </TableRow>
-
+        <TableCell>
+          {
+            <Label
+              variant='soft'
+              color={
+                (row?.status === 'CONFIRMED' && 'success') ||
+                (row?.status === 'PENDING' && 'warning') ||
+                (row?.status === 'CANCELLED' && 'error') ||
+                'default'
+              }
+            >
+              {row?.status}
+            </Label>
+          }
+        </TableCell>
+      </TableRow>
     </>
   );
 }

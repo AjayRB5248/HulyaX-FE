@@ -34,9 +34,9 @@ export const getRefreshToken = (): string | null => {
 };
 
 export const getUserData = (): any => {
-  return (
-    queryClient.getQueryData<string>(['user']) || localStorage.getItem('user')
-  );
+  console.log(localStorage.getItem('user'), 'this is data');
+
+  return localStorage.getItem('user');
 };
 
 export const clearTokens = () => {
