@@ -9,8 +9,6 @@ import { MotionViewport, varFade } from "src/components/animate";
 import Image from "src/components/image";
 import TextMaxLine from "src/components/text-max-line";
 
-// ----------------------------------------------------------------------
-
 const CATEGORIES = [
   {
     label: "User",
