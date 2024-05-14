@@ -18,6 +18,7 @@ import { usePathname } from 'src/routes/hook';
 import { NavToggleButton } from '../_common';
 import { NAV } from '../config-layout';
 import { useNavData } from './config-navigation';
+import { useAuth } from 'src/auth/context/users/auth-context';
 
 // ----------------------------------------------------------------------
 
@@ -27,13 +28,12 @@ type Props = {
 };
 
 export default function NavVertical({ openNav, onCloseNav }: Props) {
-  const { user } = useMockedUser();
-
+  const { user } = useAuth();
   const pathname = usePathname();
 
   const lgUp = useResponsive('up', 'lg');
 
-  const navData = useNavData();
+  const navData = useNavData(user?.role ?? 'companyAdmin');
 
   useEffect(() => {
     if (openNav) {

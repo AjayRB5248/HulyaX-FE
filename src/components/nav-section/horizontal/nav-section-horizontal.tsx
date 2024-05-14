@@ -11,6 +11,9 @@ import NavList from './nav-list';
 // ----------------------------------------------------------------------
 
 function NavSectionHorizontal({ data, config, sx, ...other }: NavSectionProps) {
+  data.forEach((section) => {
+    section.items = section.items.filter((item) => item.show !== false);
+  });
   return (
     <Stack
       direction="row"

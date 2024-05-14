@@ -1,5 +1,6 @@
 // @mui
 import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
@@ -11,6 +12,7 @@ import { useResponsive } from 'src/hooks/use-responsive';
 // components
 import Logo from 'src/components/logo';
 import { useSettingsContext } from 'src/components/settings';
+import SvgColor from 'src/components/svg-color';
 //
 import { AccountPopover, SettingsButton } from '../_common';
 import { HEADER, NAV } from '../config-layout';
@@ -40,11 +42,17 @@ export default function Header({ onOpenNav }: Props) {
     <>
       {lgUp && isNavHorizontal && <Logo sx={{ mr: 2.5 }} />}
 
+      {!lgUp && (
+        <IconButton onClick={onOpenNav}>
+          <SvgColor src="/assets/icons/navbar/ic_menu_item.svg" />
+        </IconButton>
+      )}
+
       <Stack
         flexGrow={1}
-        direction='row'
-        alignItems='center'
-        justifyContent='flex-end'
+        direction="row"
+        alignItems="center"
+        justifyContent="flex-end"
         spacing={{ xs: 0.5, sm: 1 }}
       >
         <SettingsButton />
