@@ -7,15 +7,16 @@ import Box, { BoxProps } from "@mui/material/Box";
 
 import { MotionContainer, varFade } from "src/components/animate";
 
-export default function FaqsHero() {
+export default function LoginAsTitle() {
   return (
     <Box
       sx={{
-        height: { md: 350 },
+        height: { md: 350, sm: 50 },
         py: { xs: 10, md: 0 },
         overflow: "hidden",
         position: "relative",
       }}
+      className="login-as-title-wrapper"
     >
       <Container component={MotionContainer}>
         <Box
@@ -34,6 +35,7 @@ export default function FaqsHero() {
               direction="row"
               justifyContent="center"
               sx={{ color: "common.white" }}
+              className="login-as-title-stack"
             >
               <TextAnimate text="Are" sx={{ color: "#4c0080" }} />
               <TextAnimate text="you" sx={{ color: "#4c0080" }} />
@@ -62,6 +64,7 @@ function TextAnimate({ text, variants, sx, ...other }: TextAnimateProps) {
   return (
     <Box
       component={m.div}
+      className="login-as-title"
       sx={{
         typography: "h1",
         overflow: "hidden",

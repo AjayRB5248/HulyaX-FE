@@ -76,10 +76,16 @@ function CardDesktop({ category }: CardDesktopProps) {
         },
         borderColor: "rgb(64 70 75 / 16%)",
       }}
+      className="login-as-card--box"
     >
       <Image disabledEffect alt={icon} src={icon} sx={{ mb: 2, width: 200, height: 200, mx: "auto" }} />
 
-      <TextMaxLine variant="h2" persistent sx={{ color: "primary.main", height: "auto" }}>
+      <TextMaxLine
+        variant="h2"
+        persistent
+        sx={{ color: "primary.main", height: "auto" }}
+        className="login-as-card--title"
+      >
         {label}
       </TextMaxLine>
     </Paper>

@@ -26,7 +26,7 @@ export default function AccountGeneral() {
   const { enqueueSnackbar } = useSnackbar();
 
   const userData = getUserData();
-  const user = JSON.parse(userData);
+  const user =  userData && JSON.parse(userData);
   const verifyMobile = useBoolean()
   const updateProfileMutation = useUpdateUserProfile(user?.id);
   const updateAvatarMutation = useUpdateUserAvatar();

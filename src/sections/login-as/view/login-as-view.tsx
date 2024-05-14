@@ -10,7 +10,7 @@ import UserType from "../login-user-type";
 
 export default function LoginAsView() {
   return (
-    <>
+    <div className="login-as-section">
       <LoginAsTitle />
 
       <Container
@@ -19,9 +19,10 @@ export default function LoginAsView() {
           position: "relative",
           maxWidth: "800px!important",
         }}
+        className="login-as-card--container"
       >
         <UserType />
       </Container>
-    </>
+    </div>
   );
 }
