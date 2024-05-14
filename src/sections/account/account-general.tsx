@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // @mui
@@ -13,9 +13,12 @@ import Typography from "@mui/material/Typography";
 import { useSnackbar } from "src/components/snackbar";
 import FormProvider, { RHFTextField, RHFUploadAvatar } from "src/components/hook-form";
 import { getUserData } from "src/utils/token-management";
-import { Chip } from "@mui/material";
 import Link from "next/link";
 import { useUpdateUserAvatar, useUpdateUserProfile } from "src/api/user";
+import VerifyOTPModal from "./otp-verify-modal";
+import { useBoolean } from "src/hooks/use-boolean";
+import { sendOTP, verifyOTP } from "src/api/auth";
+import { useRouter } from "src/routes/hook/use-router";
 
 // ----------------------------------------------------------------------
 
@@ -24,8 +27,13 @@ export default function AccountGeneral() {
 
   const userData = getUserData();
   const user = JSON.parse(userData);
+  const verifyMobile = useBoolean()
   const updateProfileMutation = useUpdateUserProfile(user?.id);
   const updateAvatarMutation = useUpdateUserAvatar();
+  const sendOTPMutation = sendOTP();
+  const verifyOTPMutation = verifyOTP();
+  const router = useRouter();
+  const [loading,setLoading] = useState(false)
 
   const UpdateUserSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -61,6 +69,60 @@ export default function AccountGeneral() {
       console.error(error);
     }
   });
+
+  const sendOTPCode= async (tokenType:string) => {
+    if (user) {
+      const payload = {
+        email: user.email,
+        tokenType: tokenType,
+      };
+      return await sendOTPMutation.mutateAsync(payload);
+    }
+    return null;
+  };
+
+  const handleOtpVerifyModal = async () => {
+    setLoading(true);
+    try {
+      const generatedOTPRes = await sendOTPCode("OTP_MOBILE");
+      if (generatedOTPRes) {
+        verifyMobile.onTrue();
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyMobileNumber = async (data:any)=>{
+    try {
+      let verifiedOTPRes;
+      if (user) {
+        const payloadForGeneratingOTP = {
+          email: user?.email,
+          otp: data?.otp,
+        };
+        verifiedOTPRes = await verifyOTPMutation.mutateAsync(payloadForGeneratingOTP);
+      }
+      if(verifiedOTPRes){
+        verifyMobile.onFalse()
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const generateOTPCode = async () => {
+    setLoading(true);
+    try {
+      const generatedOTPRes = await sendOTPCode("OTP_MOBILE");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const watchedFields= watch();
 
@@ -99,6 +161,12 @@ export default function AccountGeneral() {
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit} className="user-profile--form">
+        <VerifyOTPModal
+          open={verifyMobile.value}
+          onClose={verifyMobile.onFalse}
+          onOk={handleVerifyMobileNumber}
+          generateOTPCode={generateOTPCode}
+        />
       <Grid container spacing={3}>
         <Grid xs={12} md={4}>
           <Card sx={{ pt: 10, pb: 5, px: 3, textAlign: "center" }}>
@@ -120,7 +188,6 @@ export default function AccountGeneral() {
                 </Typography>
               }
             />
-
             <Button variant="soft" color="success" sx={{ mt: 3, width: "max-content", height: "auto" }}>
               {user?.isNumberVerified ? (
                 <span>
@@ -148,20 +215,18 @@ export default function AccountGeneral() {
               <RHFTextField name="email" label="Email Address" required />
               <RHFTextField name="mobileNumber" label="Phone Number" disabled/>
 
-              {/* TODO: Implement Verify phone Number Link */}
               {user?.isNumberVerified ? (
                 <span className="text-success text-verified">
                   Phone Number Verified <i className="fa fa-check-circle ml-2"></i>{" "}
                 </span>
               ) : (
-                <Link className="text-warning verify-phone-link" href="/">
+                <Button className="text-warning verify-phone-link" onClick={handleOtpVerifyModal} disabled={loading}>
                   Verify Your Phone Number <i className="fa fa-warning ml-2"></i>{" "}
-                </Link>
+                </Button>
               )}
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-              {/* <RHFTextField name="about" multiline rows={4} label="About" /> */}
 
               <LoadingButton type="submit" variant="contained" loading={isSubmitting} className="btn-save">
                 Save Changes

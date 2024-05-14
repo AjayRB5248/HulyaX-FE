@@ -10,6 +10,9 @@ export const storeTokens = (
   queryClient.setQueryData(['accessToken'], accessToken);
   queryClient.setQueryData(['refreshToken'], refreshToken);
 
+  queryClient.setQueryData(['accessToken'], accessToken);
+  queryClient.setQueryData(['refreshToken'], refreshToken);
+
   localStorage.setItem('accessToken', accessToken);
   localStorage.setItem('refreshToken', refreshToken);
 
@@ -34,8 +37,6 @@ export const getRefreshToken = (): string | null => {
 };
 
 export const getUserData = (): any => {
-  console.log(localStorage.getItem('user'), 'this is data');
-
   return localStorage.getItem('user');
 };
 
@@ -57,6 +58,8 @@ export const useRefreshToken = async () => {
   const response = await AuthService.refreshToken({ refreshToken }).then(
     (res) => res.data
   );
+
+  console.log(response, 'response!!!');
 
   storeTokens(response.access.token, response.refresh.token);
 

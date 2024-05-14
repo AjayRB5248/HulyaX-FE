@@ -43,6 +43,7 @@ const TABLE_HEAD = [
   { id: 'email', label: 'Email', width: 100 },
   { id: 'phoneNumber', label: 'Phone Number', width: 180 },
   { id: 'role', label: 'Role', width: 180 },
+  { id: 'isApproved', label: 'Approved', width: 100 },
   { id: 'emailVerified', label: 'Email Verified', width: 100 },
   { id: 'phoneVerified', label: 'Phone Verified', width: 100 },
   { id: 'Action', width: 88 },
@@ -60,16 +61,34 @@ export default function UserListView() {
   const table = useTable({
     defaultRowsPerPage: 10,
   });
-  const { users } = useUsers();
+  const { users, totalResults, loading } = useUsers({page:table?.page, limit:table?.rowsPerPage});
+
   const settings = useSettingsContext();
 
   const confirm = useBoolean();
 
   const [filters, setFilters] = useState(defaultFilters);
 
-  const handleFilters = () => {};
+  const handleFilters = (filterName:any, value:any) => {
+    setFilters((currentFilters) => ({
+      ...currentFilters,
+      [filterName]: value.trim().toLowerCase()
+    }));
+  };
 
-  const handleFilterStatus = () => {};
+  const handleFilterStatus = (event:any, newValue:any) => {
+    setFilters((currentFilters) => ({
+      ...currentFilters,
+      status: newValue,
+      role: newValue === 'all' ? [] : [newValue],  
+    }));
+  };
+
+  const filteredUsers = users?.filter((user:any) => 
+    (filters.role.length === 0 || filters.role.includes(user.role)) &&
+    (user.name.toLowerCase().includes(filters.name) || user.email.toLowerCase().includes(filters.name))
+  );
+  
 
   return (
     <>
@@ -78,8 +97,8 @@ export default function UserListView() {
           heading='List'
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
-            { name: 'User', href: paths.dashboard.user.root },
-            { name: 'List' },
+            { name: 'User', href: paths.dashboard.user.list },
+            { name: 'List' }, 
           ]}
           action={
             <Button
@@ -107,6 +126,9 @@ export default function UserListView() {
             }}
           >
             <Tab iconPosition='end' value={'all'} label={'All'}></Tab>
+            <Tab iconPosition='end' value={'customer'} label={'Customers'}></Tab>
+            <Tab iconPosition='end' value={'companyAdmin'} label={'Business Users'}></Tab>
+            <Tab iconPosition='end' value={'superAdmin'} label={'Super Admins'}></Tab>
           </Tabs>
 
           <UserTableToolbar
@@ -127,7 +149,7 @@ export default function UserListView() {
                 />
 
                 <TableBody>
-                  {users?.results?.map((row: any) => (
+                {filteredUsers?.map((row:any) => (
                     <UserTableRow key={row.id} row={row} />
                   ))}
 
@@ -138,11 +160,15 @@ export default function UserListView() {
           </TableContainer>
 
           <TablePaginationCustom
-            count={users?.totalResults}
+            count={totalResults} 
             page={table.page}
             rowsPerPage={table.rowsPerPage}
-            onPageChange={table.onChangePage}
-            onRowsPerPageChange={table.onChangeRowsPerPage}
+            onPageChange={(event, newPage) => table.setPage(newPage)}
+            onRowsPerPageChange={(event) => {
+            const newRowsPerPage = parseInt(event.target.value, 10);
+            table.setRowsPerPage(newRowsPerPage);
+            table.setPage(0); 
+            }}
           />
         </Card>
       </Container>

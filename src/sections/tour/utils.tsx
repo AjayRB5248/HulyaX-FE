@@ -28,6 +28,7 @@ export const timeZones = [
 ];
 
 export const EVENT_TAGS = [
+  "FEATURED",
   "Conference",
   "Workshop",
   "Seminar",

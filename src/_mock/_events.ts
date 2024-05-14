@@ -1,4 +1,4 @@
-const eventsData = {
+export const EVENTS_MOCK_DATA = {
   events: [
     {
       _id: "65ba2f3983f474115e07ef62",
@@ -61,13 +61,14 @@ const eventsData = {
           updatedAt: "2024-01-31T11:30:01.902Z",
         },
       ],
-      eventName: "Sacar Australia Tour 2024",
-      eventDescription: "this is best event",
+      eventName: "AXIX - ROAD To '24 Australia Tour",
+      eventDescription:
+        "Axis Band, pioneers of Nepali rock music, have etched their mark on the nation's cultural landscape since their inception in the early 2000s. Rising to prominence with their debut album 'Prarambha' in 2005, they seamlessly fused tradi:onal Nepali instruments with contemporary rock, earning acclaim and a dedicated following. Hits like 'Prarambha' and 'Aama' showcased their ability to blend powerful messages with cap:va:ng melodies. Their evolu:on con:nued with albums like 'An:m Yatra' and 'Umeed,' solidifying their reputa:on for dynamic performances and socially conscious lyrics. Axis Band's impact extends beyond music, championing causes and inspiring change within Nepali society. Don't miss their longawaited show in Australia this July, a performance prepared with me:culous care and passion, promising an unforgeMable experience for all who aMend.",
       eventOwner: "65b647e557b8f91495bb6161",
       artists: [
         {
           _id: "65ba2f3983f474115e07ef63",
-          artistName: "sacar",
+          artistName: "Axix",
         },
         {
           _id: "65ba2f3983f474115e07ef64",
@@ -80,28 +81,28 @@ const eventsData = {
           venueName: "Sydney Opera House",
           city: "Sydney",
           timeZone: "Australia",
-          eventDate: "2024-02-27T00:00:00.000Z",
+          eventDate: "2024-06-29T00:00:00.000Z",
         },
         {
           _id: "65ba2f3983f474115e07ef66",
           venueName: "Melbourne Opera House",
           city: "Melbourne",
           timeZone: "Australia",
-          eventDate: "2024-02-28T00:00:00.000Z",
+          eventDate: "2024-06-29T00:00:00.000Z",
         },
       ],
       eventImages: [
         {
           isPrimary: true,
           _id: "65ba2f3983f474115e07ef67",
-          imageurl: "https://ticketing-app-au.s3.ap-southeast-2.amazonaws.com/posterImage/sacar.jpg1706700599874",
+          imageurl: "https://cdn.nayathegana.com/e5/media/events/banner/96890b24-24b3-4f43-a3a6-d2f9b78321a0.jpg",
         },
       ],
       createdAt: "2024-01-31T11:30:01.847Z",
       updatedAt: "2024-01-31T11:30:01.958Z",
       slug: "sacar-australia-tour-2024",
       __v: 0,
-      tags: ["MILAN", "KANDEL"],
+      tags: ["FEATURED"],
 
       //   Requirements
       isFeatured: true,

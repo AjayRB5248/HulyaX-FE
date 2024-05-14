@@ -96,3 +96,15 @@
     font-size: 12px;
   }
 }
+
+.counter--timeblock {
+  background: rgb(90 90 90 / 40%);
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.avatar-profile {
+  img {
+    object-fit: fill;
+  }
+}

@@ -35,14 +35,14 @@ export default function FaqsHero() {
               justifyContent="center"
               sx={{ color: "common.white" }}
             >
-              <TextAnimate text="Are" sx={{ color: "primary.main" }} />
-              <TextAnimate text="you" sx={{ color: "primary.main" }} />
-              <TextAnimate text="a" sx={{ color: "primary.main" }} />
-              <TextAnimate text="User" sx={{ color: "primary.main" }} variants={varFade().inRight} />
-              <TextAnimate text="or" sx={{ color: "primary.main" }} />
-              <TextAnimate text="a" sx={{ color: "primary.main" }} />
-              <TextAnimate text="Company" sx={{ color: "primary.main" }} variants={varFade().inRight} />
-              <TextAnimate text="?" sx={{ color: "primary.main" }} />
+              <TextAnimate text="Are" sx={{ color: "#4c0080" }} />
+              <TextAnimate text="you" sx={{ color: "#4c0080" }} />
+              <TextAnimate text="a" sx={{ color: "#4c0080" }} />
+              <TextAnimate text="User" sx={{ color: "#4c0080" }} variants={varFade().inRight} />
+              <TextAnimate text="or" sx={{ color: "#4c0080" }} />
+              <TextAnimate text="a" sx={{ color: "#4c0080" }} />
+              <TextAnimate text="Company" sx={{ color: "#4c0080" }} variants={varFade().inRight} />
+              <TextAnimate text="?" sx={{ color: "#4c0080" }} />
             </Stack>
           </div>
         </Box>

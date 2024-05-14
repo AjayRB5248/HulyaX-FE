@@ -3,10 +3,14 @@ import { useSnackbar } from 'notistack';
 import { useMemo } from 'react';
 import UsersService from 'src/services/users';
 
-export function useUsers(queryParameters?: any) {
-  const { data, isLoading, error, refetch } = useQuery(
-    ['users'],
+export function   useUsers({ page, limit }:any) {
+  const { data, isLoading, error } = useQuery(
+    ['users', page, limit],  
     async () => {
+      const queryParameters = {
+        page: page,
+        limit: limit,
+      };
       const res = await UsersService.list(queryParameters);
       return res?.data;
     },
@@ -14,14 +18,13 @@ export function useUsers(queryParameters?: any) {
       keepPreviousData: true,
     }
   );
-
-  const users = useMemo(() => data || [], [data]);
+  const users = useMemo(() => data?.results || [], [data?.results]);
 
   return {
-    users,
+    users,  
+    totalResults: data?.totalResults || 0,
     loading: isLoading,
     error,
-    refetch,
   };
 }
 
@@ -50,9 +53,9 @@ export function useUpdateUser() {
   return useMutation(
     ['user/update'],
     async (item: any) => {
-      const { data, id } = item;
+      const { data, userId } = item;
 
-      const response = await UsersService.update(id, data);
+      const response = await UsersService.update(userId, data);
       return response?.data;
     },
     {

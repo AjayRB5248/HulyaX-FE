@@ -4,9 +4,9 @@ import Image, { StaticImageData } from "next/image";
 
 // Events Images
 
-import EventImg1 from "src/assets/frontend/images/event/pexels-jonathan-borba-3563171.jpg";
-import EventImg2 from "src/assets/frontend/images/event/pexels-markus-spiske-3806767.jpg";
-import EventImg3 from "src/assets/frontend/images/event/event03.jpg";
+import EventImg1 from "src/assets/frontend/images/media/AXIX.jpeg";
+import EventImg2 from "src/assets/frontend/images/media/SACARAustraliaTour.jpeg";
+import EventImg3 from "src/assets/frontend/images/media/MajjaleHasschha.jpeg";
 import EventImg4 from "src/assets/frontend/images/event/event04.jpg";
 import SportsEvent from "src/assets/frontend/images/event/sfx308846.jpg";
 

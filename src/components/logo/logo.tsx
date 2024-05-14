@@ -26,8 +26,8 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
     const logo = (
       <Box
         component="img"
-        src='/assets/hulyalogo.png'
-        sx={{ width: 150, height: 60, cursor: 'pointer', ...sx }}
+        src='/assets/1hhul.png'
+        sx={{ width: 100, height: 80, cursor: 'pointer', ...sx, alignItems: 'center' }}
       />
     );
 

@@ -107,6 +107,7 @@ export type IUserItem = {
   avatarUrl: string;
   mobileNumber: string;
   isVerified: boolean;
+  isApproved:boolean;
 };
 
 export type IUserAccount = {

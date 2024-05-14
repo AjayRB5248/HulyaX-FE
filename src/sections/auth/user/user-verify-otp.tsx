@@ -108,26 +108,26 @@ const UserVerifyOTP = () => {
   );
 
   return (
-    <section className="account-section bg_img" style={{ backgroundImage: `url(${LoginBg.src})` }}>
+    <section className="account-section bg_img mt-0">
       <div className="container">
-        <div className="padding-top padding-bottom">
-          <div className="account-area text-center">
-            <SentIcon sx={{ height: 96 }} />
+        <div className="account-area text-center">
+          <SentIcon sx={{ height: 96 }} />
 
-            <Stack spacing={1} sx={{ my: 5 }}>
-              <Typography variant="h3">OTP Code sent successfully!</Typography>
+          <Stack spacing={1} sx={{ my: 5 }}>
+            <Typography variant="h3" className="primary-text">
+              OTP Code sent successfully!
+            </Typography>
 
-              <Typography sx={{ color: "text.secondary", fontSize: "12px" }}>
-                We&apos;ve sent a 6-digit confirmation code to your phone number.
-                <br />
-                Please enter the code in below box to verify your number.
-              </Typography>
-            </Stack>
+            <Typography sx={{ color: "text.secondary", fontSize: "12px" }}>
+              We&apos;ve sent a 6-digit confirmation code to your phone number.
+              <br />
+              Please enter the code in below box to verify your number.
+            </Typography>
+          </Stack>
 
-            <FormProvider methods={methods} onSubmit={onSubmit}>
-              {renderForm}
-            </FormProvider>
-          </div>
+          <FormProvider methods={methods} onSubmit={onSubmit}>
+            {renderForm}
+          </FormProvider>
         </div>
       </div>
     </section>

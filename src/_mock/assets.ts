@@ -241,7 +241,7 @@ export const _phoneNumbers = [
 
 // ----------------------------------------------------------------------
 
-export const _roles = ['Business User', 'Customer'];
+export const _roles = ['Business User', 'Customer','All'];
 
 // ----------------------------------------------------------------------
 

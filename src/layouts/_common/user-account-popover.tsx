@@ -101,6 +101,7 @@ export default function UserAccountPopover() {
             height: 36,
             border: (theme) => `solid 2px ${theme.palette.background.default}`,
           }}
+          className='avatar-profile'
         />
       </IconButton>
 
