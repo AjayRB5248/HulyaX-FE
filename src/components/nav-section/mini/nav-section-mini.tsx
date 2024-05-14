@@ -8,6 +8,9 @@ import NavList from './nav-list';
 // ----------------------------------------------------------------------
 
 function NavSectionMini({ data, config, sx, ...other }: NavSectionProps) {
+  data.forEach((section) => {
+    section.items = section.items.filter((item) => item.show !== false);
+  });
   return (
     <Stack sx={sx} {...other}>
       {data.filter((d) => d.show).map((group, index) => (
