@@ -18,6 +18,7 @@ import { usePathname } from 'src/routes/hook';
 import { NavToggleButton } from '../_common';
 import { NAV } from '../config-layout';
 import { useNavData } from './config-navigation';
+import { useAuth } from 'src/auth/context/users/auth-context';
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +28,6 @@ type Props = {
 };
 
 export default function NavVertical({ openNav, onCloseNav }: Props) {
-
   const pathname = usePathname();
 
   const lgUp = useResponsive('up', 'lg');
@@ -54,7 +54,7 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
     >
       <Logo sx={{ mt: 3, ml: 4, mb: 1 }} />
 
-      <NavSectionVertical data={navData.filter((nav) => nav.items)} />
+      <NavSectionVertical data={navData} />
 
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
