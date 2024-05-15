@@ -32,17 +32,15 @@ import {
 import { IUserTableFilters } from 'src/types/user';
 //
 import { TableBody } from '@mui/material';
-import { useUsers } from 'src/api/users';
 import VenueTableRow from '../venue-table-row';
 import VenueTableToolbar from '../venue-table-toolbar';
-import { useArtists } from 'src/api/artists';
+import { useVenues } from 'src/api/venues';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'profile', label: 'Profile Picture', width: 250 },
-  { id: 'name', label: 'Name' },
-  { id: 'genre', label: 'Genre', width: 200 },
+  { id: 'venue', label: 'Venue Name', width: 250 },
+  { id: 'state', label: 'State',width: 250  },
   { id: 'Action', width: 88 },
 ];
 
@@ -58,39 +56,8 @@ export default function VenueListView() {
   const table = useTable({
     defaultRowsPerPage: 10,
   });
-  // const { artists } = useArtists();
-  const artists = [
-    {
-        name: "Sacar Adhikari",
-        avatarSrc: "https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/428606958_979593436857040_9093732891230991285_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=aPL6CFQzV48Q7kNvgE3Yce6&_nc_ht=scontent.fktm8-1.fna&oh=00_AYAkN99FZB-s60tHaxQ6nftUke8YTLFWSwJyBQWCyNy7Eg&oe=66452EB0",
-        genre: "Musician"
-    },
-    {
-        name: "Alina Bhattarai",
-        avatarSrc: "https://example.com/avatars/alina.jpg",
-        genre: "Visual Artist"
-    },
-    {
-        name: "Rajesh Hamal",
-        avatarSrc: "https://example.com/avatars/rajesh.jpg",
-        genre: "Actor"
-    },
-    {
-        name: "Nisha Adhikari",
-        avatarSrc: "https://example.com/avatars/nisha.jpg",
-        occupation: "Actress"
-    },
-    {
-        name: "Bikash Khatiwada",
-        avatarSrc: "https://example.com/avatars/bikash.jpg",
-        occupation: "Poet"
-    },
-    {
-        name: "Ani Choying",
-        avatarSrc: "https://example.com/avatars/ani.jpg",
-        genre: "Singer"
-    }
-];
+  const { venues } = useVenues();
+
 
   const settings = useSettingsContext();
 
@@ -109,17 +76,17 @@ export default function VenueListView() {
           heading='List'
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
-            { name: 'Artist', href: paths.dashboard.artist.root },
+            { name: 'Venue', href: paths.dashboard.venue.list },
             { name: 'List' },
           ]}
           action={
             <Button
               component={RouterLink}
-              href={paths.dashboard.user.new}
+              href={paths.dashboard.venue.new}
               variant='contained'
               startIcon={<Iconify icon='mingcute:add-line' />}
             >
-              New Artist
+              New Venue
             </Button>
           }
           sx={{
@@ -153,23 +120,22 @@ export default function VenueListView() {
                   order={table.order}
                   orderBy={table.orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={artists?.length}
+                  rowCount={venues?.count}
                   numSelected={table.selected.length}
                 />
-
                 <TableBody>
-                  {artists?.map((row: any) => (
-                    <VenueTableRow key={row.id} row={row} />
+                  {venues?.venues?.map((row: any) => (
+                    <VenueTableRow key={row?._id} row={row} />
                   ))}
 
-                  <TableNoData notFound={artists?.length === 0} />
+                  <TableNoData notFound={venues?.count === 0} />
                 </TableBody>
               </Table>
             </Scrollbar>
           </TableContainer>
 
           <TablePaginationCustom
-            count={artists?.length}
+            count={venues?.count}
             page={table.page}
             rowsPerPage={table.rowsPerPage}
             onPageChange={table.onChangePage}

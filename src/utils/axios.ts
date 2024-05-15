@@ -107,19 +107,22 @@ export const endpoints = {
     updateAvatar: `users/profile-picture`,
     changePassword:`users/update-password`
   },
-  artist: {
-    createArtist: `/artist`,
-    updateArtist:(id:string)=> `artist/${id}`,
-    list: (queryParameters = {}) => {
-      let url = "/artists";
-      const params = new URLSearchParams(queryParameters).toString();
-      if (params) {
-        url += `?${params}`;
-      }
-      return url;
-    },
-  },
   superAdmin:{
-    approveCompany:'/superadmin/approve-company'
+   company: {approveCompany:'/superadmin/approve-company'},
+   artist: {
+    createArtist: `/superadmin/artists/add-artist`,
+    updateArtist:(id:string)=> `superadmin/artists/${id}`,
+    removeArtist:(id:string)=> `superadmin/artists/${id}`,
+    list: `/superadmin/artists/fetch-artist`,
+  },
+  venue: {
+    list: `superadmin/list-venue`,
+    createVenue: `superadmin/venues/add-venues`,
+    updateVenue:(id:string)=> `superadmin/venues/${id}`,
+    removeVenue:(id:string)=> `superadmin/venues/${id}`,
+  },
+  state:{
+    list:`superadmin/list-state`
   }
+}
 };

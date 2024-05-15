@@ -1,149 +1,92 @@
 import * as Yup from 'yup';
-import { useCallback, useMemo } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useMemo } from 'react';
+import { useForm, useFieldArray } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-// @mui
-import LoadingButton from '@mui/lab/LoadingButton';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Switch from '@mui/material/Switch';
-import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
-// utils
-import { fData } from 'src/utils/format-number';
-// routes
+import { Button, Card, Grid, Stack, Typography, MenuItem, useTheme, useMediaQuery } from '@mui/material';
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hook';
-// types
-import { IUserItem } from 'src/types/user';
-// assets
-// components
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFSwitch,
-  RHFTextField,
-  RHFUploadAvatar,
-  RHFAutocomplete,
-} from 'src/components/hook-form';
+import FormProvider, { RHFTextField, RHFSelect } from 'src/components/hook-form';
+import { useCreateVenue } from 'src/api/venues';
+import { useStates } from 'src/api/superAdmin';
 
-// ----------------------------------------------------------------------
-
-type Props = {
-  currentUser?: IUserItem;
-};
-
-export default function VenueNewEditForm({ currentUser }: Props) {
+const VenueNewEditForm = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const router = useRouter();
-
+  const {states}= useStates();
   const { enqueueSnackbar } = useSnackbar();
+  const addVenuesMutation = useCreateVenue()
 
-  const NewUserSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    genre: Yup.string().required('Genre is required'),
-    artistProfile: Yup.string().required('Profile Photo is required'),
+  const VenueSchema = Yup.object().shape({
+    venues: Yup.array().of(
+      Yup.object().shape({
+        venueName: Yup.string().required('Venue name is required'),
+        state: Yup.string().required('State is required'),
+      })
+    ),
   });
 
-  const defaultValues = useMemo(
-    () => ({
-      name: currentUser?.name || '',
-      genre: currentUser?.city || '',
-      artistProfile: currentUser?.role || '',
-    }),
-    [currentUser]
-  );
+  const defaultValues = useMemo(() => ({
+    venues: [{ venueName: '', state: '' }],
+  }), []);
 
   const methods = useForm({
-    resolver: yupResolver(NewUserSchema),
+    resolver: yupResolver(VenueSchema),
     defaultValues,
   });
 
-  const {
-    reset,
-    watch,
-    control,
-    setValue,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
+  const { control, handleSubmit, reset, formState: { isSubmitting } } = methods;
+  const venues = useFieldArray({ control, name: "venues" });
 
-  const values = watch();
-
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = async (data:any) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      reset();
-      enqueueSnackbar(currentUser ? 'Update success!' : 'Create success!');
-      router.push(paths.dashboard.user.list);
-      console.info('DATA', data);
-    } catch (error) {
-      console.error(error);
-    }
-  });
-
-  const handleDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-
-      const newFile = Object.assign(file, {
-        preview: URL.createObjectURL(file),
+      const formData = new FormData();
+      data.venues.forEach((venue:any, index:any) => {
+        formData.append(`venues[${index}][venueName]`, venue.venueName);
+        formData.append(`venues[${index}][state]`, venue.state);
       });
-
-      if (file) {
-        setValue('artistProfile', newFile, { shouldValidate: true });
-      }
-    },
-    [setValue]
-  );
+      await addVenuesMutation.mutateAsync(formData);
+      reset();
+      router.push(paths.dashboard.venue.list);
+    } catch (error) {
+      console.error('Error adding venues:', error);
+      enqueueSnackbar('Failed to add venues!', { variant: 'error' });
+    }
+  };
 
   return (
-    <FormProvider methods={methods} onSubmit={onSubmit}>
-      <Grid container spacing={3} >
-        <Grid xs={12} md={8}>
-          <Card sx={{ p: 3 }}>
-            <Box
-              rowGap={3}
-              columnGap={2}
-              display="grid"
-              gridTemplateColumns={{
-                xs: 'repeat(1, 1fr)',
-                sm: 'repeat(2, 1fr)',
-              }}
-            >
-              {/* <RHFUploadAvatar
-                name="avatarUrl"
-                maxSize={3145728}
-                onDrop={handleDrop}
-                helperText={
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      mt: 3,
-                      mx: 'auto',
-                      display: 'block',
-                      textAlign: 'center',
-                      color: 'text.disabled',
-                    }}
-                  >
-                    Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
-                  </Typography>
-                }
-              /> */}
-              <RHFTextField name="name" label="Full Name" />
-              <RHFTextField name="genre" label="Genre" />
-              
-            </Box>
-
-            <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-              <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                {!currentUser ? 'Create Artist' : 'Save Changes'}
-              </LoadingButton>
-            </Stack>
-          </Card>
+    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      <Grid container>
+        {venues?.fields?.map((item, index) => (
+          <Grid item xs={12} key={item.id} spacing={3}>
+            <Card sx={{ p: 3, mb: 4 }}>
+              <Typography variant="h6" sx={{ marginBottom: 2 }}>Venue {index + 1}</Typography>
+              <Stack direction={isMobile ? "column" : "row"} spacing={3} alignItems="center">
+                <RHFTextField name={`venues[${index}].venueName`} label="Venue Name" required />
+                <RHFSelect name={`venues[${index}].state`} label="State" required>
+                  {states?.states?.map((state:any) => (
+                    <MenuItem key={state?._id} value={state?._id}>{state?.stateName}</MenuItem>
+                  ))}
+                </RHFSelect>
+                <Button onClick={() => venues.remove(index)} color="error">Remove</Button>
+              </Stack>
+            </Card>
+          </Grid>
+        ))}
+        <Grid item xs={12}>
+          <Button onClick={() => venues.append({ venueName: '', state: ''})} color="primary">
+            Add New Venue
+          </Button>
+        </Grid>
+        <Grid item xs={12} sx={{ marginTop: 4 }}>
+          <Button type="submit" variant="contained" loading={isSubmitting}>
+            Submit Venues
+          </Button>
         </Grid>
       </Grid>
     </FormProvider>
   );
-}
+};
+
+export default VenueNewEditForm;

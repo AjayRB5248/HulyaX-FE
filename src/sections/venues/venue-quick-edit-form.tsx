@@ -4,8 +4,6 @@ import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 // @mui
 import LoadingButton from '@mui/lab/LoadingButton';
-import Alert from '@mui/material/Alert';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -17,40 +15,38 @@ import FormProvider, {
   RHFUploadAvatar,
 } from 'src/components/hook-form';
 import { useSnackbar } from 'src/components/snackbar';
-import { Typography } from '@mui/material';
-import { IArtistItem } from 'src/types/artist';
-import { useCreateArtistProfile } from 'src/api/artists';
-import { fData } from 'src/utils/format-number';
+import { MenuItem, Stack, Typography } from '@mui/material';
+import { IVenueItem } from 'src/types/venue';
+import { useStates } from 'src/api/superAdmin';
+import { useUpdateVenue } from 'src/api/venues';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   open: boolean;
   onClose: VoidFunction;
-  currentUser?: IArtistItem;
+  currentVenue?: IVenueItem;
 };
 
 export default function VenueQuickEditForm({
-  currentUser,
+  currentVenue,
   open,
   onClose,
 }: Props) {
-  const { enqueueSnackbar } = useSnackbar();
-  const astistUpdateMutation = useCreateArtistProfile();
+  const {states}= useStates();
+  const venueUpdateMutation = useUpdateVenue(currentVenue?._id);
 
   const NewUserSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    genre: Yup.string().required('Artist Genre is required'),
-    artisrProfile: Yup.string().required('Artist profile is required'),
+    venueName: Yup.string().required('Venue Name is required'),
+    state: Yup.string().required('State is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      name: currentUser?.name || '',
-      genre: currentUser?.genre || '',
-      artisrProfile: currentUser?.artisrProfile || '',
+      venueName: currentVenue?.venueName || '',
+      state: currentVenue?.state?._id || '',
     }),
-    [currentUser]
+    [currentVenue]
   );
 
   const methods = useForm({
@@ -64,40 +60,21 @@ export default function VenueQuickEditForm({
     control,
     setValue,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { errors,isSubmitting },
   } = methods;
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = async (data:any) => {
     try {
-      await astistUpdateMutation
-        .mutateAsync({
-          data,
-          id: currentUser?.id,
-        })
-        .then(() => {
-          reset();
-          onClose();
-          enqueueSnackbar('Update success!');
-        });
+      const formData = new FormData();
+        formData.append(`venueName`, data?.venueName);
+        formData.append(`state`, data?.state);
+      await venueUpdateMutation.mutateAsync(formData);
+      reset();
+      onClose();
     } catch (error) {
       console.error(error);
     }
-  });
-
-  const handleDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-
-      const newFile = Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      });
-
-      if (file) {
-        setValue('artisrProfile', newFile, { shouldValidate: true });
-      }
-    },
-    [setValue]
-  );
+  };
 
   return (
     <Dialog
@@ -109,46 +86,19 @@ export default function VenueQuickEditForm({
         sx: { maxWidth: 720 },
       }}
     >
-      <FormProvider methods={methods} onSubmit={onSubmit}>
-        <DialogTitle>Artist Update</DialogTitle>
+      <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <DialogTitle>Update Venue</DialogTitle>
 
-        <DialogContent >
+        <DialogContent sx={{gap:4}}>
+        <Stack spacing={2} sx={{marginTop:2}}>
+            <RHFTextField name='venueName' label='Venue' />
+            <RHFSelect name='state' label='State'>
+         {states?.states?.map((state:any) => (
+       <MenuItem key={state?._id} value={state?._id}>{state?.stateName}</MenuItem>
+        ))}
+        </RHFSelect>
 
-          <Box
-            rowGap={3}
-            columnGap={2}
-            display='grid'
-            gridTemplateColumns={{
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
-            }}
-            sx={{ mt: 3 }}
-          >
-            <RHFUploadAvatar
-                name="artisrProfile"
-                maxSize={3145728}
-                onDrop={handleDrop}
-                helperText={
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      mt: 3,
-                      mx: 'auto',
-                      display: 'block',
-                      textAlign: 'center',
-                      color: 'text.disabled',
-                    }}
-                  >
-                    Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
-                  </Typography>
-                }
-              />
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }} />
-
-            <RHFTextField name='name' label='Full Name' />
-            <RHFTextField name='genre' label='Genre' />
-            </Box>
+        </Stack>
         </DialogContent>
 
         <DialogActions>

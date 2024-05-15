@@ -14,17 +14,16 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import Iconify from 'src/components/iconify';
 //
-import { Icon } from '@iconify/react';
-import { useRemoveUser } from 'src/api/users';
 import VenueQuickEditForm from './venue-quick-edit-form';
-import { Avatar } from '@mui/material';
+import { IVenueItem } from 'src/types/venue';
+import { useRemoveVenue } from 'src/api/venues';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   selected: boolean;
   onEditRow: VoidFunction;
-  row: IUserItem;
+  row: IVenueItem;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
 };
@@ -41,9 +40,9 @@ export default function VenueTableRow({
     name,
     genre,
     artistProfile,
-    id,
+    _id,
   } = row;
-  const removeUserMutation = useRemoveUser();
+  const removeVenueMutation = useRemoveVenue();
 
   const confirm = useBoolean();
 
@@ -52,7 +51,7 @@ export default function VenueTableRow({
   const popover = usePopover();
 
   const handleDeleteUser = async () => {
-    await removeUserMutation.mutateAsync(id).then(() => {
+    await removeVenueMutation.mutateAsync(_id).then(() => {
       confirm.onFalse();
     });
   };
@@ -60,10 +59,8 @@ export default function VenueTableRow({
   return (
     <>
       <TableRow hover selected={selected}>
-       <Avatar alt={name} src={"https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/428606958_979593436857040_9093732891230991285_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=aPL6CFQzV48Q7kNvgE3Yce6&_nc_ht=scontent.fktm8-1.fna&oh=00_AYAkN99FZB-s60tHaxQ6nftUke8YTLFWSwJyBQWCyNy7Eg&oe=66452EB0"} sx={{ mr: 2 }} />
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>Sacar Adhikari</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>Musician</TableCell>
-
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row?.venueName}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row?.state?.stateName ?? 'Not Added Yet'}</TableCell>
         <TableCell align='right' sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <Tooltip title='Quick Edit' placement='top' arrow>
             <IconButton
@@ -82,9 +79,8 @@ export default function VenueTableRow({
           </IconButton>
         </TableCell>
       </TableRow>
-
       <VenueQuickEditForm
-        currentUser={row}
+        currentVenue={row}
         open={quickEdit.value}
         onClose={quickEdit.onFalse}
       />
@@ -128,9 +124,9 @@ export default function VenueTableRow({
             variant='contained'
             color='error'
             onClick={() => handleDeleteUser()}
-            disabled={removeUserMutation.isLoading}
+            disabled={removeVenueMutation.isLoading}
           >
-            {removeUserMutation.isLoading ? 'Deleting' : 'Delete'}
+            {removeVenueMutation.isLoading ? 'Deleting' : 'Delete'}
           </Button>
         }
       />

@@ -16,8 +16,9 @@ import Iconify from 'src/components/iconify';
 //
 import { Icon } from '@iconify/react';
 import { useRemoveUser } from 'src/api/users';
-import UserQuickEditForm from './artist-quick-edit-form';
 import { Avatar } from '@mui/material';
+import ArtistQuickEditForm from './artist-quick-edit-form';
+import { useRemoveArtist } from 'src/api/artists';
 
 // ----------------------------------------------------------------------
 
@@ -38,12 +39,13 @@ export default function ArtistTableRow({
   setSelectedUser,
 }: any) {
   const {
-    name,
-    genre,
-    artistProfile,
-    id,
+    artistName,
+    category,
+    images,
+    _id,
   } = row;
-  const removeUserMutation = useRemoveUser();
+
+  const removeArtistMutation = useRemoveArtist();
 
   const confirm = useBoolean();
 
@@ -52,7 +54,7 @@ export default function ArtistTableRow({
   const popover = usePopover();
 
   const handleDeleteUser = async () => {
-    await removeUserMutation.mutateAsync(id).then(() => {
+    await removeArtistMutation.mutateAsync(_id).then(() => {
       confirm.onFalse();
     });
   };
@@ -60,9 +62,9 @@ export default function ArtistTableRow({
   return (
     <>
       <TableRow hover selected={selected}>
-       <Avatar alt={name} src={"https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/428606958_979593436857040_9093732891230991285_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=aPL6CFQzV48Q7kNvgE3Yce6&_nc_ht=scontent.fktm8-1.fna&oh=00_AYAkN99FZB-s60tHaxQ6nftUke8YTLFWSwJyBQWCyNy7Eg&oe=66452EB0"} sx={{ mr: 2 }} />
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>Sacar Adhikari</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>Musician</TableCell>
+       <Avatar alt={artistName} src={images[0]?.imageurl} sx={{ mr: 2 }} />
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{artistName}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{category}</TableCell>
 
         <TableCell align='right' sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <Tooltip title='Quick Edit' placement='top' arrow>
@@ -83,8 +85,8 @@ export default function ArtistTableRow({
         </TableCell>
       </TableRow>
 
-      <UserQuickEditForm
-        currentUser={row}
+      <ArtistQuickEditForm
+        currentArtist={row}
         open={quickEdit.value}
         onClose={quickEdit.onFalse}
       />
@@ -108,7 +110,7 @@ export default function ArtistTableRow({
 
         <MenuItem
           onClick={() => {
-            setSelectedUser(id);
+            setSelectedUser(_id);
             onEditRow();
             popover.onClose();
           }}
@@ -128,9 +130,9 @@ export default function ArtistTableRow({
             variant='contained'
             color='error'
             onClick={() => handleDeleteUser()}
-            disabled={removeUserMutation.isLoading}
+            disabled={removeArtistMutation.isLoading}
           >
-            {removeUserMutation.isLoading ? 'Deleting' : 'Delete'}
+            {removeArtistMutation.isLoading ? 'Deleting' : 'Delete'}
           </Button>
         }
       />

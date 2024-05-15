@@ -2,169 +2,101 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
-// @mui
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, Typography } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import Alert from '@mui/material/Alert';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-  RHFUploadAvatar,
-} from 'src/components/hook-form';
+import FormProvider, { RHFTextField, RHFUploadAvatar } from 'src/components/hook-form';
 import { useSnackbar } from 'src/components/snackbar';
-import { Typography } from '@mui/material';
-import { IArtistItem } from 'src/types/artist';
-import { useCreateArtistProfile } from 'src/api/artists';
 import { fData } from 'src/utils/format-number';
-
-// ----------------------------------------------------------------------
+import { IArtistItem } from 'src/types/artist';
+import { useCreateArtistProfile, useUpdateArtistProfile } from 'src/api/artists';
 
 type Props = {
   open: boolean;
   onClose: VoidFunction;
-  currentUser?: IArtistItem;
+  currentArtist?: IArtistItem;
 };
 
-export default function ArtistQuickEditForm({
-  currentUser,
-  open,
-  onClose,
-}: Props) {
-  const { enqueueSnackbar } = useSnackbar();
-  const astistUpdateMutation = useCreateArtistProfile();
+const ArtistQuickEditForm = ({ currentArtist, open, onClose }:Props) => {
+  console.log({currentArtist})
+  const artistUpdateMutation = useUpdateArtistProfile(currentArtist?._id);
 
-  const NewUserSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    genre: Yup.string().required('Artist Genre is required'),
-    artisrProfile: Yup.string().required('Artist profile is required'),
+  const schema = Yup.object().shape({
+    artistName: Yup.string().required('Artist Name is required'),
+    category: Yup.string().required('Category is required'),
+    profileImage: Yup.mixed().required('Artist profile is required'),
   });
 
-  const defaultValues = useMemo(
-    () => ({
-      name: currentUser?.name || '',
-      genre: currentUser?.genre || '',
-      artisrProfile: currentUser?.artisrProfile || '',
-    }),
-    [currentUser]
-  );
+  const defaultValues = useMemo(() => ({
+    artistName: currentArtist?.artistName || '',
+    category: currentArtist?.category || '',
+    profileImage: currentArtist?.images?.find((img:any) => img.isProfile)?.imageurl || '',
+  }), [currentArtist]);
 
   const methods = useForm({
-    resolver: yupResolver(NewUserSchema),
+    resolver: yupResolver(schema),
     defaultValues,
   });
 
-  const {
-    reset,
-    watch,
-    control,
-    setValue,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
+  const { reset, handleSubmit, setValue, formState: { isSubmitting } } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
+    const formData = new FormData();
+    formData.append('artistName', data.artistName);
+    formData.append('category', data.category);
+    if (data.profileImage instanceof File) {
+      formData.append('profileImage', data.profileImage, data.profileImage.name);
+    }
     try {
-      await astistUpdateMutation
-        .mutateAsync({
-          data,
-          id: currentUser?.id,
-        })
-        .then(() => {
-          reset();
-          onClose();
-          enqueueSnackbar('Update success!');
-        });
+      await artistUpdateMutation.mutateAsync( formData );
+      reset();
+      onClose();
     } catch (error) {
-      console.error(error);
+      console.error('Update Error:', error);
     }
   });
 
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
-
+      // setFile(acceptedFiles);
       const newFile = Object.assign(file, {
         preview: URL.createObjectURL(file),
       });
 
       if (file) {
-        setValue('artisrProfile', newFile, { shouldValidate: true });
+        setValue('profileImage', newFile, { shouldValidate: true });
       }
     },
     [setValue]
   );
 
   return (
-    <Dialog
-      fullWidth
-      maxWidth={false}
-      open={open}
-      onClose={onClose}
-      PaperProps={{
-        sx: { maxWidth: 720 },
-      }}
-    >
-      <FormProvider methods={methods} onSubmit={onSubmit}>
-        <DialogTitle>Artist Update</DialogTitle>
-
-        <DialogContent >
-
-          <Box
-            rowGap={3}
-            columnGap={2}
-            display='grid'
-            gridTemplateColumns={{
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
-            }}
-            sx={{ mt: 3 }}
-          >
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
+      <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <DialogTitle>Update Artist</DialogTitle>
+        <DialogContent>
+            <Stack spacing={3}>
             <RHFUploadAvatar
-                name="artisrProfile"
-                maxSize={3145728}
-                onDrop={handleDrop}
-                helperText={
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      mt: 3,
-                      mx: 'auto',
-                      display: 'block',
-                      textAlign: 'center',
-                      color: 'text.disabled',
-                    }}
-                  >
-                    Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
-                  </Typography>
-                }
-              />
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }} />
-
-            <RHFTextField name='name' label='Full Name' />
-            <RHFTextField name='genre' label='Genre' />
-            </Box>
+              name="profileImage"
+              maxSize={3145728}
+              onDrop={handleDrop}
+              helperText={
+                <Typography variant="caption" sx={{ mt: 2, textAlign: 'center', color: 'text.disabled' }}>
+                  Allowed *.jpeg, *.jpg, *.png, *.gif<br/>max size of {fData(3145728)}
+                </Typography>
+              }
+            />
+            <RHFTextField name="artistName" label="Artist Name" />
+            <RHFTextField name="category" label="Category" />
+            </Stack>
         </DialogContent>
-
         <DialogActions>
-          <Button variant='outlined' onClick={onClose}>
-            Cancel
-          </Button>
-
-          <LoadingButton
-            type='submit'
-            variant='contained'
-            loading={isSubmitting}
-          >
-            Update
-          </LoadingButton>
+          <Button onClick={onClose} variant="outlined">Cancel</Button>
+          <LoadingButton type="submit" variant="contained" loading={isSubmitting}>Update</LoadingButton>
         </DialogActions>
       </FormProvider>
     </Dialog>
   );
-}
+};
+
+export default ArtistQuickEditForm;

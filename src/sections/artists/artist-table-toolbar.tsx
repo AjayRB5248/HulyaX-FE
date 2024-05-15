@@ -35,7 +35,7 @@ export default function ArtistTableToolbar({
 
   const handleFilterName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      onFilters('name', event.target.value);
+      onFilters('artistName', event.target.value);
     },
     [onFilters]
   );

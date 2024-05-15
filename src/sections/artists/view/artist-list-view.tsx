@@ -36,19 +36,19 @@ import { useUsers } from 'src/api/users';
 import ArtistTableRow from '../artist-table-row';
 import ArtistTableToolbar from '../artist-table-toolbar';
 import { useArtists } from 'src/api/artists';
+import { IArtistTableFilters } from 'src/types/artist';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'profile', label: 'Profile Picture', width: 250 },
-  { id: 'name', label: 'Name' },
-  { id: 'genre', label: 'Genre', width: 200 },
+  { id: 'profile', label: 'Profile Picture', width: 200 },
+  { id: 'artistName', label: 'Artist Name' },
+  { id: 'category', label: 'Category', width: 200 },
   { id: 'Action', width: 88 },
 ];
 
-const defaultFilters: IUserTableFilters = {
-  name: '',
-  role: [],
+const defaultFilters: IArtistTableFilters = {
+  artistName: '',
   status: 'all',
 };
 
@@ -58,39 +58,8 @@ export default function UserListView() {
   const table = useTable({
     defaultRowsPerPage: 10,
   });
-  // const { artists } = useArtists();
-  const artists = [
-    {
-        name: "Sacar Adhikari",
-        avatarSrc: "https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/428606958_979593436857040_9093732891230991285_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=aPL6CFQzV48Q7kNvgE3Yce6&_nc_ht=scontent.fktm8-1.fna&oh=00_AYAkN99FZB-s60tHaxQ6nftUke8YTLFWSwJyBQWCyNy7Eg&oe=66452EB0",
-        genre: "Musician"
-    },
-    {
-        name: "Alina Bhattarai",
-        avatarSrc: "https://example.com/avatars/alina.jpg",
-        genre: "Visual Artist"
-    },
-    {
-        name: "Rajesh Hamal",
-        avatarSrc: "https://example.com/avatars/rajesh.jpg",
-        genre: "Actor"
-    },
-    {
-        name: "Nisha Adhikari",
-        avatarSrc: "https://example.com/avatars/nisha.jpg",
-        occupation: "Actress"
-    },
-    {
-        name: "Bikash Khatiwada",
-        avatarSrc: "https://example.com/avatars/bikash.jpg",
-        occupation: "Poet"
-    },
-    {
-        name: "Ani Choying",
-        avatarSrc: "https://example.com/avatars/ani.jpg",
-        genre: "Singer"
-    }
-];
+  const { artists } = useArtists();
+
 
   const settings = useSettingsContext();
 
@@ -106,10 +75,9 @@ export default function UserListView() {
   };
   const handleFilterStatus = () => {};
 
-  const filteredUsers = artists.filter(artist => 
-    artist.name.toLowerCase().includes(filters.name)
+  const filteredUsers = artists?.artists?.filter((artist:any) => 
+    artist?.artistName?.toLowerCase().includes(filters?.artistName)
   );
-
 
   return (
     <>
@@ -124,7 +92,7 @@ export default function UserListView() {
           action={
             <Button
               component={RouterLink}
-              href={paths.dashboard.user.new}
+              href={paths.dashboard.artist.new}
               variant='contained'
               startIcon={<Iconify icon='mingcute:add-line' />}
             >
@@ -178,7 +146,7 @@ export default function UserListView() {
           </TableContainer>
 
           <TablePaginationCustom
-            count={artists?.length}
+            count={artists?.artists?.length}
             page={table.page}
             rowsPerPage={table.rowsPerPage}
             onPageChange={table.onChangePage}

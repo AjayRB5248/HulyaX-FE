@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
@@ -27,6 +27,7 @@ import FormProvider, {
   RHFUploadAvatar,
   RHFAutocomplete,
 } from 'src/components/hook-form';
+import { useCreateArtistProfile } from 'src/api/artists';
 
 // ----------------------------------------------------------------------
 
@@ -36,20 +37,20 @@ type Props = {
 
 export default function ArtistNewEditForm({ currentUser }: Props) {
   const router = useRouter();
-
-  const { enqueueSnackbar } = useSnackbar();
+  const createArtistMutation = useCreateArtistProfile()
+  const [file, setFile] = useState<File[] | null>(null);
 
   const NewUserSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    genre: Yup.string().required('Genre is required'),
-    artistProfile: Yup.string().required('Profile Photo is required'),
+    artistName: Yup.string().required('Artist Name is required'),
+    category: Yup.string().required('Category is required'),
+    profileImage: Yup.string().required('Profile Photo is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      name: currentUser?.name || '',
-      genre: currentUser?.city || '',
-      artistProfile: currentUser?.role || '',
+      artistName: currentUser?.name || '',
+      category: currentUser?.city || '',
+      profileImage: currentUser?.role || '',
     }),
     [currentUser]
   );
@@ -72,11 +73,14 @@ export default function ArtistNewEditForm({ currentUser }: Props) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+        const formData = new FormData();
+        formData.append('artistName', data?.artistName);
+        formData.append("category", data?.category);
+        file && formData.append('profileImage', file[0]);
+
+      await createArtistMutation.mutateAsync(formData);
       reset();
-      enqueueSnackbar(currentUser ? 'Update success!' : 'Create success!');
-      router.push(paths.dashboard.user.list);
-      console.info('DATA', data);
+      router.push(paths.dashboard.artist.list);
     } catch (error) {
       console.error(error);
     }
@@ -85,13 +89,13 @@ export default function ArtistNewEditForm({ currentUser }: Props) {
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
-
+      setFile(acceptedFiles);
       const newFile = Object.assign(file, {
         preview: URL.createObjectURL(file),
       });
 
       if (file) {
-        setValue('artistProfile', newFile, { shouldValidate: true });
+        setValue('profileImage', newFile, { shouldValidate: true });
       }
     },
     [setValue]
@@ -112,7 +116,7 @@ export default function ArtistNewEditForm({ currentUser }: Props) {
               }}
             >
               <RHFUploadAvatar
-                name="avatarUrl"
+                name="profileImage"
                 maxSize={3145728}
                 onDrop={handleDrop}
                 helperText={
@@ -133,8 +137,8 @@ export default function ArtistNewEditForm({ currentUser }: Props) {
               />
             </Box>
             <Stack spacing={3} marginTop={3}>
-              <RHFTextField name="name" label="Full Name" />
-              <RHFTextField name="genre" label="Genre" />
+              <RHFTextField name="artistName" label="Artist Name" />
+              <RHFTextField name="category" label="Category" />
             </Stack>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
