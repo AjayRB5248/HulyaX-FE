@@ -12,6 +12,7 @@ import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 //
 import ArtistNewEditForm from '../artist-new-edit-form';
+import { useArtists } from 'src/api/artists';
 
 // ----------------------------------------------------------------------
 
@@ -21,8 +22,6 @@ export default function ArtistEditView() {
   const params = useParams();
 
   const { id } = params;
-
-  const currentUser = _userList.find((user) => user.id === id);
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -37,14 +36,14 @@ export default function ArtistEditView() {
             name: 'Artist',
             href: paths.dashboard.artist.list,
           },
-          { name: currentUser?.name },
+          { name:'New Artist' },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
 
-      <ArtistNewEditForm currentUser={currentUser} />
+      <ArtistNewEditForm  />
     </Container>
   );
 }

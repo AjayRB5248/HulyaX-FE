@@ -18,17 +18,17 @@ export default function VenueCreateView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="Create a new artist"
+        heading="Create a new Venue"
         links={[
           {
             name: 'Dashboard',
             href: paths.dashboard.root,
           },
           {
-            name: 'Artist',
-            href: paths.dashboard.artist.root,
+            name: 'Venue',
+            href: paths.dashboard.venue.list,
           },
-          { name: 'New Artist' },
+          { name: 'New Venue' },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },

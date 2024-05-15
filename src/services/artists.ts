@@ -2,11 +2,13 @@ import axiosInstance, { endpoints } from "src/utils/axios";
 
 const ArtistService = {
   createArtist: (data:any) =>
-    axiosInstance.patch(endpoints.artist.createArtist, {data}),
+    axiosInstance.post(endpoints.superAdmin.artist.createArtist, data),
   updateArtist:(id: string,data:any) =>
-    axiosInstance.post(endpoints.artist.updateArtist(id), {data}),
-  list: (queryParameters = {}) =>
-    axiosInstance.get(endpoints.artist.list(queryParameters)),
+    axiosInstance.put(endpoints.superAdmin.artist.updateArtist(id), data),
+  list: () =>
+    axiosInstance.post(endpoints.superAdmin.artist.list),
+  removeArtist:(id: string) =>
+    axiosInstance.delete(endpoints.superAdmin.artist.removeArtist(id)),
 };
 
 export default ArtistService;

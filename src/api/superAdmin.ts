@@ -1,5 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSnackbar } from "notistack";
+import { useMemo } from "react";
 import { useRouter } from "src/routes/hook";
 import superAdminService from "src/services/superAdmin";
 
@@ -28,4 +29,24 @@ export function useApproveCompany() {
   );
 }
 
+export function useStates() {
+  const { data, isLoading, error, refetch } = useQuery(
+    ['states'],
+    async () => {
+      const res = await superAdminService.state();
+      return res?.data;
+    },
+    {
+      keepPreviousData: true,
+    }
+  );
 
+  const states = useMemo(() => data || [], [data]);
+
+  return {
+    states,
+    loading: isLoading,
+    error,
+    refetch,
+  };
+}
