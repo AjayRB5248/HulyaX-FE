@@ -114,6 +114,11 @@ export const paths = {
       booking: `${ROOTS.DASHBOARD}/booking`,
       file: `${ROOTS.DASHBOARD}/file`,
     },
+    companyEvents: {
+      root: `${ROOTS.DASHBOARD}/companyEvent`,
+      details: (id: string) => `${ROOTS.DASHBOARD}/companyEvent/${id}`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/companyEvent/${id}/edit`,
+    },
     user: {
       root: `${ROOTS.DASHBOARD}/user`,
       new: `${ROOTS.DASHBOARD}/user/new`,
@@ -203,6 +208,6 @@ export const paths = {
       new: `${ROOTS.DASHBOARD}/event/new`,
       details: (id: string) => `${ROOTS.DASHBOARD}/event/${id}`,
       edit: (id: string) => `${ROOTS.DASHBOARD}/event/${id}/edit`,
-    },
+    }
   },
 };

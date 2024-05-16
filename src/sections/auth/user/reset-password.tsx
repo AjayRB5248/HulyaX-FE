@@ -80,7 +80,6 @@ const UserResetPassword = () => {
         };
         generatedOTPRes = await sendOTPMutation.mutateAsync(payloadForGeneratingOTP);
       }
-      console.log(generatedOTPRes, "generatedOTPRes");
     } catch (error) {
       console.error(error);
     }

@@ -95,8 +95,6 @@ export default function UserQuickEditForm({
     }
   });
 
-  console.log({currentUser})
-
   const handleApprovalChange = async (event:any) => {
     const isChecked = event.target.checked;
   

@@ -1,7 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 // @mui
@@ -25,8 +25,12 @@ import { PATH_AFTER_LOGIN } from 'src/config-global';
 import { useForgotPassword, useLogin } from 'src/api/auth';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
 import Iconify from 'src/components/iconify';
+import { useAuth } from 'src/auth/context/users/auth-context';
+import { enqueueSnackbar } from 'notistack';
 
 export default function JwtRegisterView() {
+  const {user} = useAuth();
+
   const router = useRouter();
 
   const [errorMsg, setErrorMsg] = useState('');
@@ -39,6 +43,12 @@ export default function JwtRegisterView() {
 
   const loginMutation = useLogin();
   const forgotPasswordMutation = useForgotPassword();
+
+  useEffect(() => {
+    if (user && !(user.role==='customer')) {
+      router.push(paths.dashboard.root);
+    }
+  }, [user]);
 
   const defaultValues = {
     email: '',
@@ -72,10 +82,13 @@ export default function JwtRegisterView() {
         password: data?.password,
       };
 
-      await loginMutation.mutateAsync(loginPayload);
-      console.log(loginMutation.data, 'this is data');
-
-      router.push(returnTo || PATH_AFTER_LOGIN);
+      const result = await loginMutation.mutateAsync(loginPayload);
+      if(result?.user && !(result?.user?.role==='customer')){
+        enqueueSnackbar("Login successful", { variant: "success" });
+        router.push(returnTo || PATH_AFTER_LOGIN);
+      }else{
+        enqueueSnackbar('You are not Authorized User',{variant: "error"})
+      }
     } catch (error) {
       console.error(error, 'this is data');
       reset();
