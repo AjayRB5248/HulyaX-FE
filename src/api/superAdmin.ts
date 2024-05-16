@@ -92,3 +92,27 @@ export function useStates() {
     refetch,
   };
 }
+
+
+export function useSetupTicketSettings() {
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
+  return useMutation(
+    ["setupTicketSettings"],
+    async (data: any) => {
+      const response = await superAdminService.setupTicket(data);
+      return response?.data;
+    },
+    {
+      onError: (error: any) => {
+        enqueueSnackbar(error.response.data.message || "Error while ticket setup", {
+          variant: "error",
+        });
+      },
+      onSuccess: () => {
+        enqueueSnackbar("Ticket setted up to Event Successfully!", { variant: "success" });
+      },
+    }
+  );
+}

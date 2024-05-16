@@ -9,6 +9,8 @@ const superAdminService = {
     axiosInstance.post(endpoints.superAdmin.company.assignCompanyFromEvent, { data }),
   removeCompanyFromEvent:(data:any)=>
     axiosInstance.delete(endpoints.superAdmin.company.removeCompanyFromEvent, { data }),
+  setupTicket:(data:any)=>
+    axiosInstance.post(endpoints.superAdmin.ticket.setupTicket, { data }),
 };
 
 export default superAdminService;

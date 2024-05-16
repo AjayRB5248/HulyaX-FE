@@ -71,7 +71,7 @@ export const endpoints = {
   },
   events: {
     list: (queryParameters = {}) => {
-      let url = "/events/fetch-events";
+      let url = "superadmin/fetch-all-events";
       const params = new URLSearchParams(queryParameters).toString();
       if (params) {
         url += `?${params}`;

@@ -25,7 +25,6 @@ export const useLogin = () => {
     },
     {
       onSuccess: (data: any) => {
-        enqueueSnackbar("Login successful", { variant: "success" });
         return data;
       },
       onError: (error: any) => {

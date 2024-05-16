@@ -17,7 +17,6 @@ type Props = {
 };
 
 const ArtistQuickEditForm = ({ currentArtist, open, onClose }:Props) => {
-  console.log({currentArtist})
   const artistUpdateMutation = useUpdateArtistProfile(currentArtist?._id);
 
   const schema = Yup.object().shape({

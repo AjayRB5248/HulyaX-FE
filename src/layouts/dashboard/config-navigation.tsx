@@ -68,10 +68,19 @@ export function useNavData() {
             icon: ICONS.booking,
           },
           {
+            title: t('CompanyEvents'),
+            path: paths.dashboard.companyEvents.root,
+            icon: ICONS.tour,
+            show: user?.role === 'companyAdmin',
+            children: [
+              { title: t('list'), path: paths.dashboard.companyEvents.root },
+            ],
+          },
+          {
             title: t('Events'),
             path: paths.dashboard.tour.root,
             icon: ICONS.tour,
-            show: roles.includes(user?.role ?? ''),
+            show: user?.role === 'superAdmin',
             children: [
               { title: t('list'), path: paths.dashboard.tour.root },
               { title: t('create'), path: paths.dashboard.tour.new },

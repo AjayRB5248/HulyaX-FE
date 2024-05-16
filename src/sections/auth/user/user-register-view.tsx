@@ -70,7 +70,6 @@ const UserRegisterView: React.FC = () => {
     try {
       if (userData) {
         const verifiedEmailResponse = await verifyEmailMutation.mutateAsync(userData);
-        console.log(verifiedEmailResponse, "verifiedEmailResponse");
       } else {
         console.error("User is not available");
       }
