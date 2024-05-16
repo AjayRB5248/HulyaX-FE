@@ -31,17 +31,7 @@ export default function VenueTableToolbar({
 
   const handleFilterName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      onFilters('name', event.target.value);
-    },
-    [onFilters]
-  );
-
-  const handleFilterRole = useCallback(
-    (event: SelectChangeEvent<string[]>) => {
-      onFilters(
-        'role',
-        typeof event.target.value === 'string' ? event.target.value.split(',') : event.target.value
-      );
+      onFilters('venueName', event.target.value);
     },
     [onFilters]
   );

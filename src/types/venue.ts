@@ -5,7 +5,7 @@ export type IVenueItem = {
     timeZone:string;
 }
 
-export type IArtistTableFilters = {
-    venuName: string;
-    state: string;
+export type IVenueTableFilters = {
+    venueName: string;
+    status: string;
   };
