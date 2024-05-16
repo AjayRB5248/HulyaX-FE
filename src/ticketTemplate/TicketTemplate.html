@@ -1,0 +1,499 @@
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #ffffff;
+            font-family: "Cabin", sans-serif;
+        }
+
+        div.container {
+            max-width: 100%;
+            margin: 10px;
+            overflow: hidden;
+        }
+
+        .header-wrapper {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .header-wrapper .logo>img {
+            height: 100px;
+            width: auto;
+        }
+
+        .user-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .user-detail--name {
+            font-size: 2rem;
+            font-weight: 500;
+        }
+
+        .user-detail p {
+            color: #5e5e5e;
+        }
+
+        .container .item {
+            width: 100%;
+            float: left;
+            background: #f6f6f6;
+            overflow: hidden;
+            margin-top: 20px;
+            position: relative;
+
+        }
+
+        .item .overlay {
+            position: absolute;
+            right: 240px;
+            opacity: 0.1;
+            top: 40px;
+            z-index: 0;
+        }
+
+        .item .overlay>img {
+            height: 200px;
+            width: auto;
+        }
+
+        .container .item-right,
+        .container .item-left {
+            float: left;
+            padding: 20px;
+        }
+
+        .container .item-right {
+            padding: 20px;
+            margin-right: 20px;
+            width: 25%;
+            position: relative;
+            height: 286px;
+        }
+
+        .qr-scan-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: scale-down;
+        }
+
+        .container .item-right .up-border,
+        .container .item-right .down-border {
+            padding: 14px 15px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .container .item-right .up-border {
+            top: -8px;
+            right: -35px;
+        }
+
+        .container .item-right .down-border {
+            bottom: -13px;
+            right: -35px;
+        }
+
+
+
+
+        .container .item-right .num {
+            font-size: 60px;
+            text-align: center;
+            color: #111;
+        }
+
+        .container .item-right .day,
+        .container .item-left .event {
+            color: #555;
+            font-size: 20px;
+            margin-bottom: 9px;
+        }
+
+        .container .item-right .day {
+            text-align: center;
+            font-size: 25px;
+        }
+
+        .container .item-left {
+            width: 71%;
+            padding: 34px 0px 19px 46px;
+            border-left: 3px dotted #999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .container .item-left .title {
+            color: #111;
+            font-size: 34px;
+            margin-bottom: 12px;
+            font-weight: 900;
+            font-family: "Indie Flower", cursive;
+        }
+
+        .container .item-left .sce {
+            margin-top: 5px;
+            display: block;
+        }
+
+        .container .item-left .sce .icon,
+        .container .item-left .sce p,
+        .container .item-left .loc .icon,
+        .container .item-left .loc p {
+            float: left;
+
+            letter-spacing: 1px;
+            color: #888;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .container .item-left .sce .icon,
+        .container .item-left .loc .icon {
+            margin-right: 10px;
+            font-size: 20px;
+            color: #4c0182;
+            margin-top: 2px;
+        }
+
+        .container .item-left .loc {
+            display: block;
+        }
+
+        .fix {
+            clear: both;
+        }
+
+        .container .item .tickets,
+        .booked,
+        .cancel {
+            color: #fff;
+            padding: 6px 14px;
+            float: right;
+            margin-top: 10px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .container .item .tickets {
+            background: #777;
+        }
+
+        .container .item .booked {
+            background: #3d71e9;
+        }
+
+        .container .item .cancel {
+            background: #df5454;
+        }
+
+        .linethrough {
+            text-decoration: line-through;
+        }
+
+        .event-banner-wrapper {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            width: 100%;
+
+            padding-top: 20px;
+        }
+
+        .event-banner-wrapper .event-banner {
+            float: right;
+            width: 40%;
+            margin-left: 20px;
+        }
+
+        .event-banner-wrapper .event-banner img {
+            width: 100%;
+            height: auto;
+        }
+
+        .event-banner-wrapper .event-desc {
+            background-color: #f6f6f6;
+            height: max-content;
+            padding: 10px;
+            border: 2px solid #a5a5a5;
+            border-radius: 4px;
+        }
+
+        .event-banner-wrapper .event-desc .desc-item {
+            background: #fff;
+            padding: 10px;
+        }
+
+        .desc-flex {
+            width: 100%;
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .w-50 {
+            width: 50%;
+        }
+
+        .mt-10 {
+            margin-top: 10px;
+        }
+
+        .terms-and-conditions {
+            margin-top: 30px;
+        }
+
+        .terms-and-conditions p {
+            color: #595959;
+        }
+
+        .terms-and-conditions .list {
+            color: #363636;
+            line-height: 1.5;
+        }
+
+        .w-60 {
+            width: 60%;
+        }
+
+        .social-media-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 30px;
+        }
+
+        .social-media-wrapper .logo img {
+            height: 80px;
+        }
+
+
+        .site-link {
+            font-size: 2rem;
+        }
+
+        .site-link span {
+            color: #cd9dd7;
+            font-weight: bold;
+        }
+
+        .social-media-wrapper p {
+            color: #4c0182;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .social-media-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-media-links .fb-link i {
+            color: #1877F2;
+        }
+
+        .social-media-links .instagram-link i {
+            color: #ff3fc2;
+        }
+
+        .social-media-links .gmail-link i {
+            color: #ff5e58;
+        }
+
+        .copyright-wrapper {
+            background-color: #f6f6f6;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Logo and User Basic Detail -->
+        <div class="header-wrapper">
+            <div class="logo">
+                <image src="./assets/hulya-events-logo.png" alt="Hulya Logo">
+            </div>
+            <div class="user-detail">
+                <div class="user-detail--name">Ayush Timalsina</div>
+                <b>THIS IS YOUR TICKET, PURCHASED ON 18-08-2023</b>
+                <p>PLEASE PRINT & BRING THIS TICKET WITH YOU AT THE VENUE</p>
+            </div>
+        </div>
+        <!-- Ticket -->
+        <div class="item">
+            <div class="overlay">
+                <img src="./assets/hulya-events-logo.png" alt="Hulya Background overlay">
+            </div>
+            <!-- QR SCAN -->
+            <div class="item-right">
+                <div class="qr-scan-wrapper">
+                    <img src="./assets/QR.png" alt="Hulya Ticket QR Scan" />
+                </div>
+                <span class="up-border"></span>
+                <span class="down-border"></span>
+            </div>
+
+            <!-- Event Details -->
+            <div class="item-left event-details">
+                <p class="event">Music Event</p>
+                <h2 class="title">AXIX - ROAD To '24 Australia Tour</h2>
+
+                <div class="sce">
+                    <div class="icon">
+                        <i class="fa fa-calendar-days"></i>
+                    </div>
+                    <p>
+                        Monday 13th Feb 2024 <br />
+                        7:00PM to 11:00PM
+                    </p>
+                </div>
+                <div class="fix"></div>
+                <div class="loc">
+                    <div class="icon">
+                        <i class="fa fa-map-pin"></i>
+                    </div>
+                    <p>
+                        Forum Sydney OperaHouse <br />
+                        Sydney, Australia
+                    </p>
+                </div>
+                <div class="fix"></div>
+
+            </div>
+
+
+
+        </div>
+
+        <!-- Event banner -->
+        <div class="event-banner-wrapper">
+            <div class="w-60">
+                <div class="event-desc">
+                    <div class="desc-item">
+                        <b>ORGANIZED BY:</b> 50B Worldwide, S-Events & Multimedia
+                    </div>
+                    <div class="desc-flex">
+                        <div class="desc-item w-50">
+                            <b>TICKET TYPE:</b> GENERAL
+
+                        </div>
+                        <div class="desc-item w-50">
+                            <b>TICKET No:</b> 713361
+
+                        </div>
+                    </div>
+
+                    <div class="desc-item mt-10">
+                        <b>PRICE & NO. OF TICKET(S):</b> AUD 700 X 3
+                    </div>
+
+                    <div class="desc-item mt-10">
+                        <b>TOTAL:</b> AUD 1400
+                    </div>
+                </div>
+
+                <div class="social-media-wrapper">
+                    <div class="logo">
+                        <image src="./assets/hulya-events-logo.png" alt="Hulya Logo">
+                    </div>
+                    <div class="site-link">
+                        www.<span>hulyax</span>.com.au
+                    </div>
+                    <p>Follow us on our site and social media to keep up to date with upcoming events!</p>
+
+                    <div class="social-media-links">
+                        <div class="social-media-link fb-link">
+                            <i class="fa-brands fa-square-facebook"></i> /
+                            Hulya Events
+                        </div>
+                        <div class="social-media-link instagram-link">
+                            <i class="fa-brands fa-square-instagram"></i> /
+                            Hulya Events
+                        </div>
+                        <div class="social-media-link gmail-link">
+                            <i class="fa-solid fa-envelope"></i> /
+                            info@hulyax.com.au
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="event-banner">
+                <img src="./assets/AXIS_BANNER.png" alt="Axix Band Banner" />
+            </div>
+        </div>
+
+        <!-- Terms And Conditions -->
+        <div class="terms-and-conditions">
+            <p>THIS TICKET IS NON-REFUNDABLE, NON-EXCHANGEABLE, NON-TRANSFERABLE AND VOID IF ALTERED.</p>
+            <h3 class="mt-10">Terms and Conditions</h4>
+
+                <ol class="list mt-10">
+                    <li>
+                        1. The right of admission is reserved by the Venue management.
+
+                    </li>
+                    <li>
+                        2. The right is reserved to vary, substitute of withdraw advertised programs, artists, venue and
+                        seating arrangements as necessary.
+
+                    </li>
+                    <li>
+                        3. No refunds or exchanges except as provided in the Entertainment Industry Code of Fair
+                        Practice.
+
+                    </li>
+                    <li>
+
+                        4. Cameras and other recording devices are prohibited in the venue auditorium.
+                    </li>
+                    <li>
+                        5. The right is reserved to refuse admission to a ticket holder who arrives late to a venue &
+                        may
+                        not be allocated to their designated seat,
+                        until there is a convenient break in the program.
+
+                    </li>
+                    <li>
+
+                        6. The Barcode or QR code on this ticket is unique to this purchase - it will be scanned and
+                        accepted as entry to the event once only.
+
+                    </li>
+
+                    <li>
+                        7. Bring your Credit/Debit Card, which you have used to purchase your tickets for verification.
+                    </li>
+
+                </ol>
+        </div>
+
+        <div class="copyright-wrapper">
+            © COPYRIGHT 2021-2024 Hulya Events Pvt LTD Australia | ALL RIGHTS RESERVED
+        </div>
+    </div>
+</body>
+
+</html>
