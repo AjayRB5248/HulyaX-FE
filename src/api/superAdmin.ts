@@ -29,6 +29,48 @@ export function useApproveCompany() {
   );
 }
 
+export function useAssignCompany() {
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
+  return useMutation(
+    ["assignCompany"],
+    async (data: any) => {
+      const response = await superAdminService.assignCompanyFromEvent(data);
+      return response?.data;
+    },
+    {
+      onError: (error: any) => {
+        enqueueSnackbar(error.response.data.message || "Error assigning company to event", {
+          variant: "error",
+        });
+      },
+      onSuccess: () => {
+        enqueueSnackbar("Company Assigned to Event Successfully!", { variant: "success" });
+      },
+    }
+  );
+}
+
+export function useRemoveAssginedCompany() {
+  const { enqueueSnackbar } = useSnackbar();
+  return useMutation(
+    ["company/remove"],
+    async (data: any) => {
+      const res = await superAdminService.removeCompanyFromEvent(data);
+      return res?.data;
+    },
+    {
+      onError: () => {
+        enqueueSnackbar("Error Removing Company from Event", { variant: "error" });
+      },
+      onSuccess: () => {
+        enqueueSnackbar("Company Removed Successfully from Event", { variant: "success" });
+      },
+    }
+  );
+}
+
 export function useStates() {
   const { data, isLoading, error, refetch } = useQuery(
     ['states'],

@@ -24,8 +24,6 @@ type Props = {
 export default function VenueTableToolbar({
   filters,
   onFilters,
-  //
-  roleOptions,
 }: Props) {
   const popover = usePopover();
 

@@ -70,7 +70,7 @@ export default function VenueListView() {
       [filterName]: value.trim().toLowerCase()
     }));
   };
-
+  
   const handleFilterStatus = () => {};
 
   const filteredVenues = venues?.venues?.filter((venue:any) => 
