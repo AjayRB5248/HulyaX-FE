@@ -64,7 +64,7 @@ export function useNavData() {
         items: [
           {
             title: t('Dashboard'),
-            path: paths.dashboard.general.booking,
+            path: paths.dashboard.root,
             icon: ICONS.booking,
           },
           {
@@ -79,7 +79,7 @@ export function useNavData() {
           },
           {
             title: t('users'),
-            path: paths.dashboard.user.root,
+            path: paths.dashboard.user.list,
             icon: ICONS.tour,
             show: user?.role === 'superAdmin',
             children: [
@@ -89,7 +89,7 @@ export function useNavData() {
           },
           {
             title: t('Artists'),
-            path: paths.dashboard.artist.root,
+            path: paths.dashboard.artist.list,
             icon: ICONS.tour,
             show: user?.role === 'superAdmin',
             children: [
@@ -99,7 +99,7 @@ export function useNavData() {
           },
           {
             title: t('Venues'),
-            path: paths.dashboard.venue.root,
+            path: paths.dashboard.venue.list,
             icon: ICONS.tour,
             show: user?.role === 'superAdmin',
             children: [

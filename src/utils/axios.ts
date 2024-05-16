@@ -108,7 +108,11 @@ export const endpoints = {
     changePassword:`users/update-password`
   },
   superAdmin:{
-   company: {approveCompany:'/superadmin/approve-company'},
+   company: {
+    approveCompany:'/superadmin/approve-company',
+    assignCompanyFromEvent:'/superadmin/assign-companies-to-events',
+    removeCompanyFromEvent:'/superadmin/assign-companies-to-events',
+  },
    artist: {
     createArtist: `/superadmin/artists/add-artist`,
     updateArtist:(id:string)=> `superadmin/artists/${id}`,
@@ -123,6 +127,11 @@ export const endpoints = {
   },
   state:{
     list:`superadmin/list-state`
+  },
+  ticket:{
+    setupTicket:`superadmin/add-ticket`,
+    updateTicket: `superadmin/tickets`,
+    removeTicket:(id:string)=> `superadmin/tickets/${id}`,
   }
 }
 };

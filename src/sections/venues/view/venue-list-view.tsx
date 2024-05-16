@@ -29,24 +29,23 @@ import {
   useTable,
 } from 'src/components/table';
 // types
-import { IUserTableFilters } from 'src/types/user';
 //
 import { TableBody } from '@mui/material';
 import VenueTableRow from '../venue-table-row';
 import VenueTableToolbar from '../venue-table-toolbar';
 import { useVenues } from 'src/api/venues';
+import { IVenueTableFilters } from 'src/types/venue';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'venue', label: 'Venue Name', width: 250 },
+  { id: 'venueName', label: 'Venue Name', width: 250 },
   { id: 'state', label: 'State',width: 250  },
   { id: 'Action', width: 88 },
 ];
 
-const defaultFilters: IUserTableFilters = {
-  name: '',
-  role: [],
+const defaultFilters: IVenueTableFilters = {
+  venueName: '',
   status: 'all',
 };
 
@@ -65,9 +64,18 @@ export default function VenueListView() {
 
   const [filters, setFilters] = useState(defaultFilters);
 
-  const handleFilters = () => {};
-
+  const handleFilters = (filterName:any, value:any) => {
+    setFilters((currentFilters) => ({
+      ...currentFilters,
+      [filterName]: value.trim().toLowerCase()
+    }));
+  };
+  
   const handleFilterStatus = () => {};
+
+  const filteredVenues = venues?.venues?.filter((venue:any) => 
+    venue?.venueName?.toLowerCase().includes(filters?.venueName)
+  );
 
   return (
     <>
@@ -124,7 +132,7 @@ export default function VenueListView() {
                   numSelected={table.selected.length}
                 />
                 <TableBody>
-                  {venues?.venues?.map((row: any) => (
+                  {filteredVenues?.map((row: any) => (
                     <VenueTableRow key={row?._id} row={row} />
                   ))}
 
