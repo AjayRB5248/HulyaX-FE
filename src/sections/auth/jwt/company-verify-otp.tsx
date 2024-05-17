@@ -93,11 +93,11 @@ export default function CompanyVerifyOTP() {
       <EmailInboxIcon sx={{ height: 96 }} />
 
       <Stack spacing={1} sx={{ my: 5 }}>
-        <Typography variant="h3">Please check your email!</Typography>
+        <Typography variant="h3">Please check your Phone!</Typography>
 
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          We have emailed a 6-digit confirmation code to acb@domain, please enter the code in below box to verify your
-          email.
+          We have sent a 6-digit confirmation code to your Phone Number, please enter the code in below box to verify your
+          Number.
         </Typography>
       </Stack>
     </>

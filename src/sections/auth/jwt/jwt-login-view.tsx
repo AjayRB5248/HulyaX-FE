@@ -45,7 +45,7 @@ export default function JwtRegisterView() {
   const forgotPasswordMutation = useForgotPassword();
 
   useEffect(() => {
-    if (user && !(user.role==='customer')) {
+    if (user && !(user.role==='customer') && user?.isApproved) {
       router.push(paths.dashboard.root);
     }
   }, [user]);
@@ -83,14 +83,17 @@ export default function JwtRegisterView() {
       };
 
       const result = await loginMutation.mutateAsync(loginPayload);
-      if(result?.user && !(result?.user?.role==='customer')){
+      if (result?.user && result?.user?.role !== 'customer' && result?.user?.isApproved) {
         enqueueSnackbar("Login successful", { variant: "success" });
         router.push(returnTo || PATH_AFTER_LOGIN);
-      }else{
-        enqueueSnackbar('You are not Authorized User',{variant: "error"})
+      } else if (result?.user && result?.user?.role === 'companyAdmin' && !result?.user?.isApproved) {
+        enqueueSnackbar("Please Contact Admin For Approval", { variant: "info" });
+      } else {
+        enqueueSnackbar('You are not an Authorized User', { variant: "error" });
       }
+      
     } catch (error) {
-      console.error(error, 'this is data');
+      console.error(error);
       reset();
       setErrorMsg(
         typeof error === 'string' ? error : error.response.data.message

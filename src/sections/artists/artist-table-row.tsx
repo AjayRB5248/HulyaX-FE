@@ -62,7 +62,7 @@ export default function ArtistTableRow({
   return (
     <>
       <TableRow hover selected={selected}>
-       <Avatar alt={artistName} src={images[0]?.imageurl} sx={{ mr: 2 }} />
+       <Avatar alt={artistName} src={images[0]?.imageurl} sx={{ ml:4,mt:2 }} />
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{artistName}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{category}</TableCell>
 

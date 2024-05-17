@@ -54,13 +54,13 @@ export default function TourItem({ event, onView, onEdit, onDelete }: Props) {
         p: (theme) => theme.spacing(1, 1, 0, 1),
       }}
     >
-      <Stack flexGrow={1} sx={{ position: 'relative' }}>
+      {/* <Stack flexGrow={1} sx={{ position: 'relative' }}>
         <Image alt={eventImages[0]} src={eventImages[0]?.imageurl} sx={{ borderRadius: 1, height: 164, width: 1 }} />
       </Stack>
       {eventImages?.length>2 && <Stack spacing={0.5}>
         <Image alt={eventImages[1]} src={eventImages[1]?.imageurl} ratio="1/1" sx={{ borderRadius: 1, width: 80 }} />
         <Image alt={eventImages[2]} src={eventImages[2]?.imageurl} ratio="1/1" sx={{ borderRadius: 1, width: 80 }} />
-      </Stack>}
+      </Stack>} */}
     </Stack>
   );
 

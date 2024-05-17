@@ -93,7 +93,7 @@ export type IUserCard = {
 };
 
 export type IUserItem = {
-  id: string;
+  _id: string;
   name: string;
   city: string;
   role: string;
