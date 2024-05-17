@@ -26,12 +26,12 @@ export default function HomeView() {
         events={EVENTS_MOCK}
       />
       {/* <TicketSearch /> */}
-      {/* <EventsCarousel />
+      <EventsCarousel />
       <NewsLetter />
       <EventsSlider />
       <BannerSlider />
-      <PopularCategories /> */}
-      {/* <Artists /> */}
+      <PopularCategories />
+      <Artists />
     </MainLayout>
   );
 }
