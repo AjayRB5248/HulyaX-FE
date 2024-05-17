@@ -93,7 +93,7 @@ export const endpoints = {
   },
   users: {
     list: (queryParameters = {}) => {
-      let url = '/users';
+      let url = '/superadmin/fetch-all-users';
       const params = new URLSearchParams(queryParameters).toString();
       if (params) {
         url += `?${params}`;

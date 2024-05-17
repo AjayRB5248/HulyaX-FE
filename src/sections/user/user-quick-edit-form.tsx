@@ -83,7 +83,7 @@ export default function UserQuickEditForm({
       await userUpdateMutation
         .mutateAsync({
           data,
-          userId: currentUser?.id,
+          userId: currentUser?._id,
         })
         .then(() => {
           reset();
@@ -101,7 +101,7 @@ export default function UserQuickEditForm({
     setIsCompanyApproved(isChecked);
   
     const payload = {
-      userId: currentUser?.id,
+      userId: currentUser?._id,
       isApproved: isChecked
     };
   

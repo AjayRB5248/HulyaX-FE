@@ -1,10 +1,6 @@
 import Image from "next/image";
-import Lana from "src/assets/frontend/images/artists/LANA.jpg";
-import Sacar from "src/assets/frontend/images/artists/Sacar.jpeg";
-import Neetesh from "src/assets/frontend/images/artists/Neetesh.jpeg";
-import Olivia from "src/assets/frontend/images/artists/Olivia.png";
-
 import Slider from "react-slick";
+import { useArtists } from "src/api/artists";
 
 const settings = {
   dots: false,
@@ -40,40 +36,9 @@ const settings = {
   ],
 };
 
-const artists = [
-  {
-    artistName: "Sacar Adhikari",
-    artistTitle: "Rapper/Musician",
-    artistProfileImg: Sacar,
-  },
-  {
-    artistName: "Neetesh Jung Kunwar",
-    artistTitle: "Rapper/Musician",
-    artistProfileImg: Neetesh,
-  },
-  {
-    artistName: "Olivia Rodrigo",
-    artistTitle: "Singer/Pianist",
-    artistProfileImg: Olivia,
-  },
-  {
-    artistName: "Lana Del Rey",
-    artistTitle: "Singer/SongWriter",
-    artistProfileImg: Lana,
-  },
-  {
-    artistName: "Sacar Adhikari",
-    artistTitle: "Rapper/Musician",
-    artistProfileImg: Sacar,
-  },
-  {
-    artistName: "Neetesh Jung Kunwar",
-    artistTitle: "Rapper/Musician",
-    artistProfileImg: Lana,
-  },
-];
-
 const Artists = () => {
+  const { artists } = useArtists();
+
   return (
     <section className="section-wrapper artists-section">
       <div className="section-title">
@@ -82,17 +47,23 @@ const Artists = () => {
       </div>
       <div className="container-fluid">
         <Slider {...settings}>
-          {artists.map((artist: any) => (
-            <div className="d-flex flex-column align-items-center">
-              <div className="artist-profile">
-                <Image src={artist.artistProfileImg} alt={artist.artistName} />
+          {artists?.artists?.map((artist:any) => {
+            const profileImage = artist?.images?.find((img:any) => img.isProfile)?.imageurl;
+
+            return (
+              <div key={artist._id} className="d-flex flex-column align-items-center">
+                <div className="artist-profile">
+                  {profileImage && (
+                    <Image src={profileImage} alt={artist?.artistName} width={150} height={150} />
+                  )}
+                </div>
+                <div className="artist-desc">
+                  <h3 className="name">{artist?.artistName}</h3>
+                  <span className="title">{artist?.category}</span>
+                </div>
               </div>
-              <div className="artist-desc">
-                <h3 className="name">{artist.artistName}</h3>
-                <span className="title">{artist.artistTitle}</span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </Slider>
       </div>
     </section>

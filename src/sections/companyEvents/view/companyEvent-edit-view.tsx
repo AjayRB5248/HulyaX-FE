@@ -24,7 +24,24 @@ export default function CompanyEventTicketEditView() {
   const { id } = params;
   const { event, isLoading} = useEvent(id)
 
-  const currentTour = _tours.find((tour) => tour.id === id);
+  const currentTicket  = {
+    ticketTypes: [
+      {
+        companyId:"65b6330e57b8f91495bb610f",
+        venueId: "6644f20a16f4742cffeacbe2",
+        type: 'VIP',
+        price: '200',
+        totalSeats: '150',
+      },
+      {
+        companyId:"65b6330e57b8f91495bb610f",
+        venueId: '6644f20a16f4742cffeacbe2',
+        type: 'VIP',
+        price: '200',
+        totalSeats: '150',
+      },
+    ],
+  }
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -39,14 +56,15 @@ export default function CompanyEventTicketEditView() {
             name: 'Company Events',
             href: paths.dashboard.tour.root,
           },
-          { name: currentTour?.name },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
 
-      <TicketSettingsForm  />
+      {/* <TicketSettingsForm currentTicket= {currentTicket} /> */}
+      <TicketSettingsForm />
+
     </Container>
   );
 }

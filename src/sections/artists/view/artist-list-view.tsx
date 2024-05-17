@@ -32,7 +32,6 @@ import {
 import { IUserTableFilters } from 'src/types/user';
 //
 import { TableBody } from '@mui/material';
-import { useUsers } from 'src/api/users';
 import ArtistTableRow from '../artist-table-row';
 import ArtistTableToolbar from '../artist-table-toolbar';
 import { useArtists } from 'src/api/artists';
