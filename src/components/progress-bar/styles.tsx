@@ -21,7 +21,7 @@ export default function StyledProgressBar() {
             zIndex: 9999,
             width: '100%',
             position: 'fixed',
-            backgroundColor: "#0678a6",
+            backgroundColor: "#4c0080",
             boxShadow: `0 0 2px ${theme.palette.primary.main}`,
           },
           '.peg': {

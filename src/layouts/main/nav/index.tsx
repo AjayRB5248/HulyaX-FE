@@ -31,17 +31,17 @@ const navigationItems: NavItem[] = [
     href: '/',
   },
   {
-    label: 'Explore',
+    label: 'Explore Events',
     href: '/events/',
     submenu: [],
   },
-  {
-    label: 'Events',
-    href: '',
-    submenu: eventCategories,
-  },
+  // {
+  //   label: 'Events',
+  //   href: '',
+  //   submenu: eventCategories,
+  // },
   { label: 'Trending Now', href: '/trending-now' },
-  { label: 'About Us', href: '/about-us' },
+  { label: 'Contact Us', href: '/about-us' },
 ];
 
 interface NavbarProps {

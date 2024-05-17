@@ -27,7 +27,7 @@ const Banner = (events: any) => {
 
   return (
     <Slider {...settings} className="banner-slider">
-      {Array.isArray(featuredEvents) &&
+      {/* {Array.isArray(featuredEvents) &&
         featuredEvents.map((featuredEvent: any) => {
           const posterImage = featuredEvent.eventImages?.find((eventImg: any) => eventImg?.isPrimary)?.imageurl;
 
@@ -66,7 +66,7 @@ const Banner = (events: any) => {
               </div>
             </div>
           );
-        })}
+        })} */}
 
       <div className="banner-section">
         <div className="banner-bg bg_img bg-fixed" style={{ backgroundImage: `url(${BannerBg.src})` }}></div>
@@ -93,7 +93,7 @@ const Banner = (events: any) => {
               alignItems="center"
               divider={<Box sx={{ mx: { xs: 1, sm: 2.5 } }}>:</Box>}
               sx={{ typography: "h2" }}
-              className="mt-5"
+              className="mt-5 counter-wrapper"
             >
               <TimeBlock label="Days" value={days} />
 

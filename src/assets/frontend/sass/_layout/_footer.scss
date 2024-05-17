@@ -14,7 +14,7 @@
     mask-repeat: no-repeat;
     mask-size: cover;
     -webkit-mask-size: cover;
-    
+
     @include breakpoint(lg) {
       top: 120px;
     }
@@ -47,13 +47,16 @@
     margin: 0;
     font-size: 12px;
     color: $theme-text-color;
+    font-weight: 500;
 
     a {
-      color: $theme-color;
+      color: $main-theme-color;
+      font-weight: bold;
+      margin-left: 2px;
     }
   }
   .left {
-    margin-bottom: 25px;
+    text-align: center;
   }
   .links {
     @extend %flex;

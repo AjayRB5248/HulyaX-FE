@@ -104,14 +104,12 @@ export default function UserForgotPassword() {
   );
 
   return (
-    <section className="account-section bg_img">
-      <div className="container">
-        <div className="account-area text-center">
-          <FormProvider methods={methods} onSubmit={onSubmit}>
-            {renderHead}
-            {renderForm}
-          </FormProvider>
-        </div>
+    <section className="account-section d-flex align-items-center justify-content-center">
+      <div className="account-area text-center">
+        <FormProvider methods={methods} onSubmit={onSubmit}>
+          {renderHead}
+          {renderForm}
+        </FormProvider>
       </div>
     </section>
   );

@@ -1,0 +1,113 @@
+@media screen and (max-width: 992px) {
+  .container {
+    max-width: 90% !important;
+  }
+
+  .banner-section {
+    padding: 150px 0 30.31px;
+
+    .banner-content .title {
+      font-size: 30px;
+    }
+  }
+
+  .account-section .account-area {
+    box-shadow: none;
+    padding: 40px;
+  }
+
+  .footer-bottom p {
+    a {
+      display: block;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .footer-bottom p {
+    font-size: 10px !important;
+
+    span {
+      display: block;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .banner-section {
+    padding: 120px 0 30.31px;
+
+    .title {
+      margin-bottom: 8px;
+    }
+
+    .counter-wrapper,
+    button {
+      margin-top: 2rem !important;
+    }
+  }
+
+  .account-section {
+    .account-area .account-form .form-group .btn-loading {
+      padding: 0 30px;
+      width: 100%;
+    }
+
+    &--register .account-area {
+      margin: 5vh 0 !important;
+      padding: 20px;
+    }
+  }
+
+  .account-section .account-area .section-header-3 {
+    .title {
+      font-size: 12px;
+    }
+
+    .cate {
+      font-size: 16px;
+    }
+  }
+
+  .otp-code-input-wrapper {
+    gap: 10px;
+
+    input {
+      font-size: 14px!important;
+      height: 1rem;
+      padding: 16px 4px;
+    }
+  }
+
+  .footer-bottom-area {
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .newslater-form {
+    input {
+      font-size: 10px !important;
+      height: 40px;
+      padding-right: 0px;
+    }
+
+    button {
+      padding: 0 15px;
+      height: 40px;
+    }
+  }
+
+  .footer-bottom p {
+    a,
+    span {
+      display: inline !important;
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .account-section .account-area {
+    padding: 30px;
+  }
+}

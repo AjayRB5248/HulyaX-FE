@@ -95,7 +95,7 @@ export const EVENTS_MOCK_DATA = {
         {
           isPrimary: true,
           _id: "65ba2f3983f474115e07ef67",
-          imageurl: "https://cdn.nayathegana.com/e5/media/events/banner/96890b24-24b3-4f43-a3a6-d2f9b78321a0.jpg",
+          imageurl: "../assets/frontend/images/media/AXIX.jpeg",
         },
       ],
       createdAt: "2024-01-31T11:30:01.847Z",

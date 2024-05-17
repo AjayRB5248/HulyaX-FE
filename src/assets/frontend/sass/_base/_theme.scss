@@ -1,4 +1,6 @@
 .light-theme {
+  overflow: hidden;
+
   .container-fluid {
     width: 90%; /* Set to 90% width by default */
     margin-right: auto;
@@ -9,7 +11,6 @@
     @include breakpoint(max-sm) {
       width: 100%;
     }
-  
   }
 
   .theme--container-xl {
@@ -65,7 +66,8 @@
     }
 
     .logo {
-      width: 60px;
+      height: 100%;
+      width: auto;
     }
   }
   .header-bar span {
