@@ -3,9 +3,9 @@ import { useSnackbar } from 'notistack';
 import { useMemo } from 'react';
 import UsersService from 'src/services/users';
 
-export function   useUsers({ page, limit }:any) {
+export function useUsers({ page, limit }: any) {
   const { data, isLoading, error } = useQuery(
-    ['users', page, limit],  
+    ['users', page, limit],
     async () => {
       const queryParameters = {
         page: page,
@@ -21,7 +21,7 @@ export function   useUsers({ page, limit }:any) {
   const users = useMemo(() => data?.results || [], [data?.results]);
 
   return {
-    users,  
+    users,
     totalResults: data?.totalResults || 0,
     loading: isLoading,
     error,
@@ -66,4 +66,25 @@ export function useUpdateUser() {
       },
     }
   );
+}
+
+export function useAllUsersByRole(role: string) {
+  const { data, isLoading, error } = useQuery(
+    ['useAllUsersByRole'],
+    async () => {
+      const res = await UsersService.alUserByRole(role);
+      return res?.data;
+    },
+    {
+      keepPreviousData: true,
+    }
+  );
+  const users = useMemo(() => data?.users || [], [data?.users]);
+
+  return {
+    users: users,
+    totalResults: data?.totalResults || 0,
+    loading: isLoading,
+    error,
+  };
 }

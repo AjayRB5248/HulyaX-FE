@@ -8,6 +8,8 @@ const UsersService = {
     axiosInstance.patch(endpoints.users.update(userId), data),
   details: (id: any) => axiosInstance.get(endpoints.events.details(id)),
   remove: (id: string) => axiosInstance.delete(endpoints.users.remove(id)),
+  alUserByRole: (role: string) =>
+    axiosInstance.get(endpoints.users.listByRole(role)),
 };
 
 export default UsersService;

@@ -34,5 +34,5 @@ export const EventSchema = Yup.object().shape({
   ),
 
   images: Yup.array().optional(),
-  tags: Yup.array().of(Yup.string()).required('At least one tag is required'),
+  tags: Yup.array().of(Yup.string()),
 });

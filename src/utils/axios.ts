@@ -102,6 +102,7 @@ export const endpoints = {
     },
     remove: (id: string) => `/users/${id}`,
     update: (userId: string) => `/users/${userId}`,
+    listByRole: (role: string) => `/superadmin/fetch-all-users?role=${role}`,
   },
   tickets: {
     list: `tickets/view-tickets`,

@@ -111,9 +111,6 @@ export default function TourNewEditForm({ currentTour }: Props) {
     reset,
   } = methods;
 
-  useEffect(() => {
-    console.log('this is data errors', errors);
-  }, [errors]);
   const artists = useFieldArray({
     control,
     name: 'artists',

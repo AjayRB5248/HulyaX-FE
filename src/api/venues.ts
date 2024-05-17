@@ -46,7 +46,6 @@ export function useVenues() {
     loading: isLoading,
     error,
     refetch,
-    data: venues?.venues,
   };
 }
 

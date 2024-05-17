@@ -9,7 +9,7 @@ const superAdminService = {
   state: () => axiosInstance.get(endpoints.superAdmin.states.list),
   assignCompanyFromEvent: (data: any) =>
     axiosInstance.post(endpoints.superAdmin.company.assignCompanyFromEvent, {
-      data,
+      ...data,
     }),
   removeCompanyFromEvent: (data: any) =>
     axiosInstance.delete(endpoints.superAdmin.company.removeCompanyFromEvent, {

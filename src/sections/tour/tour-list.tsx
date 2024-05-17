@@ -13,6 +13,7 @@ import { useEvents, useRemoveEvent } from 'src/api/events';
 import { useBoolean } from 'src/hooks/use-boolean';
 import TransitionsDialog from '../_examples/mui/dialog-view/transitions-dialog';
 import TourItem from './tour-item';
+import AssignModal from './view/assignModal';
 
 // ----------------------------------------------------------------------
 
@@ -24,9 +25,10 @@ export default function TourList({ tours }: Props) {
   const router = useRouter();
   const { events, loading, error, refetch } = useEvents();
   const removeEventMutation = useRemoveEvent();
-  const [selectedEvent, setSelectedEvent] = useState<string>('');
+  const [selectedEventId, setSelectedEventId] = useState<string>('');
   const { onToggle, onTrue, onFalse, setValue, value } = useBoolean();
-
+  const [selectedEvent, setSelectedEvent] = useState({});
+  const [assignModal, setAssignModal] = useState(false);
   const handleView = useCallback(
     (id: string) => {
       router.push(paths.dashboard.tour.details(id));
@@ -42,13 +44,21 @@ export default function TourList({ tours }: Props) {
   );
 
   const handleOpenDeleteModal = useCallback((id: string) => {
-    setSelectedEvent(id);
+    setSelectedEventId(id);
     onTrue();
   }, []);
 
+  const handleAssign = (eventId: any) => {
+    const selectedEvent = events?.filter(
+      (item: any) => item?._id === eventId
+    )[0];
+    setSelectedEvent(selectedEvent);
+    setAssignModal(true);
+  };
+
   const handleDelete = async () => {
-    await removeEventMutation.mutateAsync(selectedEvent);
-    setSelectedEvent('');
+    await removeEventMutation.mutateAsync(selectedEventId);
+    setSelectedEventId('');
     refetch();
     onFalse();
   };
@@ -71,6 +81,7 @@ export default function TourList({ tours }: Props) {
             onView={() => handleView(event._id)}
             onEdit={() => handleEdit(event._id)}
             onDelete={() => handleOpenDeleteModal(event._id)}
+            onAssignVenue={() => handleAssign(event._id)}
           />
         ))}
       </Box>
@@ -84,6 +95,14 @@ export default function TourList({ tours }: Props) {
         falseText='Cancel'
         title='Delete Event'
         isLoading={removeEventMutation.isLoading}
+      />
+
+      <AssignModal
+        onSubmit={() => {}}
+        isOpen={assignModal}
+        setAssignModal={setAssignModal}
+        selectedEvent={selectedEvent}
+        setSelectedEvent={setSelectedEvent}
       />
 
       {events?.length > 8 && (
