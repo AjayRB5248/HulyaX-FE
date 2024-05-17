@@ -59,8 +59,6 @@ export const useRefreshToken = async () => {
     (res) => res.data
   );
 
-  console.log(response, 'response!!!');
-
   storeTokens(response.access.token, response.refresh.token);
 
   return response.access.token;

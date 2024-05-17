@@ -64,14 +64,23 @@ export function useNavData() {
         items: [
           {
             title: t('Dashboard'),
-            path: paths.dashboard.general.booking,
+            path: paths.dashboard.root,
             icon: ICONS.booking,
+          },
+          {
+            title: t('CompanyEvents'),
+            path: paths.dashboard.companyEvents.root,
+            icon: ICONS.tour,
+            show: user?.role === 'companyAdmin',
+            children: [
+              { title: t('list'), path: paths.dashboard.companyEvents.root },
+            ],
           },
           {
             title: t('Events'),
             path: paths.dashboard.tour.root,
             icon: ICONS.tour,
-            show: roles.includes(user?.role ?? ''),
+            show: user?.role === 'superAdmin',
             children: [
               { title: t('list'), path: paths.dashboard.tour.root },
               { title: t('create'), path: paths.dashboard.tour.new },
@@ -79,7 +88,7 @@ export function useNavData() {
           },
           {
             title: t('users'),
-            path: paths.dashboard.user.root,
+            path: paths.dashboard.user.list,
             icon: ICONS.tour,
             show: user?.role === 'superAdmin',
             children: [
@@ -89,7 +98,7 @@ export function useNavData() {
           },
           {
             title: t('Artists'),
-            path: paths.dashboard.artist.root,
+            path: paths.dashboard.artist.list,
             icon: ICONS.tour,
             show: user?.role === 'superAdmin',
             children: [
@@ -99,7 +108,7 @@ export function useNavData() {
           },
           {
             title: t('Venues'),
-            path: paths.dashboard.venue.root,
+            path: paths.dashboard.venue.list,
             icon: ICONS.tour,
             show: user?.role === 'superAdmin',
             children: [

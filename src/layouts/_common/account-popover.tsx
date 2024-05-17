@@ -27,7 +27,7 @@ const OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
-  const { user, refreshToken } = useAuth();
+  const { user, setUser } = useAuth();
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -38,8 +38,10 @@ export default function AccountPopover() {
   const handleLogout = async () => {
     try {
       localStorage.clear();
+      setUser(null)
       popover.onClose();
-      router.replace('/');
+      router.replace('/auth/company/login');
+      enqueueSnackbar('Logged Out Successfully!', { variant: 'success' });
     } catch (error) {
       console.error(error);
       enqueueSnackbar('Unable to logout!', { variant: 'error' });

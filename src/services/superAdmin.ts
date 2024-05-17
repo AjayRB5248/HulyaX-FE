@@ -7,6 +7,16 @@ const superAdminService = {
       isApproved,
     }),
   state: () => axiosInstance.get(endpoints.superAdmin.states.list),
+  assignCompanyFromEvent: (data: any) =>
+    axiosInstance.post(endpoints.superAdmin.company.assignCompanyFromEvent, {
+      data,
+    }),
+  removeCompanyFromEvent: (data: any) =>
+    axiosInstance.delete(endpoints.superAdmin.company.removeCompanyFromEvent, {
+      data,
+    }),
+  setupTicket: (data: any) =>
+    axiosInstance.post(endpoints.superAdmin.ticket.setupTicket, { data }),
 };
 
 export default superAdminService;
