@@ -15,35 +15,42 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import {  useEffect, useMemo, useState } from 'react';
-import {
-  useCreateEvent,
-} from 'src/api/events';
-import { useRouter } from 'src/routes/hook';
+import { useEffect, useMemo } from 'react';
+import { useParams, useRouter } from 'src/routes/hook';
 import { paths } from 'src/routes/paths';
 import { useVenues } from 'src/api/venues';
 import * as Yup from 'yup';
 import { useSetupTicketSettings } from 'src/api/superAdmin';
+import { useUsers } from 'src/api/users';
+import { useAuth } from 'src/auth/context/users/auth-context';
+import { enqueueSnackbar } from 'notistack';
 
 type Props = {
-    currentTicket?: any;
+  currentTicket?: any;
 };
 
 const ticketDefault = {
   type: '',
   price: 0,
   totalSeats: 0,
-  venueId:'',
+  venueId: '',
 };
+
 export default function TicketSettingsForm({ currentTicket }: Props) {
   const setupTicketMutation = useSetupTicketSettings();
+  const { eventId } = useParams(); 
+  const {user} = useAuth()
+  const userRole = user ? user.role : 'companyAdmin'
   const router = useRouter();
-  const {venues}= useVenues();
+  const { venues } = useVenues();
+  const { users } = useUsers(); 
+  const companies= users?.filter((company: any) => company?.role === 'companyAdmin')
 
-  const TicketSetingsSchema = Yup.object().shape({
+  const TicketSettingsSchema = Yup.object().shape({
     ticketSettings: Yup.array().of(
       Yup.object().shape({
-        venueId: Yup.string().required('Venue  is required'),
+        companyId: Yup.string().optional(),
+        venueId: Yup.string().required('Venue is required'),
         type: Yup.string().required('Ticket type is required'),
         price: Yup.number()
           .positive('Price must be positive')
@@ -59,20 +66,21 @@ export default function TicketSettingsForm({ currentTicket }: Props) {
   const defaultValues = useMemo(
     () => ({
       ticketSettings: currentTicket?.ticketTypes
-        ? currentTicket?.ticketTypes.map((ticketType:any) => ({
+        ? currentTicket?.ticketTypes.map((ticketType: any) => ({
             ...ticketType,
             venueId: ticketType.venueId,
             type: ticketType.type,
             price: ticketType.price,
             totalSeats: ticketType.totalSeats,
+            companyId: ticketType.companyId || ''
           }))
-        : [{ venueId:'', type: '', price: 0, totalSeats: 0 }],
+        : [ticketDefault],
     }),
     [currentTicket]
   );
 
   const methods = useForm({
-    resolver: yupResolver(TicketSetingsSchema),
+    resolver: yupResolver(TicketSettingsSchema),
     defaultValues,
   });
 
@@ -88,38 +96,41 @@ export default function TicketSettingsForm({ currentTicket }: Props) {
     name: 'ticketSettings',
   });
 
-
   useEffect(() => {
     if (currentTicket) {
       reset(defaultValues);
     }
   }, [currentTicket, defaultValues, reset]);
 
-
   const onSubmit = async (data: any) => {
-    // const formData = new FormData();
-    // data?.ticketSettings.forEach((ticket: any, index: any) => {
-    //   formData.append(`ticketSettings[${index}][venueId]`, ticket.venueId);
-    //   formData.append(`ticketSettings[${index}][type]`, ticket.type);
-    //   formData.append(
-    //     `ticketSettings[${index}][price]`,
-    //     ticket?.price?.toString()
-    //   );
-    //   formData.append(
-    //     `ticketSettings[${index}][totalSeats]`,
-    //     ticket?.totalSeats?.toString()
-    //   );
-    // });
-
     try {
-    //   await setupTicketMutation.mutateAsync(formData);
+      const payload = { eventId };
+      for (const ticketSetting of data.ticketSettings) {
+        // await setupTicketMutation.mutateAsync({ ...payload, ...ticketSetting });
+        console.log({ ...payload, ...ticketSetting })
+      }
+      enqueueSnackbar("Ticket Settings Added successful", { variant: "success" });
+      router.push(paths.dashboard.companyEvents.root)
+      reset();
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar("Something went Wrong,Try Again", { variant: "error" });
+    }
+  };
+  
+
+  const onUpdate = async (data: any) => {
+    try {
+      const payload = { eventId };
+      const promises = data.ticketSettings.map((ticketSetting: any) =>
+        setupTicketMutation.mutateAsync({ ...payload, ticketSetting })
+      );
+      await Promise.all(promises);
       reset();
     } catch (error) {
       console.error(error);
     }
   };
-
-  const onUpdate = ()=>{};
 
   return (
     <FormProvider
@@ -131,9 +142,8 @@ export default function TicketSettingsForm({ currentTicket }: Props) {
           <Typography variant='h4' sx={{ mb: 3 }}>
             Ticket Settings
           </Typography>
-          {renderTicketSettings(ticketSettings, venues?.venues)}
+          {renderTicketSettings(ticketSettings, venues?.venues, companies, userRole,currentTicket)}
         </Grid>
-
       </Stack>
 
       <Stack spacing={3}>
@@ -146,7 +156,7 @@ export default function TicketSettingsForm({ currentTicket }: Props) {
             loading={isSubmitting}
             sx={{ mt: 3 }}
           >
-            {currentTicket?._id ? 'Update Events' : 'Submit Event'}
+            {currentTicket?._id ? 'Update Ticket' : 'Submit Ticket'}
           </LoadingButton>
         </Grid>
       </Stack>
@@ -154,13 +164,29 @@ export default function TicketSettingsForm({ currentTicket }: Props) {
   );
 }
 
-const renderTicketSettings = (ticketSettings: any, venues: any) => {
+const renderTicketSettings = (ticketSettings: any, venues: any, companies: any, role: string,currentTicket:any) => {
   return (
     <Stack spacing={3}>
       {ticketSettings.fields.map((item: any, index: number) => (
         <Card key={item.id} sx={{ p: 2 }}>
           <Stack spacing={2}>
             <Typography variant='h6'>Ticket Setting {index + 1}</Typography>
+
+            {role === 'superAdmin' && (
+              <Controller
+                name={`ticketSettings[${index}].companyId`}
+                control={ticketSettings.control}
+                render={({ field }) => (
+                  <RHFSelect {...field} label='Company' required>
+                    {companies?.map((company: any) => (
+                      <MenuItem key={company?.id} value={company?.id}>
+                        {company?.name}
+                      </MenuItem>
+                    ))}
+                  </RHFSelect>
+                )}
+              />
+            )}
 
             <RHFSelect
               name={`ticketSettings[${index}].venueId`}
@@ -203,6 +229,7 @@ const renderTicketSettings = (ticketSettings: any, venues: any) => {
       <Button
         variant='contained'
         onClick={() => ticketSettings.append(ticketDefault)}
+        disabled = {currentTicket?.ticketTypes?.length>0}
       >
         Add Ticket Setting
       </Button>

@@ -3,14 +3,16 @@ import { useSnackbar } from 'notistack';
 import { useMemo } from 'react';
 import UsersService from 'src/services/users';
 
-export function   useUsers({ page, limit }:any) {
+interface QueryParameters {
+  page?: number;
+  limit?: number;
+}
+
+export function  useUsers(queryParameters:QueryParameters = {}) {
   const { data, isLoading, error } = useQuery(
-    ['users', page, limit],  
+    ['users'],  
     async () => {
-      const queryParameters = {
-        page: page,
-        limit: limit,
-      };
+
       const res = await UsersService.list(queryParameters);
       return res?.data;
     },
@@ -18,7 +20,7 @@ export function   useUsers({ page, limit }:any) {
       keepPreviousData: true,
     }
   );
-  const users = useMemo(() => data?.results || [], [data?.results]);
+  const users = useMemo(() => data?.users || [], [data?.users]);
 
   return {
     users,  

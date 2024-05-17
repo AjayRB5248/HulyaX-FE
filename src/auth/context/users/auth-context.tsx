@@ -14,6 +14,7 @@ interface User {
   mobileNumber: string;
   id: string;
   profilePicture: string;
+  isApproved:boolean,
 }
 
 interface UserToken {
