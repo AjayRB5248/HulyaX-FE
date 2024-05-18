@@ -75,14 +75,7 @@ export const endpoints = {
   },
 
   events: {
-    list: (queryParameters = {}) => {
-      let url = 'superadmin/fetch-all-events';
-      const params = new URLSearchParams(queryParameters).toString();
-      if (params) {
-        url += `?${params}`;
-      }
-      return url;
-    },
+    list: 'superadmin/fetch-all-events',
     create: '/superadmin/add-new-event',
     update: (id: string) => `/events/edit/${id}`,
     details: (id: any) => `/events/${id}`,

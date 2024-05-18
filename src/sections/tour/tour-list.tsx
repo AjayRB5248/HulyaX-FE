@@ -78,10 +78,10 @@ export default function TourList({ tours }: Props) {
           <TourItem
             key={event._id}
             event={event}
-            onView={() => handleView(event._id)}
+            onView={() => handleView(event?._id)}
             onEdit={() => handleEdit(event._id)}
-            onDelete={() => handleOpenDeleteModal(event._id)}
-            onAssignVenue={() => handleAssign(event._id)}
+            onDelete={() => handleOpenDeleteModal(event?._id)}
+            onAssignVenue={() => handleAssign(event?._id)}
           />
         ))}
       </Box>

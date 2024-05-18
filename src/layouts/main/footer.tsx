@@ -3,7 +3,7 @@ import Link from "next/link";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
 import FooterBackground from "src/assets/frontend/images/event1.jpg";
-import FooterLogo from "src/assets/frontend/images/hulyalogo-dark.png";
+import FooterLogo from "src/assets/frontend/images/hulyalogomain.png";
 import axiosInstance from "src/utils/axios";
 
 const socialIcons = [
@@ -104,7 +104,7 @@ export default function Footer() {
         <div className="footer-top">
           <div className="logo">
             <Link href="index-1.html">
-              <Image width={100} src={FooterLogo} alt="Footer Image" />
+              <Image width={50} src={FooterLogo} alt="Footer Image" />
             </Link>
           </div>
           <ul className="social-icons">{socialIcons.map(renderLink)}</ul>
