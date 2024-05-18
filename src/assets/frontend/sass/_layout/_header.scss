@@ -26,6 +26,8 @@ header {
     }
   }
   .menu {
+    height: 100%;
+
     @include breakpoint(lg) {
       display: flex;
       flex-wrap: wrap;
@@ -36,6 +38,10 @@ header {
       li {
         padding: 5px 12px;
         position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+
         a {
           color: #e9eeff;
           font-size: 14px;
@@ -43,6 +49,9 @@ header {
           // text-transform: uppercase;
           padding: 5px;
           text-decoration: none;
+          height: 100%;
+          display: flex;
+          align-items: center;
         }
         .submenu {
           position: absolute;
@@ -165,8 +174,9 @@ header {
           background-color: $main-theme-color;
           padding: 10px 49px;
           font-weight: 600;
+          height: auto;
           @include border-radius(25px);
-          display: inline-block;
+
           &:hover {
             box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
           }
@@ -256,6 +266,11 @@ header {
         }
         &.header-button {
           margin-top: 20px;
+          margin-left: 0 !important;  
+
+          a {
+            display: inline-flex;
+          }
         }
       }
       &.active {
