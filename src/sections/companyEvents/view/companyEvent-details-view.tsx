@@ -16,23 +16,68 @@ import { useSettingsContext } from 'src/components/settings';
 //
 import { useEvent, useEvents } from 'src/api/events';
 import CompanyEventDetailsContent from '../companyEvent-details-content';
+import { useAssignedEvents } from 'src/api/superAdmin';
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs/custom-breadcrumbs';
+import { Button, Stack } from '@mui/material';
+import { RouterLink } from 'src/routes/components';
+import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function TourDetailsView() {
+export default function companyEventDetailsView() {
   const settings = useSettingsContext();
 
   const params = useParams();
 
   const { id } = params;
 
-  const {event,isLoading} = useEvent(id)
-
+  const {eventList,loading} = useAssignedEvents(id)
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+     <CustomBreadcrumbs
+        heading="Event Detail"
+        links={[
+          {
+            name: 'Dashboard',
+            href: paths.dashboard.root,
+          },
+          {
+            name: 'Company Events',
+            href: paths.dashboard.companyEvents.root,
+          },
+          {
+            name: 'About Event',
+          },
+        ]}
+        sx={{
+          mb: { xs: 3, md: 5 },
+        }}
+        action={
+          <>
+          <Stack spacing={2} direction={'row'}>
+          <Button
+            component={RouterLink}
+            href={paths.dashboard.companyEvents.edit(id)}
+            variant='contained'
+            startIcon={<Iconify icon='mingcute:add-line' />}
+          >
+            New Ticket Settings
+          </Button>
+          <Button
+          component={RouterLink}
+          href={paths.dashboard.companyEvents.update(id)}
+          variant='contained'
+          startIcon={<Iconify icon='mingcute:add-line' />}
+        >
+          Update Ticket Settings
+        </Button>
+        </Stack>
+        </>
+        }
+      />
 
-    <CompanyEventDetailsContent event={event} isLoading={isLoading} />
+    <CompanyEventDetailsContent event={eventList} isLoading={loading} />
 
     </Container>
   );

@@ -102,6 +102,28 @@ export function useStates() {
   };
 }
 
+export function useAssignedEvents(subEventId?:any) {
+  const { data, isLoading, error, refetch } = useQuery(
+    ['asssignedEvents'],
+    async () => {
+      const res = await superAdminService.veiwAssignedEvents(subEventId);
+      return res?.data;
+    },
+    {
+      keepPreviousData: true,
+    }
+  );
+
+  const events = useMemo(() => data || [], [data]);
+
+  return {
+    events,
+    loading: isLoading,
+    error,
+    refetch,
+    eventList:events?.assignedEvents
+  };
+}
 
 export function useSetupTicketSettings() {
   const router = useRouter();
@@ -121,6 +143,29 @@ export function useSetupTicketSettings() {
       },
       onSuccess: () => {
         enqueueSnackbar("Ticket setted up to Event Successfully!", { variant: "success" });
+      },
+    }
+  );
+}
+
+export function useupdateTicketSettings() {
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
+  return useMutation(
+    ["updateTicketSettings"],
+    async (data: any) => {
+      const response = await superAdminService.updateTicket(data);
+      return response?.data;
+    },
+    {
+      onError: (error: any) => {
+        enqueueSnackbar(error.response.data.message || "Error while ticket update", {
+          variant: "error",
+        });
+      },
+      onSuccess: () => {
+        enqueueSnackbar("Ticket updated Successfully!", { variant: "success" });
       },
     }
   );

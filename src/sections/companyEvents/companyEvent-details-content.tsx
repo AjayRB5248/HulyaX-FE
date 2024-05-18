@@ -24,20 +24,21 @@ type Props = {
 
 export default function CompanyEventDetailsContent({ event, isLoading }: Props) {
   const {
-    _id,
     eventName,
     eventCategory,
     eventDescription,
     status,
+    state,
     ticketTypes,
     artists,
     tags,
     venues,
-    eventImages,
+    images:eventImages,
     slug,
+    ticketConfig,
     createdAt,
     available,
-  } = event;
+  } = event[0];
 
   const carouselData = eventImages?.map((image:any) => ({
     id: image._id,
@@ -67,7 +68,7 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
           sx={{ typography: "body2" }}
         >
           <Iconify icon="mingcute:location-fill" sx={{ color: "error.main" }} />
-          Australia
+          {state?.stateName}
         </Stack>
         <Stack
           direction="row"
@@ -105,21 +106,28 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
         </Stack>
       </Stack>
 
-{  artists?.length > 0 &&  <Box sx={{ mt: 4 }}>
+    { artists?.length > 0 &&  <Box sx={{ mt: 4 }}>
         <Typography variant="h6" gutterBottom>
           Featured Artists
         </Typography>
         <Stack direction="row" spacing={2} sx={{ overflowX: "auto" }}>
-          {artists?.map((artist:any, index:string) => (
-            <Paper key={index} elevation={3} sx={{ p: 2, borderRadius: 2 }}>
-              <Stack spacing={2} alignItems="center">
-                <Typography variant="subtitle1">{artist.artistName}</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {artist?.genre || ""}
-                </Typography>
-              </Stack>
-            </Paper>
-          ))}
+        {artists?.map((artist:any) => {
+            const profileImage = artist?.images?.find((img:any) => img?.isProfile)?.imageurl;
+
+            return (
+              <div key={artist?._id} className="d-flex flex-column align-items-center">
+                <div className="artist-profile">
+                  {profileImage && (
+                    <Image src={profileImage} alt={artist?.artistName} width={150} height={150} />
+                  )}
+                </div>
+                <div className="artist-desc">
+                  <h3 className="name">{artist?.artistName}</h3>
+                  <span className="title">{artist?.category}</span>
+                </div>
+              </div>
+            );
+          })}
         </Stack>
       </Box>}
     </>
@@ -149,33 +157,17 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
     return (
       <Box sx={{ mt: 4 }}>
         <Typography variant="h6" gutterBottom>
-          Event Venues and Tickets
+          Tickets
         </Typography>
         <Box
           display="grid"
           gridTemplateColumns={{
-            xs: "repeat(1, 1fr)",
+            xs: "repeat(2, 1fr)",
             md: "repeat(2, 1fr)",
           }}
           gap={3}
         >
-          {combinedDetails?.map((venue: any, index: any) => (
-            <Paper key={index} elevation={3} sx={{ p: 2, borderRadius: 2 }}>
-              <Stack spacing={2}>
-                <Stack direction="row" spacing={2} alignItems="center">
-                  {venue.icon}
-                  <Typography variant="subtitle1">
-                    {venue?.venueName}
-                  </Typography>
-                </Stack>
-                <Typography variant="body1" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
-                  <Iconify icon="mingcute:location-fill" sx={{ color: 'error.main', }} />  {venue.city}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" alignItems={'center'}  sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Iconify icon="solar:clock-circle-bold" sx={{ color: 'info.main',marginRight: '8px' }} />  {venue.date} | {venue.time} Onwards
-                </Typography>
-                <Box>
-                  {ticketTypes?.filter((ticket:any) => ticket?.venueId === venue?.venueId).map((ticket: any, idx: any) => (
+                  {ticketConfig?.length> 0 && ticketConfig?.map((ticket: any, idx: any) => (
                     <Box
                       key={idx}
                       p={1}
@@ -184,19 +176,25 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
                       borderColor="grey.300"
                       borderRadius={1}
                     >
-                      <Stack direction="row" spacing={2} alignItems="center">
+                      
+                      <Stack direction="column" spacing={2} alignItems="center">
                         <Iconify icon="ant-design:ticket-outlined" />
                         <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
-                          <Iconify icon="emojione:admission-tickets" sx={{ color: 'info.main',marginRight: '8px' }}/>  {ticket.type} - Price: ${ticket.price}, Seats: {ticket.availableSeats}
+                          <Iconify icon="emojione:admission-tickets" sx={{ color: 'info.main',marginRight: '8px' }}/>  {ticket.type} - ${ticket.price}
+                        </Typography>
+                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
+                         Available Seats: {ticket.availableSeats}
+                        </Typography>
+                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
+                         Sold Seats: {ticket.soldSeats}
+                        </Typography>
+                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
+                         Total Seats: {ticket.totalSeats}
                         </Typography>
                       </Stack>
                     </Box>
                   ))}
                 </Box>
-              </Stack>
-            </Paper>
-          ))}
-        </Box>
       </Box>
     );
   }

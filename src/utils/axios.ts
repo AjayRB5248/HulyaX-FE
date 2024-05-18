@@ -75,7 +75,7 @@ export const endpoints = {
   },
 
   events: {
-    list: 'superadmin/fetch-all-events',
+    list: 'events/fetch-events',
     create: '/superadmin/add-new-event',
     update: (id: string) => `/events/edit/${id}`,
     details: (id: any) => `/events/${id}`,
@@ -111,6 +111,7 @@ export const endpoints = {
       approveCompany: '/superadmin/approve-company',
       assignCompanyFromEvent: '/superadmin/assign-companies-to-events',
       removeCompanyFromEvent: '/superadmin/assign-companies-to-events',
+      veiwAssignedEvents:'events/view-assigned-events'
     },
     artist: {
       createArtist: `/superadmin/artists/add-artist`,
@@ -129,7 +130,7 @@ export const endpoints = {
     },
     ticket: {
       setupTicket: `superadmin/add-ticket`,
-      updateTicket: `superadmin/tickets`,
+      updateTicket: `superadmin/update-ticket`,
       removeTicket: (id: string) => `superadmin/tickets/${id}`,
     },
   },

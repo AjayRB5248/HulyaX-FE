@@ -13,12 +13,11 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 //
 import TicketSettingsForm from '../ticket-config';
 import UpdateTicketSettingsForm from "../update-ticket-config"
-import { useEvent } from 'src/api/events';
 import { useAssignedEvents } from 'src/api/superAdmin';
 
 // ----------------------------------------------------------------------
 
-export default function CompanyEventTicketEditView() {
+export default function CompanyEventTicketUpdateView() {
   const settings = useSettingsContext();
 
   const params = useParams();
@@ -48,7 +47,9 @@ export default function CompanyEventTicketEditView() {
         }}
       />
 
-      <TicketSettingsForm currentTicket={eventList} />
+     {eventList[0].ticketConfig.length > 0 ? <UpdateTicketSettingsForm currentEvent={eventList} /> : 
+      <TicketSettingsForm currentEvent={eventList} />
+    }
 
     </Container>
   );

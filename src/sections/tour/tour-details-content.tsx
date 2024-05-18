@@ -33,7 +33,7 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
     artists,
     tags,
     venues,
-    eventImages,
+    images:eventImages,
     slug,
     createdAt,
     available,
@@ -110,16 +110,23 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
           Featured Artists
         </Typography>
         <Stack direction="row" spacing={2} sx={{ overflowX: "auto" }}>
-          {artists?.map((artist:any, index:string) => (
-            <Paper key={index} elevation={3} sx={{ p: 2, borderRadius: 2 }}>
-              <Stack spacing={2} alignItems="center">
-                <Typography variant="subtitle1">{artist.artistName}</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {artist?.genre || ""}
-                </Typography>
-              </Stack>
-            </Paper>
-          ))}
+          {artists?.map((artist:any) => {
+            const profileImage = artist?.images?.find((img:any) => img.isProfile)?.imageurl;
+
+            return (
+              <div key={artist._id} className="d-flex flex-column align-items-center">
+                <div className="artist-profile">
+                  {profileImage && (
+                    <Image src={profileImage} alt={artist?.artistName} width={150} height={150} />
+                  )}
+                </div>
+                <div className="artist-desc">
+                  <h3 className="name">{artist?.artistName}</h3>
+                  <span className="title">{artist?.category}</span>
+                </div>
+              </div>
+            );
+          })}
         </Stack>
       </Box>}
     </>
