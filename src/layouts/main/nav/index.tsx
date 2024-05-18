@@ -41,7 +41,7 @@ const navigationItems: NavItem[] = [
   //   submenu: eventCategories,
   // },
   { label: "Trending Now", href: "/trending-now" },
-  { label: "Contact Us", href: "/about-us" },
+  { label: "FAQs", href: "/faqs" },
 ];
 
 interface NavbarProps {

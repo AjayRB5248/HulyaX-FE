@@ -21,6 +21,7 @@ import { useAuth } from "src/auth/context/users/auth-context";
 import { useSearchParams, useRouter } from "src/routes/hook";
 import { PATH_AFTER_LOGIN } from "src/config-global";
 import { useEffect } from "react";
+import { enqueueSnackbar } from "notistack";
 
 // ----------------------------------------------------------------------
 
@@ -64,10 +65,8 @@ export default function CompanyVerifyOTP() {
 
         await verifyOTPMutation.mutateAsync(payloadForGeneratingOTP);
       }
-
-      setTimeout(() => {
-        router.push(returnTo || PATH_AFTER_LOGIN);
-      }, 1000);
+      enqueueSnackbar('We will reach out to you soon,Please wait until Approval', { variant: 'success' });
+      router.push('/auth/company/login')
     } catch (error) {
       console.error(error);
     }
