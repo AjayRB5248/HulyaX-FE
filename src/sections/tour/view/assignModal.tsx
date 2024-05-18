@@ -115,7 +115,6 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
   return (
     <Dialog open={isOpen} onClose={() => setAssignModal(false)}>
       <DialogTitle>Assign Venue and Company</DialogTitle>
-
       <DialogContent>
         {data?.map((item: any, index) => {
           return (

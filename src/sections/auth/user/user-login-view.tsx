@@ -15,7 +15,7 @@ import { LoadingButton } from "@mui/lab";
 import Link from "next/link";
 import { paths } from "src/routes/paths";
 import Image from "next/image";
-import Logo from "src/assets/frontend/images/hulya-events-logo.png";
+import Logo from "src/assets/frontend/images/hulyalogomain.png";
 import { enqueueSnackbar } from "notistack";
 
 interface FormData {
