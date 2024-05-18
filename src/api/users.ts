@@ -8,11 +8,10 @@ interface QueryParameters {
   limit?: number;
 }
 
-export function  useUsers(queryParameters:QueryParameters = {}) {
+export function useUsers(queryParameters: QueryParameters = {}) {
   const { data, isLoading, error } = useQuery(
-    ['users'],  
+    ['users'],
     async () => {
-
       const res = await UsersService.list(queryParameters);
       return res?.data;
     },
@@ -23,7 +22,7 @@ export function  useUsers(queryParameters:QueryParameters = {}) {
   const users = useMemo(() => data?.users || [], [data?.users]);
 
   return {
-    users,  
+    users,
     totalResults: data?.totalResults || 0,
     loading: isLoading,
     error,
@@ -68,4 +67,25 @@ export function useUpdateUser() {
       },
     }
   );
+}
+
+export function useAllUsersByRole(role: string) {
+  const { data, isLoading, error } = useQuery(
+    ['useAllUsersByRole'],
+    async () => {
+      const res = await UsersService.alUserByRole(role);
+      return res?.data;
+    },
+    {
+      keepPreviousData: true,
+    }
+  );
+  const users = useMemo(() => data?.users || [], [data?.users]);
+
+  return {
+    users: users,
+    totalResults: data?.totalResults || 0,
+    loading: isLoading,
+    error,
+  };
 }

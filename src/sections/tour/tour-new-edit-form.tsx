@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 // @mui
 // hooks
 // _mock
@@ -22,26 +22,22 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { DateTimePicker } from '@mui/x-date-pickers';
 import { useSnackbar } from 'notistack';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useArtists } from 'src/api/artists';
 import {
   useAddEventItem,
   useCreateEvent,
   useRemoveEventItem,
   useUpdateEvent,
 } from 'src/api/events';
+import { useStates } from 'src/api/superAdmin';
 import Iconify from 'src/components/iconify';
 import { useRouter } from 'src/routes/hook';
 import { paths } from 'src/routes/paths';
 import { EventSchema } from 'src/schema/Event.schema';
 import { IEvent, TVenue } from 'src/types/tour';
-import {
-  EVENT_CATEGORIES,
-  EVENT_TAGS,
-  EventStatusEnum,
-  timeZones,
-} from './utils';
+import { EVENT_CATEGORIES, EVENT_TAGS, EventStatusEnum } from './utils';
 
 type Props = {
   currentTour?: IEvent;
@@ -54,17 +50,14 @@ const venueDefault = {
   timeZone: '',
   dateOfEvent: new Date(),
 };
-const ticketDefault = {
-  venueName: '',
-  type: '',
-  price: 0,
-  totalSeats: 0,
-};
+
 export default function TourNewEditForm({ currentTour }: Props) {
   const eventMutation = useCreateEvent();
   const eventUpdateMutation = useUpdateEvent();
   const eventRemoveItemMutation = useRemoveEventItem();
   const eventAddItemMutation = useAddEventItem();
+  const { artistsData } = useArtists();
+  const { stateList } = useStates();
 
   const [file, setFile] = useState<File[] | null>(null);
   const { enqueueSnackbar } = useSnackbar();
@@ -72,10 +65,10 @@ export default function TourNewEditForm({ currentTour }: Props) {
 
   const artistsFormatted = currentTour?.artists?.map((artist) => ({
     name: artist?.artistName || '',
-    genre: artist?.genre || '',
-    category: artist?.category || '',
     _id: artist?._id,
-  })) || [{ name: '', genre: '', category: '' }];
+  })) || [{ name: '' }];
+
+  const stateFormatted = [{ name: '' }];
 
   const mappedImages = currentTour?.eventImages?.filter(
     (item: any) => !item?.isPrimary
@@ -85,11 +78,6 @@ export default function TourNewEditForm({ currentTour }: Props) {
     (item: any) => item?.isPrimary
   )?.imageurl;
 
-  const getVenueName = (venueId: string) => {
-    const venue = currentTour?.venues?.find((v: any) => v._id === venueId);
-    return venue ? venue.venueName : '';
-  };
-
   const defaultValues = useMemo(
     () => ({
       eventName: currentTour?.eventName || '',
@@ -98,21 +86,7 @@ export default function TourNewEditForm({ currentTour }: Props) {
       status: currentTour?.status || '',
       artists: artistsFormatted,
       videoUrl: currentTour?.videoUrl || '',
-      venues: currentTour?.venues
-        ? currentTour.venues.map((venue) => ({
-            ...venue,
-            dateOfEvent: new Date(venue.eventDate) || new Date(),
-          }))
-        : [{ venueName: '', city: '', timeZone: '', dateOfEvent: new Date() }],
-      ticketSettings: currentTour?.ticketTypes
-        ? currentTour?.ticketTypes.map((ticketType) => ({
-            ...ticketType,
-            venueName: getVenueName(ticketType.venueId),
-            type: ticketType.type,
-            price: ticketType.price,
-            totalSeats: ticketType.totalSeats,
-          }))
-        : [{ venueName: '', type: '', price: 0, totalSeats: 0 }],
+      states: stateFormatted,
       posterImage: defaultPosterImage,
       images: mappedImages?.map((item: any) => item?.imageurl),
       tags:
@@ -122,7 +96,7 @@ export default function TourNewEditForm({ currentTour }: Props) {
     [currentTour]
   );
 
-  const methods = useForm({
+  const methods = useForm<any>({
     resolver: yupResolver(EventSchema),
     defaultValues,
   });
@@ -141,26 +115,20 @@ export default function TourNewEditForm({ currentTour }: Props) {
     control,
     name: 'artists',
   });
-  const venues = useFieldArray({
+  const states = useFieldArray<any>({
     control,
-    name: 'venues',
-  });
-  const ticketSettings = useFieldArray({
-    control,
-    name: 'ticketSettings',
+    name: 'states',
   });
 
-  const venueNames = (watch('venues') ?? [])
-    .filter((venue) => venue && venue.venueName)
-    .map((venue) => venue.venueName);
+  // const venueNames = (watch('venues') ?? [])
+  //   .filter((venue) => venue && venue.venueName)
+  //   .map((venue) => venue.venueName);
 
   const formValues = watch();
 
   useEffect(() => {
     if (artists.fields.length === 0) {
       artists.append({ ...artistDefault });
-      venues.append({ ...venueDefault });
-      ticketSettings.append({ ...ticketDefault });
     }
   }, []);
 
@@ -233,32 +201,10 @@ export default function TourNewEditForm({ currentTour }: Props) {
     });
 
     data.artists?.forEach((artist: any, index: any) => {
-      formData.append(`artists[${index}][name]`, artist.name);
-      formData.append(`artists[${index}][genre]`, artist.genre);
-      formData.append(`artists[${index}][category]`, artist.category);
+      formData.append(`artists[${index}]`, artist.name);
     });
-
-    data?.venues?.forEach((venue: any, index: any) => {
-      formData.append(`venues[${index}][venueName]`, venue.venueName);
-      formData.append(`venues[${index}][city]`, venue.city);
-      formData.append(`venues[${index}][timeZone]`, venue.timeZone);
-      formData.append(
-        `venues[${index}][dateOfEvent]`,
-        venue.dateOfEvent.toISOString()
-      );
-    });
-
-    data?.ticketSettings.forEach((ticket: any, index: any) => {
-      formData.append(`ticketSettings[${index}][venueName]`, ticket.venueName);
-      formData.append(`ticketSettings[${index}][type]`, ticket.type);
-      formData.append(
-        `ticketSettings[${index}][price]`,
-        ticket?.price?.toString()
-      );
-      formData.append(
-        `ticketSettings[${index}][totalSeats]`,
-        ticket?.totalSeats?.toString()
-      );
+    data.states?.forEach((state: any, index: any) => {
+      formData.append(`states[${index}]`, state.name);
     });
 
     try {
@@ -601,7 +547,7 @@ export default function TourNewEditForm({ currentTour }: Props) {
           <Typography variant='h4' sx={{ mb: 3 }}>
             Artists
           </Typography>
-          {renderArtists(artists)}
+          {renderArtists(artists, artistsData)}
         </Grid>
 
         <Grid xs={12}>
@@ -613,16 +559,9 @@ export default function TourNewEditForm({ currentTour }: Props) {
 
         <Grid xs={12}>
           <Typography variant='h4' sx={{ mb: 3 }}>
-            Venues
+            States
+            {renderStates(states, stateList)}
           </Typography>
-          {renderVenues(venues, control)}
-        </Grid>
-
-        <Grid xs={12}>
-          <Typography variant='h4' sx={{ mb: 3 }}>
-            Ticket Settings
-          </Typography>
-          {renderTicketSettings(ticketSettings, venueNames)}
         </Grid>
 
         <Grid xs={12}>
@@ -683,26 +622,18 @@ export default function TourNewEditForm({ currentTour }: Props) {
   );
 }
 
-const renderArtists = (artist: any) => {
+const renderArtists = (artist: any, artistsData: any) => {
   return (
     <Stack spacing={3}>
       {artist.fields.map((item: any, index: any) => (
         <Stack key={item.id} direction='row' spacing={2} alignItems='center'>
-          <RHFTextField
-            name={`artists[${index}].name`}
-            label='Artist Name'
-            required
-          />
-          <RHFTextField
-            name={`artists[${index}].genre`}
-            label='Artist Genre'
-            required
-          />
-          <RHFTextField
-            name={`artists[${index}].category`}
-            label='Artist Category'
-            required
-          />
+          <RHFSelect name={`artists[${index}].name`} label='Event Category'>
+            {artistsData?.map((item: any) => (
+              <MenuItem key={item?._id} value={item?._id}>
+                {item.artistName}
+              </MenuItem>
+            ))}
+          </RHFSelect>
           <Button
             variant='outlined'
             color='error'
@@ -720,112 +651,33 @@ const renderArtists = (artist: any) => {
   );
 };
 
-const renderVenues = (venues: any, control: any) => {
+const renderStates = (states: any, stateList: any) => {
   return (
     <Stack spacing={3}>
-      {venues.fields.map((item: any, index: any) => (
-        <Card key={item.id} sx={{ p: 2 }}>
+      {states.fields.map((item: any, index: any) => (
+        <Card sx={{ p: 2 }}>
           <Stack spacing={2}>
-            <Typography variant='h6'>Venue {index + 1}</Typography>
-
-            <RHFTextField
-              name={`venues[${index}].venueName`}
-              label='Venue Name'
-              required
-            />
-            <RHFTextField
-              name={`venues[${index}].city`}
-              label='City'
-              required
-            />
-            <RHFSelect name={`venues[${index}].timeZone`} label='Time Zone'>
-              {timeZones.map((timeZone) => (
-                <MenuItem key={timeZone.value} value={timeZone.value}>
-                  {timeZone.label}
+            <Typography variant='h6'>States {index + 1} </Typography>
+            <RHFSelect name={`states[${index}.name]`} label='Name'>
+              {stateList?.map((item: any) => (
+                <MenuItem key={item?._id} value={item?._id}>
+                  {item.stateName}
                 </MenuItem>
               ))}
             </RHFSelect>
 
-            <Controller
-              name={`venues[${index}].dateOfEvent`}
-              control={control}
-              render={({ field }: any) => (
-                <DateTimePicker
-                  label='Date of Event'
-                  inputFormat='yyyy-MM-dd HH:mm'
-                  {...field}
-                  renderInput={(params: any) => <RHFTextField {...params} />}
-                />
-              )}
-            />
             <Button
               variant='outlined'
               color='error'
-              onClick={() => venues.remove(index)}
+              onClick={() => states.remove(index)}
             >
-              Remove Venue
+              Remove States
             </Button>
           </Stack>
         </Card>
       ))}
-      <Button variant='soft' onClick={() => venues.append(venueDefault)}>
-        Add Venue
-      </Button>
-    </Stack>
-  );
-};
-
-const renderTicketSettings = (ticketSettings: any, venueNames: any) => {
-  return (
-    <Stack spacing={3}>
-      {ticketSettings.fields.map((item: any, index: number) => (
-        <Card key={item.id} sx={{ p: 2 }}>
-          <Stack spacing={2}>
-            <Typography variant='h6'>Ticket Setting {index + 1}</Typography>
-
-            <RHFSelect
-              name={`ticketSettings[${index}].venueName`}
-              label='Venue Name'
-              required
-            >
-              {venueNames.map((name: string, idx: number) => (
-                <MenuItem key={idx} value={name}>
-                  {name}
-                </MenuItem>
-              ))}
-            </RHFSelect>
-            <RHFTextField
-              name={`ticketSettings[${index}].type`}
-              label='Ticket Type'
-              required
-            />
-            <RHFTextField
-              name={`ticketSettings[${index}].price`}
-              label='Price'
-              type='number'
-              required
-            />
-            <RHFTextField
-              name={`ticketSettings[${index}].totalSeats`}
-              label='Total Seats'
-              type='number'
-              required
-            />
-            <Button
-              variant='outlined'
-              color='error'
-              onClick={() => ticketSettings.remove(index)}
-            >
-              Remove Ticket Setting
-            </Button>
-          </Stack>
-        </Card>
-      ))}
-      <Button
-        variant='contained'
-        onClick={() => ticketSettings.append(ticketDefault)}
-      >
-        Add Ticket Setting
+      <Button variant='soft' onClick={() => states.append(venueDefault)}>
+        Add States
       </Button>
     </Stack>
   );

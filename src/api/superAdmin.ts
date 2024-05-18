@@ -1,8 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useSnackbar } from "notistack";
-import { useMemo } from "react";
-import { useRouter } from "src/routes/hook";
-import superAdminService from "src/services/superAdmin";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSnackbar } from 'notistack';
+import { useMemo } from 'react';
+import { useRouter } from 'src/routes/hook';
+import superAdminService from 'src/services/superAdmin';
 
 export function useApproveCompany() {
   const router = useRouter();
@@ -10,20 +10,28 @@ export function useApproveCompany() {
   const queryClient = useQueryClient();
 
   return useMutation(
-    ["approveCompany"],
+    ['approveCompany'],
     async (data: any) => {
-      const response = await superAdminService.approveCompany(data.userId, data.isApproved);
+      const response = await superAdminService.approveCompany(
+        data.userId,
+        data.isApproved
+      );
       return response?.data;
     },
     {
       onError: (error: any) => {
-        enqueueSnackbar(error.response.data.message || "Error approving company", {
-          variant: "error",
-        });
+        enqueueSnackbar(
+          error.response.data.message || 'Error approving company',
+          {
+            variant: 'error',
+          }
+        );
       },
       onSuccess: () => {
-        enqueueSnackbar("Company Updated Successfully!", { variant: "success" });
-          queryClient.invalidateQueries(['users']);
+        enqueueSnackbar('Company Updated Successfully!', {
+          variant: 'success',
+        });
+        queryClient.invalidateQueries(['users']);
       },
     }
   );
@@ -90,6 +98,7 @@ export function useStates() {
     loading: isLoading,
     error,
     refetch,
+    stateList: states?.states,
   };
 }
 

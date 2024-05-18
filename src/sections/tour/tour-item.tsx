@@ -1,24 +1,19 @@
 // @mui
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
 import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
+import Stack from '@mui/material/Stack';
 // routes
-import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
+import { paths } from 'src/routes/paths';
 // utils
 import { fDate, fDateTime } from 'src/utils/format-time';
-import { fCurrency } from 'src/utils/format-number';
 // types
-import { ITourItem } from 'src/types/tour';
 // components
-import Image from 'src/components/image';
-import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
-import { shortDateLabel } from 'src/components/custom-date-range-picker';
+import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -27,9 +22,16 @@ type Props = {
   onView: VoidFunction;
   onEdit: VoidFunction;
   onDelete: VoidFunction;
+  onAssignVenue: VoidFunction;
 };
 
-export default function TourItem({ event, onView, onEdit, onDelete }: Props) {
+export default function TourItem({
+  event,
+  onView,
+  onEdit,
+  onDelete,
+  onAssignVenue,
+}: Props) {
   const popover = usePopover();
   const {
     _id,
@@ -49,7 +51,7 @@ export default function TourItem({ event, onView, onEdit, onDelete }: Props) {
   const renderImages = (
     <Stack
       spacing={0.5}
-      direction="row"
+      direction='row'
       sx={{
         p: (theme) => theme.spacing(1, 1, 0, 1),
       }}
@@ -71,8 +73,12 @@ export default function TourItem({ event, onView, onEdit, onDelete }: Props) {
       }}
       primary={`Posted date: ${fDateTime(createdAt)}`}
       secondary={
-        <Link component={RouterLink} href={paths.dashboard.tour.details(_id)} color="inherit">
-         {eventName}
+        <Link
+          component={RouterLink}
+          href={paths.dashboard.tour.details(_id)}
+          color='inherit'
+        >
+          {eventName}
         </Link>
       }
       primaryTypographyProps={{
@@ -89,8 +95,10 @@ export default function TourItem({ event, onView, onEdit, onDelete }: Props) {
     />
   );
 
-  const venueNames = venues?.map((venue:any) => venue.city).join('-');
-  const venuesDate = venues?.map((venue:any) =>  `${fDate(venue.eventDate)}`).join('-');
+  const venueNames = venues?.map((venue: any) => venue.city).join('-');
+  const venuesDate = venues
+    ?.map((venue: any) => `${fDate(venue.eventDate)}`)
+    .join('-');
 
   const renderInfo = (
     <Stack
@@ -100,29 +108,44 @@ export default function TourItem({ event, onView, onEdit, onDelete }: Props) {
         p: (theme) => theme.spacing(0, 2.5, 2.5, 2.5),
       }}
     >
-      <IconButton onClick={popover.onOpen} sx={{ position: 'absolute', bottom: 20, right: 8 }}>
-        <Iconify icon="eva:more-vertical-fill" />
+      <IconButton
+        onClick={popover.onOpen}
+        sx={{ position: 'absolute', bottom: 20, right: 8 }}
+      >
+        <Iconify icon='eva:more-vertical-fill' />
       </IconButton>
 
       {[
         {
           label: venueNames,
-          icon: <Iconify icon="mingcute:location-fill" sx={{ color: 'error.main' }} />,
+          icon: (
+            <Iconify
+              icon='mingcute:location-fill'
+              sx={{ color: 'error.main' }}
+            />
+          ),
         },
         {
           label: venuesDate,
-          icon: <Iconify icon="solar:clock-circle-bold" sx={{ color: 'info.main' }} />,
+          icon: (
+            <Iconify
+              icon='solar:clock-circle-bold'
+              sx={{ color: 'info.main' }}
+            />
+          ),
         },
         {
-          label: eventCategory ? eventCategory : "Event",
-          icon: <Iconify icon="tabler:category" sx={{ color: 'success.main' }} />,
+          label: eventCategory ? eventCategory : 'Event',
+          icon: (
+            <Iconify icon='tabler:category' sx={{ color: 'success.main' }} />
+          ),
         },
       ].map((item) => (
         <Stack
           key={item.label}
           spacing={1}
-          direction="row"
-          alignItems="center"
+          direction='row'
+          alignItems='center'
           sx={{ typography: 'body2' }}
         >
           {item.icon}
@@ -145,7 +168,7 @@ export default function TourItem({ event, onView, onEdit, onDelete }: Props) {
       <CustomPopover
         open={popover.open}
         onClose={popover.onClose}
-        arrow="right-top"
+        arrow='right-top'
         sx={{ width: 140 }}
       >
         <MenuItem
@@ -154,8 +177,17 @@ export default function TourItem({ event, onView, onEdit, onDelete }: Props) {
             onView();
           }}
         >
-          <Iconify icon="solar:eye-bold" />
+          <Iconify icon='solar:eye-bold' />
           View
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            popover.onClose();
+            onAssignVenue();
+          }}
+        >
+          <Iconify icon='solar:eye-bold' />
+          Asigin Venue
         </MenuItem>
 
         <MenuItem
@@ -164,7 +196,7 @@ export default function TourItem({ event, onView, onEdit, onDelete }: Props) {
             onEdit();
           }}
         >
-          <Iconify icon="solar:pen-bold" />
+          <Iconify icon='solar:pen-bold' />
           Edit
         </MenuItem>
 
@@ -175,7 +207,7 @@ export default function TourItem({ event, onView, onEdit, onDelete }: Props) {
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon="solar:trash-bin-trash-bold" />
+          <Iconify icon='solar:trash-bin-trash-bold' />
           Delete
         </MenuItem>
       </CustomPopover>
