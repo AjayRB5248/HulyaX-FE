@@ -17,7 +17,7 @@ export default function RHFCode({ name, ...other }: RHFCodesProps) {
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <div>
+        <>
           <MuiOtpInput
             {...field}
             autoFocus
@@ -35,7 +35,7 @@ export default function RHFCode({ name, ...other }: RHFCodesProps) {
               {error.message}
             </FormHelperText>
           )}
-        </div>
+        </>
       )}
     />
   );

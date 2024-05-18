@@ -61,11 +61,11 @@
   }
   &::before {
     @extend %pa;
-    top: 0;
+    top: auto;
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba($color: $bg-two, $alpha: 0.2);
+    background: rgb(0 0 0 / 20%);
     z-index: 2;
   }
   .banner-bg {

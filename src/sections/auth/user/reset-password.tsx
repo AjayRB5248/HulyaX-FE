@@ -149,27 +149,25 @@ const UserResetPassword = () => {
   );
 
   return (
-    <section className="account-section bg_img mt-0">
-      <div className="container">
-        <div className="account-area text-center">
-          <PasswordIcon sx={{ height: 96 }} />
+    <section className="account-section d-flex align-items-center justify-content-center mt-0 h-100vh">
+      <div className="account-area text-center">
+        <PasswordIcon sx={{ height: 96 }} />
 
-          <Stack spacing={1} sx={{ my: 5 }}>
-            <Typography variant="h3" className="primary-text">
-              Reset Your Password
-            </Typography>
+        <Stack spacing={1} sx={{ my: 5 }}>
+          <Typography variant="h3" className="primary-text">
+            Reset Your Password
+          </Typography>
 
-            <Typography sx={{ color: "text.secondary", fontSize: "12px" }}>
-              We&apos;ve sent a 8-digit confirmation code to your phone number.
-              <br />
-              Please enter the code in below box to reset your Password.
-            </Typography>
-          </Stack>
+          <Typography sx={{ color: "text.secondary", fontSize: "12px" }}>
+            We&apos;ve sent a 8-digit confirmation code to your phone number.
+            <br />
+            Please enter the code in below box to reset your Password.
+          </Typography>
+        </Stack>
 
-          <FormProvider methods={methods} onSubmit={onSubmit}>
-            {renderForm}
-          </FormProvider>
-        </div>
+        <FormProvider methods={methods} onSubmit={onSubmit}>
+          {renderForm}
+        </FormProvider>
       </div>
     </section>
   );

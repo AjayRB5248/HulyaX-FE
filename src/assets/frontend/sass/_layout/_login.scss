@@ -24,16 +24,14 @@
 
 /*Account-Section Starts Here*/
 .account-section {
-  min-height: 100vh;
-  margin-top: 50px;
+  min-height: calc(100vh - 12vh);
+  margin-top: 12vh;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  &.register-section {
-    .account-area {
-      margin-top: 100px;
-    }
+  &--register .account-area {
+    margin: 10vh 0!important;
   }
 
   .account-area {
@@ -281,6 +279,10 @@
   }
 }
 
+.otp-code-input-wrapper {
+  width: 100%;
+}
+
 .link-text {
   font-weight: 600;
 
@@ -339,7 +341,7 @@
     }
 
     &--box {
-      padding: 20px!important;
+      padding: 20px !important;
     }
 
     &--title {
