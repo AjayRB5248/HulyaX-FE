@@ -27,9 +27,10 @@ type Props = {
   onView: VoidFunction;
   onEdit: VoidFunction;
   onDelete: VoidFunction;
+  onAssignVenue: VoidFunction;
 };
 
-export default function TourItem({ event, onView, onEdit, onDelete }: Props) {
+export default function TourItem({ event, onView, onEdit, onDelete,onAssignVenue }: Props) {
   const popover = usePopover();
   const {
     _id,
@@ -157,6 +158,17 @@ export default function TourItem({ event, onView, onEdit, onDelete }: Props) {
           <Iconify icon="solar:eye-bold" />
           View
         </MenuItem>
+
+        <MenuItem
+          onClick={() => {
+            popover.onClose();
+            onAssignVenue();
+          }}
+        >
+          <Iconify icon='solar:eye-bold' />
+          Asigin Venue
+        </MenuItem>
+        
 
         <MenuItem
           onClick={() => {
