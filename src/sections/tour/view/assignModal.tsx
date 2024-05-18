@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { useAssignCompany } from 'src/api/superAdmin';
 import { useAllUsersByRole } from 'src/api/users';
 import { useVenues } from 'src/api/venues';
+import { useAuth } from 'src/auth/context/users/auth-context';
 import axiosInstance from 'src/utils/axios';
 import * as Yup from 'yup';
 
@@ -17,18 +18,19 @@ export const FormSchema = Yup.object().shape({});
 
 const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
   const [data, setData] = useState([]);
+  const {user} = useAuth()
   const { venues } = useVenues();
   const { users } = useAllUsersByRole('companyAdmin');
   const assignCompanyMutation = useAssignCompany();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (selectedEvent?._id) {
-      const result = selectedEvent.states?.map((state) => {
+      const result = selectedEvent.states?.map((state:any) => {
         const assignedCompany = selectedEvent?.assignedCompany?.find(
-          (company) => company.state === state._id
+          (company:any) => company.state === state._id
         );
         const venue = selectedEvent?.venue?.find(
-          (venue) => venue.state === state._id
+          (venue:any) => venue.state === state._id
         );
 
         return {
@@ -100,7 +102,7 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
     }
   };
 
-  const addVenue = (data: any): Promise<any> => {
+  const addVenue = async (data: any): Promise<any> => {
     return axiosInstance
       .post('superadmin/update-venue-subevent', {
         ...data,
@@ -113,7 +115,6 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
   return (
     <Dialog open={isOpen} onClose={() => setAssignModal(false)}>
       <DialogTitle>Assign Venue and Company</DialogTitle>
-
       <DialogContent>
         {data?.map((item: any, index) => {
           return (
@@ -124,6 +125,8 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
                 display: 'flex',
                 gap: 15,
                 flexWrap: 'wrap',
+                justifyContent: 'center',
+                alignItems:'center',
               }}
             >
               <div
@@ -138,6 +141,7 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
                   type='text'
                   margin='dense'
                   variant='outlined'
+                  style={{ minWidth: 250 }}
                   value={item?.state?.name}
                   disabled
                 />
@@ -155,7 +159,7 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
                 <Select
                   label='Venue'
                   name={`venue`}
-                  style={{ minWidth: 100 }}
+                  style={{ minWidth: 250 }}
                   value={item.venue}
                   onChange={(e: any) =>
                     handleSelectChange(index, 'venue', e?.target?.value)
@@ -172,7 +176,7 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
               </div>
 
               {/* company */}
-              <div
+             {user?.role === 'superAdmin' && <div
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -183,8 +187,9 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
                 <Select
                   label='User/Company'
                   name={`company`}
-                  style={{ minWidth: 100 }}
+                  style={{ minWidth: 250 }}
                   value={item.company}
+                  fullWidth
                   onChange={(e) =>
                     handleSelectChange(index, 'company', e?.target?.value)
                   }
@@ -197,13 +202,14 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
                     );
                   })}
                 </Select>
-              </div>
+              </div>}
 
               {/* date */}
               <DateTimePicker
                 onChange={(e: any) =>
                   handleSelectChange(index, 'date', new Date(e).toISOString())
                 }
+                sx={{ minWidth: 250 }}
                 label='Date of Event'
                 inputFormat='yyyy-MM-dd HH:mm'
               />

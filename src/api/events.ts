@@ -30,11 +30,11 @@ export function useEvent(id: any) {
   };
 }
 
-export function useEvents(queryParameters?: any) {
+export function useEvents() {
   const { data, isLoading, error, refetch } = useQuery(
     ['events'],
     async () => {
-      const res = await EventsService.list(queryParameters);
+      const res = await EventsService.list();
       return res?.data?.events;
     },
     {

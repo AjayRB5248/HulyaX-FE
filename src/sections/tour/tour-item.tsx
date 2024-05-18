@@ -38,6 +38,7 @@ export default function TourItem({
     eventName,
     eventCategory,
     eventDescription,
+    supportedStates,
     status,
     ticketTypes,
     artists,
@@ -46,6 +47,7 @@ export default function TourItem({
     slug,
     createdAt,
     available,
+    images,
   } = event;
 
   const renderImages = (

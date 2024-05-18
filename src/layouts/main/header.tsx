@@ -2,7 +2,7 @@ import Navbar from "./nav";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Logo from "src/assets/frontend/images/final-wala-clr-change.png";
+import Logo from "src/assets/frontend/images/hulyalogomain.png";
 import UserAccountPopover from "../_common/user-account-popover";
 import { useAuth } from "src/auth/context/users/auth-context";
 
