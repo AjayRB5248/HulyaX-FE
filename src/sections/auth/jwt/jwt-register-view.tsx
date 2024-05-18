@@ -26,6 +26,7 @@ import { useAuthContext } from "src/auth/hooks";
 import Iconify from "src/components/iconify";
 import FormProvider, { RHFTextField } from "src/components/hook-form";
 import { useRegister } from "src/api/auth";
+import { enqueueSnackbar } from "notistack";
 
 // ----------------------------------------------------------------------
 
@@ -90,7 +91,6 @@ export default function JwtRegisterView() {
       };
 
       await registerMutation.mutateAsync(registerPayload);
-
       router.push("/auth/company/verify");
     } catch (error) {
       console.error(error);
