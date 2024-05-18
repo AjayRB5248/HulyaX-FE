@@ -112,6 +112,7 @@ export const endpoints = {
     updateProfile: (id: string) => `users/${id}`,
     updateAvatar: `users/profile-picture`,
     changePassword: `users/update-password`,
+    detailById: (id: string) =>  `/users/${id}`,
   },
   superAdmin: {
     company: {

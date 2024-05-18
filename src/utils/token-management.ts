@@ -1,63 +1,62 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import { queryClient } from 'src/lib/queryClient';
-import AuthService from 'src/services/auths';
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { useEffect, useState } from "react";
+import { useFetchUserById } from "src/api/user";
+import { queryClient } from "src/lib/queryClient";
+import AuthService from "src/services/auths";
 
-export const storeTokens = (
-  accessToken: string,
-  refreshToken: string,
-  userData?: {}
-) => {
-  queryClient.setQueryData(['accessToken'], accessToken);
-  queryClient.setQueryData(['refreshToken'], refreshToken);
+export const storeTokens = (accessToken: string, refreshToken: string, userData?: {}) => {
+  queryClient.setQueryData(["accessToken"], accessToken);
+  queryClient.setQueryData(["refreshToken"], refreshToken);
 
-  queryClient.setQueryData(['accessToken'], accessToken);
-  queryClient.setQueryData(['refreshToken'], refreshToken);
+  queryClient.setQueryData(["accessToken"], accessToken);
+  queryClient.setQueryData(["refreshToken"], refreshToken);
 
-  localStorage.setItem('accessToken', accessToken);
-  localStorage.setItem('refreshToken', refreshToken);
+  localStorage.setItem("accessToken", accessToken);
+  localStorage.setItem("refreshToken", refreshToken);
 
   if (userData && Object.keys(userData).length > 0) {
-    queryClient.setQueryData(['user'], userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+    queryClient.setQueryData(["user"], userData);
+    localStorage.setItem("user", JSON.stringify(userData));
   }
 };
 
 export const getAccessToken = (): string | null => {
-  return (
-    queryClient.getQueryData<string>(['accessToken']) ||
-    localStorage.getItem('accessToken')
-  );
+  return queryClient.getQueryData<string>(["accessToken"]) || localStorage.getItem("accessToken");
 };
 
 export const getRefreshToken = (): string | null => {
-  return (
-    queryClient.getQueryData<string>(['refreshToken']) ||
-    localStorage.getItem('refreshToken')
-  );
+  return queryClient.getQueryData<string>(["refreshToken"]) || localStorage.getItem("refreshToken");
 };
 
-export const getUserData = (): any => {
-  return localStorage.getItem('user');
+export const useUserData = () => {
+  const userData = localStorage.getItem("user");
+  const parsedUser = userData ? JSON.parse(userData) : null;
+
+  const { userDetail , error, isLoading } = useFetchUserById(parsedUser?.id);
+
+  return {
+    userDetail,
+    error,
+    isLoading,
+  };
 };
 
 export const clearTokens = () => {
-  localStorage.removeItem('accessToken');
-  localStorage.removeItem('refreshToken');
-  localStorage.removeItem('user');
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("user");
 
-  queryClient.removeQueries(['accessToken']);
-  queryClient.removeQueries(['refreshToken']);
-  queryClient.removeQueries(['user']);
+  queryClient.removeQueries(["accessToken"]);
+  queryClient.removeQueries(["refreshToken"]);
+  queryClient.removeQueries(["user"]);
 };
 
 export const useRefreshToken = async () => {
   const refreshToken = getRefreshToken();
 
-  if (!refreshToken) throw new Error('No refresh token available');
+  if (!refreshToken) throw new Error("No refresh token available");
 
-  const response = await AuthService.refreshToken({ refreshToken }).then(
-    (res) => res.data
-  );
+  const response = await AuthService.refreshToken({ refreshToken }).then((res) => res.data);
 
   storeTokens(response.access.token, response.refresh.token);
 

@@ -12,28 +12,29 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import { useSnackbar } from "src/components/snackbar";
 import FormProvider, { RHFTextField, RHFUploadAvatar } from "src/components/hook-form";
-import { getUserData } from "src/utils/token-management";
 import Link from "next/link";
-import { useUpdateUserAvatar, useUpdateUserProfile } from "src/api/user";
+import { useFetchUserById, useUpdateUserAvatar, useUpdateUserProfile } from "src/api/user";
 import VerifyOTPModal from "./otp-verify-modal";
 import { useBoolean } from "src/hooks/use-boolean";
 import { sendOTP, verifyOTP } from "src/api/auth";
 import { useRouter } from "src/routes/hook/use-router";
+import { useAuth } from "src/auth/context/users/auth-context";
+import _ from "lodash";
 
 // ----------------------------------------------------------------------
 
 export default function AccountGeneral() {
-  const { enqueueSnackbar } = useSnackbar();
+  const { user } = useAuth();
 
-  const userData = getUserData();
-  const user =  userData && JSON.parse(userData);
-  const verifyMobile = useBoolean()
+  const { refetchUser } = useFetchUserById(user?.id);
+
+  const verifyMobile = useBoolean();
   const updateProfileMutation = useUpdateUserProfile(user?.id);
   const updateAvatarMutation = useUpdateUserAvatar();
   const sendOTPMutation = sendOTP();
   const verifyOTPMutation = verifyOTP();
   const router = useRouter();
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const UpdateUserSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -59,18 +60,18 @@ export default function AccountGeneral() {
     handleSubmit,
     formState: { isSubmitting },
     formState: { errors },
-    watch
+    watch,
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await updateProfileMutation.mutateAsync({email: data?.email, name: data?.name});
+      await updateProfileMutation.mutateAsync({ email: data?.email, name: data?.name });
     } catch (error) {
       console.error(error);
     }
   });
 
-  const sendOTPCode= async (tokenType:string) => {
+  const sendOTPCode = async (tokenType: string) => {
     if (user) {
       const payload = {
         email: user.email,
@@ -95,7 +96,7 @@ export default function AccountGeneral() {
     }
   };
 
-  const handleVerifyMobileNumber = async (data:any)=>{
+  const handleVerifyMobileNumber = async (data: any) => {
     try {
       let verifiedOTPRes;
       if (user) {
@@ -105,13 +106,13 @@ export default function AccountGeneral() {
         };
         verifiedOTPRes = await verifyOTPMutation.mutateAsync(payloadForGeneratingOTP);
       }
-      if(verifiedOTPRes){
-        verifyMobile.onFalse()
+      if (verifiedOTPRes) {
+        verifyMobile.onFalse();
       }
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const generateOTPCode = async () => {
     setLoading(true);
@@ -124,7 +125,7 @@ export default function AccountGeneral() {
     }
   };
 
-  const watchedFields= watch();
+  const watchedFields = watch();
 
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -141,32 +142,36 @@ export default function AccountGeneral() {
     [setValue]
   );
 
-  const onSubmitAvatar = async (data:{profilePicture:string}) => {
+  const onSubmitAvatar = async (data: { profilePicture: string }) => {
     try {
       const formData = new FormData();
-      formData.append('profile-picture', data.profilePicture);
-      await updateAvatarMutation.mutateAsync(formData);
-      enqueueSnackbar("Profile picture updated successfully", { variant: "success" });
+      formData.append("profile-picture", data.profilePicture);
+      await updateAvatarMutation.mutateAsync(formData, {
+        onSuccess: () => {
+          refetchUser();
+        },
+      });
     } catch (error) {
       console.error(error);
-      enqueueSnackbar("Failed to update profile picture", { variant: "error" });
     }
   };
 
   useEffect(() => {
     if (watchedFields?.profilePicture && watchedFields?.profilePicture !== user?.profilePicture) {
-      handleSubmit(() => onSubmitAvatar({profilePicture: watchedFields.profilePicture}))();
+      handleSubmit(() => {
+        onSubmitAvatar({ profilePicture: watchedFields.profilePicture });
+      })();
     }
-  }, [watchedFields?.profilePicture, handleSubmit, user?.profilePicture]);
+  }, [watchedFields?.profilePicture]);
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit} className="user-profile--form">
-        <VerifyOTPModal
-          open={verifyMobile.value}
-          onClose={verifyMobile.onFalse}
-          onOk={handleVerifyMobileNumber}
-          generateOTPCode={generateOTPCode}
-        />
+      <VerifyOTPModal
+        open={verifyMobile.value}
+        onClose={verifyMobile.onFalse}
+        onOk={handleVerifyMobileNumber}
+        generateOTPCode={generateOTPCode}
+      />
       <Grid container spacing={3}>
         <Grid xs={12} md={4}>
           <Card sx={{ pt: 10, pb: 5, px: 3, textAlign: "center" }}>
@@ -213,7 +218,7 @@ export default function AccountGeneral() {
             >
               <RHFTextField name="name" label="Name" required />
               <RHFTextField name="email" label="Email Address" required />
-              <RHFTextField name="mobileNumber" label="Phone Number" disabled/>
+              <RHFTextField name="mobileNumber" label="Phone Number" disabled />
 
               {user?.isNumberVerified ? (
                 <span className="text-success text-verified">
@@ -227,7 +232,6 @@ export default function AccountGeneral() {
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-
               <LoadingButton type="submit" variant="contained" loading={isSubmitting} className="btn-save">
                 Save Changes
               </LoadingButton>

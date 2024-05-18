@@ -1,19 +1,21 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSnackbar } from "notistack";
+import { useMemo } from "react";
+import { useAuth } from "src/auth/context/users/auth-context";
 import { useRouter } from "src/routes/hook";
 import UserService from "src/services/user";
 
-export function useUpdateUserProfile(id:string) {
+export function useUpdateUserProfile(id: string) {
+  const { setUser } = useAuth();
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
   return useMutation(
     ["updateUserProfile"],
     async (data: any) => {
-      const response = await UserService.updateProfile(id,data.name, data.email);
-
-      //   TODO: Map Edit User Profile
-      return response?.data?.user;
+      const response = await UserService.updateProfile(id, data.name, data.email);
+      setUser(response?.data);
+      return response?.data;
     },
     {
       onError: (error: any) => {
@@ -61,7 +63,7 @@ export function useChangePassword() {
   return useMutation(
     ["changePassword"],
     async (data: any) => {
-      const response = await UserService.changePassword(data.password,data.newPassword,data.confirmPassword);
+      const response = await UserService.changePassword(data.password, data.newPassword, data.confirmPassword);
       return response?.data?.user;
     },
     {
@@ -76,3 +78,27 @@ export function useChangePassword() {
     }
   );
 }
+
+export const useFetchUserById = (id: string) => {
+  const { setUser } = useAuth();
+
+  const { data, error, isLoading, refetch } = useQuery(
+    ["users/id", id],
+    async () => {
+      const response = await UserService.fetchUserById(id);
+      console.log("setting updated user data");
+      setUser(response?.data);
+      return response?.data;
+    },
+    {
+      enabled: !!id,
+    }
+  );
+
+  return {
+    userDetail: data,
+    error,
+    isLoading,
+    refetchUser: refetch,
+  };
+};
