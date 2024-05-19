@@ -1,12 +1,9 @@
-// sections
+'use client';
+import withAuth from 'src/hoc/withAuth';
 import { CompanyEventEditView } from 'src/sections/companyEvents/view';
 
-// ----------------------------------------------------------------------
-
-export const metadata = {
-  title: 'Dashboard: Company Ticket Edit',
-};
-
-export default function CompanyTicketEditPage() {
+function CompanyTicketEditPage() {
   return <CompanyEventEditView />;
 }
+
+export default withAuth(CompanyTicketEditPage, ['superAdmin', 'companyAdmin']);

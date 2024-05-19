@@ -5,21 +5,19 @@ import Pagination, { paginationClasses } from '@mui/material/Pagination';
 // routes
 import { paths } from 'src/routes/paths';
 // types
-import { ITourItem } from 'src/types/tour';
 // components
 import { useRouter } from 'src/routes/hook';
 //
-import { useEvents, useRemoveEvent } from 'src/api/events';
+import { useRemoveEvent } from 'src/api/events';
+import { useAssignedEvents } from 'src/api/superAdmin';
 import { useBoolean } from 'src/hooks/use-boolean';
 import TransitionsDialog from '../_examples/mui/dialog-view/transitions-dialog';
-import CompanyEventItem from './companyEvent-item';
 import AssignModal from '../tour/view/assignModal';
-import { useAssignedEvents } from 'src/api/superAdmin';
-
+import CompanyEventItem from './companyEvent-item';
 
 export default function CompanyEventList() {
   const router = useRouter();
-  const {eventList} = useAssignedEvents()
+  const { eventList, refetch } = useAssignedEvents();
   const removeEventMutation = useRemoveEvent();
   const [selectedEvent, setSelectedEvent] = useState<string>('');
   const [assignModal, setAssignModal] = useState(false);
@@ -73,7 +71,6 @@ export default function CompanyEventList() {
     setAssignModal(true);
   };
 
-
   return (
     <>
       <Box
@@ -93,8 +90,10 @@ export default function CompanyEventList() {
             onEdit={() => handleEdit(event?._id)}
             onDelete={() => handleOpenDeleteModal(event?._id)}
             onAssignVenue={() => handleAssign(event._id)}
-            onAddTicketSettings={()=>handleAssignTicketSettings(event._id)}
-            onEditTicketSettings={()=>handleAssignEditTicketSettings(event._id)}
+            onAddTicketSettings={() => handleAssignTicketSettings(event._id)}
+            onEditTicketSettings={() =>
+              handleAssignEditTicketSettings(event._id)
+            }
           />
         ))}
       </Box>
@@ -116,6 +115,7 @@ export default function CompanyEventList() {
         setAssignModal={setAssignModal}
         selectedEvent={selectedEvent}
         setSelectedEvent={setSelectedEvent}
+        refetch={refetch}
       />
 
       {eventList?.length > 8 && (

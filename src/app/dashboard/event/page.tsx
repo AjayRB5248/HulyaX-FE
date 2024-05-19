@@ -1,12 +1,9 @@
-// sections
+'use client';
+import withAuth from 'src/hoc/withAuth';
 import { TourListView } from 'src/sections/tour/view';
 
-// ----------------------------------------------------------------------
-
-export const metadata = {
-  title: 'Dashboard: Tour List',
-};
-
-export default function TourListPage() {
+function TourListPage() {
   return <TourListView />;
 }
+
+export default withAuth(TourListPage, ['superAdmin', 'companyAdmin']);

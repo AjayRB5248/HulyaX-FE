@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { useEffect, useState } from 'react';
-import { useAssignCompany } from 'src/api/superAdmin';
+import { useAssignCompany, useRemoveAssginedCompany } from 'src/api/superAdmin';
 import { useAllUsersByRole } from 'src/api/users';
 import { useVenues } from 'src/api/venues';
 import { useAuth } from 'src/auth/context/users/auth-context';
@@ -16,21 +16,29 @@ import * as Yup from 'yup';
 
 export const FormSchema = Yup.object().shape({});
 
-const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
+const AssignModal = ({
+  isOpen,
+  setAssignModal,
+  selectedEvent,
+  setSelectedEvent,
+  refetch,
+}: any) => {
   const [data, setData] = useState([]);
-  const {user} = useAuth()
+  const { user } = useAuth();
   const { venues } = useVenues();
   const { users } = useAllUsersByRole('companyAdmin');
   const assignCompanyMutation = useAssignCompany();
+  const removeAssiginedCompany = useRemoveAssginedCompany();
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    if (selectedEvent?._id) {
-      const result = selectedEvent.states?.map((state:any) => {
+    if (selectedEvent?._id && user?.role !== 'companyAdmin') {
+      const result = selectedEvent.states?.map((state: any) => {
         const assignedCompany = selectedEvent?.assignedCompany?.find(
-          (company:any) => company.state === state._id
+          (company: any) => company.state === state._id
         );
         const venue = selectedEvent?.venue?.find(
-          (venue:any) => venue.state === state._id
+          (venue: any) => venue.state === state._id
         );
 
         return {
@@ -40,21 +48,25 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
           },
           company: assignedCompany ? assignedCompany.companyId : '',
           venue: venue ? venue.venueId : '',
-          date: '', // Assuming the date is not provided in the initial data
+          date: '',
+          deleteOption: assignedCompany?.companyId ? true : false,
         };
       });
 
-      // const initialData = selectedEvent?.states?.map((item: any) => ({
-      //   state: {
-      //     name: item?.stateName,
-      //     _id: item?._id,
-      //   },
-      //   company: '',
-      //   venue: '',
-      //   date: '',
-      // }));
-
       setData(result);
+    }
+
+    if (selectedEvent?._id && user?.role == 'companyAdmin') {
+      const data: any = {
+        state: {
+          name: selectedEvent?.state.stateName,
+          _id: selectedEvent?.state._id,
+        },
+        company: '',
+        venue: '',
+        date: '',
+      };
+      setData([data]);
     }
   }, [selectedEvent?._id]);
 
@@ -93,6 +105,21 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
             await addVenue(venueData);
           }
         }
+
+        if (user?.role === 'companyAdmin') {
+          const venueData = {
+            subEventId: selectedEvent?._id,
+            venues: [
+              {
+                _id: singleData?.venue,
+                date: singleData?.date,
+              },
+            ],
+          };
+          if (singleData?.venue) {
+            await addVenue(venueData);
+          }
+        }
       }
       setAssignModal(false);
     } catch (error) {
@@ -112,8 +139,26 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
       });
   };
 
+  const handleDeleteCompany = async (state: string, companyId: string) => {
+    const { lo } = await removeAssiginedCompany.mutateAsync({
+      eventId: selectedEvent?._id,
+      state,
+      companyId,
+    });
+
+    setSelectedEvent({});
+    setAssignModal(false);
+    refetch();
+  };
+
   return (
-    <Dialog open={isOpen} onClose={() => setAssignModal(false)}>
+    <Dialog
+      open={isOpen}
+      onClose={() => {
+        setAssignModal(false);
+        setSelectedEvent({});
+      }}
+    >
       <DialogTitle>Assign Venue and Company</DialogTitle>
       <DialogContent>
         {data?.map((item: any, index) => {
@@ -126,7 +171,7 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
                 gap: 15,
                 flexWrap: 'wrap',
                 justifyContent: 'center',
-                alignItems:'center',
+                alignItems: 'center',
               }}
             >
               <div
@@ -176,33 +221,35 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
               </div>
 
               {/* company */}
-             {user?.role === 'superAdmin' && <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'left',
-                }}
-              >
-                <FormLabel>User/Company</FormLabel>
-                <Select
-                  label='User/Company'
-                  name={`company`}
-                  style={{ minWidth: 250 }}
-                  value={item.company}
-                  fullWidth
-                  onChange={(e) =>
-                    handleSelectChange(index, 'company', e?.target?.value)
-                  }
+              {user?.role === 'superAdmin' && (
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'left',
+                  }}
                 >
-                  {users?.map((userItem: any) => {
-                    return (
-                      <MenuItem key={userItem?._id} value={userItem?._id}>
-                        {userItem?.name}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </div>}
+                  <FormLabel>User/Company</FormLabel>
+                  <Select
+                    label='User/Company'
+                    name={`company`}
+                    style={{ minWidth: 250 }}
+                    value={item.company}
+                    fullWidth
+                    onChange={(e) =>
+                      handleSelectChange(index, 'company', e?.target?.value)
+                    }
+                  >
+                    {users?.map((userItem: any) => {
+                      return (
+                        <MenuItem key={userItem?._id} value={userItem?._id}>
+                          {userItem?.name}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </div>
+              )}
 
               {/* date */}
               <DateTimePicker
@@ -213,6 +260,18 @@ const AssignModal = ({ isOpen, setAssignModal, selectedEvent }: any) => {
                 label='Date of Event'
                 inputFormat='yyyy-MM-dd HH:mm'
               />
+
+              {item?.deleteOption && user?.role === 'superAdmin' && (
+                <Button
+                  variant='outlined'
+                  color='error'
+                  onClick={() =>
+                    handleDeleteCompany(item?.state?._id, item.company)
+                  }
+                >
+                  Remove Company
+                </Button>
+              )}
             </Card>
           );
         })}
