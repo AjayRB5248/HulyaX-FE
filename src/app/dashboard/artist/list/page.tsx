@@ -1,12 +1,9 @@
-// sections
+'use client';
+
+import withAuth from 'src/hoc/withAuth';
 import { ArtistListView } from 'src/sections/artists/view';
 
-// ----------------------------------------------------------------------
-
-export const metadata = {
-  title: 'Dashboard: Artist List',
-};
-
-export default function ArtistListPage() {
+function ArtistListPage() {
   return <ArtistListView />;
 }
+export default withAuth(ArtistListPage, ['superAdmin']);

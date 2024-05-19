@@ -96,8 +96,10 @@ export default function TourList({ tours }: Props) {
             onEdit={() => handleEdit(event._id)}
             onDelete={() => handleOpenDeleteModal(event?._id)}
             onAssignVenue={() => handleAssign(event?._id)}
-            onAddTicketSettings={()=>handleAssignTicketSettings(event._id)}
-            onEditTicketSettings={()=>handleAssignEditTicketSettings(event._id)}
+            onAddTicketSettings={() => handleAssignTicketSettings(event._id)}
+            onEditTicketSettings={() =>
+              handleAssignEditTicketSettings(event._id)
+            }
           />
         ))}
       </Box>
@@ -119,6 +121,7 @@ export default function TourList({ tours }: Props) {
         setAssignModal={setAssignModal}
         selectedEvent={selectedEvent}
         setSelectedEvent={setSelectedEvent}
+        refetch={refetch}
       />
 
       {events?.length > 8 && (

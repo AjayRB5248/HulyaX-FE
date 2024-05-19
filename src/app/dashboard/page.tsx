@@ -1,12 +1,11 @@
+'use client';
+
+import withAuth from 'src/hoc/withAuth';
 // sections
 import { OverviewBankingView } from 'src/sections/overview/booking/view';
 
-// ----------------------------------------------------------------------
-
-export const metadata = {
-  title: 'Dashboard: Booking',
-};
-
-export default function OverviewBookingPage() {
+function OverviewBookingPage() {
   return <OverviewBankingView />;
 }
+
+export default withAuth(OverviewBookingPage, ['superAdmin', 'companyAdmin']);
