@@ -1,12 +1,8 @@
-// sections
+'use client';
+import withAuth from 'src/hoc/withAuth';
 import { UserProfileView } from 'src/sections/user/view';
 
-// ----------------------------------------------------------------------
-
-export const metadata = {
-  title: 'Dashboard: User Profile',
-};
-
-export default function UserProfilePage() {
+function UserProfilePage() {
   return <UserProfileView />;
 }
+export default withAuth(UserProfilePage, ['superAdmin']);
