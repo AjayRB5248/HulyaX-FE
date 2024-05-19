@@ -20,7 +20,11 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
         if (allowedUserTypes.includes(loggedInUserType)) {
           setVerified(true);
         } else {
+<<<<<<< Updated upstream
           router.push('/home');
+=======
+          router.push('/dashboard');
+>>>>>>> Stashed changes
         }
       }
     };

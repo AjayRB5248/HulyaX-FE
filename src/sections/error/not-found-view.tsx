@@ -12,10 +12,14 @@ import { RouterLink } from 'src/routes/components';
 import { MotionContainer, varBounce } from 'src/components/animate';
 // assets
 import { PageNotFoundIllustration } from 'src/assets/illustrations';
+import { useAuth } from 'src/auth/context/users/auth-context';
 
 // ----------------------------------------------------------------------
 
 export default function NotFoundView() {
+  const { user } = useAuth();
+  const redirectUrl = !user || user.role === 'customer' ? '/' : '/dashboard';
+
   return (
     <CompactLayout>
       <MotionContainer>
@@ -41,7 +45,7 @@ export default function NotFoundView() {
           />
         </m.div>
 
-        <Button component={RouterLink} href="/" size="large" variant="contained">
+        <Button component={RouterLink} href={redirectUrl} size="large" variant="contained">
           Go to Home
         </Button>
       </MotionContainer>
