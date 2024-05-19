@@ -13,9 +13,10 @@ import Image from "src/components/image";
 import Iconify from "src/components/iconify";
 import Markdown from "src/components/markdown";
 import Lightbox, { useLightBox } from "src/components/lightbox";
-import { Chip, Paper } from "@mui/material";
+import { Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Paper } from "@mui/material";
 import { SplashScreen } from "src/components/loading-screen";
 import CarouselThumbnail from "../_examples/extra/carousel-view/carousel-thumbnail";
+import { useState } from "react";
 
 type Props = {
   event: any;
@@ -37,7 +38,19 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
     slug,
     createdAt,
     available,
+    videoUrl,
   } = event;
+  console.log({event})
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const carouselData = eventImages?.map((image:any) => ({
     id: image._id,
@@ -216,6 +229,38 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
         {renderHead}
 
         <Divider sx={{ borderStyle: "dashed", my: 5 }} />
+
+        {videoUrl && (
+          <>
+            <Button variant="contained" startIcon={<Iconify icon="mdi:youtube" />} onClick={handleClickOpen}>
+              Watch Video
+            </Button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="video-dialog-title"
+              maxWidth="md"
+              fullWidth
+            >
+              <DialogTitle id="video-dialog-title">Event Video</DialogTitle>
+              <DialogContent>
+                <iframe
+                  width="100%"
+                  height="400"
+                  src={videoUrl}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Close
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </>
+        )}
 
         {renderEventVenueDetails()}
 

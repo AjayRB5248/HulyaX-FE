@@ -21,6 +21,7 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs/custom-breadcru
 import { Button, Stack } from '@mui/material';
 import { RouterLink } from 'src/routes/components';
 import Iconify from 'src/components/iconify';
+import HeaderActions from './header';
 
 // ----------------------------------------------------------------------
 
@@ -53,28 +54,7 @@ export default function companyEventDetailsView() {
         sx={{
           mb: { xs: 3, md: 5 },
         }}
-        action={
-          <>
-          <Stack spacing={2} direction={'row'}>
-          <Button
-            component={RouterLink}
-            href={paths.dashboard.companyEvents.edit(id)}
-            variant='contained'
-            startIcon={<Iconify icon='mingcute:add-line' />}
-          >
-            New Ticket Settings
-          </Button>
-          <Button
-          component={RouterLink}
-          href={paths.dashboard.companyEvents.update(id)}
-          variant='contained'
-          startIcon={<Iconify icon='mingcute:add-line' />}
-        >
-          Update Ticket Settings
-        </Button>
-        </Stack>
-        </>
-        }
+        action={<HeaderActions />}
       />
 
     <CompanyEventDetailsContent event={eventList} isLoading={loading} />

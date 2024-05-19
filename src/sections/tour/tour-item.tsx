@@ -24,6 +24,8 @@ type Props = {
   onEdit: VoidFunction;
   onDelete: VoidFunction;
   onAssignVenue: VoidFunction;
+  onAddTicketSettings:VoidFunction;
+  onEditTicketSettings:VoidFunction
 };
 
 export default function TourItem({
@@ -32,6 +34,8 @@ export default function TourItem({
   onEdit,
   onDelete,
   onAssignVenue,
+  onAddTicketSettings,
+  onEditTicketSettings
 }: Props) {
   const popover = usePopover();
   const {
@@ -51,6 +55,8 @@ export default function TourItem({
     images,
   } = event;
   const primaryImage = images?.find((image:any) => image?.isPrimary);
+  // const secondaryImages = images?.find((image:any) => !image?.isPrimary);
+
   const renderImages = (
     <Stack
       spacing={0.5}
@@ -62,7 +68,7 @@ export default function TourItem({
       <Stack flexGrow={1} sx={{ position: 'relative' }}>
         {primaryImage && <Image alt={primaryImage._id ?? new Date().toString()} src={primaryImage?.imageurl} sx={{ borderRadius: 1, height: 164, width: 1 }} />}
       </Stack>
-       {/* {eventImages?.length>2 && <Stack spacing={0.5}>
+       {/* {secondaryImages?.length>2 && <Stack spacing={0.5}>
         <Image alt={eventImages[1]} src={eventImages[1]?.imageurl} ratio="1/1" sx={{ borderRadius: 1, width: 80 }} />
         <Image alt={eventImages[2]} src={eventImages[2]?.imageurl} ratio="1/1" sx={{ borderRadius: 1, width: 80 }} /> 
       </Stack>} */}
@@ -191,6 +197,25 @@ export default function TourItem({
         >
           <Iconify icon='solar:eye-bold' />
           Asigin Venue
+        </MenuItem>
+
+        <MenuItem
+          onClick={() => {
+            popover.onClose();
+            onAddTicketSettings();
+          }}
+        >
+          <Iconify icon='solar:eye-bold' />
+          Add Ticket 
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            popover.onClose();
+            onEditTicketSettings();
+          }}
+        >
+          <Iconify icon='solar:eye-bold' />
+          Edit Ticket 
         </MenuItem>
 
         <MenuItem
