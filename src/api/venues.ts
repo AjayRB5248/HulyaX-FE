@@ -27,11 +27,11 @@ export function useCreateVenue() {
   );
 }
 
-export function useVenues() {
+export function useVenues(stateId?:string) {
   const { data, isLoading, error, refetch } = useQuery(
     ['venues'],
     async () => {
-      const res = await VenueService.list();
+      const res = await VenueService.list(stateId);
       return res?.data;
     },
     {

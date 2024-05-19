@@ -80,4 +80,14 @@ export const primaryPresets = [
     darker: '#7A0930',
     contrastText: '#FFFFFF',
   },
+  //Logo
+  {
+    name: 'logo',
+    lighter: '#CA9DC8',
+    light: '#CA9DC8',
+    main: '#4D297B',
+    dark: '#4D297B',
+    darker: '#4D297B',
+    contrastText: '#FFFFFF',
+  },
 ];

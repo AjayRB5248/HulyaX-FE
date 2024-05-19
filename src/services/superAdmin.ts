@@ -6,6 +6,8 @@ const superAdminService = {
       userId,
       isApproved,
     }),
+  veiwAssignedEvents:(subEventId?:any)=>
+  axiosInstance.post(endpoints.superAdmin.company.veiwAssignedEvents,{subEventId}),
   state: () => axiosInstance.get(endpoints.superAdmin.states.list),
   assignCompanyFromEvent: (data: any) =>
     axiosInstance.post(endpoints.superAdmin.company.assignCompanyFromEvent, {
@@ -16,7 +18,9 @@ const superAdminService = {
       data,
     }),
   setupTicket: (data: any) =>
-    axiosInstance.post(endpoints.superAdmin.ticket.setupTicket, { data }),
+    axiosInstance.post(endpoints.superAdmin.ticket.setupTicket,  data ),
+  updateTicket: (data: any) =>
+    axiosInstance.post(endpoints.superAdmin.ticket.updateTicket,  data ),
 };
 
 export default superAdminService;
