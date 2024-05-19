@@ -13,6 +13,7 @@ const EventsService = {
   addItem: (id: string, data: any) =>
     axiosInstance.post(endpoints.events.addItem(id), data),
   fetchSingleEventBySlug: (slug: string) => axiosInstance.get(endpoints.events.detailsBySlug(slug)),
+  fetchAllEvents: () => axiosInstance.get(endpoints.events.allEvents()),
 };
 
 export default EventsService;

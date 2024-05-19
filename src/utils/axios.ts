@@ -83,6 +83,7 @@ export const endpoints = {
     removeItem: (id: string) => `/events/edit/remove-event-items/${id}`,
     addItem: (id: string) => `/events/edit/add-event-items/${id}`,
     detailsBySlug: (slug: string) => `/events/slug/${slug}`,
+    allEvents: () => `events/fetch-subEvent-by-parent-event/all`,
   },
   users: {
     list: (queryParameters = {}) => {

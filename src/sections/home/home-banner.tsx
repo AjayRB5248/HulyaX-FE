@@ -1,15 +1,10 @@
 import React from "react";
 import Slider from "react-slick";
-import BannerBg from "src/assets/frontend/images/banner/banner12.jpg";
-import SACARBANNER from "src/assets/frontend/images/media/SACARAustraliaTour.jpeg";
-
-import { TypeAnimation } from "react-type-animation";
-
+import moment from "moment-timezone";
+import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import { Box } from "@mui/system";
 import { useCountdownDate } from "src/hooks/use-countdown";
-import moment from "moment";
-import Link from "next/link";
 
 const settings = {
   dots: true,
@@ -20,149 +15,115 @@ const settings = {
   // autoplay: true,
 };
 
-const Banner = (events: any) => {
-  const featuredEvents = events?.events?.filter((eachEvent: any) => eachEvent.tags?.includes("FEATURED"));
+interface EventImage {
+  isPrimary: boolean;
+  imageurl: string;
+}
 
-  const { days, hours, minutes, seconds } = useCountdownDate(new Date("07/07/2024 21:30"));
+interface Venue {
+  eventDate: string;
+}
+
+interface ParentEvent {
+  eventName: string;
+  eventDescription: string;
+  images?: EventImage[];
+  tags?: string[];
+}
+
+interface FeaturedEvent {
+  id: string;
+  slug: string;
+  parentEvent: ParentEvent;
+  venues?: Venue[];
+  status: string;
+  state: any;
+}
+
+interface BannerProps {
+  events: FeaturedEvent[];
+}
+
+const Banner: React.FC<BannerProps> = ({ events }) => {
+  const featuredEvents =
+    events &&
+    Array.isArray(events) &&
+    events.length > 0 &&
+    events.filter(
+      (eachEvent) =>
+        eachEvent.parentEvent?.tags?.includes("FEATURED") && ["PLANNED", "ONGOING"].includes(eachEvent.status)
+    );
+
+  console.log(featuredEvents, "featuredEvents");
 
   return (
     <Slider {...settings} className="banner-slider">
-      {/* {Array.isArray(featuredEvents) &&
-        featuredEvents.map((featuredEvent: any) => {
-          const posterImage = featuredEvent.eventImages?.find((eventImg: any) => eventImg?.isPrimary)?.imageurl;
+      {Array.isArray(featuredEvents) &&
+        featuredEvents.map((featuredEvent) => {
+          const posterImage = featuredEvent.parentEvent?.images?.find((eventImg) => eventImg?.isPrimary)?.imageurl;
+          console.log(posterImage, "posterImage");
 
-          const eventStartDate = moment(featuredEvent.venues?.[0]?.eventDate).format("MM/DD/YYYY HH:mm");
-          const { days, hours, minutes, seconds } = useCountdownDate(new Date(eventStartDate));
-
-          return (
-            <div className="banner-section">
-              <div className="banner-bg bg_img bg-fixed" style={{ backgroundImage: `url(${posterImage})` }}></div>
-              <div className="container">
-                <div className="banner-content">
-                  <h1 className="title  cd-headline clip">
-                    <span className="d-block">{featuredEvent.eventName}</span>
-                  </h1>
-                  <p>{featuredEvent.eventDescription}</p>
-                  <Stack
-                    direction="row"
-                    justifyContent="start"
-                    alignItems="center"
-                    divider={<Box sx={{ mx: { xs: 1, sm: 2.5 } }}>:</Box>}
-                    sx={{ typography: "h2" }}
-                    className="mt-5"
-                  >
-                    <TimeBlock label="Days" value={days} />
-
-                    <TimeBlock label="Hours" value={hours} />
-
-                    <TimeBlock label="Minutes" value={minutes} />
-
-                    <TimeBlock label="Seconds" value={seconds} />
-                  </Stack>
-                  <Link href={`/events/${featuredEvent.slug}`}>
-                    <button className="mt-5 theme-button">Buy Ticket Now</button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          );
-        })} */}
-
-      <div className="banner-section">
-        <div className="banner-bg bg_img bg-fixed" style={{ backgroundImage: `url(${BannerBg.src})` }}></div>
-        <div className="container">
-          <div className="banner-content">
-            <h1 className="title  cd-headline clip">
-              {/* <span className="d-block">book your</span> tickets for {""} */}
-              <span className="d-block">AXIX - ROAD To '24 Australia Tour</span>
-
-              {/* <TypeAnimation
-                sequence={["AXIX", 1000, "Sports", 1000, "Events", 1000, "Movies", 1000]}
-                wrapper="span"
-                speed={1}
-                style={{ display: "inline-block" }}
-                repeat={Infinity}
-                className="banner-animation"
-              /> */}
-            </h1>
-            <p>Safe, secure, reliable ticketing. Your ticket to live entertainment!</p>
-
-            <Stack
-              direction="row"
-              justifyContent="start"
-              alignItems="center"
-              divider={<Box sx={{ mx: { xs: 1, sm: 2.5 } }}>:</Box>}
-              sx={{ typography: "h2" }}
-              className="mt-5 counter-wrapper"
-            >
-              <TimeBlock label="Days" value={days} />
-
-              <TimeBlock label="Hours" value={hours} />
-
-              <TimeBlock label="Minutes" value={minutes} />
-
-              <TimeBlock label="Seconds" value={seconds} />
-            </Stack>
-            <button className="mt-5 theme-button">Buy Ticket Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div className="banner-section">
-        <div className="banner-bg bg_img bg-fixed" style={{ backgroundImage: `url(${SACARBANNER.src})` }}></div>
-        <div className="container">
-          <div className="banner-content">
-            <h1 className="title  cd-headline clip">
-              {/* <span className="d-block">book your</span> tickets for {""} */}
-              <span className="d-block">SACAR Ft. CAREY Australia Tour</span>
-
-              {/* <TypeAnimation
-                sequence={["AXIX", 1000, "Sports", 1000, "Events", 1000, "Movies", 1000]}
-                wrapper="span"
-                speed={1}
-                style={{ display: "inline-block" }}
-                repeat={Infinity}
-                className="banner-animation"
-              /> */}
-            </h1>
-            <p>Safe, secure, reliable ticketing. Your ticket to live entertainment!</p>
-
-            <Stack
-              direction="row"
-              justifyContent="start"
-              alignItems="center"
-              divider={<Box sx={{ mx: { xs: 1, sm: 2.5 } }}>:</Box>}
-              sx={{ typography: "h2" }}
-              className="mt-5"
-            >
-              <TimeBlock label="Days" value={days} />
-
-              <TimeBlock label="Hours" value={hours} />
-
-              <TimeBlock label="Minutes" value={minutes} />
-
-              <TimeBlock label="Seconds" value={seconds} />
-            </Stack>
-            <button className="mt-5 theme-button">Buy Ticket Now</button>
-          </div>
-        </div>
-      </div>
+          return <EventBanner key={featuredEvent.id} event={featuredEvent} posterImage={posterImage} />;
+        })}
     </Slider>
+  );
+};
+
+interface EventBannerProps {
+  event: FeaturedEvent;
+  posterImage?: string;
+}
+
+const EventBanner: React.FC<EventBannerProps> = ({ event, posterImage }) => {
+  const _startDate = event.venues?.[0]?.eventDate ?? "";
+  const timezone = event.state?.timeZone;
+  // const eventStartDate = moment(_startDate).tz(timezone).format("MM/DD/YYYY HH:mm");
+
+  const { days, hours, minutes, seconds } = useCountdownDate(new Date(_startDate));
+
+  return (
+    <div className="banner-section">
+      <div className="banner-bg bg_img bg-fixed" style={{ backgroundImage: `url(${posterImage})` }}></div>
+      <div className="container">
+        <div className="banner-content">
+          <h1 className="title cd-headline clip">
+            <span className="d-block">{event.parentEvent?.eventName}</span>
+          </h1>
+          <p dangerouslySetInnerHTML={{ __html: event.parentEvent?.eventDescription }} />
+          <Stack
+            direction="row"
+            justifyContent="start"
+            alignItems="center"
+            divider={<Box sx={{ mx: { xs: 1, sm: 2.5 } }}>:</Box>}
+            sx={{ typography: "h2" }}
+            className="mt-5"
+          >
+            <TimeBlock label="Days" value={days} />
+            <TimeBlock label="Hours" value={hours} />
+            <TimeBlock label="Minutes" value={minutes} />
+            <TimeBlock label="Seconds" value={seconds} />
+          </Stack>
+          <Link href={`/events/${event.slug}`}>
+            <button className="mt-5 theme-button">Buy Ticket Now</button>
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 };
 
 export default Banner;
 
-type TimeBlockProps = {
+interface TimeBlockProps {
   label: string;
-  value: string;
-};
+  value: string | number;
+}
 
-function TimeBlock({ label, value }: TimeBlockProps) {
+const TimeBlock: React.FC<TimeBlockProps> = ({ label, value }) => {
   return (
     <div className="counter--timeblock">
-      <Box> {value} </Box>
+      <Box>{value}</Box>
       <Box sx={{ color: "white", typography: "body1" }}>{label}</Box>
     </div>
   );
-}
+};

@@ -17,21 +17,21 @@ import { EVENTS_MOCK_DATA } from "src/_mock/_events";
 export default function HomeView() {
   const { events } = useFetchEvents();
 
-  const EVENTS_MOCK = EVENTS_MOCK_DATA?.events;
-  
+  const EVENTS_MOCK = EVENTS_MOCK_DATA?.subEvents;
+
   return (
     <MainLayout>
       <Banner
-        // events={events?.events}
+        // events={events}
         events={EVENTS_MOCK}
       />
       {/* <TicketSearch /> */}
-      <EventsCarousel />
+      {/* <EventsCarousel />
       <NewsLetter />
       <EventsSlider />
       <BannerSlider />
       <PopularCategories />
-      <Artists />
+      <Artists /> */}
     </MainLayout>
   );
 }
