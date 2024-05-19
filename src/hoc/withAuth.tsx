@@ -25,7 +25,7 @@ const withAuth = (
         if (allowedUserTypes.includes(loggedInUserType)) {
           setVerified(true);
         } else {
-          router.push('/');
+          router.push('/dashboard');
         }
       }
     };
