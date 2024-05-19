@@ -23,6 +23,7 @@ import * as Yup from 'yup';
 import { useupdateTicketSettings } from 'src/api/superAdmin';
 import { useUsers } from 'src/api/users';
 import { useAuth } from 'src/auth/context/users/auth-context';
+import { SplashScreen } from 'src/components/loading-screen';
 
 type Props = {
   currentEvent?: any;
@@ -55,6 +56,9 @@ export default function UpdateTicketSettingsForm({ currentEvent }: Props) {
   });
 
   const currentTicket = currentEvent[0]?.ticketConfig
+  if (!currentTicket || currentTicket.length === 0) {
+    return <SplashScreen />;
+  }
 
   const defaultValues = useMemo(
     () => ({

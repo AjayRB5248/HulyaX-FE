@@ -107,7 +107,7 @@ export default function CompanyEventItem({ event, onView, onEdit, onDelete,onAss
 
       {[
         {
-          label: "Australia",
+          label: state?.stateName,
           icon: <Iconify icon="mingcute:location-fill" sx={{ color: 'error.main' }} />,
         },
         {
@@ -176,7 +176,7 @@ export default function CompanyEventItem({ event, onView, onEdit, onDelete,onAss
           }}
         >
           <Iconify icon='solar:eye-bold' />
-          Add Ticket Settings
+          Add Ticket 
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -185,7 +185,7 @@ export default function CompanyEventItem({ event, onView, onEdit, onDelete,onAss
           }}
         >
           <Iconify icon='solar:eye-bold' />
-          Edit Ticket Settings
+          Edit Ticket 
         </MenuItem>
         
 
