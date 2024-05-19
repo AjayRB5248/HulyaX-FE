@@ -14,6 +14,7 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import TicketSettingsForm from '../ticket-config';
 import UpdateTicketSettingsForm from "../update-ticket-config"
 import { useAssignedEvents } from 'src/api/superAdmin';
+import { SplashScreen } from 'src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +25,9 @@ export default function CompanyEventTicketUpdateView() {
 
   const { id } = params;
   const { eventList, loading} = useAssignedEvents(id)
+  if (!eventList || eventList.length === 0) {
+    return <SplashScreen />;
+  }
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -48,7 +52,7 @@ export default function CompanyEventTicketUpdateView() {
       />
 
      {eventList[0].ticketConfig.length > 0 ? <UpdateTicketSettingsForm currentEvent={eventList} /> : 
-      <TicketSettingsForm currentEvent={eventList} />
+      <TicketSettingsForm currentTicket={eventList} />
     }
 
     </Container>
