@@ -18,11 +18,8 @@ import {
 import { useEffect, useMemo } from 'react';
 import { useParams, useRouter } from 'src/routes/hook';
 import { paths } from 'src/routes/paths';
-import { useVenues } from 'src/api/venues';
 import * as Yup from 'yup';
 import { useupdateTicketSettings } from 'src/api/superAdmin';
-import { useUsers } from 'src/api/users';
-import { useAuth } from 'src/auth/context/users/auth-context';
 import { SplashScreen } from 'src/components/loading-screen';
 
 type Props = {

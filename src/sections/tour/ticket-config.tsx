@@ -36,11 +36,15 @@ const ticketDefault = {
   venueInfo: '',
 };
 
-export default function TicketSettingsForm({ currentTicket }: Props) {
+export default function TourTicketSettingsForm({ currentTicket }: Props) {
   const setupTicketMutation = useSetupTicketSettings();
   const params = useParams(); 
+  const {user} = useAuth()
+  const userRole = user ? user.role : 'companyAdmin'
   const router = useRouter();
   const { venues } = useVenues(currentTicket?.[0]?.state?._id);
+  const { users } = useUsers(); 
+  const companies= users?.filter((company: any) => company?.role === 'companyAdmin')
 
   const TicketSettingsSchema = Yup.object().shape({
     ticketSettings: Yup.array().of(
@@ -123,7 +127,7 @@ export default function TicketSettingsForm({ currentTicket }: Props) {
           <Typography variant='h4' sx={{ mb: 3 }}>
             Ticket Settings
           </Typography>
-          {renderTicketSettings(ticketSettings, venues?.venues)}
+          {renderTicketSettings(ticketSettings, venues?.venues, companies, userRole,currentTicket)}
         </Grid>
       </Stack>
 
@@ -145,13 +149,30 @@ export default function TicketSettingsForm({ currentTicket }: Props) {
   );
 }
 
-const renderTicketSettings = (ticketSettings: any, venues: any) => {
+const renderTicketSettings = (ticketSettings: any, venues: any, companies: any, role: string,currentTicket:any) => {
   return (
     <Stack spacing={3}>
       {ticketSettings.fields.map((item: any, index: number) => (
         <Card key={item.id} sx={{ p: 2 }}>
           <Stack spacing={2}>
             <Typography variant='h6'>Ticket Setting {index + 1}</Typography>
+
+            {role === 'superAdmin' && (
+              <Controller
+                name={`ticketSettings[${index}].companyId`}
+                control={ticketSettings?.control}
+                render={({ field }) => (
+                  <RHFSelect {...field} label='Company' required>
+                    {companies?.map((company: any) => (
+                      <MenuItem key={company?.id} value={company?.id}>
+                        {company?.name}
+                      </MenuItem>
+                    ))}
+                  </RHFSelect>
+                )}
+              />
+            )}
+
             <RHFSelect
               name={`ticketSettings[${index}].venueInfo`}
               label='Venue'

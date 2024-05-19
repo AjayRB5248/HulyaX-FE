@@ -18,6 +18,11 @@ import TourDetailsToolbar from '../tour-details-toolbar';
 import TourDetailsContent from '../tour-details-content';
 import TourDetailsBookers from '../tour-details-bookers';
 import { useEvent, useEvents } from 'src/api/events';
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs/custom-breadcrumbs';
+import { Button, Stack } from '@mui/material';
+import { RouterLink } from 'src/routes/components';
+import Iconify from 'src/components/iconify';
+import HeaderActions from './header-action';
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +38,26 @@ export default function TourDetailsView() {
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+        <CustomBreadcrumbs
+        heading="Event Detail"
+        links={[
+          {
+            name: 'Dashboard',
+            href: paths.dashboard.root,
+          },
+          {
+            name: 'Events',
+            href: paths.dashboard.tour.root,
+          },
+          {
+            name: 'About Event',
+          },
+        ]}
+        sx={{
+          mb: { xs: 3, md: 5 },
+        }}
+        action={<HeaderActions />}
+      />
 
     <TourDetailsContent event={event} isLoading={isLoading} />
 

@@ -209,6 +209,8 @@ export const paths = {
       new: `${ROOTS.DASHBOARD}/event/new`,
       details: (id: string) => `${ROOTS.DASHBOARD}/event/${id}`,
       edit: (id: string) => `${ROOTS.DASHBOARD}/event/${id}/edit`,
+      createTicket: (id: string) => `${ROOTS.DASHBOARD}/event/${id}/create-ticket`,
+      updateTicket: (id: string) => `${ROOTS.DASHBOARD}/event/${id}/update-ticket`,
     }
   },
 };
