@@ -51,7 +51,7 @@ export default function CompanyEventTicketUpdateView() {
         }}
       />
 
-     {eventList[0].ticketConfig.length > 0 ? <UpdateTicketSettingsForm currentEvent={eventList} /> : 
+     {eventList[0].ticketTypes.length > 0 ? <UpdateTicketSettingsForm currentEvent={eventList} /> : 
       <TicketSettingsForm currentTicket={eventList} />
     }
 

@@ -43,14 +43,14 @@ export default function CompanyEventItem({ event, onView, onEdit, onDelete,onAss
     ticketTypes,
     artists,
     venues,
-    images,
+    parentEvent,
     slug,
     createdAt,
     available,
     state,
   } = event;
 
-  const primaryImage = images?.find((image:any) => image?.isPrimary);
+  const primaryImage = parentEvent?.images?.find((image:any) => image?.isPrimary);
   const renderImages = (
     <Stack
       spacing={0.5}
@@ -73,7 +73,7 @@ export default function CompanyEventItem({ event, onView, onEdit, onDelete,onAss
       primary={`Posted date: ${fDateTime(createdAt)}`}
       secondary={
         <Link component={RouterLink} href={paths.dashboard.companyEvents.details(_id)} color="inherit">
-         {eventName}
+         {parentEvent?.eventName}
         </Link>
       }
       primaryTypographyProps={{

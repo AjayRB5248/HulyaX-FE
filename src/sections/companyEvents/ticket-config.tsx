@@ -64,12 +64,10 @@ export default function TicketSettingsForm({ currentTicket }: Props) {
     () => ({
       ticketSettings: currentTicket
         ? currentTicket?.map((ticketType: any) => ({
-            ...ticketType,
             venueInfo: ticketType.venueId,
             type: ticketType.type,
             price: ticketType.price,
             totalSeats: ticketType.totalSeats,
-            companyId: ticketType.companyId || ''
           }))
         : [ticketDefault],
     }),

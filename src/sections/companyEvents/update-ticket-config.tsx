@@ -52,7 +52,7 @@ export default function UpdateTicketSettingsForm({ currentEvent }: Props) {
     ),
   });
 
-  const currentTicket = currentEvent[0]?.ticketConfig
+  const currentTicket = currentEvent[0]?.ticketTypes
   if (!currentTicket || currentTicket.length === 0) {
     return <SplashScreen />;
   }
@@ -101,7 +101,7 @@ export default function UpdateTicketSettingsForm({ currentEvent }: Props) {
       );
   
       await Promise.all(updatePromises);
-      router.push(paths.dashboard.companyEvents.details(params?.id))
+      router.push(paths.dashboard.companyEvents.details(params?.id as any))
     } catch (error) {
       console.error(error);
     }
@@ -117,7 +117,7 @@ export default function UpdateTicketSettingsForm({ currentEvent }: Props) {
           <Typography variant='h4' sx={{ mb: 3 }}>
             Ticket Settings
           </Typography>
-          {renderTicketSettings(ticketSettings,currentTicket)}
+          {renderTicketSettings(ticketSettings)}
         </Grid>
       </Stack>
 
@@ -139,7 +139,7 @@ export default function UpdateTicketSettingsForm({ currentEvent }: Props) {
   );
 }
 
-const renderTicketSettings = (ticketSettings: any,currentTicket:any) => {
+const renderTicketSettings = (ticketSettings: any) => {
   return (
     <Stack spacing={3}>
       {ticketSettings.fields.map((item: any, index: number) => (
