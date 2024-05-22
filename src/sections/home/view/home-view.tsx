@@ -29,8 +29,8 @@ export default function HomeView() {
       <EventsCarousel events={EVENTS_MOCK} />
       <MobileApp />
       <EventsSlider events={EVENTS_MOCK?.filter((event: any) => event.status !== "COMPLETED")} />
-      {/* <BannerSlider />
-      <PopularCategories />
+      <BannerSlider />
+      {/* <PopularCategories />
       <Artists /> */}
     </MainLayout>
   );
