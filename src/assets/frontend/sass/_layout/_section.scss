@@ -3592,9 +3592,11 @@
   position: relative;
   padding: 30px;
   // background-image: -webkit-linear-gradient(299deg, rgb(85, 96, 255) 17%, rgb(170, 82, 161) 63%, rgb(255, 67, 67) 100%);
-  background: $main-theme-color;
   // margin-top: 60px;
   border-radius: 12px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  border: 1px solid;
 
   @include breakpoint(max-sm) {
     padding-left: 15px;
@@ -3633,6 +3635,7 @@
       font-size: 30px;
       font-weight: bold;
       margin-bottom: 0;
+      color: $main-theme-color;
     }
     p {
       margin-bottom: 0;

@@ -8,7 +8,7 @@ import TicketSearch from "../ticket-search";
 import { EventsCarousel } from "src/sections/events/view";
 import { useFetchEvents } from "src/api/events";
 import Artists from "../artists-section";
-import NewsLetter from "src/layouts/main/newsletter";
+import MobileApp from "src/layouts/main/MobileApp";
 import EventsSlider from "../events-slider";
 import PopularCategories from "../popular-categories";
 import BannerSlider from "../banner-slider";
@@ -27,8 +27,8 @@ export default function HomeView() {
       />
       {/* <TicketSearch /> */}
       <EventsCarousel events={EVENTS_MOCK} />
-      {/* <NewsLetter />
-      <EventsSlider />
+      <MobileApp />
+      {/* <EventsSlider />
       <BannerSlider />
       <PopularCategories />
       <Artists /> */}
