@@ -63,10 +63,11 @@ const AssignModal = ({
           _id: selectedEvent?.state._id,
         },
         company: '',
-        venue: '',
-        date: '',
+        venue: selectedEvent?.venues[0]?.venueId?._id,
+        date: selectedEvent?.venues[0]?.eventDate,
       };
       setData([data]);
+      console.log('this is data', { data });
     }
   }, [selectedEvent?._id]);
 
@@ -278,6 +279,7 @@ const AssignModal = ({
                 onChange={(e: any) =>
                   handleSelectChange(index, 'date', new Date(e).toISOString())
                 }
+                value={item?.date}
                 sx={{ minWidth: 250 }}
                 label='Date of Event'
                 inputFormat='yyyy-MM-dd HH:mm'
