@@ -6,6 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { DateTimePicker } from '@mui/x-date-pickers';
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useAssignCompany, useRemoveAssginedCompany } from 'src/api/superAdmin';
 import { useAllUsersByRole } from 'src/api/users';
@@ -64,7 +65,9 @@ const AssignModal = ({
         },
         company: '',
         venue: selectedEvent?.venues[0]?.venueId?._id,
-        date: selectedEvent?.venues[0]?.eventDate,
+        date: moment(selectedEvent?.venues[0]?.eventDate).format(
+          'yyyy-MM-dd HH:mm'
+        ),
       };
       setData([data]);
       console.log('this is data', { data });
