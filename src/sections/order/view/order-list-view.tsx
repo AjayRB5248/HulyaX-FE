@@ -103,7 +103,7 @@ export default function OrderListView() {
             gap: 15,
           }}
         >
-          <select
+          {/* <select
             style={{
               width: 'fit-content',
               paddingInline: 15,
@@ -134,7 +134,7 @@ export default function OrderListView() {
                 {category}
               </option>
             ))}
-          </select>
+          </select> */}
 
           <input
             type='text'
