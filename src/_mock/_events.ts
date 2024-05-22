@@ -54,6 +54,8 @@ export const EVENTS_MOCK_DATA = {
           {
             _id: "6647a8cdacd32f2fef3efad0",
             artistName: "Sacar Adhikari",
+            category: "Singer/Artist",
+            imageurl: `http://localhost:8081${SACAR_IMG.src}`,
           },
         ],
         tags: ["FEATURED"],
@@ -157,6 +159,8 @@ export const EVENTS_MOCK_DATA = {
           {
             _id: "6647a8cdacd32f2fef3efad0",
             artistName: "Bharatmani Paudel",
+            category: "Singer/Artist",
+            imageurl: `http://localhost:8081${MAJJALE_HASSCHHA_IMG.src}`,
           },
         ],
         tags: ["FEATURED"],
@@ -229,6 +233,8 @@ export const EVENTS_MOCK_DATA = {
           {
             _id: "6647a860acd32f2fef3efabf",
             artistName: "AXIS Band",
+            category: "Singer/Artist",
+            imageurl: `http://localhost:8081${AXIS_IMG.src}`,
           },
         ],
         tags: ["FEATURED"],
@@ -311,6 +317,7 @@ export const EVENTS_MOCK_DATA = {
           {
             _id: "6647a860acd32f2fef3efabf",
             artistName: "NEPATHYA",
+            category: "Singer/Artist",
           },
         ],
         tags: ["FEATURED"],
@@ -391,6 +398,7 @@ export const EVENTS_MOCK_DATA = {
           {
             _id: "6647a860acd32f2fef3efabf",
             artistName: "NEPATHYA",
+            category: "Singer/Artist",
           },
         ],
         tags: ["FEATURED"],

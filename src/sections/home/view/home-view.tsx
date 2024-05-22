@@ -28,8 +28,8 @@ export default function HomeView() {
       {/* <TicketSearch /> */}
       <EventsCarousel events={EVENTS_MOCK} />
       <MobileApp />
-      {/* <EventsSlider />
-      <BannerSlider />
+      <EventsSlider events={EVENTS_MOCK?.filter((event: any) => event.status !== "COMPLETED")} />
+      {/* <BannerSlider />
       <PopularCategories />
       <Artists /> */}
     </MainLayout>
