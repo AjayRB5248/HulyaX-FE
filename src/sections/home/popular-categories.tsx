@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Slider from "react-slick";
-import PopularCategory01 from "src/assets/frontend/images/event/ArjitSingh.webp";
+import PopularCategory01 from "src/assets/frontend/images/media/NepathyaVideoThumbnail.jpeg";
 import PopularCategory02 from "src/assets/frontend/images/event/165919922762e55efbe71f1.webp";
 import PopularCategory03 from "src/assets/frontend/images/event/Nepathya.jpg";
 
@@ -14,6 +14,7 @@ import VenueIcon from "src/assets/frontend/images/icons/location.png";
 import SacarPoster from "src/assets/frontend/images/event/SacarPoster.jpeg";
 import NeeteshPoster from "src/assets/frontend/images/event/NeeteshConcert.jpg";
 import { PlayButtonSVG } from "src/components/icons";
+import Link from "next/link";
 
 const PopularCategories = () => {
   const settings = {
@@ -33,12 +34,16 @@ const PopularCategories = () => {
     <section className="section-wrapper section--popular-categories">
       <div className="container-fluid">
         <div className="section-title">
-          <h4 className="title text-left">🔥 Popular Categories</h4>
-          {/* <p>Explore What's Trending Now: Stay ahead of the curve with the latest and hottest trends.</p> */}
+          <h4 className="title text-left">🔥 Popular Past Events</h4>
+          <p className="text-left">
+            Discover the past popular events that set the trend. Don't miss out on the events that everyone is talking
+            about.
+          </p>
         </div>
 
         <div className="row">
-          <div className="col-12 col-md-7">
+          {/* TODO: Disabling for now: very less events - reptitive  */}
+          <div className="col-12 col-md-7 d-none">
             <div className="event-item event-item--row">
               <div className="event-top-card">
                 <Image src={SacarPoster} alt="Event Poster" />
@@ -110,7 +115,7 @@ const PopularCategories = () => {
             </div>
           </div>
 
-          <div className="col-12 col-md-5">
+          <div className="col-12 col-md-12">
             <Slider {...settings} className="slider-wrapper">
               <div className="popular-categories-slider">
                 <a className="button is-play" href="#">
@@ -124,13 +129,15 @@ const PopularCategories = () => {
                     <li>Musical Concert</li>
                   </ul>
 
-                  <h3 className="event-title">Arjit Singh Evolution Tour 2024</h3>
+                  <h3 className="event-title">Nepathya Live in Sydney</h3>
 
-                  <button className="theme-button theme-button--sm">Reserve Seat Now</button>
+                  <Link href={`/events`}>
+                    <button className="theme-button theme-button--sm">Reserve Seat for Events Now</button>
+                  </Link>
                 </div>
               </div>
 
-              <div className="popular-categories-slider">
+              {/* <div className="popular-categories-slider">
                 <Image src={PopularCategory02} alt="Image" />
                 <div className="overlay"></div>
                 <div className="position-absolute details-wrapper">
@@ -141,7 +148,7 @@ const PopularCategories = () => {
 
                   <h3 className="event-title">SACAR Evolution Tour 2024</h3>
 
-                  <button className="theme-button theme-button--sm">Reserve Seat Now</button>
+                  <button className="theme-button theme-button--sm">Reserve Seat For Events Now</button>
                 </div>
               </div>
 
@@ -158,7 +165,7 @@ const PopularCategories = () => {
 
                   <button className="theme-button theme-button--sm">Reserve Seat Now</button>
                 </div>
-              </div>
+              </div> */}
             </Slider>
           </div>
         </div>
