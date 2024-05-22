@@ -57,7 +57,7 @@ export default function Footer() {
       .post(`/subscribe`, { email })
       .then((response: any) => {
         if (response.status === 201) {
-          enqueueSnackbar(response?.data?.message || "Event Removed Successfully", {
+          enqueueSnackbar(response?.data?.message || "You are now Subscribed ", {
             variant: "success",
           });
         } else {

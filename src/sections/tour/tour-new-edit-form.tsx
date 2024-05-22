@@ -627,7 +627,7 @@ const renderArtists = (artist: any, artistsData: any) => {
     <Stack spacing={3}>
       {artist.fields.map((item: any, index: any) => (
         <Stack key={item.id} direction='row' spacing={2} alignItems='center'>
-          <RHFSelect name={`artists[${index}].name`} label='Event Category'>
+          <RHFSelect name={`artists[${index}].name`} label='Select Artist'>
             {artistsData?.map((item: any) => (
               <MenuItem key={item?._id} value={item?._id}>
                 {item.artistName}

@@ -13,10 +13,12 @@ import Image from "src/components/image";
 import Iconify from "src/components/iconify";
 import Markdown from "src/components/markdown";
 import Lightbox, { useLightBox } from "src/components/lightbox";
-import { Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Paper } from "@mui/material";
+import { Button, Card, CardContent, CardHeader, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Paper } from "@mui/material";
 import { SplashScreen } from "src/components/loading-screen";
 import CarouselThumbnail from "../_examples/extra/carousel-view/carousel-thumbnail";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAllUsersByRole } from "src/api/users";
+import { useStates } from "src/api/superAdmin";
 
 type Props = {
   event: any;
@@ -36,13 +38,35 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
     venues,
     images:eventImages,
     slug,
+    assignedCompany,
     createdAt,
     available,
     videoUrl,
   } = event;
-  console.log({event})
 
+  const {states}= useStates();
+  const { users} = useAllUsersByRole("companyAdmin")
+  const [mappedData, setMappedData] = useState([]);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const stateMap :any= {};
+    states?.states?.forEach((state:any) => {
+        stateMap[state._id] = state.stateName;
+    });
+
+    const companyMap :any= {};
+    users.forEach((company:any) => {
+        companyMap[company._id] = company.name;
+    });
+
+    const result = assignedCompany?.map((ac:any) => ({
+        stateName: stateMap[ac.state],
+        companyName: companyMap[ac.companyId]
+    }));
+
+    setMappedData(result);
+}, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -145,6 +169,39 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
     </>
   );
 
+  const renderStatewithCompany = (data:any) => {
+    return (
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h6" gutterBottom>
+          Assigned Companies
+        </Typography>
+        <Stack direction="row" spacing={2} sx={{ overflowX: "auto" }}>
+          {data?.map((item:any, index:any) => (
+            <Card key={index} sx={{ minWidth: 275 }}>
+              <CardHeader
+                avatar={<Iconify icon="ic:baseline-business" />}
+                title={item.companyName}
+              />
+              <CardContent>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Iconify icon="mingcute:location-fill" />
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    {item.stateName}
+                  </Typography>
+                </Stack>
+              </CardContent>
+            </Card>
+          ))}
+        </Stack>
+      </Box>
+    );
+  };
+
+
   function renderEventVenueDetails() {
     const combinedDetails = venues?.map((venue: any) => {
       const eventDateTime = new Date(venue?.eventDate);
@@ -227,6 +284,7 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
 
       <Stack sx={{ maxWidth: 720, mx: "auto" }}>
         {renderHead}
+        {mappedData?.length ? renderStatewithCompany(mappedData) : null}
 
         <Divider sx={{ borderStyle: "dashed", my: 5 }} />
 

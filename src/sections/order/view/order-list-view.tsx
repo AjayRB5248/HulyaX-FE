@@ -96,7 +96,7 @@ export default function OrderListView() {
   return (
     <>
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-        <div
+        {/* <div
           style={{
             display: 'flex',
             flexWrap: 'wrap',
@@ -148,7 +148,7 @@ export default function OrderListView() {
             value={filter?.eventName}
             placeholder='Event Name'
           />
-        </div>
+        </div> */}
         <Card>
           <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
             <Scrollbar>
