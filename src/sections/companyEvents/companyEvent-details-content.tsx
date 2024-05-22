@@ -4,8 +4,6 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-// utils
-import { fDate } from "src/utils/format-time";
 // _mock
 // types
 // components
@@ -13,9 +11,10 @@ import Image from "src/components/image";
 import Iconify from "src/components/iconify";
 import Markdown from "src/components/markdown";
 import Lightbox, { useLightBox } from "src/components/lightbox";
-import { Chip, Paper } from "@mui/material";
+import { Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Paper } from "@mui/material";
 import { SplashScreen } from "src/components/loading-screen";
 import CarouselThumbnail from "../_examples/extra/carousel-view/carousel-thumbnail";
+import { useState } from "react";
 
 type Props = {
   event: any;
@@ -36,14 +35,16 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
     artists,
     tags,
     venues,
-    images:eventImages,
+    parentEvent,
     slug,
-    ticketConfig,
     createdAt,
     available,
   } = event[0];
+  console.log({ajjj:event})
 
-  const carouselData = eventImages?.map((image:any) => ({
+  const [open, setOpen] = useState(false);
+
+  const carouselData = parentEvent?.images?.map((image:any) => ({
     id: image._id,
     title: "",
     coverUrl: image.imageurl,
@@ -55,11 +56,19 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
     </>
   );
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const renderHead = (
     <>
       <Stack direction="row" sx={{ mb: 3 }}>
         <Typography variant="h4" sx={{ flexGrow: 1 }}>
-          {eventName}
+          {parentEvent?.eventName}
         </Typography>
       </Stack>
 
@@ -105,16 +114,16 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
           sx={{ typography: "body2" }}
         >
           <Iconify icon={"tabler:category"} />
-          {eventCategory ? eventCategory : "Event"}
+          {parentEvent?.eventCategory ? parentEvent?.eventCategory : "Event"}
         </Stack>
       </Stack>
 
-    { artists?.length > 0 &&  <Box sx={{ mt: 4 }}>
+    { parentEvent?.artists?.length > 0 &&  <Box sx={{ mt: 4 }}>
         <Typography variant="h6" gutterBottom>
           Featured Artists
         </Typography>
         <Stack direction="row" spacing={2} sx={{ overflowX: "auto" }}>
-        {artists?.map((artist:any) => {
+        {parentEvent?.artists?.map((artist:any) => {
             const profileImage = artist?.images?.find((img:any) => img?.isProfile)?.imageurl;
 
             return (
@@ -136,7 +145,65 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
     </>
   );
 
-  function renderEventVenueDetails() {
+  function renderVenueDetails() {
+    const combinedDetails = venues?.map((venue:any) => {
+      const eventDateTime = new Date(venue?.eventDate);
+  
+      return {
+        venueName: venue.venueId.venueName,
+        date: eventDateTime.toLocaleDateString(),
+        time: eventDateTime.toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+        icon: <Iconify icon="solar:calendar-date-bold" />,
+      };
+    });
+  
+    return (
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h6" gutterBottom>
+          Venue Details
+        </Typography>
+        <Box
+          display="grid"
+          gridTemplateColumns={{
+            xs: 'repeat(2, 1fr)',
+            md: 'repeat(2, 1fr)',
+          }}
+          gap={3}
+        >
+          {combinedDetails?.length > 0 ? combinedDetails?.map((detail:any, idx:any) => (
+            <Box
+              key={idx}
+              p={1}
+              mt={1}
+              border={1}
+              borderColor="grey.300"
+              borderRadius={1}
+            >
+              <Stack direction="column" spacing={2} alignItems="center">
+                <Typography variant="body1">
+                  {detail?.venueName}
+                </Typography>
+                <Typography variant="body1">
+                  {state?.stateName}
+                </Typography>
+                <Typography variant="body2">
+                  {detail?.date} {detail?.time}
+                </Typography>
+                {detail?.icon}
+              </Stack>
+            </Box>
+          )) : <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: '4' }}>
+            No Venue Details Available
+          </Typography>}
+        </Box>
+      </Box>
+    );
+  }
+
+  function renderTicketDetails() {
     const combinedDetails = venues?.map((venue: any) => {
       const eventDateTime = new Date(venue?.eventDate);
       const ticketsForVenue = ticketTypes?.filter(
@@ -147,7 +214,6 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
         venueId:venue?._id,
         venueName: venue.venueName,
         city: venue.city,
-        date: fDate(eventDateTime),
         time: eventDateTime.toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
@@ -170,7 +236,7 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
           }}
           gap={3}
         >
-                  {ticketConfig?.length> 0 && ticketConfig?.map((ticket: any, idx: any) => (
+                  {ticketTypes?.length> 0 ? ticketTypes?.map((ticket: any, idx: any) => (
                     <Box
                       key={idx}
                       p={1}
@@ -196,11 +262,16 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
                         </Typography>
                       </Stack>
                     </Box>
-                  ))}
+                  )):
+                  <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
+                         No Tickets Added Yet
+                  </Typography>
+                  }
                 </Box>
       </Box>
     );
   }
+  
 
   return (
     <>
@@ -211,17 +282,51 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
 
         <Divider sx={{ borderStyle: "dashed", my: 5 }} />
 
-        {renderEventVenueDetails()}
+        {parentEvent?.videoUrl && (
+          <>
+            <Button variant="contained" startIcon={<Iconify icon="mdi:youtube" />} onClick={handleClickOpen}>
+              Watch Video
+            </Button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="video-dialog-title"
+              maxWidth="md"
+              fullWidth
+            >
+              <DialogTitle id="video-dialog-title">Event Video</DialogTitle>
+              <DialogContent>
+                <iframe
+                  width="100%"
+                  height="400"
+                  src={parentEvent?.videoUrl}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Close
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </>
+        )}
+
+
+        {renderVenueDetails()}
+        {renderTicketDetails()}
 
         <Divider sx={{ borderStyle: "dashed", my: 5 }} />
 
-        <Markdown children={eventDescription} />
-        {tags?.length > 0 &&  <Box sx={{ mt: 4 }}>
+        <Markdown children={parentEvent?.eventDescription} />
+        {parentEvent?.tags?.length > 0 &&  <Box sx={{ mt: 4 }}>
          <Typography variant="h6" gutterBottom>
             Tags
           </Typography>
            <Stack direction="row" spacing={1} sx={{ overflowX: "auto" }}>
-            {tags?.map((tag:any, index:any) => (
+            {parentEvent?.tags?.map((tag:any, index:any) => (
               <Chip key={index} label={tag} />
             ))}
           </Stack> 

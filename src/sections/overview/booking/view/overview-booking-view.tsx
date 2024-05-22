@@ -24,6 +24,7 @@ import BookingTotalIncomes from '../booking-total-incomes';
 import BookingWidgetSummary from '../booking-widget-summary';
 import BookingCheckInWidgets from '../booking-check-in-widgets';
 import BookingCustomerReviews from '../booking-customer-reviews';
+import { useDashboardReports } from 'src/api/dashboard';
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +32,7 @@ const SPACING = 3;
 
 export default function OverviewBookingView() {
   const theme = useTheme();
+  const {reports}= useDashboardReports();
 
   const settings = useSettingsContext();
 
@@ -39,18 +41,18 @@ export default function OverviewBookingView() {
       <Grid container spacing={SPACING} disableEqualOverflow>
         <Grid xs={12} md={4}>
           <BookingWidgetSummary
-            title="Total Booking"
-            total={714000}
+            title="Total Ticket Amount"
+            total={reports?.reportData?.totalPriceInDollars}
             icon={<BookingIllustration />}
           />
         </Grid>
 
         <Grid xs={12} md={4}>
-          <BookingWidgetSummary title="Sold" total={311000} icon={<CheckInIllustration />} />
+          <BookingWidgetSummary title="Sold" total={reports?.reportData?.soldTickets} icon={<CheckInIllustration />} />
         </Grid>
 
         <Grid xs={12} md={4}>
-          <BookingWidgetSummary title="Canceled" total={124000} icon={<CheckOutIllustration />} />
+          <BookingWidgetSummary title="Sold in $" total={reports?.reportData?.totalSoldInDollars} icon={<CheckOutIllustration />} />
         </Grid>
 
         <Grid container xs={12}>
@@ -58,7 +60,7 @@ export default function OverviewBookingView() {
             <Grid xs={12} md={6}>
               <BookingTotalIncomes
                 title="Total Incomes"
-                total={18765}
+                total={reports?.reportData?.totalSoldInDollars}
                 percent={2.6}
                 chart={{
                   series: [
@@ -83,8 +85,8 @@ export default function OverviewBookingView() {
               <BookingCheckInWidgets
                 chart={{
                   series: [
-                    { label: 'Sold', percent: 72, total: 38566 },
-                    { label: 'Pending for payment', percent: 64, total: 18472 },
+                    { label: 'Sold', percent: 72, total: reports?.reportData?.totalSoldInDollars },
+                    { label: 'Pending for payment', percent: 64, total: reports?.reportData?.remaningToSellInDollars },
                   ],
                 }}
               />
@@ -98,8 +100,8 @@ export default function OverviewBookingView() {
               title="Tickets Available"
               chart={{
                 series: [
-                  { label: 'Sold out', value: 120 },
-                  { label: 'Available', value: 66 },
+                  { label: 'Sold out', value: reports?.reportData?.soldTickets },
+                  { label: 'Available', value: reports?.reportData?.availableTickets },
                 ],
               }}
             />

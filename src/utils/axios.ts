@@ -73,6 +73,16 @@ export const endpoints = {
     resetPassword: 'auth/reset-password',
     logout: '/auth/logout',
   },
+  dashboard:{
+    report:(queryParameters = {}) => {
+      let url = '/dashboard/get-dashboard-report';
+      const params = new URLSearchParams(queryParameters).toString();
+      if (params) {
+        url += `?${params}`;
+      }
+      return url;
+    },
+  },
 
   events: {
     list: 'events/fetch-events',

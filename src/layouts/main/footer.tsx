@@ -114,13 +114,13 @@ export default function Footer() {
             <div className="left">
               <p>
                 Copyright © {Year}. <span>All Rights Reserved By </span>
-                <Link href="#0">Hulya Events</Link>
+                <Image width={20} src={FooterLogo} alt="Footer Image" />
               </p>
             </div>
             {/* <ul className='links'>{footerLinks.map(renderLink)}</ul> */}
             <p>
               Contact Us:
-              <a href="mailto:info@hulyaevents.com.au">info@hulyaevents.com.au</a>
+              <a href="mailto:info@hulyax.com.au">info@hulyax.com.au</a>
             </p>
             <p>
               For Business Queries:
