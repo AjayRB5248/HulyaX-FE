@@ -37,7 +37,7 @@ const AssignModal = ({
         const assignedCompany = selectedEvent?.assignedCompany?.find(
           (company: any) => company.state === state._id
         );
-        const venue = selectedEvent?.venue?.find(
+        const venue = selectedEvent?.venueData?.find(
           (venue: any) => venue.state === state._id
         );
 
@@ -46,8 +46,8 @@ const AssignModal = ({
             name: state.stateName,
             _id: state._id,
           },
-          company: assignedCompany ? assignedCompany.companyId : '',
-          venue: venue ? venue.venueId : '',
+          company: assignedCompany?._id ? assignedCompany.companyId : '',
+          venue: venue?._id ? venue._id : '',
           date: '',
           deleteOption: assignedCompany?.companyId ? true : false,
         };
@@ -91,16 +91,34 @@ const AssignModal = ({
               },
             ],
           };
-          const response = await assignCompanyMutation.mutateAsync(data);
-          const venueData = {
-            subEventId: response?.insertedSubEvents[0]?._id,
-            venues: [
-              {
-                _id: singleData?.venue,
-                date: singleData?.date,
-              },
-            ],
-          };
+
+          let venueData = {};
+          if (singleData?.deleteOption) {
+            const subEventId = selectedEvent?.assignedCompany.find(
+              (item: any) => item?.companyId === singleData?.company
+            )?.subEventId;
+
+            venueData = {
+              subEventId,
+              venues: [
+                {
+                  _id: singleData?.venue,
+                  date: singleData?.date,
+                },
+              ],
+            };
+          } else {
+            const response = await assignCompanyMutation.mutateAsync(data);
+            venueData = {
+              subEventId: response?.insertedSubEvents[0]?._id,
+              venues: [
+                {
+                  _id: singleData?.venue,
+                  date: singleData?.date,
+                },
+              ],
+            };
+          }
           if (singleData?.venue) {
             await addVenue(venueData);
           }
@@ -210,13 +228,17 @@ const AssignModal = ({
                     handleSelectChange(index, 'venue', e?.target?.value)
                   }
                 >
-                  {venues?.venues?.map((venueItem: any) => {
-                    return (
-                      <MenuItem key={venueItem?._id} value={venueItem?._id}>
-                        {venueItem?.venueName}
-                      </MenuItem>
-                    );
-                  })}
+                  {venues?.venues
+                    ?.filter(
+                      (venue: any) => item?.state?._id === venue?.state?._id
+                    )
+                    .map((venueItem: any) => {
+                      return (
+                        <MenuItem key={venueItem?._id} value={venueItem?._id}>
+                          {venueItem?.venueName}
+                        </MenuItem>
+                      );
+                    })}
                 </Select>
               </div>
 
