@@ -11,14 +11,13 @@ import { useParams } from 'src/routes/hook';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 //
-import TicketSettingsForm from '../ticket-config';
-import UpdateTicketSettingsForm from "../update-ticket-config"
 import { useEvent } from 'src/api/events';
 import { useAssignedEvents } from 'src/api/superAdmin';
+import TourTicketSettingsForm from '../ticket-config';
 
 // ----------------------------------------------------------------------
 
-export default function CompanyEventTicketEditView() {
+export default function TourTicketCreateView() {
   const settings = useSettingsContext();
 
   const params = useParams();
@@ -36,8 +35,8 @@ export default function CompanyEventTicketEditView() {
             href: paths.dashboard.root,
           },
           {
-            name: 'Company Events',
-            href: paths.dashboard.companyEvents.root,
+            name: 'Events',
+            href: paths.dashboard.tour.root,
           },
           {
             name: 'Ticket Settings',
@@ -48,7 +47,7 @@ export default function CompanyEventTicketEditView() {
         }}
       />
 
-      <TicketSettingsForm currentTicket={eventList} />
+      <TourTicketSettingsForm currentTicket={eventList} />
 
     </Container>
   );

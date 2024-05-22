@@ -5,20 +5,19 @@ import Pagination, { paginationClasses } from '@mui/material/Pagination';
 // routes
 import { paths } from 'src/routes/paths';
 // types
-import { ITourItem } from 'src/types/tour';
 // components
 import { useRouter } from 'src/routes/hook';
 //
-import { useEvents, useRemoveEvent } from 'src/api/events';
+import { useRemoveEvent } from 'src/api/events';
+import { useAssignedEvents } from 'src/api/superAdmin';
 import { useBoolean } from 'src/hooks/use-boolean';
 import TransitionsDialog from '../_examples/mui/dialog-view/transitions-dialog';
-import TourItem from './companyEvent-item';
 import AssignModal from '../tour/view/assignModal';
-
+import CompanyEventItem from './companyEvent-item';
 
 export default function CompanyEventList() {
   const router = useRouter();
-  const { events, loading, error, refetch } = useEvents();
+  const { eventList, refetch } = useAssignedEvents();
   const removeEventMutation = useRemoveEvent();
   const [selectedEvent, setSelectedEvent] = useState<string>('');
   const [assignModal, setAssignModal] = useState(false);
@@ -27,6 +26,20 @@ export default function CompanyEventList() {
   const handleView = useCallback(
     (id: string) => {
       router.push(paths.dashboard.companyEvents.details(id));
+    },
+    [router]
+  );
+
+  const handleAssignTicketSettings = useCallback(
+    (id: string) => {
+      router.push(paths.dashboard.companyEvents.edit(id));
+    },
+    [router]
+  );
+
+  const handleAssignEditTicketSettings = useCallback(
+    (id: string) => {
+      router.push(paths.dashboard.companyEvents.update(id));
     },
     [router]
   );
@@ -46,18 +59,17 @@ export default function CompanyEventList() {
   const handleDelete = async () => {
     await removeEventMutation.mutateAsync(selectedEvent);
     setSelectedEvent('');
-    refetch();
+    // refetch();
     onFalse();
   };
 
   const handleAssign = (eventId: any) => {
-    const selectedEvent = events?.filter(
+    const selectedEvent = eventList?.filter(
       (item: any) => item?._id === eventId
     )[0];
     setSelectedEvent(selectedEvent);
     setAssignModal(true);
   };
-
 
   return (
     <>
@@ -70,14 +82,18 @@ export default function CompanyEventList() {
           md: 'repeat(3, 1fr)',
         }}
       >
-        {events?.map((event: any) => (
-          <TourItem
+        {eventList?.map((event: any) => (
+          <CompanyEventItem
             key={event._id}
             event={event}
             onView={() => handleView(event?._id)}
             onEdit={() => handleEdit(event?._id)}
             onDelete={() => handleOpenDeleteModal(event?._id)}
             onAssignVenue={() => handleAssign(event._id)}
+            onAddTicketSettings={() => handleAssignTicketSettings(event._id)}
+            onEditTicketSettings={() =>
+              handleAssignEditTicketSettings(event._id)
+            }
           />
         ))}
       </Box>
@@ -99,9 +115,10 @@ export default function CompanyEventList() {
         setAssignModal={setAssignModal}
         selectedEvent={selectedEvent}
         setSelectedEvent={setSelectedEvent}
+        refetch={refetch}
       />
 
-      {events?.length > 8 && (
+      {eventList?.length > 8 && (
         <Pagination
           count={8}
           sx={{

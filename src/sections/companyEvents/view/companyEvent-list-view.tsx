@@ -45,20 +45,11 @@ export default function TourListView() {
           { name: 'Dashboard', href: paths.dashboard.root },
           {
             name: 'Company Event',
-            href: paths.dashboard.tour.root,
+            href: paths.dashboard.companyEvents.root,
           },
           { name: 'List' },
         ]}
-        action={
-          <Button
-            component={RouterLink}
-            href={paths.dashboard.companyEvents.edit("123")}
-            variant='contained'
-            startIcon={<Iconify icon='mingcute:add-line' />}
-          >
-            New Ticket Settings
-          </Button>
-        }
+
         sx={{
           mb: { xs: 3, md: 5 },
         }}

@@ -118,6 +118,7 @@ export const paths = {
       root: `${ROOTS.DASHBOARD}/companyEvent`,
       details: (id: string) => `${ROOTS.DASHBOARD}/companyEvent/${id}`,
       edit: (id: string) => `${ROOTS.DASHBOARD}/companyEvent/${id}/edit`,
+      update: (id: string) => `${ROOTS.DASHBOARD}/companyEvent/${id}/update`,
     },
     user: {
       root: `${ROOTS.DASHBOARD}/user`,
@@ -208,6 +209,8 @@ export const paths = {
       new: `${ROOTS.DASHBOARD}/event/new`,
       details: (id: string) => `${ROOTS.DASHBOARD}/event/${id}`,
       edit: (id: string) => `${ROOTS.DASHBOARD}/event/${id}/edit`,
+      createTicket: (id: string) => `${ROOTS.DASHBOARD}/event/${id}/create-ticket`,
+      updateTicket: (id: string) => `${ROOTS.DASHBOARD}/event/${id}/update-ticket`,
     }
   },
 };

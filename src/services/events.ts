@@ -2,7 +2,7 @@ import axiosInstance, { endpoints } from 'src/utils/axios';
 
 const EventsService = {
   list: () =>
-    axiosInstance.post(endpoints.events.list),
+    axiosInstance.get(endpoints.events.list),
   create: (data: any) => axiosInstance.post(endpoints.events.create, data),
   update: (id: string, data: any) =>
     axiosInstance.put(endpoints.events.update(id), data),

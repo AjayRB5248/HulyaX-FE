@@ -1,26 +1,31 @@
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface Props {
-  allowedUserTypes: string[]; 
+  allowedUserTypes: string[];
+}
 
-const withAuth = (WrappedComponent: React.ComponentType<any>) => {
-  return (props: Props & any) => {
+const withAuth = (
+  WrappedComponent: React.ComponentType<any>,
+  allowedUserTypes: string[]
+) => {
+  return (props: any) => {
     const [verified, setVerified] = useState(false);
     const router = useRouter();
 
-    const { allowedUserTypes } = props;
-
     const checkToken = async () => {
-      const accessToken = localStorage.getItem('user');
+      const user = JSON.parse(localStorage.getItem('user') || '');
+      const accessToken = localStorage.getItem('accessToken');
+
       if (!accessToken) {
         router.push('/login');
       } else {
-        const loggedInUserType: string = 'superadmin';
+        const loggedInUserType: string = user?.role;
+
         if (allowedUserTypes.includes(loggedInUserType)) {
           setVerified(true);
         } else {
-          router.push('/home');
+          router.push('/dashboard');
         }
       }
     };

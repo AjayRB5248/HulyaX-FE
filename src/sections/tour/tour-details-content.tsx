@@ -13,9 +13,10 @@ import Image from "src/components/image";
 import Iconify from "src/components/iconify";
 import Markdown from "src/components/markdown";
 import Lightbox, { useLightBox } from "src/components/lightbox";
-import { Chip, Paper } from "@mui/material";
+import { Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Paper } from "@mui/material";
 import { SplashScreen } from "src/components/loading-screen";
 import CarouselThumbnail from "../_examples/extra/carousel-view/carousel-thumbnail";
+import { useState } from "react";
 
 type Props = {
   event: any;
@@ -33,11 +34,23 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
     artists,
     tags,
     venues,
-    eventImages,
+    images:eventImages,
     slug,
     createdAt,
     available,
+    videoUrl,
   } = event;
+  console.log({event})
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const carouselData = eventImages?.map((image:any) => ({
     id: image._id,
@@ -110,16 +123,23 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
           Featured Artists
         </Typography>
         <Stack direction="row" spacing={2} sx={{ overflowX: "auto" }}>
-          {artists?.map((artist:any, index:string) => (
-            <Paper key={index} elevation={3} sx={{ p: 2, borderRadius: 2 }}>
-              <Stack spacing={2} alignItems="center">
-                <Typography variant="subtitle1">{artist.artistName}</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {artist?.genre || ""}
-                </Typography>
-              </Stack>
-            </Paper>
-          ))}
+          {artists?.map((artist:any) => {
+            const profileImage = artist?.images?.find((img:any) => img.isProfile)?.imageurl;
+
+            return (
+              <div key={artist._id} className="d-flex flex-column align-items-center">
+                <div className="artist-profile">
+                  {profileImage && (
+                    <Image src={profileImage} alt={artist?.artistName} width={150} height={150} />
+                  )}
+                </div>
+                <div className="artist-desc">
+                  <h3 className="name">{artist?.artistName}</h3>
+                  <span className="title">{artist?.category}</span>
+                </div>
+              </div>
+            );
+          })}
         </Stack>
       </Box>}
     </>
@@ -209,6 +229,38 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
         {renderHead}
 
         <Divider sx={{ borderStyle: "dashed", my: 5 }} />
+
+        {videoUrl && (
+          <>
+            <Button variant="contained" startIcon={<Iconify icon="mdi:youtube" />} onClick={handleClickOpen}>
+              Watch Video
+            </Button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="video-dialog-title"
+              maxWidth="md"
+              fullWidth
+            >
+              <DialogTitle id="video-dialog-title">Event Video</DialogTitle>
+              <DialogContent>
+                <iframe
+                  width="100%"
+                  height="400"
+                  src={videoUrl}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Close
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </>
+        )}
 
         {renderEventVenueDetails()}
 

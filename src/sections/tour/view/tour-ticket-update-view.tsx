@@ -11,20 +11,23 @@ import { useParams } from 'src/routes/hook';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 //
-import TicketSettingsForm from '../ticket-config';
-import UpdateTicketSettingsForm from "../update-ticket-config"
-import { useEvent } from 'src/api/events';
 import { useAssignedEvents } from 'src/api/superAdmin';
+import { SplashScreen } from 'src/components/loading-screen';
+import TourTicketSettingsForm from '../ticket-config';
+import UpdateTourTicketSettingsForm from '../update-ticket-config';
 
 // ----------------------------------------------------------------------
 
-export default function CompanyEventTicketEditView() {
+export default function CompanyEventTicketUpdateView() {
   const settings = useSettingsContext();
 
   const params = useParams();
 
   const { id } = params;
   const { eventList, loading} = useAssignedEvents(id)
+  if (!eventList || eventList.length === 0) {
+    return <SplashScreen />;
+  }
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -36,8 +39,8 @@ export default function CompanyEventTicketEditView() {
             href: paths.dashboard.root,
           },
           {
-            name: 'Company Events',
-            href: paths.dashboard.companyEvents.root,
+            name: 'Events',
+            href: paths.dashboard.tour.root,
           },
           {
             name: 'Ticket Settings',
@@ -48,7 +51,9 @@ export default function CompanyEventTicketEditView() {
         }}
       />
 
-      <TicketSettingsForm currentTicket={eventList} />
+     {eventList[0].ticketConfig.length > 0 ? <UpdateTourTicketSettingsForm currentEvent={eventList} /> : 
+      <TourTicketSettingsForm currentTicket={eventList} />
+    }
 
     </Container>
   );

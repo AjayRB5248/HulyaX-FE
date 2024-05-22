@@ -102,7 +102,7 @@ export default function BookingAvailable({ title, subheader, chart, ...other }: 
               }}
             />
             <Box sx={{ color: 'text.secondary', flexGrow: 1 }}>{item.label}</Box>
-            {item.value} Tsickets
+            {item.value} Tickets
           </Stack>
         ))}
       </Stack>
