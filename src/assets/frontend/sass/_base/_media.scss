@@ -20,6 +20,30 @@
     padding: 40px;
   }
 
+  .user-profile--container {
+    .MuiGrid-container {
+      > div {
+        width: 100%;
+      }
+    }
+    
+    .user-profile--tab-wrapper {
+      .MuiTabs-flexContainer {
+        flex-direction: row;
+        width: 100%;
+      }
+
+      .user-profile--tab-item {
+        width: calc(100% / 3);
+        text-align: left;
+      }
+
+      .MuiTabs-indicator {
+        left: 0;
+      }
+    }
+  }
+
   .footer-bottom p {
     a {
       display: block;
