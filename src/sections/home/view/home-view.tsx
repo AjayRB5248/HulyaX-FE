@@ -26,8 +26,8 @@ export default function HomeView() {
         events={EVENTS_MOCK}
       />
       {/* <TicketSearch /> */}
-      {/* <EventsCarousel />
-      <NewsLetter />
+      <EventsCarousel events={EVENTS_MOCK} />
+      {/* <NewsLetter />
       <EventsSlider />
       <BannerSlider />
       <PopularCategories />

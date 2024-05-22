@@ -5,6 +5,7 @@ import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import { Box } from "@mui/system";
 import { useCountdownDate } from "src/hooks/use-countdown";
+import { EventProps } from "src/types/events";
 
 const settings = {
   dots: true,
@@ -15,36 +16,7 @@ const settings = {
   // autoplay: true,
 };
 
-interface EventImage {
-  isPrimary: boolean;
-  imageurl: string;
-}
-
-interface Venue {
-  eventDate: string;
-}
-
-interface ParentEvent {
-  eventName: string;
-  eventDescription: string;
-  images?: EventImage[];
-  tags?: string[];
-}
-
-interface FeaturedEvent {
-  id: string;
-  slug: string;
-  parentEvent: ParentEvent;
-  venues?: Venue[];
-  status: string;
-  state: any;
-}
-
-interface BannerProps {
-  events: FeaturedEvent[];
-}
-
-const Banner: React.FC<BannerProps> = ({ events }) => {
+const Banner: React.FC<EventProps> = ({ events }) => {
   const featuredEvents =
     events &&
     Array.isArray(events) &&

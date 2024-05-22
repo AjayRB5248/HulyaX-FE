@@ -29,7 +29,7 @@ module.exports = {
     includePaths: [path.join(__dirname, 'src', 'assets', 'frontend', 'sass')],
   },
   images: {
-    domains: ['ticketing-app-au.s3.ap-southeast-2.amazonaws.com'],
+    domains: ['ticketing-app-au.s3.ap-southeast-2.amazonaws.com', 'localhost'],
   },
   typescript: {
     // !! WARN !!
