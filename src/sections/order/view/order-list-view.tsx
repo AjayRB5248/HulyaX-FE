@@ -73,18 +73,25 @@ export default function OrderListView() {
 
   const denseHeight = table.dense ? 52 : 72;
 
-  useEffect(() => {
-    if (data?.ticket?.length == 0) {
-      myPurchasedTicket(filter).then((res: any) => {
+  const fetchTickets = (filter: any) => {
+    myPurchasedTicket(filter)
+      .then((res: any) => {
         setData(res);
+      })
+      .catch((error) => {
+        console.error('Failed to fetch tickets:', error);
       });
-    }
-  }, []);
+  };
+
   useEffect(() => {
-    myPurchasedTicket(filter).then((res: any) => {
-      setData(res);
-    });
-  }, [filter?.limit, filter?.page, filter.eventStatus, filter?.eventName]);
+    fetchTickets(filter);
+  }, []);
+
+  useEffect(() => {
+    if (data.ticket.length > 0) {
+      fetchTickets(filter);
+    }
+  }, [filter.limit, filter.page, filter.eventStatus, filter.eventName]);
 
   return (
     <>
