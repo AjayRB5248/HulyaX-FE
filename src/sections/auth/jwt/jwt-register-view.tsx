@@ -4,6 +4,8 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 // @mui
 import LoadingButton from "@mui/lab/LoadingButton";
 import Link from "@mui/material/Link";
@@ -52,13 +54,7 @@ export default function JwtRegisterView() {
     confirmPassword: Yup.string()
       .required("Confirm Password is required")
       .oneOf([Yup.ref("password")], "Passwords must match"),
-    mobileNumber: Yup.string()
-      .required("Mobile Number is required")
-      .test("isValidMobileNumber", "Invalid mobile number", (value) => {
-        const cleanNumber = value.replace(/\D/g, "");
-        const isValidLength = cleanNumber.length >= 7;
-        return isValidLength;
-      }),
+    mobileNumber: Yup.string().required("Mobile Number is required"),
   });
 
   const defaultValues = {
@@ -73,6 +69,13 @@ export default function JwtRegisterView() {
     resolver: yupResolver(RegisterSchema),
     defaultValues,
   });
+
+  const handlePhoneChange = (value:any) => {
+    if (!value.startsWith("+")) {
+      value = "+" + value;
+    }
+    methods.setValue("mobileNumber", value);
+  };
 
   const {
     reset,
@@ -136,7 +139,23 @@ export default function JwtRegisterView() {
 
         <RHFTextField InputLabelProps={{ shrink: true }} name="email" label="Email address" />
 
-        <RHFTextField  InputLabelProps={{ shrink: true }} name="mobileNumber" label="Phone" />
+        <PhoneInput
+          country={"au"}
+          onlyCountries={["au", "np"]}
+          inputStyle={{
+            width: "100%",
+            borderRadius: "4px",
+            fontSize: "16px",
+          }}
+          buttonStyle={{
+            borderRadius: "4px 0 0 4px",
+            border: "1px solid #ced4da",
+            backgroundColor: "#e9ecef",
+          }}
+          containerStyle={{ marginBottom: "16px" }}
+          dropdownStyle={{ borderRadius: "4px", border: "1px solid #ced4da" }}
+          onChange={handlePhoneChange}
+        />
 
         <RHFTextField
           name="password"
