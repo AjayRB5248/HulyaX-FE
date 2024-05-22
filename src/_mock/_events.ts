@@ -1,5 +1,5 @@
-import AXIS_POSTER_IMG from "../assets/frontend/images/media/AXIX POSTER.png";
-import SACAR_POSTER_IMG from "../assets/frontend/images/media/SACAR POSTER.jpg";
+import AXIS_POSTER_IMG from "../assets/frontend/images/media/AXIXPOSTER.png";
+import SACAR_POSTER_IMG from "../assets/frontend/images/media/SACARPOSTER.jpg";
 
 export const EVENTS_MOCK_DATA = {
   total: 6,
@@ -58,7 +58,7 @@ export const EVENTS_MOCK_DATA = {
           {
             isPrimary: true,
             _id: "6647b52cd63e9c40804d8923",
-            imageurl: "http://localhost:8081/_next/static/media/SACAR%20POSTER.ba545065.jpg",
+            imageurl: SACAR_POSTER_IMG,
           },
         ],
         eventCategory: "arts_culture",
@@ -343,7 +343,7 @@ export const EVENTS_MOCK_DATA = {
             _id: "6648c4124428768043ebed3e",
             // imageurl:
             //   "https://ticketing-app-au.s3.ap-southeast-2.amazonaws.com/eventImages/payload.eventName/1716044806953",
-            imageurl: "http://localhost:8081/_next/static/media/AXIX%20POSTER.c58a47b2.png",
+            imageurl: AXIS_POSTER_IMG,
           },
           {
             isPrimary: false,

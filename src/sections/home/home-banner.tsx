@@ -54,16 +54,16 @@ const Banner: React.FC<BannerProps> = ({ events }) => {
         eachEvent.parentEvent?.tags?.includes("FEATURED") && ["PLANNED", "ONGOING"].includes(eachEvent.status)
     );
 
-  console.log(featuredEvents, "featuredEvents");
-
   return (
     <Slider {...settings} className="banner-slider">
       {Array.isArray(featuredEvents) &&
         featuredEvents.map((featuredEvent) => {
           const posterImage = featuredEvent.parentEvent?.images?.find((eventImg) => eventImg?.isPrimary)?.imageurl;
-          console.log(posterImage, "posterImage");
 
-          return <EventBanner key={featuredEvent.id} event={featuredEvent} posterImage={posterImage} />;
+          // TODO: REMOVE USED FOR MOCK
+          const posterImageURL = `http://localhost:8081${posterImage?.src}`;
+
+          return <EventBanner key={featuredEvent.id} event={featuredEvent} posterImage={posterImageURL} />;
         })}
     </Slider>
   );
@@ -103,7 +103,7 @@ const EventBanner: React.FC<EventBannerProps> = ({ event, posterImage }) => {
             <TimeBlock label="Minutes" value={minutes} />
             <TimeBlock label="Seconds" value={seconds} />
           </Stack>
-          <Link href={`/events/${event.slug}`}>
+          <Link href={`/events/${event.parentEvent?.slug}`}>
             <button className="mt-5 theme-button">Buy Ticket Now</button>
           </Link>
         </div>
