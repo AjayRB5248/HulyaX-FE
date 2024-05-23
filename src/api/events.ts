@@ -173,7 +173,7 @@ export const useFetchEvents = (queryData?: Filters) => {
 export function useEventDetailsBySlug(slug: string) {
   const { data, isLoading, isError, error } = useQuery(["events/slug", slug], async () => {
     const response = await EventsService.fetchSingleEventBySlug(slug);
-    return response?.data?.event;
+    return response?.data?.eventData?.[0];
   });
 
   const event = useMemo(() => data || {}, [data]);

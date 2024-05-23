@@ -14,10 +14,10 @@ const EventVenues: React.FC<any> = ({ venues }) => {
             {venues?.map((eachVenue: any) => (
               <div className="item" key={eachVenue._id}>
                 <div className="item-thumb">
-                  <Image src={VenueIcon} alt={eachVenue.venueName} className="venue-icon" />
+                  <Image src={VenueIcon} alt={eachVenue.venueId?.venueName} className="venue-icon" />
                 </div>
                 <div className="item-content">
-                  <span className="up">{eachVenue.venueName}, </span>
+                  <span className="up">{eachVenue.venueId?.venueName}, </span>
                   <span>{eachVenue.city}</span>
                   <div className="item-date">{moment(eachVenue.eventDate).format("MMM DD, YYYY")}</div>
                 </div>
@@ -29,8 +29,8 @@ const EventVenues: React.FC<any> = ({ venues }) => {
               </div>
               <div className="item-content">
                 <span className="up">Drop us a line:</span>
-                <Link href="MailTo:info@hulyaevents.com.au" className="d-block email-link">
-                  info@hulyaevents.com.au
+                <Link href="MailTo:info@hulyax.com.au" className="d-block email-link">
+                  info@hulyax.com.au
                 </Link>
               </div>
             </div>

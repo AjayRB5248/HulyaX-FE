@@ -161,11 +161,13 @@ const EventDetail = () => {
   let slug = params.slug as string;
 
   const { event, isLoading } = useEventDetailsBySlug(slug);
-  
-  const posterImage = event?.eventImages?.find((eachEventImg: any) => eachEventImg.isPrimary).imageurl;
+
+  console.log(event, "event By slug====");
+
+  const posterImage = event?.images?.find((eachEventImg: any) => eachEventImg.isPrimary).imageurl;
 
   return Object.keys(event).length === 0 && isLoading ? (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "200px" }}>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "200px", margin: "50px" }}>
       <CircularProgress />
     </div>
   ) : (
@@ -175,14 +177,15 @@ const EventDetail = () => {
         eventName={event?.eventName}
         eventTags={event?.tags}
         videoUrl={event?.videoUrl}
-        eventImages={event?.eventImages}
+        eventImages={event?.images}
         venues={event?.venues}
+        state={event?.state}
       />
 
       <EventVenues venues={event?.venues} />
 
       <EventAbout
-        eventImages={event?.eventImages}
+        eventImages={event?.images}
         eventDescription={event?.eventDescription}
         sponsors={sponsors}
         venues={event?.venues}
