@@ -6,11 +6,12 @@ import { Stack, Button, TextField, Typography } from '@mui/material';
 import { varFade, MotionViewport } from 'src/components/animate';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
 import { useSnackbar } from 'src/components/snackbar';
+import { useCreateFAQ } from 'src/api/faqs';
 
 // ----------------------------------------------------------------------
 
 export default function FaqsForm() {
-  const { enqueueSnackbar } = useSnackbar();
+  const createFAQmutations = useCreateFAQ();
 
   const FaqsSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -35,12 +36,10 @@ export default function FaqsForm() {
 
   const onSubmit = async (data:any) => {
     try {
-      console.log('Form data:', data);
+      await createFAQmutations.mutateAsync(data);
       reset();
-      enqueueSnackbar('Your message has been sent!', { variant: 'success' });
     } catch (error) {
       console.error('Error submitting form:', error);
-      enqueueSnackbar('Failed to send your message!', { variant: 'error' });
     }
   };
 

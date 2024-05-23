@@ -121,7 +121,7 @@ export default function TicketSettingsForm({ currentTicket }: Props) {
           <Typography variant='h4' sx={{ mb: 3 }}>
             Ticket Settings
           </Typography>
-          {renderTicketSettings(ticketSettings, venues?.venues)}
+          {renderTicketSettings(ticketSettings, currentTicket[0])}
         </Grid>
       </Stack>
 
@@ -143,7 +143,7 @@ export default function TicketSettingsForm({ currentTicket }: Props) {
   );
 }
 
-const renderTicketSettings = (ticketSettings: any, venues: any) => {
+const renderTicketSettings = (ticketSettings: any, currentTicket:any) => {
   return (
     <Stack spacing={3}>
       {ticketSettings.fields.map((item: any, index: number) => (
@@ -155,9 +155,9 @@ const renderTicketSettings = (ticketSettings: any, venues: any) => {
               label='Venue'
               required
             >
-              {venues?.map((venue: any) => (
+              {currentTicket?.venues?.map((venue: any) => (
                 <MenuItem key={venue?._id} value={venue?._id}>
-                  {venue?.venueName}
+                  {venue?.venueId?.venueName}
                 </MenuItem>
               ))}
             </RHFSelect>

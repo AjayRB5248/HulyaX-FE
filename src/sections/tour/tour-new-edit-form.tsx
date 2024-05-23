@@ -63,18 +63,12 @@ export default function TourNewEditForm({ currentTour }: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
 
-  const artistsFormatted = currentTour?.artists?.map((artist) => ({
-    name: artist?.artistName || '',
-    _id: artist?._id,
-  })) || [{ name: '' }];
+  const mappedImages = currentTour?.images?.map(image => ({
+    ...image,
+    preview: image.imageurl,
+  })) || [];  
 
-  const stateFormatted = [{ name: '' }];
-
-  const mappedImages = currentTour?.eventImages?.filter(
-    (item: any) => !item?.isPrimary
-  );
-
-  const defaultPosterImage = currentTour?.eventImages?.find(
+  const defaultPosterImage = currentTour?.images?.find(
     (item: any) => item?.isPrimary
   )?.imageurl;
 
@@ -84,14 +78,12 @@ export default function TourNewEditForm({ currentTour }: Props) {
       eventCategory: currentTour?.eventCategory || '',
       eventDescription: currentTour?.eventDescription || '',
       status: currentTour?.status || '',
-      artists: artistsFormatted,
+      artists: currentTour?.artists,
       videoUrl: currentTour?.videoUrl || '',
-      states: stateFormatted,
+      states: currentTour?.states,
       posterImage: defaultPosterImage,
       images: mappedImages?.map((item: any) => item?.imageurl),
-      tags:
-        currentTour?.tags &&
-        currentTour?.tags[0]?.split(',').filter((item) => item !== ''),
+      tags: currentTour && currentTour?.tags?.length > 0 ? currentTour?.tags[0].split(',') : [],
     }),
     [currentTour]
   );
@@ -658,7 +650,7 @@ const renderStates = (states: any, stateList: any) => {
         <Card sx={{ p: 2 }}>
           <Stack spacing={2}>
             <Typography variant='h6'>States {index + 1} </Typography>
-            <RHFSelect name={`states[${index}.name]`} label='Name'>
+            <RHFSelect name={`states[${index}.name]`} label='Name' required>
               {stateList?.map((item: any) => (
                 <MenuItem key={item?._id} value={item?._id}>
                   {item.stateName}
