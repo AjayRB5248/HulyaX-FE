@@ -134,7 +134,7 @@ export default function OrderListView() {
                 {category}
               </option>
             ))}
-          </select> */}
+          </select> 
 
           <input
             type='text'

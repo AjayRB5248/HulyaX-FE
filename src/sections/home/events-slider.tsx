@@ -84,11 +84,11 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
                       <div className="event-top-card">
                         <div className="event-date">
                           <h6 className="date-title">
-                            {formatDate(eventVenue.eventDate).day} {formatDate(eventVenue.eventDate).month}
+                            {formatDate(eventVenue?.eventDate).day} {formatDate(eventVenue?.eventDate).month}
                           </h6>
                         </div>
                         <Image
-                          src={event.parentEvent?.images?.[1]?.imageurl}
+                          src={event?.parentEvent?.images?.[1]?.imageurl}
                           alt={event?.parentEvent?.eventName}
                           width={800}
                           height={1200}

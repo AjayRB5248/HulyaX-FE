@@ -1,5 +1,5 @@
 import WidgetBanner from "./widget-banner";
-import FeaturedAd1 from "src/assets/frontend/images/featuredAds/SacarEvent.png";
+import FeaturedAd1 from "src/assets/frontend/images/axisEvent.png";
 import WidgetCheckbox from "./widget-checkbox";
 import FilterMain from "./filter-main";
 import EventGridItem from "./event-grid";
@@ -24,7 +24,7 @@ const EventsListing = () => {
             <div className={`row mb-10 event-list-row`}>
               {events && events.length > 0 ? (
                 events?.map((event: any) =>
-                  event.venues.map((eachEventVenue: any) => (
+                  event?.venues?.map((eachEventVenue: any) => (
                     <EventGridItem
                       key={eachEventVenue._id}
                       imageUrl={event.eventImages.find((eventImg: any) => eventImg.isPrimary)?.imageurl}
