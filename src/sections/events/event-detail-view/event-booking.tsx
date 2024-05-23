@@ -30,7 +30,9 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state }) => {
     const selectedEventVenue = venues.find((eachVenue: any) => eachVenue.venueId?.venueName === value);
     console.log(selectedEventVenue, "selectedEventVenue ========== event booking");
     if (selectedVenue) {
-      const selectedEventDate = moment(selectedEventVenue.eventDate).tz(state?.timeZone).format("DD MMM ddd, hh:mm A");
+      // const selectedEventDate = moment(selectedEventVenue.eventDate).tz(state?.timeZone).format("DD MMM ddd, hh:mm A");
+
+      const selectedEventDate = moment(selectedEventVenue.eventDate).format("DD MMM ddd, hh:mm A");
 
       console.log(selectedEventDate, "selectedEventDate ========== event booking");
 

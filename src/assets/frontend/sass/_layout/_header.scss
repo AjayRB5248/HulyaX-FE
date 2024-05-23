@@ -178,7 +178,7 @@ header {
           @include border-radius(25px);
 
           &:hover {
-            box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
+            box-shadow: $theme-color-box-shadow;
           }
         }
 
@@ -266,7 +266,7 @@ header {
         }
         &.header-button {
           margin-top: 20px;
-          margin-left: 0 !important;  
+          margin-left: 0 !important;
 
           a {
             display: inline-flex;
