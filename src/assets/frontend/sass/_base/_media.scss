@@ -6,6 +6,10 @@
   .banner-section {
     padding: 150px 0 30.31px;
 
+    .banner-bg {
+      top: 88px;
+    }
+
     .banner-content .title {
       font-size: 30px;
     }
@@ -14,6 +18,30 @@
   .account-section .account-area {
     box-shadow: none;
     padding: 40px;
+  }
+
+  .user-profile--container {
+    .MuiGrid-container {
+      > div {
+        width: 100%;
+      }
+    }
+    
+    .user-profile--tab-wrapper {
+      .MuiTabs-flexContainer {
+        flex-direction: row;
+        width: 100%;
+      }
+
+      .user-profile--tab-item {
+        width: calc(100% / 3);
+        text-align: left;
+      }
+
+      .MuiTabs-indicator {
+        left: 0;
+      }
+    }
   }
 
   .footer-bottom p {
@@ -35,10 +63,17 @@
 
 @media (max-width: 576px) {
   .banner-section {
+    height: 60vh;
     padding: 120px 0 30.31px;
 
     .title {
       margin-bottom: 8px;
+      font-size: 24px !important;
+    }
+
+    p {
+      font-size: 14px !important;
+      height: 18px !important;
     }
 
     .counter-wrapper,
@@ -73,9 +108,23 @@
     gap: 10px;
 
     input {
-      font-size: 14px!important;
+      font-size: 14px !important;
       height: 1rem;
       padding: 16px 4px;
+    }
+  }
+
+  .events-row {
+    height: max-content;
+
+    .right-col .row {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+
+      > div {
+        padding: 0;
+      }
     }
   }
 

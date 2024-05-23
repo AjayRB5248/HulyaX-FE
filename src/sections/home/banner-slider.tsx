@@ -1,5 +1,5 @@
 import Image from "next/image";
-import WebBanner from "src/assets/frontend/images/event/SajanRaj.jpg";
+import WebBanner from "src/assets/frontend/images/media/AXIXPOSTER.png";
 
 const BannerSlider = () => {
   return (

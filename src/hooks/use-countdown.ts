@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
 // ----------------------------------------------------------------------
 
@@ -13,40 +13,43 @@ type ReturnDateType = {
 
 export function useCountdownDate(date: Date): ReturnDateType {
   const [countdown, setCountdown] = useState({
-    days: '00',
-    hours: '00',
-    minutes: '00',
-    seconds: '00',
+    days: "00",
+    hours: "00",
+    minutes: "00",
+    seconds: "00",
   });
 
   useEffect(() => {
+    if (isNaN(date.valueOf())) {
+      console.error("Invalid date provided");
+      return;
+    }
+
     const interval = setInterval(() => setNewTime(), 1000);
     return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [date]);
 
   const setNewTime = () => {
     const startTime = date;
-
     const endTime = new Date();
 
-    const distanceToNow = startTime.valueOf() - endTime.valueOf();
+    if (isNaN(startTime.valueOf())) {
+      console.error("Invalid date provided");
+      return;
+    }
+
+    const distanceToNow = Math.max(0, startTime.valueOf() - endTime.valueOf());
 
     const getDays = Math.floor(distanceToNow / (1000 * 60 * 60 * 24));
-
-    const getHours = `0${Math.floor(
-      (distanceToNow % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    )}`.slice(-2);
-
+    const getHours = `0${Math.floor((distanceToNow % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))}`.slice(-2);
     const getMinutes = `0${Math.floor((distanceToNow % (1000 * 60 * 60)) / (1000 * 60))}`.slice(-2);
-
     const getSeconds = `0${Math.floor((distanceToNow % (1000 * 60)) / 1000)}`.slice(-2);
 
     setCountdown({
-      days: getDays.toString() || '000',
-      hours: getHours || '000',
-      minutes: getMinutes || '000',
-      seconds: getSeconds || '000',
+      days: isNaN(getDays) ? "00" : getDays.toString(),
+      hours: isNaN(parseInt(getHours)) ? "00" : getHours,
+      minutes: isNaN(parseInt(getMinutes)) ? "00" : getMinutes,
+      seconds: isNaN(parseInt(getSeconds)) ? "00" : getSeconds,
     });
   };
 
@@ -59,7 +62,7 @@ export function useCountdownDate(date: Date): ReturnDateType {
 }
 
 // Usage
-// const countdown = useCountdown(new Date('07/07/2022 21:30'));
+// const countdown = useCountdownDate(new Date('07/07/2022 21:30'));
 
 // ----------------------------------------------------------------------
 
@@ -79,7 +82,7 @@ export function useCountdownSeconds(initCountdown: number): ReturnSecondsType {
     const intervalId = setInterval(() => {
       remainingSeconds -= 1;
 
-      if (remainingSeconds === 0) {
+      if (remainingSeconds <= 0) {
         clearInterval(intervalId);
         setCountdown(initCountdown);
       } else {

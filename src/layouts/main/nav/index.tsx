@@ -65,7 +65,7 @@ const Navbar: React.FC<NavbarProps> = ({ isToggleMenuActive }) => {
 
   return (
     <>
-      <ul className={`menu ${isToggleMenuActive ? "active" : ""} `}>
+      <ul className={`menu ${isToggleMenuActive ? "active" : ""} ${!user ? "ml-auto" : ""}`}>
         {navigationItems.map((item, index) => (
           <>
             <li
@@ -103,7 +103,7 @@ const Navbar: React.FC<NavbarProps> = ({ isToggleMenuActive }) => {
           </>
         ))}
         {!user && (
-          <li className="header-button secondary-theme-btn pr-0">
+          <li className="header-button secondary-theme-btn pr-0 ml-5">
             <Link href="/login-as">Join Us</Link>
           </li>
         )}

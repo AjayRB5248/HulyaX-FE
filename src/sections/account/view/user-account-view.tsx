@@ -61,10 +61,11 @@ export default function AccountView() {
 
   return (
     <section className="user-profile-section">
-      <Container maxWidth={settings.themeStretch ? false : "xl"} className="theme--container-xl">
+      <Container maxWidth={settings.themeStretch ? false : "xl"} className="theme--container-xl user-profile--container">
         <Grid container spacing={2}>
           <Grid item lg={3}>
             <Tabs
+              className="user-profile--tab-wrapper"
               orientation="vertical"
               value={currentTab}
               onChange={handleChangeTab}
@@ -87,7 +88,7 @@ export default function AccountView() {
           <Grid item lg={9}>
             {currentTab === "general" && <AccountGeneral />}
 
-            {currentTab === "tickets" &&  <OrderListView /> }
+            {currentTab === "tickets" && <OrderListView />}
 
             {currentTab === "billing" && (
               <AccountBilling

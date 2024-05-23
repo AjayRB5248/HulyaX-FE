@@ -93,6 +93,7 @@ export const endpoints = {
     removeItem: (id: string) => `/events/edit/remove-event-items/${id}`,
     addItem: (id: string) => `/events/edit/add-event-items/${id}`,
     detailsBySlug: (slug: string) => `/events/slug/${slug}`,
+    allEvents: () => `events/fetch-subEvent-by-parent-event/all`,
   },
   users: {
     list: (queryParameters = {}) => {
@@ -115,6 +116,7 @@ export const endpoints = {
     updateProfile: (id: string) => `users/${id}`,
     updateAvatar: `users/profile-picture`,
     changePassword: `users/update-password`,
+    detailById: (id: string) =>  `/users/${id}`,
   },
   superAdmin: {
     company: {

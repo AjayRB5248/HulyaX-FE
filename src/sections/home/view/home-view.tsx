@@ -8,7 +8,7 @@ import TicketSearch from "../ticket-search";
 import { EventsCarousel } from "src/sections/events/view";
 import { useFetchEvents } from "src/api/events";
 import Artists from "../artists-section";
-import NewsLetter from "src/layouts/main/newsletter";
+import MobileApp from "src/layouts/main/MobileApp";
 import EventsSlider from "../events-slider";
 import PopularCategories from "../popular-categories";
 import BannerSlider from "../banner-slider";
@@ -17,21 +17,21 @@ import { EVENTS_MOCK_DATA } from "src/_mock/_events";
 export default function HomeView() {
   const { events } = useFetchEvents();
 
-  const EVENTS_MOCK = EVENTS_MOCK_DATA?.events;
-  
+  const EVENTS_MOCK = EVENTS_MOCK_DATA?.subEvents;
+
   return (
     <MainLayout>
       <Banner
-        // events={events?.events}
+        // events={events}
         events={EVENTS_MOCK}
       />
       {/* <TicketSearch /> */}
-      <EventsCarousel />
-      <NewsLetter />
-      <EventsSlider />
-      <BannerSlider />
+      <EventsCarousel events={EVENTS_MOCK} />
+      <MobileApp />
+      <EventsSlider events={EVENTS_MOCK?.filter((event: any) => event.status !== "COMPLETED")} />
       <PopularCategories />
       <Artists />
+      <BannerSlider />
     </MainLayout>
   );
 }

@@ -4,7 +4,7 @@ import AppImg1 from "src/assets/frontend/images/apps/apps01.png";
 import AppImg2 from "src/assets/frontend/images/apps/apps02.png";
 import AppImg3 from "src/assets/frontend/images/apps/apps03.png";
 
-const NewsLetter = () => {
+const MobileApp = () => {
   return (
     <section className="section-wrapper">
       <div className="container-fluid">
@@ -14,7 +14,7 @@ const NewsLetter = () => {
           <div className="row">
             <div className="col-lg-7 offset-lg-5">
               <div className="content">
-                <h3 className="title">Get Hulya Events App</h3>
+                <h3 className="title">Hulya Events App Launching Soon</h3>
                 <p>
                   Discover the Hulya Events App: Scan for exclusive event details and unlock a world of unforgettable
                   experiences.
@@ -40,4 +40,4 @@ const NewsLetter = () => {
   );
 };
 
-export default NewsLetter;
+export default MobileApp;

@@ -32,7 +32,7 @@ export function useEvent(id: any) {
 
 export function useEvents() {
   const { data, isLoading, error, refetch } = useQuery(
-    ['events'],
+    ["events"],
     async () => {
       const res = await EventsService.list();
       return res?.data?.events;
@@ -156,7 +156,7 @@ export const useFetchEvents = (queryData?: Filters) => {
   const { setEvents } = useEventsContext();
 
   const { data, isLoading, isError, isFetching, error } = useQuery(["events", queryData], async () => {
-    const events = await EventsService.list(queryData).then((res) => res?.data?.events);
+    const events = await EventsService.fetchAllEvents().then((res) => res?.data?.subEvents);
 
     setEvents(events);
     return events;

@@ -2,6 +2,7 @@
 
 "use client";
 
+import _ from "lodash";
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { queryClient } from "src/lib/queryClient";
 
@@ -14,7 +15,7 @@ interface User {
   mobileNumber: string;
   id: string;
   profilePicture: string;
-  isApproved:boolean,
+  isApproved: boolean;
 }
 
 interface UserToken {
@@ -29,7 +30,7 @@ interface UserToken {
 }
 
 interface AuthContextType {
-  user: User | null;
+  user: User;
   setUser: (user: User | null) => void;
   accessToken: string | null;
   refreshToken: string | null;
@@ -85,8 +86,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setRefreshToken(null);
   };
 
+  useEffect(() => {
+    if (user && !_.isEmpty(user)) {
+      setUser(user);
+
+      queryClient.setQueryData(["user"], user);
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, [user]);
+
   return (
-    <AuthContext.Provider value={{ user,setUser, accessToken, refreshToken, register, login, logout }}>
+    <AuthContext.Provider value={{ user, setUser, accessToken, refreshToken, register, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
