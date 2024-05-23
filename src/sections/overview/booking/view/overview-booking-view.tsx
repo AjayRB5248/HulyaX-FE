@@ -34,6 +34,12 @@ export default function OverviewBookingView() {
   const theme = useTheme();
   const {reports}= useDashboardReports();
 
+  // const _bookingsOverview = [...Array(2)].map((_, index) => ({
+  //   status: ['Availabe', 'Sold'][index],
+  //   quantity: reports?.reportData?.availableTickets,
+  //   // value: _mock.number.percent(index),
+  // }));
+
   const settings = useSettingsContext();
 
   return (
@@ -78,7 +84,7 @@ export default function OverviewBookingView() {
             </Grid>
 
             <Grid xs={12} md={6}>
-              <BookingBooked title="Booked" data={_bookingsOverview} />
+              <BookingBooked title="Ticket Status" data={_bookingsOverview} />
             </Grid>
 
             <Grid xs={12}>

@@ -54,7 +54,7 @@ export default function FaqsHero() {
           <m.div variants={varFade().in}>
             <TextField
               fullWidth
-              placeholder="For support: info@hulyax.com.au"
+              placeholder="support@hulyax.com.au"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -63,6 +63,8 @@ export default function FaqsHero() {
               }}
               disabled
               sx={{
+                fontSize:15,
+                color:'black',
                 mt: 5,
                 maxWidth: 360,
                 [`& .${outlinedInputClasses.root}`]: {

@@ -112,11 +112,12 @@ export type IEvent = {
   eventOwner: string;
   artists: TArtist[];
   venues: TVenue[];
-  eventImages: TEventImage[];
+  images: TEventImage[];
   eventCategory: string;
   videoUrl: string;
   createdAt: string;
   updatedAt: string;
   slug: string;
   __v: number;
+  states:any;
 };

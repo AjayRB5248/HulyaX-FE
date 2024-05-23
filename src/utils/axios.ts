@@ -83,11 +83,13 @@ export const endpoints = {
       return url;
     },
   },
-
+  faqs:{
+    create:`faq`
+  },
   events: {
     list: 'events/fetch-events',
     create: '/superadmin/add-new-event',
-    update: (id: string) => `/events/edit/${id}`,
+    update: (id: string) => `superadmin/events/${id}`,
     details: (id: any) => `/events/${id}`,
     remove: (id: string) => `/events/${id}`,
     removeItem: (id: string) => `/events/edit/remove-event-items/${id}`,

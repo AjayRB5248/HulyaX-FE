@@ -227,7 +227,7 @@ const AssignModal = ({
                   label='Venue'
                   name={`venue`}
                   style={{ minWidth: 250 }}
-                  value={item.venue}
+                  value={item?.venue}
                   onChange={(e: any) =>
                     handleSelectChange(index, 'venue', e?.target?.value)
                   }

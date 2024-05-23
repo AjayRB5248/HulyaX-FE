@@ -120,7 +120,7 @@ export default function Footer() {
             {/* <ul className='links'>{footerLinks.map(renderLink)}</ul> */}
             <p>
               Contact Us:
-              <a href="mailto:info@hulyax.com.au">info@hulyax.com.au</a>
+              <a href="mailto:info@hulyax.com.au">support@hulyax.com.au</a>
             </p>
             <p>
               For Business Queries:

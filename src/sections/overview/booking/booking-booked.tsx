@@ -42,8 +42,8 @@ export default function BookingBooked({ title, subheader, data, ...other }: Prop
               variant="determinate"
               value={progress.value}
               color={
-                (progress.status === 'Pending' && 'warning') ||
-                (progress.status === 'Canceled' && 'error') ||
+                (progress.status === 'Sold' && 'warning') ||
+                (progress.status === 'Available' && 'error') ||
                 'success'
               }
               sx={{ height: 8, bgcolor: (theme) => alpha(theme.palette.grey[500], 0.16) }}

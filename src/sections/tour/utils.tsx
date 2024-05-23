@@ -87,6 +87,7 @@ export const EventStatusEnum = {
 
 export const EVENT_CATEGORIES = [
   { label: "Music & Concerts", value: "music_concerts", isFeatured: true, img: EventsTicket },
+  { label: "Comedy", value: "comedy" },
   { label: "Fundraisers", value: "fundraisers" },
   { label: "Arts & Culture", value: "arts_culture" },
   { label: "Sports", value: "sports_fitness", isFeatured: true, img: SportsTicket },
