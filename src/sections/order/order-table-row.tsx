@@ -114,18 +114,22 @@ export default function OrderTableRow({ row }: Props) {
           </Box>
         </TableCell>
 
-        <TableCell>{row?.eventData?.eventName}</TableCell>
-
-        <TableCell>{moment(row?.bookedDate)?.format()}</TableCell>
+        <TableCell>{row?.eventName}</TableCell>
 
         <TableCell>
-          {row?.eventData?.artists
+          {row?.venues
+            ?.map((item: any) => moment(item?.eventDate).format('MMMM DD, YYYY h:mm:ss A Z'))
+            .join(', ')}
+        </TableCell>
+
+        <TableCell>
+          {row?.artistDetails
             ?.map((item: any) => item?.artistName)
             .join(', ')}
         </TableCell>
         <TableCell>
-          {row?.eventData?.venues
-            ?.map((item: any) => item?.venueName)
+          {row?.venues
+            ?.map((item: any) => item?.venueDetails?.venueName)
             .join(', ')}
         </TableCell>
 
