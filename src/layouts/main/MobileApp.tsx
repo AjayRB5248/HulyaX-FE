@@ -14,7 +14,7 @@ const MobileApp = () => {
           <div className="row">
             <div className="col-lg-7 offset-lg-5">
               <div className="content">
-                <h3 className="title">Hulya Events App Launching Soon</h3>
+                <h3 className="title">HulyaX App Launching Soon</h3>
                 <p>
                   Discover the Hulya Events App: Scan for exclusive event details and unlock a world of unforgettable
                   experiences.

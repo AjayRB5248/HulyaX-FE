@@ -2,7 +2,7 @@
 
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -29,10 +29,13 @@ import Iconify from "src/components/iconify";
 import FormProvider, { RHFTextField } from "src/components/hook-form";
 import { useRegister } from "src/api/auth";
 import { enqueueSnackbar } from "notistack";
+import { useAuth } from "src/auth/context/users/auth-context";
 
 // ----------------------------------------------------------------------
 
 export default function JwtRegisterView() {
+  const {user} = useAuth();
+
   const { register } = useAuthContext();
 
   const router = useRouter();
@@ -64,6 +67,12 @@ export default function JwtRegisterView() {
     mobileNumber: "",
     confirmPassword: "",
   };
+
+  useEffect(() => {
+    if (user && !(user.role==='customer') && user?.isApproved) {
+      router.push(paths.dashboard.root);
+    }
+  }, [user]);
 
   const methods = useForm({
     resolver: yupResolver(RegisterSchema),

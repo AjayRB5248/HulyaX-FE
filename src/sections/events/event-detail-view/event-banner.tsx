@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -62,8 +62,7 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
                   <i className='fas fa-calendar-alt'></i>
                   {/* TODO: Earliest date ? */}
                   <span>
-                    {moment(venues?.[0]?.eventDate)
-                      .tz(venues?.[0]?.timeZone)
+                    {moment(venues?.[0]?.eventDate)?.tz(venues?.[0]?.timeZone)
                       ?.format('MMM DD, YYYY')}
                   </span>
                 </div>

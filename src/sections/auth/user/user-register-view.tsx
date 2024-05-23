@@ -10,11 +10,12 @@ import * as Yup from "yup";
 import PhoneInput from "react-phone-number-input";
 import Input from "react-phone-number-input/input";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "src/routes/hook";
 import { LoadingButton } from "@mui/lab";
 import { paths } from "src/routes/paths";
+import { useAuth } from "src/auth/context/users/auth-context";
 
 interface FormData {
   name: string;
@@ -29,7 +30,14 @@ const UserRegisterView: React.FC = () => {
   const registerMutation = useRegister();
   const verifyEmailMutation = verifyEmail();
 
+  const {user} = useAuth();
   const [phoneNumber, setPhoneNumber] = useState<any>("");
+
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+    }
+  }, [user]);
 
   const RegisterSchema = Yup.object().shape({
     name: Yup.string().required("User Full Name required"),
@@ -101,7 +109,7 @@ const UserRegisterView: React.FC = () => {
     >
       <div className="account-area">
         <div className="section-header-3">
-          <span className="cate">Welcome to Hulya Events </span>
+          <span className="cate">Welcome to Hulya-X </span>
           <h4 className="title">Elevate Your Experience – Register Today for Hassle-Free Event Ticketing!</h4>
         </div>
 

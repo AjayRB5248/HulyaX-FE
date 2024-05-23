@@ -8,7 +8,7 @@ import FormProvider from "src/components/hook-form";
 import * as Yup from "yup";
 
 import PhoneInput from "react-phone-number-input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useRouter } from "src/routes/hook";
 import { LoadingButton } from "@mui/lab";
@@ -17,6 +17,7 @@ import { paths } from "src/routes/paths";
 import Image from "next/image";
 import Logo from "src/assets/frontend/images/hulyalogomain.png";
 import { enqueueSnackbar } from "notistack";
+import { useAuth } from "src/auth/context/users/auth-context";
 
 interface FormData {
   email: string;
@@ -27,6 +28,14 @@ const UserRegisterView: React.FC = () => {
   const router = useRouter();
   const loginMutation = useLogin();
   const forgotPasswordMutation = useForgotPassword();
+  const {user} = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+    }
+  }, [user]);
+
 
   const defaultValues: FormData = {
     email: "",
@@ -69,7 +78,7 @@ const UserRegisterView: React.FC = () => {
     >
       <div className="account-area">
         <div className="section-header-3">
-          <span className="cate">Welcome to Hulya Events </span>
+          <span className="cate">Welcome to Hulya-X</span>
           <h4 className="title">Elevate Your Experience – Login for Hassle-Free Ticketing!</h4>
         </div>
 
