@@ -1,8 +1,7 @@
 import axiosInstance, { endpoints } from "src/utils/axios";
 
 const TicketService = {
-  viewTickets: (eventId: string, venueName: string) =>
-    axiosInstance.post(endpoints.tickets.list, { eventId, venueName }),
+  viewTickets: (eventId: string, state: string) => axiosInstance.post(endpoints.tickets.list, { eventId, state }),
 
   purchaseTickets: (
     eventId: string,
@@ -10,7 +9,7 @@ const TicketService = {
       ticketId: string;
       quantity: number;
     }[]
-  ) => axiosInstance.post(endpoints.tickets.purchase, { eventId, tickets }),
+  ) => axiosInstance.post(endpoints.tickets.purchase, { tickets }),
 };
 
 export default TicketService;

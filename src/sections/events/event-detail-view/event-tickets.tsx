@@ -6,6 +6,7 @@ import { usePurchaseTickets, useTicketsView } from "src/api/tickets";
 interface IEventTickets {
   eventId: string;
   venueName: string;
+  stateId: string;
 }
 
 import Ticket01 from "src/assets/frontend/images/event/ticket/ticket01.png";
@@ -13,13 +14,15 @@ import Ticket02 from "src/assets/frontend/images/event/ticket/ticket02.png";
 import Ticket03 from "src/assets/frontend/images/event/ticket/ticket03.png";
 
 const ticketIcons: Record<string, StaticImageData> = {
-  STANDARD: Ticket01,
+  EARLY_BIRD: Ticket01,
   PREMIUM: Ticket02,
   VIP: Ticket03,
 };
 
-const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName }) => {
-  const { tickets, isLoading } = useTicketsView(eventId, venueName);
+const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId }) => {
+  const { tickets, isLoading } = useTicketsView(eventId, venueName, stateId);
+
+  console.log(tickets, "tickets====");
   const purchaseEventMutation = usePurchaseTickets();
 
   const [ticketQuantities, setTicketQuantities] = useState<{ [key: string]: number }>({});
@@ -79,6 +82,8 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName }) => {
         });
       }
     }
+    
+    console.log(ticketsToBook, "ticketsToBook")
 
     await purchaseEventMutation.mutateAsync({
       eventId,
@@ -94,7 +99,7 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName }) => {
             <div className="col-12">
               <div className="ticket-item">
                 <div className="ticket-thumb">
-                  <Image src={getTicketIcon(eachTicket.type)} alt="event" />
+                  <Image src={getTicketIcon(eachTicket.type?.toUpperCase()?.replace(" ", "_"))} alt="event" />
                 </div>
                 <div className="ticket-content">
                   <span className="ticket-title">{eachTicket.type} Ticket</span>

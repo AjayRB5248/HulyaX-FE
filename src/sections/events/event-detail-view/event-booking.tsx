@@ -1,18 +1,17 @@
-import moment from 'moment';
-import React, { useEffect, useState } from 'react';
-import SelectField from 'src/components/select-field/select-field';
-import withNiceSelect from 'src/layouts/_common/nice-select/withNiceSelect';
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import SelectField from "src/components/select-field/select-field";
+import withNiceSelect from "src/layouts/_common/nice-select/withNiceSelect";
 
-import EventTickets from './event-tickets';
+import EventTickets from "./event-tickets";
 
-const EventBooking: React.FC<any> = ({ eventId, venues }) => {
+const EventBooking: React.FC<any> = ({ eventId, venues, state }) => {
+  console.log(eventId, venues, "EVENT BOOKING");
   const [venuesOptions, setVenuesOptions] = useState<any>([]);
-  const [selectedVenue, setSelectedVenue] = useState<string>(
-    venues?.[0]?.venueName
-  );
+  const [selectedVenue, setSelectedVenue] = useState<string>(venues?.[0]?.venueName);
+  console.log(selectedVenue, "selectedVenue====");
   const [eventDate, setEventDate] = useState<any>(
-    moment(venues?.[0]?.eventDate).tz(venues?.[0]?.timeZone)
-      ?.format('DD MMM ddd, hh:mm A')
+    moment(venues?.[0]?.eventDate).tz(venues?.[0]?.timeZone)?.format("DD MMM ddd, hh:mm A")
   );
   const [showTickets, setShowTickets] = useState<any>({});
 
@@ -25,16 +24,15 @@ const EventBooking: React.FC<any> = ({ eventId, venues }) => {
   // );
 
   const handleVenueChange = (value: any) => {
+    console.log(value, "value ========== event booking");
     setSelectedVenue(value);
 
-    const selectedEventVenue = venues.find(
-      (eachVenue: any) => eachVenue.venueName === value
-    );
-
+    const selectedEventVenue = venues.find((eachVenue: any) => eachVenue.venueId?.venueName === value);
+    console.log(selectedEventVenue, "selectedEventVenue ========== event booking");
     if (selectedVenue) {
-      const selectedEventDate = moment(selectedEventVenue.eventDate)
-        .tz(selectedEventVenue.timeZone)
-        .format('DD MMM ddd, hh:mm A');
+      const selectedEventDate = moment(selectedEventVenue.eventDate).tz(state?.timeZone).format("DD MMM ddd, hh:mm A");
+
+      console.log(selectedEventDate, "selectedEventDate ========== event booking");
 
       setEventDate(selectedEventDate);
 
@@ -48,45 +46,49 @@ const EventBooking: React.FC<any> = ({ eventId, venues }) => {
   };
 
   const handleEventDateChange = (value: any) => {
-    console.log('Selected Venue Date:', value);
+    console.log("Selected Venue Date:", value);
   };
 
   const handleFindTickets = () => {
-    setShowTickets({ eventId, selectedVenue });
+    setShowTickets({ eventId, selectedVenue, state });
   };
 
   useEffect(() => {
     if (venues && venues.length > 0) {
       const venueList = venues.map((eachVenue: any) => ({
         id: eachVenue._id,
-        value: eachVenue.venueName,
-        label: eachVenue.venueName,
+        value: eachVenue.venueId?.venueName,
+        label: eachVenue.venueId?.venueName,
       }));
+
       setVenuesOptions(venueList);
+      setSelectedVenue(venueList[0]?.value);
+      setEventDate(moment(venues[0]?.eventDate).tz(venues[0]?.timeZone)?.format("DD MMM ddd, hh:mm A"));
     }
   }, [venues]);
 
   return (
-    <div className='booking-summery'>
+    <div className="booking-summery">
       <ul>
         {/* Select Venue */}
         <li>
-          <h6 className='subtitle'>Select Venue:</h6>
+          <h6 className="subtitle">Select Venue:</h6>
           <SelectField
-            className='info'
-            label='venue'
+            className="info"
+            label="venue"
             options={venuesOptions}
-            onSelectChange={(label: string, value: string) =>
-              handleVenueChange(value)
-            }
+            onSelectChange={(label: string, value: string) => {
+              console.log("onSelectChange called with:", label, value);
+              handleVenueChange(value);
+            }}
           />
         </li>
         {/* Select Date */}
         <li>
-          <h6 className='subtitle'>
+          <h6 className="subtitle">
             <span>Event Date:</span>
           </h6>
-          <div className='info'>
+          <div className="info">
             {/* <SelectField
               className="info"
               label="eventDate"
@@ -97,20 +99,14 @@ const EventBooking: React.FC<any> = ({ eventId, venues }) => {
           </div>
         </li>
         {/* Find Tickets */}
-        <button
-          className='theme-button btn-book-ticket mb-4'
-          onClick={handleFindTickets}
-        >
+        <button className="theme-button btn-book-ticket mb-4" onClick={handleFindTickets}>
           Find Tickets
-          <i className='fa fa-ticket-alt ml-3'></i>
+          <i className="fa fa-ticket-alt ml-3"></i>
         </button>
 
         {/* Tickets Type */}
-        {showTickets && showTickets.selectedVenue ? (
-          <EventTickets
-            eventId={eventId}
-            venueName={showTickets.selectedVenue}
-          />
+        {showTickets && showTickets.selectedVenue && showTickets.state ? (
+          <EventTickets eventId={eventId} venueName={showTickets.selectedVenue} stateId={state?._id} />
         ) : null}
       </ul>
     </div>

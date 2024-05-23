@@ -189,7 +189,8 @@ const EventDetail = () => {
         eventDescription={event?.eventDescription}
         sponsors={sponsors}
         venues={event?.venues}
-        eventId={event?._id}
+        eventId={event?.parentEventId}
+        state={event?.state}
       />
     </>
   );
