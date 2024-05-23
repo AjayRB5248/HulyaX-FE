@@ -1,5 +1,6 @@
 import Image from "next/image";
-import SuccessImg from "src/assets/illustrations/Confirmed attendance-pana.png";
+import Link from "next/link";
+import SuccessImg from "src/assets/illustrations/BOOKING_SUCCESS.png";
 
 const BookingSuccess = () => {
   return (
@@ -12,7 +13,9 @@ const BookingSuccess = () => {
           you need before your arrival, please don't hesitate to reach out to your host!
         </p>
 
-        <button className="theme-button view-tickets-btn">View Your Tickets</button>
+        <Link href={`http://localhost:8081/user/profile`}>
+          <button className="theme-button view-tickets-btn">View Your Tickets</button>
+        </Link>
       </div>
     </section>
   );

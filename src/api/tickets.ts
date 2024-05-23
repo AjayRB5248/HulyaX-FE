@@ -3,9 +3,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import TicketService from "src/services/tickets";
 import { useSnackbar } from "notistack";
 
-export function useTicketsView(eventId: string, venueName: string) {
+export function useTicketsView(eventId: string, venueName: string, stateId: string) {
   const { data, isLoading, isError, error } = useQuery(["viewTickets", eventId, venueName], async () => {
-    const response = await TicketService.viewTickets(eventId, venueName);
+    const response = await TicketService.viewTickets(eventId, stateId);
 
     return response?.data?.ticket;
   });
