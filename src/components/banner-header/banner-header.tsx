@@ -2,7 +2,7 @@ import BannerImg from "src/assets/frontend/images/banner/banner12.jpg";
 
 const BannerHeader = () => {
   return (
-    <section className="banner-section bg-six">
+    <section className="banner-section bg-six" style={{ height: "50vh" }}>
       <div className="banner-bg bg_img" style={{ backgroundImage: `url(${BannerImg.src})` }}></div>
       <div className="container">
         <div className="banner-content event-content">

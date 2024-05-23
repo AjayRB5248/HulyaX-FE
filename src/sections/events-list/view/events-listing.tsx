@@ -7,9 +7,11 @@ import EventPagination from "./event-pagination";
 import { useFetchEvents } from "src/api/events";
 import { useEventsContext } from "src/context/EventsContextProvider";
 import { useEffect, useState } from "react";
+import { EventProps } from "src/types/events";
+import { EventStatusEnum } from "src/sections/tour/utils";
 
-const EventsListing = () => {
-  const { events } = useEventsContext();
+const EventsListing: React.FC<EventProps> = ({ events }) => {
+  const filteredEvents = events?.filter((event: any) => event.status !== EventStatusEnum.COMPLETED);
 
   return (
     <section className="event-section section-wrapper">
@@ -22,20 +24,20 @@ const EventsListing = () => {
           <div className={`col-sm-12 col-lg-9 mb-50 mb-lg-0 event-list-wrapper`}>
             <FilterMain isSticky />
             <div className={`row mb-10 event-list-row`}>
-              {events && events.length > 0 ? (
-                events?.map((event: any) =>
+              {filteredEvents && filteredEvents.length > 0 ? (
+                filteredEvents?.map((event: any) =>
                   event?.venues?.map((eachEventVenue: any) => (
                     <EventGridItem
                       key={eachEventVenue._id}
-                      imageUrl={event.eventImages.find((eventImg: any) => eventImg.isPrimary)?.imageurl}
+                      imageUrl={event.parentEvent?.images.find((eventImg: any) => eventImg.isPrimary)?.imageurl}
                       date={eachEventVenue.eventDate}
-                      title={event.eventName}
-                      venue={eachEventVenue.venueName}
-                      city={eachEventVenue.city}
-                      timeZone={eachEventVenue.timeZone}
+                      title={event.parentEvent?.eventName}
+                      venue={eachEventVenue.venueId?.venueName}
+                      city={event?.state?.stateName}
+                      timeZone={event?.state?.timeZone}
                       eventId={event._id}
-                      slug={event.slug}
-                      artists={event.artists}
+                      slug={event.parentEvent?.slug}
+                      artists={event.parentEvent?.artists}
                     />
                   ))
                 )

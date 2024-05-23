@@ -116,7 +116,8 @@ const TicketSearch = () => {
     setFilters(queryData);
 
     // API call with the queryData above and setEvent
-    const events = await EventsService.list(queryData)
+    // Need to send query
+    const events = await EventsService.fetchAllEvents()
       .then((res) => res.data?.events)
       .catch((err) => {
         console.log(err, "err===");
@@ -130,7 +131,7 @@ const TicketSearch = () => {
   };
 
   useEffect(() => {
-    callFilterEventsAPI();
+    // callFilterEventsAPI();
   }, [selectedCity, selectedDate, selectedLocation, activeTab]);
 
   return (
