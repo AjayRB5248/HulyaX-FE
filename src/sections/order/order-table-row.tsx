@@ -70,9 +70,13 @@ export default function OrderTableRow({ row }: Props) {
           link.click();
           document.body.removeChild(link);
         }
+        enqueueSnackbar("Ticket Downloaded Successfully!", { variant: "success" });
       })
       .catch((error) => {
         console.error('Failed to download ticket:', error);
+        enqueueSnackbar(error.response.data.message || "Error updating profile", {
+          variant: "error",
+        });
       })
       .finally(() => {
         setDownloading(false);
