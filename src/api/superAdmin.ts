@@ -53,9 +53,6 @@ export function useAssignCompany() {
           variant: "error",
         });
       },
-      onSuccess: () => {
-        enqueueSnackbar("Company Assigned to Event Successfully!", { variant: "success" });
-      },
     }
   );
 }

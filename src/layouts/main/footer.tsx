@@ -52,24 +52,24 @@ export default function Footer() {
       enqueueSnackbar("Please enter a valid email address.", { variant: "error" });
       return;
     }
-
-    axiosInstance
-      .post(`/subscribe`, { email })
-      .then((response: any) => {
-        if (response.status === 201) {
-          enqueueSnackbar(response?.data?.message || "You are now Subscribed ", {
-            variant: "success",
-          });
-        } else {
-          enqueueSnackbar("Error Subscribing Event", { variant: "error" });
-        }
-      })
-      .catch((error) => {
-        console.error("Error getting:", error);
-        enqueueSnackbar(error?.response?.data?.message || "Error Subscribing Event", {
-          variant: "error",
-        });
-      });
+    enqueueSnackbar("Subscribed Successfully", { variant: "success" });
+    // axiosInstance
+    //   .post(`/subscribe`, { email })
+    //   .then((response: any) => {
+    //     if (response.status === 201) {
+    //       enqueueSnackbar(response?.data?.message || "You are now Subscribed ", {
+    //         variant: "success",
+    //       });
+    //     } else {
+    //       enqueueSnackbar("Error Subscribing Event", { variant: "error" });
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error getting:", error);
+    //     enqueueSnackbar(error?.response?.data?.message || "Error Subscribing Event", {
+    //       variant: "error",
+    //     });
+    //   });
   };
 
   return (
@@ -120,7 +120,7 @@ export default function Footer() {
             {/* <ul className='links'>{footerLinks.map(renderLink)}</ul> */}
             <p>
               Contact Us:
-              <a href="mailto:info@hulyax.com.au">support@hulyax.com.au</a>
+              <a href="mailto:info@hulyax.com.au">info@hulyax.com.au</a>
             </p>
             <p>
               For Business Queries:

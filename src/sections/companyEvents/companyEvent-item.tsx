@@ -19,6 +19,7 @@ import Image from 'src/components/image';
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { shortDateLabel } from 'src/components/custom-date-range-picker';
+import moment from 'moment';
 
 // ----------------------------------------------------------------------
 
@@ -49,6 +50,8 @@ export default function CompanyEventItem({ event, onView, onEdit, onDelete,onAss
     available,
     state,
   } = event;
+
+  console.log({mabisha:event})
 
   const primaryImage = parentEvent?.images?.find((image:any) => image?.isPrimary);
   const renderImages = (
@@ -111,7 +114,7 @@ export default function CompanyEventItem({ event, onView, onEdit, onDelete,onAss
           icon: <Iconify icon="mingcute:location-fill" sx={{ color: 'error.main' }} />,
         },
         {
-          label: "July 5",
+          label: venues[0]?.eventDate ? moment(venues[0]?.eventDate).format('MMMM D, h A') : '',
           icon: <Iconify icon="solar:clock-circle-bold" sx={{ color: 'info.main' }} />,
         },
         {

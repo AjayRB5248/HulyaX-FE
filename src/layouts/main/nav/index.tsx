@@ -30,17 +30,17 @@ const navigationItems: NavItem[] = [
     label: "Home",
     href: "/",
   },
-  {
-    label: "Explore Events",
-    href: "/events/",
-    submenu: [],
-  },
+  // {
+  //   label: "Explore Events",
+  //   href: "/events/",
+  //   submenu: [],
+  // },
   // {
   //   label: 'Events',
   //   href: '',
   //   submenu: eventCategories,
   // },
-  { label: "Trending Now", href: "/trending-now" },
+  // { label: "Trending Now", href: "/trending-now" },
   { label: "FAQs", href: "/faqs" },
 ];
 
@@ -104,7 +104,7 @@ const Navbar: React.FC<NavbarProps> = ({ isToggleMenuActive }) => {
         ))}
         {!user && (
           <li className="header-button secondary-theme-btn pr-0 ml-5">
-            <Link href="/login-as">Join Us</Link>
+            <Link href="/auth/user/login/">Login</Link>
           </li>
         )}
         {/* Sign Up Link */}
