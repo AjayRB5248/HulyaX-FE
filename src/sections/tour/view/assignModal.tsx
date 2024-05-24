@@ -7,6 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import moment from 'moment';
+import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useAssignCompany, useRemoveAssginedCompany } from 'src/api/superAdmin';
 import { useAllUsersByRole } from 'src/api/users';
@@ -24,7 +25,7 @@ const AssignModal = ({
   setSelectedEvent,
   refetch,
 }: any) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
   const { user } = useAuth();
   const { venues } = useVenues();
   const { users } = useAllUsersByRole('companyAdmin');
@@ -52,7 +53,7 @@ const AssignModal = ({
           },
           company: assignedCompany?._id ? assignedCompany.companyId : '',
           venue: venue?._id ? venue._id : '',
-          date: new Date(date),
+          date: date ? new Date(date) : '',
           deleteOption: assignedCompany?.companyId ? true : false,
         };
       });
@@ -68,7 +69,9 @@ const AssignModal = ({
         },
         company: '',
         venue: selectedEvent?.venues[0]?.venueId?._id,
-        date: new Date(selectedEvent?.venues[0]?.eventDate),
+        date: selectedEvent?.venues[0]?.eventDate
+          ? new Date(selectedEvent?.venues[0]?.eventDate)
+          : '',
       };
       setData([data]);
     }
@@ -99,7 +102,7 @@ const AssignModal = ({
           let venueData = {};
           if (singleData?.deleteOption) {
             const subEventId = selectedEvent?.assignedCompany.find(
-              (item: any) => item?.companyId === singleData?.company
+              (item: any) => item?.state === singleData?.state?._id
             )?.subEventId;
 
             venueData = {
@@ -143,6 +146,10 @@ const AssignModal = ({
           }
         }
       }
+
+      enqueueSnackbar('Assigned Successfully!', {
+        variant: 'success',
+      });
       setAssignModal(false);
     } catch (error) {
       console.log('error', error);
