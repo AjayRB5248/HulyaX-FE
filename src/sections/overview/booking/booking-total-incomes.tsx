@@ -129,7 +129,6 @@ export default function BookingTotalIncomes({
             </Box>
           </Stack>
 
-          <Box sx={{ mt: 0.5, opacity: 0.8, typography: 'body2' }}>than last month </Box>
         </div>
       </Stack>
 

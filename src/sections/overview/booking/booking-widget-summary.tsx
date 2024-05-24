@@ -10,9 +10,10 @@ interface Props extends CardProps {
   title: string;
   total: number;
   icon: React.ReactElement;
+  dollar:any;
 }
 
-export default function BookingWidgetSummary({ title, total, icon, sx, ...other }: Props) {
+export default function BookingWidgetSummary({ title, total, icon, sx,dollar,...other }: Props) {
   return (
     <Card
       sx={{
@@ -26,7 +27,7 @@ export default function BookingWidgetSummary({ title, total, icon, sx, ...other 
       {...other}
     >
       <Box>
-        <Box sx={{ mb: 1, typography: 'h4' }}>${total}</Box>
+        <Box sx={{ mb: 1, typography: 'h4' }}> {dollar ? `$${total}` : total }</Box>
         <Box sx={{ color: 'text.secondary', typography: 'subtitle2' }}>{title}</Box>
       </Box>
 

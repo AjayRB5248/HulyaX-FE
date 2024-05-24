@@ -52,21 +52,21 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
   useEffect(() => {
     const stateMap :any= {};
     states?.states?.forEach((state:any) => {
-        stateMap[state._id] = state.stateName;
+        stateMap[state?._id] = state?.stateName;
     });
 
     const companyMap :any= {};
-    users.forEach((company:any) => {
-        companyMap[company._id] = company.name;
+    users?.forEach((company:any) => {
+        companyMap[company?._id] = company?.name;
     });
 
     const result = assignedCompany?.map((ac:any) => ({
-        stateName: stateMap[ac.state],
-        companyName: companyMap[ac.companyId]
+        stateName: stateMap[ac?.state],
+        companyName: companyMap[ac?.companyId]
     }));
 
     setMappedData(result);
-}, []);
+}, [event]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -142,7 +142,7 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
         </Stack>
       </Stack>
 
-{  artists?.length > 0 &&  <Box sx={{ mt: 4 }}>
+  { artists?.length > 0 &&  <Box sx={{ mt: 4 }}>
         <Typography variant="h6" gutterBottom>
           Featured Artists
         </Typography>
@@ -202,81 +202,81 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
   };
 
 
-  function renderEventVenueDetails() {
-    const combinedDetails = venues?.map((venue: any) => {
-      const eventDateTime = new Date(venue?.eventDate);
-      const ticketsForVenue = ticketTypes?.filter(
-        (ticket: any) => ticket.venueName === venue.venueName
-      );
+  // function renderEventVenueDetails() {
+  //   const combinedDetails = venues?.map((venue: any) => {
+  //     const eventDateTime = new Date(venue?.eventDate);
+  //     const ticketsForVenue = ticketTypes?.filter(
+  //       (ticket: any) => ticket.venueName === venue.venueName
+  //     );
 
-      return {
-        venueId:venue?._id,
-        venueName: venue.venueName,
-        city: venue.city,
-        date: fDate(eventDateTime),
-        time: eventDateTime.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-        tickets: ticketsForVenue,
-        icon: <Iconify icon="solar:calendar-date-bold" />,
-      };
-    });
+  //     return {
+  //       venueId:venue?._id,
+  //       venueName: venue.venueName,
+  //       city: venue.city,
+  //       date: fDate(eventDateTime),
+  //       time: eventDateTime.toLocaleTimeString([], {
+  //         hour: "2-digit",
+  //         minute: "2-digit",
+  //       }),
+  //       tickets: ticketsForVenue,
+  //       icon: <Iconify icon="solar:calendar-date-bold" />,
+  //     };
+  //   });
 
-    return (
-      <Box sx={{ mt: 4 }}>
-        <Typography variant="h6" gutterBottom>
-          Event Venues and Tickets
-        </Typography>
-        <Box
-          display="grid"
-          gridTemplateColumns={{
-            xs: "repeat(1, 1fr)",
-            md: "repeat(2, 1fr)",
-          }}
-          gap={3}
-        >
-          {combinedDetails?.map((venue: any, index: any) => (
-            <Paper key={index} elevation={3} sx={{ p: 2, borderRadius: 2 }}>
-              <Stack spacing={2}>
-                <Stack direction="row" spacing={2} alignItems="center">
-                  {venue.icon}
-                  <Typography variant="subtitle1">
-                    {venue?.venueName}
-                  </Typography>
-                </Stack>
-                <Typography variant="body1" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
-                  <Iconify icon="mingcute:location-fill" sx={{ color: 'error.main', }} />  {venue.city}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" alignItems={'center'}  sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Iconify icon="solar:clock-circle-bold" sx={{ color: 'info.main',marginRight: '8px' }} />  {venue.date} | {venue.time} Onwards
-                </Typography>
-                <Box>
-                  {ticketTypes?.filter((ticket:any) => ticket?.venueId === venue?.venueId).map((ticket: any, idx: any) => (
-                    <Box
-                      key={idx}
-                      p={1}
-                      mt={1}
-                      border={1}
-                      borderColor="grey.300"
-                      borderRadius={1}
-                    >
-                      <Stack direction="row" spacing={2} alignItems="center">
-                        <Iconify icon="ant-design:ticket-outlined" />
-                        <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
-                          <Iconify icon="emojione:admission-tickets" sx={{ color: 'info.main',marginRight: '8px' }}/>  {ticket.type} - Price: ${ticket.price}, Seats: {ticket.availableSeats}
-                        </Typography>
-                      </Stack>
-                    </Box>
-                  ))}
-                </Box>
-              </Stack>
-            </Paper>
-          ))}
-        </Box>
-      </Box>
-    );
-  }
+  //   return (
+  //     <Box sx={{ mt: 4 }}>
+  //       <Typography variant="h6" gutterBottom>
+  //         Event Venues and Tickets
+  //       </Typography>
+  //       <Box
+  //         display="grid"
+  //         gridTemplateColumns={{
+  //           xs: "repeat(1, 1fr)",
+  //           md: "repeat(2, 1fr)",
+  //         }}
+  //         gap={3}
+  //       >
+  //         {combinedDetails?.map((venue: any, index: any) => (
+  //           <Paper key={index} elevation={3} sx={{ p: 2, borderRadius: 2 }}>
+  //             <Stack spacing={2}>
+  //               <Stack direction="row" spacing={2} alignItems="center">
+  //                 {venue.icon}
+  //                 <Typography variant="subtitle1">
+  //                   {venue?.venueName}
+  //                 </Typography>
+  //               </Stack>
+  //               <Typography variant="body1" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
+  //                 <Iconify icon="mingcute:location-fill" sx={{ color: 'error.main', }} />  {venue.city}
+  //               </Typography>
+  //               <Typography variant="body2" color="text.secondary" alignItems={'center'}  sx={{ display: 'flex', alignItems: 'center' }}>
+  //                 <Iconify icon="solar:clock-circle-bold" sx={{ color: 'info.main',marginRight: '8px' }} />  {venue.date} | {venue.time} Onwards
+  //               </Typography>
+  //               <Box>
+  //                 {ticketTypes?.filter((ticket:any) => ticket?.venueId === venue?.venueId).map((ticket: any, idx: any) => (
+  //                   <Box
+  //                     key={idx}
+  //                     p={1}
+  //                     mt={1}
+  //                     border={1}
+  //                     borderColor="grey.300"
+  //                     borderRadius={1}
+  //                   >
+  //                     <Stack direction="row" spacing={2} alignItems="center">
+  //                       <Iconify icon="ant-design:ticket-outlined" />
+  //                       <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
+  //                         <Iconify icon="emojione:admission-tickets" sx={{ color: 'info.main',marginRight: '8px' }}/>  {ticket.type} - Price: ${ticket.price}, Seats: {ticket.availableSeats}
+  //                       </Typography>
+  //                     </Stack>
+  //                   </Box>
+  //                 ))}
+  //               </Box>
+  //             </Stack>
+  //           </Paper>
+  //         ))}
+  //       </Box>
+  //     </Box>
+  //   );
+  // }
 
   return (
     <>
@@ -320,7 +320,7 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
           </>
         )}
 
-        {renderEventVenueDetails()}
+        {/* {renderEventVenueDetails()} */}
 
         <Divider sx={{ borderStyle: "dashed", my: 5 }} />
 

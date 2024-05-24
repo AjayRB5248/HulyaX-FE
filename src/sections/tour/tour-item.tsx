@@ -104,11 +104,6 @@ export default function TourItem({
     />
   );
 
-  const venueNames = venues?.map((venue: any) => venue.city).join('-');
-  const venuesDate = venues
-    ?.map((venue: any) => `${fDate(venue.eventDate)}`)
-    .join('-');
-
   const renderInfo = (
     <Stack
       spacing={1.5}
@@ -135,7 +130,7 @@ export default function TourItem({
           ),
         },
         {
-          label: "July 5",
+          label: "July/August",
           icon: (
             <Iconify
               icon='solar:clock-circle-bold'
@@ -199,7 +194,7 @@ export default function TourItem({
           Asigin Venue
         </MenuItem>
 
-        <MenuItem
+        {/* <MenuItem
           onClick={() => {
             popover.onClose();
             onAddTicketSettings();
@@ -216,7 +211,7 @@ export default function TourItem({
         >
           <Iconify icon='solar:eye-bold' />
           Edit Ticket 
-        </MenuItem>
+        </MenuItem> */}
 
         <MenuItem
           onClick={() => {
