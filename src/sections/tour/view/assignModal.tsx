@@ -7,6 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import moment from 'moment';
+import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useAssignCompany, useRemoveAssginedCompany } from 'src/api/superAdmin';
 import { useAllUsersByRole } from 'src/api/users';
@@ -24,7 +25,7 @@ const AssignModal = ({
   setSelectedEvent,
   refetch,
 }: any) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
   const { user } = useAuth();
   const { venues } = useVenues();
   const { users } = useAllUsersByRole('companyAdmin');
@@ -41,6 +42,9 @@ const AssignModal = ({
         const venue = selectedEvent?.venueData?.find(
           (venue: any) => venue.state === state._id
         );
+        const date = selectedEvent?.childEvents?.find(
+          (event: any) => event?.state === state._id
+        )?.venues[0]?.eventDate;
 
         return {
           state: {
@@ -49,7 +53,7 @@ const AssignModal = ({
           },
           company: assignedCompany?._id ? assignedCompany.companyId : '',
           venue: venue?._id ? venue._id : '',
-          date: '',
+          date: date ? new Date(date) : '',
           deleteOption: assignedCompany?.companyId ? true : false,
         };
       });
@@ -65,12 +69,11 @@ const AssignModal = ({
         },
         company: '',
         venue: selectedEvent?.venues[0]?.venueId?._id,
-        date: moment(selectedEvent?.venues[0]?.eventDate).format(
-          'yyyy-MM-dd HH:mm'
-        ),
+        date: selectedEvent?.venues[0]?.eventDate
+          ? new Date(selectedEvent?.venues[0]?.eventDate)
+          : '',
       };
       setData([data]);
-      console.log('this is data', { data });
     }
   }, [selectedEvent?._id]);
 
@@ -99,7 +102,7 @@ const AssignModal = ({
           let venueData = {};
           if (singleData?.deleteOption) {
             const subEventId = selectedEvent?.assignedCompany.find(
-              (item: any) => item?.companyId === singleData?.company
+              (item: any) => item?.state === singleData?.state?._id
             )?.subEventId;
 
             venueData = {
@@ -107,7 +110,7 @@ const AssignModal = ({
               venues: [
                 {
                   _id: singleData?.venue,
-                  date: singleData?.date,
+                  date: moment(singleData?.date).toISOString(),
                 },
               ],
             };
@@ -118,7 +121,7 @@ const AssignModal = ({
               venues: [
                 {
                   _id: singleData?.venue,
-                  date: singleData?.date,
+                  date: moment(singleData?.date).toISOString(),
                 },
               ],
             };
@@ -143,6 +146,10 @@ const AssignModal = ({
           }
         }
       }
+
+      enqueueSnackbar('Assigned Successfully!', {
+        variant: 'success',
+      });
       setAssignModal(false);
     } catch (error) {
       console.log('error', error);
@@ -279,9 +286,7 @@ const AssignModal = ({
 
               {/* date */}
               <DateTimePicker
-                onChange={(e: any) =>
-                  handleSelectChange(index, 'date', new Date(e).toISOString())
-                }
+                onChange={(date) => handleSelectChange(index, 'date', date)}
                 value={item?.date}
                 sx={{ minWidth: 250 }}
                 label='Date of Event'
