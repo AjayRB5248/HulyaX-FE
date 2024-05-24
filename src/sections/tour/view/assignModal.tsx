@@ -41,6 +41,9 @@ const AssignModal = ({
         const venue = selectedEvent?.venueData?.find(
           (venue: any) => venue.state === state._id
         );
+        const date = selectedEvent?.childEvents?.find(
+          (event: any) => event?.state === state._id
+        )?.venues[0]?.eventDate;
 
         return {
           state: {
@@ -49,7 +52,7 @@ const AssignModal = ({
           },
           company: assignedCompany?._id ? assignedCompany.companyId : '',
           venue: venue?._id ? venue._id : '',
-          date: '',
+          date: new Date(date),
           deleteOption: assignedCompany?.companyId ? true : false,
         };
       });
@@ -65,12 +68,9 @@ const AssignModal = ({
         },
         company: '',
         venue: selectedEvent?.venues[0]?.venueId?._id,
-        date: moment(selectedEvent?.venues[0]?.eventDate).format(
-          'yyyy-MM-dd HH:mm'
-        ),
+        date: new Date(selectedEvent?.venues[0]?.eventDate),
       };
       setData([data]);
-      console.log('this is data', { data });
     }
   }, [selectedEvent?._id]);
 
@@ -107,7 +107,7 @@ const AssignModal = ({
               venues: [
                 {
                   _id: singleData?.venue,
-                  date: singleData?.date,
+                  date: moment(singleData?.date).toISOString(),
                 },
               ],
             };
@@ -118,7 +118,7 @@ const AssignModal = ({
               venues: [
                 {
                   _id: singleData?.venue,
-                  date: singleData?.date,
+                  date: moment(singleData?.date).toISOString(),
                 },
               ],
             };
@@ -279,9 +279,7 @@ const AssignModal = ({
 
               {/* date */}
               <DateTimePicker
-                onChange={(e: any) =>
-                  handleSelectChange(index, 'date', new Date(e).toISOString())
-                }
+                onChange={(date) => handleSelectChange(index, 'date', date)}
                 value={item?.date}
                 sx={{ minWidth: 250 }}
                 label='Date of Event'
