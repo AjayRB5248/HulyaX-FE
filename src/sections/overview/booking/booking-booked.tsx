@@ -26,7 +26,7 @@ export default function BookingBooked({ title, subheader, data, ...other }: Prop
       <CardHeader title={title} subheader={subheader} />
 
       <Stack spacing={3} sx={{ p: 3 }}>
-        {data.map((progress) => (
+        {data?.map((progress) => (
           <Stack key={progress.status}>
             <Stack
               direction="row"
@@ -34,8 +34,8 @@ export default function BookingBooked({ title, subheader, data, ...other }: Prop
               justifyContent="space-between"
               sx={{ mb: 1 }}
             >
-              <Box sx={{ typography: 'overline' }}>{progress.status}</Box>
-              <Box sx={{ typography: 'subtitle1' }}>{fShortenNumber(progress.value)}</Box>
+              <Box sx={{ typography: 'overline' }}>{progress?.status}</Box>
+              <Box sx={{ typography: 'subtitle1' }}>{fShortenNumber(progress?.value)}</Box>
             </Stack>
 
             <LinearProgress
