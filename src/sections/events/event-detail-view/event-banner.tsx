@@ -10,7 +10,7 @@ import VideoPlayButton from "src/assets/frontend/images/movie/video-button.png";
 
 // Sample Image
 import SocialShare from "src/components/social-share";
-import { getRemainingTime } from "src/utility";
+import { getRemainingTime } from "src/utils/format-date";
 interface EventDetailBannerProps {
   bannerImg: string;
   eventName: string;

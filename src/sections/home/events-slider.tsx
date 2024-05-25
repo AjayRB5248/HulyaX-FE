@@ -12,7 +12,7 @@ import NeeteshPoster from "src/assets/frontend/images/event/NeeteshConcert.jpg";
 import Slider from "react-slick";
 import React from "react";
 import { EventProps } from "src/types/events";
-import { formatDate } from "src/utility";
+import { formatDate } from "src/utils/format-date";
 import Link from "next/link";
 
 const EventsSlider: React.FC<EventProps> = ({ events }) => {

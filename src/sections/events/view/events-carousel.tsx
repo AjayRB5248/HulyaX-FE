@@ -18,7 +18,7 @@ import VenueIcon from "src/assets/frontend/images/event/icon/event-icon02.png";
 import { EachEventProps, EventProps, Venue } from "src/types/events";
 import Link from "next/link";
 import moment from "moment";
-import { formatDate } from "src/utility";
+import { formatDate } from "src/utils/format-date";
 
 interface EventData {
   imageUrl: StaticImageData;
