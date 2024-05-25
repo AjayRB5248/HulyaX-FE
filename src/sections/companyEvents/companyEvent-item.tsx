@@ -51,8 +51,6 @@ export default function CompanyEventItem({ event, onView, onEdit, onDelete,onAss
     state,
   } = event;
 
-  console.log({mabisha:event})
-
   const primaryImage = parentEvent?.images?.find((image:any) => image?.isPrimary);
   const renderImages = (
     <Stack

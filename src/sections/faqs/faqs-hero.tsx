@@ -10,7 +10,6 @@ import { outlinedInputClasses } from '@mui/material/OutlinedInput';
 // theme
 import { bgGradient } from 'src/theme/css';
 // components
-import Iconify from 'src/components/iconify';
 import { MotionContainer, varFade } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
@@ -22,7 +21,7 @@ export default function FaqsHero() {
     <Box
       sx={{
         ...bgGradient({
-          color: alpha(theme.palette.grey[900], 0.8),
+          color: alpha(theme.palette.grey[900], 0.9),
           imgUrl: '/assets/images/faqs/hero.jpg',
         }),
         height: { md: 560 },
@@ -34,7 +33,7 @@ export default function FaqsHero() {
       <Container component={MotionContainer}>
         <Box
           sx={{
-            bottom: { md: 80 },
+            bottom: { md: 100,marginTop:50 },
             position: { md: 'absolute' },
             textAlign: { xs: 'center', md: 'unset' },
           }}

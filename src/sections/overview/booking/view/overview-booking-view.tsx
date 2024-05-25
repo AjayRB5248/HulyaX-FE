@@ -21,6 +21,9 @@ import BookingTotalIncomes from '../booking-total-incomes';
 import BookingWidgetSummary from '../booking-widget-summary';
 import BookingCheckInWidgets from '../booking-check-in-widgets';
 import { useDashboardReports } from 'src/api/dashboard';
+import { useAssignedEvents } from 'src/api/superAdmin';
+import { useEffect, useState } from 'react';
+import { FormControl, InputLabel, MenuItem, Select, useMediaQuery } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -28,8 +31,10 @@ const SPACING = 3;
 
 export default function OverviewBookingView() {
   const theme = useTheme();
-  const {reports}= useDashboardReports();
-
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const { reports, loading, error, fetchReports } = useDashboardReports();
+  const { events} = useAssignedEvents()
+  const [selectedSubEventId, setSelectedSubEventId] = useState('');
   const settings = useSettingsContext();
   const totalAmount = reports?.reportData?.totalPriceInDollars
   const totalSoldInDollars = reports?.reportData?.totalSoldInDollars ?? 0;
@@ -55,24 +60,63 @@ export default function OverviewBookingView() {
     },
 
 ];
+
+const handleEventChange = (event:any) => {
+  setSelectedSubEventId(event.target.value);
+};
+
+useEffect(() => {
+  if (selectedSubEventId) {
+    fetchReports({ subEventId: selectedSubEventId });
+  } else {
+    fetchReports();
+  }
+}, [selectedSubEventId, fetchReports]);
+
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <Grid container spacing={SPACING} disableEqualOverflow>
+      <Grid  xs={12}>
+          <Grid container spacing={2}>
+            <Grid  xs={6}>
+            <FormControl fullWidth sx={{ minWidth: 240 }}>
+        <InputLabel id="event-select-label">Select Event</InputLabel>
+        <Select
+          labelId="event-select-label"
+          value={selectedSubEventId}
+          onChange={handleEventChange}
+          label="Select Event"
+          defaultValue=""
+          sx={{ width: isSmallScreen ? 300 : 400 }}
+        >
+          <MenuItem value="">
+            Overall Report
+          </MenuItem>
+          {events?.assignedEvents?.map((event:any) => (
+            <MenuItem key={event?._id} value={event?._id}>
+              {event?.parentEvent?.eventName} - {event?.state?.stateName}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+            </Grid>
+          </Grid>
+        </Grid>
         <Grid xs={12} md={4}>
           <BookingWidgetSummary
             title="Total Ticket Amount"
-            total={reports?.reportData?.totalPriceInDollars}
+            total={totalAmount ? totalAmount : 0}
             icon={<BookingIllustration />}
             dollar={true}
           />
         </Grid>
 
         <Grid xs={12} md={4}>
-          <BookingWidgetSummary title="Ticket Sold" dollar={false} total={reports?.reportData?.soldTickets} icon={<CheckInIllustration />} />
+          <BookingWidgetSummary title="Ticket Sold" dollar={false} total={soldTickets ? soldTickets : 0} icon={<CheckInIllustration />} />
         </Grid>
 
         <Grid xs={12} md={4}>
-          <BookingWidgetSummary title="Sold Ticket Amount" dollar={true} total={reports?.reportData?.totalSoldInDollars} icon={<CheckOutIllustration />} />
+          <BookingWidgetSummary title="Sold Ticket Amount" dollar={true} total={totalSoldInDollars ? totalSoldInDollars : 0} icon={<CheckOutIllustration />} />
         </Grid>
 
         <Grid container xs={12}>
@@ -80,7 +124,7 @@ export default function OverviewBookingView() {
             <Grid xs={12} md={6}>
               <BookingTotalIncomes
                 title="Total Incomes"
-                total={reports?.reportData?.totalSoldInDollars}
+                total={totalSoldInDollars ? totalSoldInDollars : 0}
                 percent={2.6}
                 chart={{
                   series: [
@@ -105,8 +149,8 @@ export default function OverviewBookingView() {
               <BookingCheckInWidgets
                 chart={{
                   series: [
-                    { label: 'Sold', percent: soldPercent, total: reports?.reportData?.totalSoldInDollars },
-                    { label: 'Pending for payment', percent: remainingPercent, total: reports?.reportData?.remaningToSellInDollars },
+                    { label: 'Sold', percent: soldPercent, total: totalSoldInDollars ? totalSoldInDollars : 0 },
+                    { label: 'Pending for payment', percent: remainingPercent, total: remainingToSellInDollars ? remainingToSellInDollars : 0},
                   ],
                 }}
               />
