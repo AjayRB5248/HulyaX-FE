@@ -4,7 +4,7 @@ import Olivia from "src/assets/frontend/images/artists/Olivia.png";
 import Sacar from "src/assets/frontend/images/artists/Sacar.jpeg";
 import Neetesh from "src/assets/frontend/images/artists/Neetesh.jpeg";
 
-import VenueIcon from "src/assets/frontend/images/icons/venue.png";
+import VenueIcon from "src/assets/frontend/images/icons/icons8-location-24.png";
 
 import SacarPoster from "src/assets/frontend/images/event/SacarPoster.jpeg";
 import NeeteshPoster from "src/assets/frontend/images/event/NeeteshConcert.jpg";
@@ -20,7 +20,7 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
     dots: false,
     infinite: true,
     slidesToShow: 3,
-    slidesToScroll: 1,
+    slidesToScroll: 3,
     autoplay: true,
     speed: 3000,
     autoplaySpeed: 2000,
@@ -72,59 +72,57 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
             Array.isArray(events) &&
             events.length > 0 &&
             events?.map((event: any) => {
-              const eventVenues = event?.venues;
-              console.log(eventVenues, "eventVenues");
-
               return (
-                eventVenues &&
-                eventVenues?.length > 0 &&
-                eventVenues?.map((eventVenue: any) => (
-                  <div className="slider-item">
-                    <div className="event-item">
-                      <div className="event-top-card">
-                        <div className="event-date">
-                          <h6 className="date-title">
-                            {formatDate(eventVenue?.eventDate).day} {formatDate(eventVenue?.eventDate).month}
-                          </h6>
-                        </div>
+                <div className="slider-item">
+                  <div className="event-item">
+                    <div className="event-top-card">
+                      <div className="event-date">
+                        <h6 className="date-title">
+                          {/* Showing only parent event - date/venue name from the first - nearest */}
+                          {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}{" "}
+                          {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.month}
+                        </h6>
+                      </div>
+                      <Image
+                        src={event?.images?.[1]?.imageurl ?? event?.images?.[0]?.imageurl}
+                        alt={event?.eventName}
+                        width={800}
+                        height={1200}
+                      />
+                      <h4 className="event-title">{event?.eventName}</h4>
+                    </div>
+
+                    <div className="event-bottom-card d-flex flex-column p-4">
+                      <div className="artist d-flex align-items-center">
                         <Image
-                          src={event?.parentEvent?.images?.[1]?.imageurl}
-                          alt={event?.parentEvent?.eventName}
-                          width={800}
-                          height={1200}
+                          src={event?.artists?.[0]?.images?.[0]?.imageurl}
+                          alt={event?.artists?.[0]?.artistName}
+                          className="artist-profile-img"
+                          width={50}
+                          height={50}
                         />
-                        <h4 className="event-title">{event?.parentEvent?.eventName}</h4>
+                        <h4 className="artist-name ml-3">
+                          {event?.artists?.[0]?.artistName}
+                          {/* <p className="artist-position">{event?.artists?.[0]?.category}</p> */}
+                        </h4>
+                        <Link href={`/events/${event?.slug}`} className="ml-auto">
+                          <button className="theme-button">
+                            {event.status === "ONGOING" ? "BUY TICKET" : "View Details"}
+                          </button>
+                        </Link>
                       </div>
 
-                      <div className="event-bottom-card d-flex flex-column p-4">
-                        <div className="artist d-flex align-items-center">
-                          <Image
-                            src={event?.parentEvent?.artists?.[0]?.imageurl}
-                            alt="Artist Profile"
-                            className="artist-profile-img"
-                            width={50}
-                            height={50}
-                          />
-                          <h4 className="artist-name ml-3">
-                            {event?.parentEvent?.artists?.[0]?.artistName}
-                            {/* <p className="artist-position">{event?.parentEvent?.artist?.[0]?.category}</p> */}
-                          </h4>
-                          <Link href={`/events/${event?.parentEvent?.slug}`} className="ml-auto">
-                            <button className="theme-button">Buy Ticket</button>
-                          </Link>
-                        </div>
+                      <div className="venue d-flex align-items-center">
+                        <Image src={VenueIcon} alt="Venue icon" className="venue-icon" />
 
-                        <div className="venue d-flex align-items-center">
-                          <Image src={VenueIcon} alt="Venue icon" className="venue-icon" />
-
-                          <div className="venue-name ml-4">
-                            {eventVenue?.venueId?.venueName}, {event?.state?.stateName}
-                          </div>
+                        <div className="venue-name ml-4">
+                          {event?.childEvents?.[0]?.state?.stateName} {event?.childEvents?.[1] ? "," : ""}{" "}
+                          {event?.childEvents?.[1]?.state?.stateName}
                         </div>
                       </div>
                     </div>
                   </div>
-                ))
+                </div>
               );
             })}
         </Slider>
