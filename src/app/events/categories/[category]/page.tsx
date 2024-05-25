@@ -1,7 +1,7 @@
 import EventsList from "src/sections/events-list";
 
 export const metadata = {
-  title: "Browse  Hulya Events Categories",
+  title: "Browse  HulyaX Categories",
 };
 
 // TODO: Pass props if from category and filter likewise

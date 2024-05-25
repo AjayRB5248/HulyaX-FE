@@ -53,6 +53,7 @@ export default function Footer() {
       return;
     }
     enqueueSnackbar("Subscribed Successfully", { variant: "success" });
+    setEmail("");
     // axiosInstance
     //   .post(`/subscribe`, { email })
     //   .then((response: any) => {
