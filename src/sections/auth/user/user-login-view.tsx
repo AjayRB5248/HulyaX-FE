@@ -28,14 +28,13 @@ const UserRegisterView: React.FC = () => {
   const router = useRouter();
   const loginMutation = useLogin();
   const forgotPasswordMutation = useForgotPassword();
-  const {user} = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (user) {
-      router.push('/');
+      router.push("/");
     }
   }, [user]);
-
 
   const defaultValues: FormData = {
     email: "",
@@ -64,7 +63,17 @@ const UserRegisterView: React.FC = () => {
     try {
       await loginMutation.mutateAsync(data);
       enqueueSnackbar("Login successful", { variant: "success" });
-      router.push("/");
+
+      const pathToRedirect = localStorage.getItem("currentPath");
+
+      if (pathToRedirect) {
+        localStorage.removeItem("currentPath");
+        console.log(pathToRedirect, "pathToRedirect!!!");
+
+        router.push(pathToRedirect);
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       console.error(error);
       reset();

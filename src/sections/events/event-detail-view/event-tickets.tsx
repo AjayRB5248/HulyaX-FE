@@ -2,6 +2,7 @@ import { Skeleton } from "@mui/material";
 import Image, { StaticImageData } from "next/image";
 import React, { useState } from "react";
 import { usePurchaseTickets, useTicketsView } from "src/api/tickets";
+import { useRouter } from "src/routes/hook";
 
 interface IEventTickets {
   eventId: string;
@@ -12,6 +13,7 @@ interface IEventTickets {
 import Ticket01 from "src/assets/frontend/images/event/ticket/ticket01.png";
 import Ticket02 from "src/assets/frontend/images/event/ticket/ticket02.png";
 import Ticket03 from "src/assets/frontend/images/event/ticket/ticket03.png";
+import { checkIfUserIsAuthenticated } from "src/utils/helper";
 
 const ticketIcons: Record<string, StaticImageData> = {
   EARLY_BIRD: Ticket01,
@@ -20,9 +22,10 @@ const ticketIcons: Record<string, StaticImageData> = {
 };
 
 const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId }) => {
+  const router = useRouter();
+
   const { tickets, isLoading } = useTicketsView(eventId, venueName, stateId);
 
-  console.log(tickets, "tickets====");
   const purchaseEventMutation = usePurchaseTickets();
 
   const [ticketQuantities, setTicketQuantities] = useState<{ [key: string]: number }>({});
@@ -72,6 +75,13 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId }) 
       quantity: number;
     }[]
   ) => {
+    const isAuthenticated = checkIfUserIsAuthenticated();
+    if (!isAuthenticated) {
+      router.push("/auth/user/login");
+      localStorage.setItem("currentPath", window.location.pathname);
+      return;
+    }
+
     const ticketsToBook = [];
 
     for (const ticketId in ticketQuantities) {
@@ -82,8 +92,6 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId }) 
         });
       }
     }
-    
-    console.log(ticketsToBook, "ticketsToBook")
 
     await purchaseEventMutation.mutateAsync({
       eventId,
