@@ -23,7 +23,7 @@ export function useUsers(queryParameters: QueryParameters = {}) {
 
   return {
     users,
-    totalResults: data?.totalResults || 0,
+    totalResults: data?.totalCount || 0,
     loading: isLoading,
     error,
   };
