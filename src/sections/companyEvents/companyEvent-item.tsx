@@ -112,7 +112,7 @@ export default function CompanyEventItem({ event, onView, onEdit, onDelete,onAss
           icon: <Iconify icon="mingcute:location-fill" sx={{ color: 'error.main' }} />,
         },
         {
-          label: venues[0]?.eventDate ? moment(venues[0]?.eventDate).format('MMMM D, h A') : '',
+          label: venues && venues[0]?.eventDate ? moment(venues[0]?.eventDate).format('MMMM D, h A') : '',
           icon: <Iconify icon="solar:clock-circle-bold" sx={{ color: 'info.main' }} />,
         },
         {
