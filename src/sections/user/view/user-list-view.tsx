@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // @mui
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -59,7 +59,7 @@ const defaultFilters: IUserTableFilters = {
 
 export default function UserListView() {
   const table = useTable({
-    defaultRowsPerPage: 10,
+    defaultRowsPerPage: 15,
   });
   const { users, totalResults, loading } = useUsers({page:table?.page, limit:table?.rowsPerPage});
 
@@ -68,6 +68,7 @@ export default function UserListView() {
   const confirm = useBoolean();
 
   const [filters, setFilters] = useState(defaultFilters);
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const handleFilters = (filterName:any, value:any) => {
     setFilters((currentFilters) => ({
@@ -84,12 +85,15 @@ export default function UserListView() {
     }));
   };
 
-  const filteredUsers = users?.filter((user:any) => 
-    (filters.role.length === 0 || filters.role.includes(user.role)) &&
-    (user.name.toLowerCase().includes(filters.name) || user.email.toLowerCase().includes(filters.name))
-  );
-  
 
+  useEffect(() => {
+    const filtered = users?.filter((user:any) => 
+      (filters?.role?.length === 0 || filters?.role.includes(user?.role)) &&
+      (user.name.toLowerCase().includes(filters.name.toLowerCase()) || user.email.toLowerCase().includes(filters.name.toLowerCase()))
+    );
+    setFilteredUsers(filtered);
+  }, [users, filters,table?.rowsPerPage]);
+  
   return (
     <>
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -163,11 +167,13 @@ export default function UserListView() {
             count={totalResults} 
             page={table.page}
             rowsPerPage={table.rowsPerPage}
-            onPageChange={(event, newPage) => table.setPage(newPage)}
+            onPageChange={(event, newPage) => {
+              table.setPage(newPage + 1)
+            }}
             onRowsPerPageChange={(event) => {
             const newRowsPerPage = parseInt(event.target.value, 10);
             table.setRowsPerPage(newRowsPerPage);
-            table.setPage(0); 
+            table.setPage(1); 
             }}
           />
         </Card>

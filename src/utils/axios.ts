@@ -91,7 +91,7 @@ export const endpoints = {
     create: '/superadmin/add-new-event',
     update: (id: string) => `superadmin/events/${id}`,
     details: (id: any) => `/events/${id}`,
-    remove: (id: string) => `/events/${id}`,
+    remove: (id: string) => `superadmin/events/${id}`,
     removeItem: (id: string) => `/events/edit/remove-event-items/${id}`,
     addItem: (id: string) => `/events/edit/add-event-items/${id}`,
     detailsBySlug: (slug: string) => `/events/slug/${slug}`,
