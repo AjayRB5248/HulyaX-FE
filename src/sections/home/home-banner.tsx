@@ -46,9 +46,9 @@ interface EventBannerProps {
 const EventBanner: React.FC<EventBannerProps> = ({ event, posterImage }) => {
   const nearestEvent: any = event?.childEvents?.[0];
   const _startDate = nearestEvent?.venues?.[0]?.eventDate ?? "";
-  const timezone = event?.states?.find((state: any) => state._id === nearestEvent?.state)?.timeZone;
+  const timezone = event?.states?.find((state: any) => state._id === nearestEvent?.state?._id)?.timeZone;
 
-  const eventStartDate = moment(_startDate).tz(timezone).format("MM/DD/YYYY HH:mm");
+  const eventStartDate = moment(_startDate)?.tz(timezone)?.format("MM/DD/YYYY HH:mm");
 
   const { days, hours, minutes, seconds } = useCountdownDate(new Date(eventStartDate));
 
