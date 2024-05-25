@@ -319,7 +319,9 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
         {renderTicketDetails()}
 
         <Divider sx={{ borderStyle: "dashed", my: 5 }} />
-
+        <Typography variant="h6" gutterBottom>
+            Event Description
+          </Typography>
         <Markdown children={parentEvent?.eventDescription} />
         {parentEvent?.tags?.length > 0 &&  <Box sx={{ mt: 4 }}>
          <Typography variant="h6" gutterBottom>

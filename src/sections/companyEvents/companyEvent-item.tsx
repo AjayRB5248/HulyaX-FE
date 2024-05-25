@@ -51,8 +51,6 @@ export default function CompanyEventItem({ event, onView, onEdit, onDelete,onAss
     state,
   } = event;
 
-  console.log({mabisha:event})
-
   const primaryImage = parentEvent?.images?.find((image:any) => image?.isPrimary);
   const renderImages = (
     <Stack
@@ -93,9 +91,6 @@ export default function CompanyEventItem({ event, onView, onEdit, onDelete,onAss
     />
   );
 
-  const venueNames = venues?.map((venue:any) => venue.city).join('-');
-  const venuesDate = venues?.map((venue:any) =>  `${fDate(venue.eventDate)}`).join('-');
-
   const renderInfo = (
     <Stack
       spacing={1.5}
@@ -114,7 +109,7 @@ export default function CompanyEventItem({ event, onView, onEdit, onDelete,onAss
           icon: <Iconify icon="mingcute:location-fill" sx={{ color: 'error.main' }} />,
         },
         {
-          label: venues?.[0]?.eventDate ? moment(venues[0]?.eventDate).format('MMMM D, h A') : '',
+          label: venues && venues[0]?.eventDate ? moment(venues[0]?.eventDate).format('MMMM D, h A') : 'No Date Added Yet',
           icon: <Iconify icon="solar:clock-circle-bold" sx={{ color: 'info.main' }} />,
         },
         {

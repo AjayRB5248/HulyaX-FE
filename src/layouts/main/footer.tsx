@@ -3,7 +3,7 @@ import Link from "next/link";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
 import FooterBackground from "src/assets/frontend/images/event1.jpg";
-import FooterLogo from "src/assets/frontend/images/hulyalogomain.png";
+import FooterLogo from "src/assets/frontend/images/hulyaXfinalLogo.png";
 import axiosInstance from "src/utils/axios";
 
 const socialIcons = [
@@ -53,6 +53,7 @@ export default function Footer() {
       return;
     }
     enqueueSnackbar("Subscribed Successfully", { variant: "success" });
+    setEmail("");
     // axiosInstance
     //   .post(`/subscribe`, { email })
     //   .then((response: any) => {
@@ -79,7 +80,7 @@ export default function Footer() {
           <div className="newslater-container bg_img" style={{ backgroundImage: `url(${FooterBackground.src})` }}>
             <div className="newslater-wrapper">
               <h5 className="cate">subscribe to HulyaX</h5>
-              <h3 className="title">to get exclusive benefits</h3>
+              <h3 className="title">to get notify about New Events</h3>
               <form className="newslater-form">
                 <input
                   type="text"

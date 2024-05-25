@@ -16,7 +16,7 @@ const MobileApp = () => {
               <div className="content">
                 <h3 className="title">HulyaX App Launching Soon</h3>
                 <p>
-                  Discover the Hulya Events App: Scan for exclusive event details and unlock a world of unforgettable
+                  Discover the HulyaX App: Scan for exclusive event details and unlock a world of unforgettable
                   experiences.
                 </p>
                 <ul className="app-button">

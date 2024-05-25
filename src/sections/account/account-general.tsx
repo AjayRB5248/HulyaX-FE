@@ -39,14 +39,14 @@ export default function AccountGeneral() {
   const UpdateUserSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     email: Yup.string().required("Email is required").email("Email must be a valid email address"),
-    profilePicture: Yup.mixed().nullable(),
+    profileImage: Yup.mixed().nullable(),
     // mobileNumber: Yup.string().required("Phone number is required"),
   });
 
   const defaultValues = {
     name: user?.name || "",
     email: user?.email || "",
-    profilePicture: user?.profilePicture || null,
+    profileImage: user?.profilePicture || null,
     mobileNumber: user?.mobileNumber || "",
   };
 
@@ -136,16 +136,16 @@ export default function AccountGeneral() {
       });
 
       if (file) {
-        setValue("profilePicture", newFile, { shouldValidate: true });
+        setValue("profileImage", newFile, { shouldValidate: true });
       }
     },
     [setValue]
   );
 
-  const onSubmitAvatar = async (data: { profilePicture: string }) => {
+  const onSubmitAvatar = async (data: { profileImage: string }) => {
     try {
       const formData = new FormData();
-      formData.append("profile-picture", data.profilePicture);
+      formData.append("profileImage", data.profileImage);
       await updateAvatarMutation.mutateAsync(formData, {
         onSuccess: () => {
           refetchUser();
@@ -157,12 +157,12 @@ export default function AccountGeneral() {
   };
 
   useEffect(() => {
-    if (watchedFields?.profilePicture && watchedFields?.profilePicture !== user?.profilePicture) {
+    if (watchedFields?.profileImage && watchedFields?.profileImage !== user?.profilePicture) {
       handleSubmit(() => {
-        onSubmitAvatar({ profilePicture: watchedFields.profilePicture });
+        onSubmitAvatar({ profileImage: watchedFields?.profileImage });
       })();
     }
-  }, [watchedFields?.profilePicture]);
+  }, [watchedFields?.profileImage]);
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit} className="user-profile--form">
@@ -176,7 +176,7 @@ export default function AccountGeneral() {
         <Grid xs={12} md={4}>
           <Card sx={{ pt: 10, pb: 5, px: 3, textAlign: "center" }}>
             <RHFUploadAvatar
-              name="profilePicture"
+              name="profileImage"
               maxSize={3145728}
               onDrop={handleDrop}
               helperText={
