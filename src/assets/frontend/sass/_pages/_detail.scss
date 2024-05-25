@@ -729,6 +729,11 @@
     border-radius: 0;
     margin-bottom: 0;
     height: auto;
+
+    &.disabled{
+      background-color: #878787;
+      cursor: not-allowed;
+    }
   }
 
   .title {

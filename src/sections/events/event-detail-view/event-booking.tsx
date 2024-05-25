@@ -113,7 +113,12 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
 
         {/* Tickets Type */}
         {showTickets && showTickets.selectedVenue && showTickets.state ? (
-          <EventTickets eventId={eventId} venueName={showTickets.selectedVenue} stateId={state?._id} />
+          <EventTickets
+            eventId={eventId}
+            venueName={showTickets.selectedVenue}
+            stateId={state?._id}
+            eventStatus={eventData?.status}
+          />
         ) : null}
       </ul>
     </div>

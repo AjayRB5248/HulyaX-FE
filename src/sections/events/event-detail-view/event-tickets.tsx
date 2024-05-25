@@ -8,12 +8,14 @@ interface IEventTickets {
   eventId: string;
   venueName: string;
   stateId: string;
+  eventStatus: string;
 }
 
 import Ticket01 from "src/assets/frontend/images/event/ticket/ticket01.png";
 import Ticket02 from "src/assets/frontend/images/event/ticket/ticket02.png";
 import Ticket03 from "src/assets/frontend/images/event/ticket/ticket03.png";
 import { checkIfUserIsAuthenticated } from "src/utils/helper";
+import { enqueueSnackbar } from "notistack";
 
 const ticketIcons: Record<string, StaticImageData> = {
   EARLY_BIRD: Ticket01,
@@ -21,7 +23,7 @@ const ticketIcons: Record<string, StaticImageData> = {
   VIP: Ticket03,
 };
 
-const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId }) => {
+const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId, eventStatus }) => {
   const router = useRouter();
 
   const { tickets, isLoading } = useTicketsView(eventId, venueName, stateId);
@@ -82,7 +84,7 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId }) 
       return;
     }
 
-    const ticketsToBook = [];
+    const ticketsToBook: any = [];
 
     for (const ticketId in ticketQuantities) {
       if (ticketQuantities.hasOwnProperty(ticketId)) {
@@ -91,6 +93,13 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId }) 
           quantity: ticketQuantities[ticketId],
         });
       }
+    }
+
+    if (ticketsToBook && ticketsToBook.length === 0) {
+      enqueueSnackbar("Please Choose Tickets First!", {
+        variant: "error",
+      });
+      return;
     }
 
     await purchaseEventMutation.mutateAsync({
@@ -149,8 +158,12 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId }) 
       </li>
 
       {/* Book Ticket */}
-      <button className="theme-button btn-book-ticket mb-10" onClick={() => handlePurchaseTickets(eventId, [])}>
-        book tickets
+      <button
+        className={`theme-button btn-book-ticket mb-10 ${eventStatus !== "ONGOING" ? "disabled" : ""}`}
+        disabled={eventStatus !== "ONGOING" ? true : false}
+        onClick={() => handlePurchaseTickets(eventId, [])}
+      >
+        {eventStatus === "ONGOING" ? "book tickets" : "Tickets In Sale Soon"}
         <i className="fa fa-ticket-alt ml-2"></i>
       </button>
     </>
