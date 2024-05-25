@@ -95,7 +95,7 @@ export default function BookingStatistics({ title, subheader, chart, ...other }:
         {series.map((item) => (
           <Box key={item.type} sx={{ mt: 3, mx: 3 }}>
             {item.type === seriesData && (
-              <Chart dir="ltr" type="bar" series={item.data} options={chartOptions} height={364} />
+              <Chart dir="ltr" type="bar" series={item.data} options={chartOptions} height={364}  width={"100%"} />
             )}
           </Box>
         ))}

@@ -94,7 +94,7 @@ export default function AppWidget({
       }}
       {...other}
     >
-      <Chart type="radialBar" series={[series]} options={chartOptions} width={86} height={86} />
+      <Chart type="radialBar" series={[series]} options={chartOptions} width={86} height={86}  />
 
       <ListItemText
         sx={{ ml: 3 }}
