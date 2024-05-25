@@ -79,7 +79,7 @@ export default function Footer() {
           <div className="newslater-container bg_img" style={{ backgroundImage: `url(${FooterBackground.src})` }}>
             <div className="newslater-wrapper">
               <h5 className="cate">subscribe to HulyaX</h5>
-              <h3 className="title">to get exclusive benefits</h3>
+              <h3 className="title">to get notify about New Events</h3>
               <form className="newslater-form">
                 <input
                   type="text"
