@@ -62,6 +62,7 @@ const EventDetail = () => {
         states={eventDetail?.parentEvent?.states}
         eventData={event}
         state={eventDetail?.state}
+        artists={eventDetail?.parentEvent?.artists}
       />
     </>
   );
