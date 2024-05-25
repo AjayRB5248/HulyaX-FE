@@ -121,7 +121,6 @@ export default function BookingCheckInWidgets({ chart, ...other }: Props) {
               series={[item.percent]}
               options={index === 1 ? chartOptionsCheckOut : chartOptionsCheckIn}
               {...CHART_SIZE}
-              width={"100%"}
             />
 
             <div>
