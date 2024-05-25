@@ -7,7 +7,6 @@ import ContactIcon from "src/assets/frontend/images/event/icon/event-icon03.png"
 
 const EventVenues: React.FC<any> = ({ eventData, states }) => {
   const getStateDetails = (stateId: string) => {
-
     const stateDetails = states && states.length > 0 && states.find((eachState: any) => eachState?._id === stateId);
     return stateDetails ?? {};
   };
@@ -16,28 +15,30 @@ const EventVenues: React.FC<any> = ({ eventData, states }) => {
       <div className="container-fluid">
         <div className="book-wrapper offset-lg-3">
           <div className="left-side">
-            {eventData?.map(
-              (eachEvent: any) =>
-                eachEvent?.venues &&
-                eachEvent?.venues?.length > 0 &&
-                eachEvent?.venues?.map((eachVenue: any) => {
-                  const stateName = getStateDetails(eachVenue?.venueId?.state)?.stateName;
-                  return (
-                    <div className="item" key={eachVenue._id}>
-                      <div className="item-thumb">
-                        <Image src={VenueIcon} alt={eachVenue.venueId?.venueName} className="venue-icon" />
+            {eventData &&
+              eventData.length > 0 &&
+              eventData?.map(
+                (eachEvent: any) =>
+                  eachEvent?.venues &&
+                  eachEvent?.venues?.length > 0 &&
+                  eachEvent?.venues?.map((eachVenue: any) => {
+                    const stateName = getStateDetails(eachVenue?.venueId?.state)?.stateName;
+                    return (
+                      <div className="item" key={eachVenue._id}>
+                        <div className="item-thumb">
+                          <Image src={VenueIcon} alt={eachVenue.venueId?.venueName} className="venue-icon" />
+                        </div>
+                        <div className="item-content">
+                          <span className="up">
+                            {eachVenue.venueId?.venueName}, {stateName}
+                          </span>
+                          <span>{eachVenue.city}</span>
+                          <div className="item-date">{moment(eachVenue.eventDate).format("MMM DD, YYYY")}</div>
+                        </div>
                       </div>
-                      <div className="item-content">
-                        <span className="up">
-                          {eachVenue.venueId?.venueName}, {stateName}
-                        </span>
-                        <span>{eachVenue.city}</span>
-                        <div className="item-date">{moment(eachVenue.eventDate).format("MMM DD, YYYY")}</div>
-                      </div>
-                    </div>
-                  );
-                })
-            )}
+                    );
+                  })
+              )}
             <div className="item">
               <div className="item-thumb">
                 <Image src={ContactIcon} alt="Contact Icon" className="contact-icon" />
