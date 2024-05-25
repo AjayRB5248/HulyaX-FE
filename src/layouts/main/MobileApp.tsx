@@ -21,12 +21,12 @@ const MobileApp = () => {
                 </p>
                 <ul className="app-button">
                   <li>
-                    <a href="#0">
+                    <a href="/">
                       <Image src={AppImg3} alt="apps" />
                     </a>
                   </li>
                   <li>
-                    <a href="#0">
+                    <a href="/">
                       <Image src={AppImg2} alt="apps" />
                     </a>
                   </li>
