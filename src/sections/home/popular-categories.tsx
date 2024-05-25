@@ -15,6 +15,8 @@ import SacarPoster from "src/assets/frontend/images/event/SacarPoster.jpeg";
 import NeeteshPoster from "src/assets/frontend/images/event/NeeteshConcert.jpg";
 import { PlayButtonSVG } from "src/components/icons";
 import Link from "next/link";
+import { useState } from "react";
+import VideoDialog from "src/components/video-dialog";
 
 const PopularCategories = () => {
   const settings = {
@@ -29,6 +31,8 @@ const PopularCategories = () => {
     // cssEase: "linear",
     // pauseOnHover: true,
   };
+
+  const [playVideo, setPlayVideo] = useState(false);
 
   return (
     <section className="section-wrapper section--popular-categories">
@@ -117,10 +121,10 @@ const PopularCategories = () => {
 
           <div className="col-12 col-md-12">
             <Slider {...settings} className="slider-wrapper">
-              <div className="popular-categories-slider">
-                <a className="button is-play" href="#">
+              <div className="popular-categories-slider" onClick={() => setPlayVideo(true)}>
+                <div className="button is-play">
                   <PlayButtonSVG />
-                </a>
+                </div>
 
                 <Image src={PopularCategory01} alt="Image" />
                 <div className="overlay"></div>
@@ -131,9 +135,9 @@ const PopularCategories = () => {
 
                   <h3 className="event-title">Nepathya Live in Sydney</h3>
 
-                  <Link href={`/events`}>
+                  {/* <Link href={`/events`}>
                     <button className="theme-button theme-button--sm">Reserve Seat for Events Now</button>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
 
@@ -170,6 +174,15 @@ const PopularCategories = () => {
           </div>
         </div>
       </div>
+
+      {playVideo && (
+        <VideoDialog
+          title="Nepathya Live Sydney"
+          videoUrl=""
+          open={playVideo}
+          handleClose={() => setPlayVideo(false)}
+        />
+      )}
     </section>
   );
 };
