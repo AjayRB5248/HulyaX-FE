@@ -9,8 +9,9 @@ import { _bookings, _bookingNew, _bookingReview } from 'src/_mock';
 // assets
 import {
   BookingIllustration,
-  CheckInIllustration,
+  TicketSoldIllustration,
   CheckOutIllustration,
+  OrderCompleteIllustration,
 } from 'src/assets/illustrations';
 // components
 import { useSettingsContext } from 'src/components/settings';
@@ -112,11 +113,11 @@ useEffect(() => {
         </Grid>
 
         <Grid xs={12} md={4}>
-          <BookingWidgetSummary title="Ticket Sold" dollar={false} total={soldTickets ? soldTickets : 0} icon={<CheckInIllustration />} />
+          <BookingWidgetSummary title="Ticket Sold" dollar={false} total={soldTickets ? soldTickets : 0} icon={<TicketSoldIllustration />} />
         </Grid>
 
         <Grid xs={12} md={4}>
-          <BookingWidgetSummary title="Sold Ticket Amount" dollar={true} total={totalSoldInDollars ? totalSoldInDollars : 0} icon={<CheckOutIllustration />} />
+          <BookingWidgetSummary title="Sold Ticket Amount" dollar={true} total={totalSoldInDollars ? totalSoldInDollars : 0} icon={<OrderCompleteIllustration />} />
         </Grid>
 
         <Grid container xs={12}>
