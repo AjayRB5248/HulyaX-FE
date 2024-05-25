@@ -7,11 +7,17 @@ interface SocialPlatform {
 }
 
 const socialPlatforms: SocialPlatform[] = [
-  { name: "Facebook", icon: "fab fa-facebook-f", url: "https://www.facebook.com/sharer/sharer.php?u=" },
-  { name: "Twitter", icon: "fab fa-twitter", url: "https://twitter.com/intent/tweet?url=" },
-  { name: "Pinterest", icon: "fab fa-pinterest-p", url: "https://pinterest.com/pin/create/button/?url=" },
-  { name: "LinkedIn", icon: "fab fa-linkedin-in", url: "https://www.linkedin.com/shareArticle?url=" },
-  { name: "GooglePlus", icon: "fab fa-google-plus-g", url: "https://plus.google.com/share?url=" },
+  {
+    name: "Facebook",
+    icon: "fab fa-facebook-f",
+    url: "https://www.facebook.com/profile.php?id=61555048269687&mibextid=LQQJ4d",
+  },
+  {
+    name: "Instagram",
+    icon: "fab fa-instagram",
+    url: "https://www.instagram.com/events.hulya?igshid=dDZsdWFmNmQ0b2tw&utm_source=qr",
+  },
+  { name: "GooglePlus", icon: "fab fa-google-plus-g", url: "mailto:info@hulyaevents.com.au" },
 ];
 
 interface SocialShareProps {
