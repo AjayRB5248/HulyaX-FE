@@ -1,7 +1,7 @@
 import EventsList from "src/sections/events-list";
 
 export const metadata = {
-  title: "Trending Hulya Events",
+  title: "Trending HulyaX",
 };
 
 export default function EventsListPage() {

@@ -4,7 +4,7 @@ import { UserRegisterView } from "src/sections/auth/user";
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: "Register with Hulya Events",
+  title: "Register with HulyaX",
 };
 
 export default function LoginPage() {

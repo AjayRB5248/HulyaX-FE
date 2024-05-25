@@ -49,7 +49,7 @@ import { AuthProvider } from "src/auth/context/users/auth-context";
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: "Hulya Events",
+  title: "Hulya X",
   description:
     "Event Management Company in Australia",
   keywords: "react,material,kit,application,dashboard,admin,template",
