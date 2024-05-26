@@ -15,10 +15,10 @@ import { useState } from "react";
 import { useFetchEvents } from "src/api/events";
 import ArtistImg from "src/assets/frontend/images/event/Sacar.jpeg";
 import VenueIcon from "src/assets/frontend/images/event/icon/event-icon02.png";
-import { EventProps, SubEventProps, Venue } from "src/types/events";
+import { EachEventProps, EventProps, Venue } from "src/types/events";
 import Link from "next/link";
 import moment from "moment";
-import { formatDate } from "src/utility";
+import { formatDate } from "src/utils/format-date";
 
 interface EventData {
   imageUrl: StaticImageData;
@@ -29,61 +29,10 @@ interface EventData {
   tags?: string[];
 }
 
-const eventsData: EventData[] = [
-  {
-    imageUrl: EventImg1,
-    date: "28",
-    month: "DEC",
-    title: "SACAR Concert",
-    venue: "27 Montague Street, Sydney",
-    tags: ["Now Showing", "Exclusive"],
-  },
-  {
-    imageUrl: EventImg2,
-    date: "28",
-    month: "DEC",
-    title: "SACAR Concert",
-    venue: "27 Montague Street, Sydney",
-    tags: ["Now Showing", "Exclusive"],
-  },
-  // {
-  //   imageUrl: EventImg3,
-  //   date: "28",
-  //   month: "DEC",
-  //   title: "SACAR Concert",
-  //   venue: "27 Montague Street, Sydney",
-  //   tags: ["Now Showing", "Exclusive"],
-  // },
-  // {
-  //   imageUrl: EventImg4,
-  //   date: "28",
-  //   month: "DEC",
-  //   title: "SACAR Concert",
-  //   venue: "27 Montague Street, Sydney",
-  //   tags: ["Now Showing", "Exclusive"],
-  // },
-  // {
-  //   imageUrl: SportsEvent,
-  //   date: "28",
-  //   month: "DEC",
-  //   title: "SACAR Concert 2024",
-  //   venue: "27 Montague Street, Sydney",
-  //   tags: ["Now Showing", "Exclusive"],
-  // },
-  // {
-  //   imageUrl: EventImg4,
-  //   date: "28",
-  //   month: "DEC",
-  //   title: "SACAR Concert",
-  //   venue: "27 Montague Street, Sydney",
-  //   tags: ["Now Showing", "Exclusive"],
-  // },
-];
-
 const tabItems = [
   {
     id: 1,
-    title: "Coming Soon",
+    title: "Upcoming",
   },
   {
     id: 2,
@@ -92,13 +41,13 @@ const tabItems = [
 ];
 
 const statusMapper: any = {
-  "Coming Soon": "PLANNED",
+  Upcoming: "PLANNED",
   "Past Events": "COMPLETED",
 };
 
-const getClosestEvent = (events: any): { event: SubEventProps; closestVenue: Venue } | null => {
+const getClosestEvent = (events: any): { event: EachEventProps; closestVenue: Venue } | null => {
   const today = new Date();
-  let closestEvent: { event: SubEventProps; closestVenue: Venue } | null = null;
+  let closestEvent: { event: EachEventProps; closestVenue: Venue } | null = null;
 
   events.forEach((event: any) => {
     event?.venues?.forEach((venue: Venue) => {
@@ -117,15 +66,17 @@ const getClosestEvent = (events: any): { event: SubEventProps; closestVenue: Ven
 };
 
 const EventsCarousel: React.FC<EventProps> = ({ events }) => {
-  const [activeTab, setActiveTab] = useState<string>("Coming Soon");
+  const [activeTab, setActiveTab] = useState<string>("Upcoming");
 
-  // Get Featured and Nearest Event to show in Featured Left Section
-  const featuredEvents = events?.filter(
-    (event: SubEventProps) => event?.parentEvent?.tags.includes("FEATURED") && event?.status === statusMapper[activeTab]
-  );
-  const closestEvent = getClosestEvent(featuredEvents);
+  const filteredEvents = events?.filter((event: EachEventProps) => event?.status === statusMapper[activeTab]);
 
-  const remainingEvents = featuredEvents.filter((event) => closestEvent && event !== closestEvent.event);
+  // const closestEvent = getClosestEvent(filteredEvents);
+
+  const featuredEvent: any = filteredEvents?.find((event: EachEventProps) => event.tags?.includes("FEATURED"));
+
+  const remainingEvents = featuredEvent
+    ? filteredEvents.filter((event: any) => featuredEvent && event?._id !== featuredEvent?._id)
+    : filteredEvents;
 
   return (
     <section className="event-section section-wrapper">
@@ -146,28 +97,28 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
 
         <div className="row events-row">
           {/* Put Carousel Later - Only Featured and Closest Event */}
-          {closestEvent && (
+          {featuredEvent && (
             <div className="col-12 col-md-4 left-col">
               <div className="event-grid featured">
                 <div className="movie-thumb c-thumb">
                   <div className="overlay"></div>
-                  <Link href={`/events/${closestEvent.event?.parentEvent?.slug}`}>
+                  <Link href={`/events/${featuredEvent.slug}`}>
                     <Image
-                      src={closestEvent?.event?.parentEvent?.images?.[1]?.imageurl}
-                      alt={closestEvent?.event?.parentEvent?.eventName}
+                      src={featuredEvent?.images?.[1]?.imageurl ?? featuredEvent?.images?.[0]?.imageurl}
+                      alt={featuredEvent?.eventName}
                       width={800}
                       height={1200}
                     />
                   </Link>
 
                   <div className="event-date">
-                    <h6 className="date-title">{formatDate(closestEvent.closestVenue.eventDate).day}</h6>
-                    <span>{formatDate(closestEvent.closestVenue.eventDate).month}</span>
+                    <h6 className="date-title">
+                      {formatDate(featuredEvent.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}
+                    </h6>
+                    <span>{formatDate(featuredEvent.childEvents?.[0]?.venues?.[0]?.eventDate)?.month}</span>
                   </div>
                   <h5 className="event-title">
-                    <Link href={`/events/${closestEvent.event?.parentEvent?.slug}`}>
-                      {closestEvent?.event?.parentEvent?.eventName}
-                    </Link>
+                    <Link href={`/events/${featuredEvent.slug}`}>{featuredEvent?.eventName}</Link>
                   </h5>
                 </div>
               </div>
@@ -182,20 +133,22 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
                     <div className="event-grid">
                       <div className="movie-thumb c-thumb">
                         <div className="overlay"></div>
-                        <a href="#0">
+                        <Link href={`/events/${event.slug}`}>
                           <Image
-                            src={event.parentEvent?.images?.[1]?.imageurl}
-                            alt={event.parentEvent?.eventName}
+                            src={event?.images?.[1]?.imageurl ?? event?.images?.[0]?.imageurl}
+                            alt={event?.eventName}
                             width={800}
                             height={1200}
                           />
-                        </a>
+                        </Link>
                         <div className="event-date">
-                          <h6 className="date-title">{formatDate(event.venues?.[0]?.eventDate).day}</h6>
-                          <span>{formatDate(event.venues?.[0]?.eventDate).month}</span>
+                          <h6 className="date-title">
+                            {formatDate(event.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}
+                          </h6>
+                          <span>{formatDate(event.childEvents?.[0]?.venues?.[0]?.eventDate)?.month}</span>
                         </div>
                         <h5 className="event-title">
-                          <a href="#0">{event.parentEvent?.eventName}</a>
+                          <Link href={`/events/${event.slug}`}>{event?.eventName}</Link>
                         </h5>
                       </div>
                     </div>
@@ -203,41 +156,6 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
                 ))}
             </div>
           </div>
-        </div>
-
-        <div className="tab">
-          {/* <div className="section-header-2">
-            <div className="left">
-              <h2 className="title">events</h2>
-              <p>Be sure not to miss these Event today.</p>
-            </div>
-            <ul className="tab-menu">
-              {tabItems.map((tabItem) => (
-                <li className={tabItem.title === activeTab ? "active" : ""} onClick={() => setActiveTab(tabItem.title)}>
-                  {tabItem.title}
-                </li>
-              ))}
-            </ul>
-          </div> */}
-          {/* <div className="tab-area mb-30-none">
-            {activeTab === "Now Showing" && (
-              <div className={`tab-item active`}>
-                <EventCarouselItem events={filteredEvents} />
-              </div>
-            )}
-
-            {activeTab === "Coming soon" && (
-              <div className={`tab-item active`}>
-                <EventCarouselItem events={filteredEvents} />
-              </div>
-            )}
-
-            {activeTab === "Exclusive" && (
-              <div className={`tab-item active`}>
-                <EventCarouselItem events={filteredEvents} />
-              </div>
-            )}
-          </div> */}
         </div>
       </div>
     </section>

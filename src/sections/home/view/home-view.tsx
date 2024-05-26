@@ -13,6 +13,7 @@ import EventsSlider from "../events-slider";
 import PopularCategories from "../popular-categories";
 import BannerSlider from "../banner-slider";
 import { EVENTS_MOCK_DATA } from "src/_mock/_events";
+import { EventStatusEnum } from "src/sections/tour/utils";
 
 export default function HomeView() {
   const { events } = useFetchEvents();
@@ -21,14 +22,11 @@ export default function HomeView() {
 
   return (
     <MainLayout>
-      <Banner
-        // events={events}
-        events={EVENTS_MOCK}
-      />
+      <Banner events={events} />
       {/* <TicketSearch /> */}
-      <EventsCarousel events={EVENTS_MOCK} />
+      <EventsCarousel events={events} />
       <MobileApp />
-      <EventsSlider events={EVENTS_MOCK?.filter((event: any) => event.status !== "COMPLETED")} />
+      <EventsSlider events={events?.filter((event: any) => event.status !== EventStatusEnum.COMPLETED)} />
       <PopularCategories />
       <Artists />
       <BannerSlider />

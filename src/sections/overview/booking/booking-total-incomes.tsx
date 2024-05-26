@@ -132,7 +132,7 @@ export default function BookingTotalIncomes({
         </div>
       </Stack>
 
-      <Chart type="line" series={[{ data: series }]} options={chartOptions} height={118} />
+      <Chart type="line" series={[{ data: series }]} options={chartOptions} height={118}  width={"100%"} />
     </Stack>
   );
 }

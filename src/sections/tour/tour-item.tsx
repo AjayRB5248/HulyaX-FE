@@ -185,13 +185,14 @@ export default function TourItem({
           View
         </MenuItem>
         <MenuItem
+          sx={{ marginRight: 2 }}
           onClick={() => {
             popover.onClose();
             onAssignVenue();
           }}
         >
           <Iconify icon='solar:eye-bold' />
-          Asigin Venue
+          Assign Venue
         </MenuItem>
 
         {/* <MenuItem

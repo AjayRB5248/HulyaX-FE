@@ -9,7 +9,6 @@ interface NiceSelectProps {
 }
 
 const NiceSelect: React.FC<NiceSelectProps> = ({ onSelectChange }) => {
-  console.log(onSelectChange, "onSelectChange!!!");
   useEffect(() => {
     if (onSelectChange) {
       const $select = $("select");

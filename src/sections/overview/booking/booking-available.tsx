@@ -77,7 +77,7 @@ export default function BookingAvailable({ title, subheader, chart, ...other }: 
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 8 }} />
 
-      <Chart type="radialBar" series={[chartSeries]} options={chartOptions} height={310} />
+      <Chart type="radialBar" series={[chartSeries]} options={chartOptions} height={310}  width={"100%"} />
 
       <Stack spacing={2} sx={{ p: 5 }}>
         {series.map((item) => (

@@ -5,7 +5,8 @@ import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import { Box } from "@mui/system";
 import { useCountdownDate } from "src/hooks/use-countdown";
-import { EventProps } from "src/types/events";
+import { EachEventProps, EventProps } from "src/types/events";
+import { EventStatusEnum } from "../tour/utils";
 
 const settings = {
   dots: true,
@@ -22,36 +23,34 @@ const Banner: React.FC<EventProps> = ({ events }) => {
     Array.isArray(events) &&
     events.length > 0 &&
     events.filter(
-      (eachEvent) =>
-        eachEvent.parentEvent?.tags?.includes("FEATURED") && ["PLANNED", "ONGOING"].includes(eachEvent.status)
+      (eachEvent) => eachEvent.tags?.includes("FEATURED") && [EventStatusEnum.ONGOING].includes(eachEvent.status)
     );
 
   return (
     <Slider {...settings} className="banner-slider">
       {Array.isArray(featuredEvents) &&
         featuredEvents.map((featuredEvent) => {
-          const posterImage = featuredEvent.parentEvent?.images?.find((eventImg) => eventImg?.isPrimary)?.imageurl;
+          const posterImage = featuredEvent.images?.find((eventImg) => eventImg?.isPrimary)?.imageurl;
 
-          // TODO: REMOVE USED FOR MOCK
-          const posterImageURL = `http://localhost:8081${posterImage?.src}`;
-
-          return <EventBanner key={featuredEvent.id} event={featuredEvent} posterImage={posterImageURL} />;
+          return <EventBanner key={featuredEvent.id} event={featuredEvent} posterImage={posterImage} />;
         })}
     </Slider>
   );
 };
 
 interface EventBannerProps {
-  event: FeaturedEvent;
+  event: EachEventProps;
   posterImage?: string;
 }
 
 const EventBanner: React.FC<EventBannerProps> = ({ event, posterImage }) => {
-  const _startDate = event.venues?.[0]?.eventDate ?? "";
-  const timezone = event.state?.timeZone;
-  // const eventStartDate = moment(_startDate).tz(timezone).format("MM/DD/YYYY HH:mm");
+  const nearestEvent: any = event?.childEvents?.[0];
+  const _startDate = nearestEvent?.venues?.[0]?.eventDate ?? "";
+  const timezone = event?.states?.find((state: any) => state._id === nearestEvent?.state?._id)?.timeZone;
 
-  const { days, hours, minutes, seconds } = useCountdownDate(new Date(_startDate));
+  const eventStartDate = moment(_startDate)?.tz(timezone)?.format("MM/DD/YYYY HH:mm");
+
+  const { days, hours, minutes, seconds } = useCountdownDate(new Date(eventStartDate));
 
   return (
     <div className="banner-section">
@@ -59,9 +58,9 @@ const EventBanner: React.FC<EventBannerProps> = ({ event, posterImage }) => {
       <div className="container">
         <div className="banner-content">
           <h1 className="title cd-headline clip">
-            <span className="d-block">{event.parentEvent?.eventName}</span>
+            <span className="d-block">{event.eventName}</span>
           </h1>
-          <p dangerouslySetInnerHTML={{ __html: event.parentEvent?.eventDescription }} />
+          <p dangerouslySetInnerHTML={{ __html: event.eventDescription }} />
           <Stack
             direction="row"
             justifyContent="start"
@@ -75,7 +74,7 @@ const EventBanner: React.FC<EventBannerProps> = ({ event, posterImage }) => {
             <TimeBlock label="Minutes" value={minutes} />
             <TimeBlock label="Seconds" value={seconds} />
           </Stack>
-          <Link href={`/events/${event.parentEvent?.slug}`}>
+          <Link href={`/events/${event.slug}`}>
             <button className="mt-5 theme-button">Buy Ticket Now</button>
           </Link>
         </div>

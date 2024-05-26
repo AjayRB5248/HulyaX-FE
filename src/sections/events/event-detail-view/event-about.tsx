@@ -6,13 +6,23 @@ import EventSponsors from "./event-sponsors";
 import EventArtists from "./event-artists";
 import EventBooking from "./event-booking";
 
-const EventAbout: React.FC<any> = ({ eventId, eventDescription, eventImages, sponsors, venues, state }) => {
+const EventAbout: React.FC<any> = ({
+  eventId,
+  eventDescription,
+  eventImages,
+  sponsors,
+  venues,
+  state,
+  states,
+  eventData,
+  artists,
+}) => {
   return (
     <section className="movie-details-section padding-top padding-bottom">
       <div className="container-fluid">
         <div className="row justify-content-center flex-wrap-reverse mb--50 no-gutters">
           <div className="col-lg-5 col-sm-10 col-md-6">
-            <EventBooking eventId={eventId} venues={venues} state={state} />
+            <EventBooking eventId={eventId} venues={venues} state={state} states={states} eventData={eventData} />
           </div>
 
           <div className="col-lg-7">
@@ -34,7 +44,7 @@ const EventAbout: React.FC<any> = ({ eventId, eventDescription, eventImages, spo
                     {/* Sponsors and Organizers */}
                     <EventSponsors sponsors={sponsors} />
                     {/* Artists */}
-                    <EventArtists sponsors={sponsors} />
+                    <EventArtists artists={artists} />
                   </div>
                 </div>
               </div>

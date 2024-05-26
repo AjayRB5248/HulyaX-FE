@@ -15,15 +15,24 @@ interface ParentEvent {
   slug: string;
 }
 
-export interface SubEventProps {
+interface ChildEventProps {
+  venues: Venue[];
+}
+
+export interface EachEventProps {
   id: string;
   slug: string;
-  parentEvent: ParentEvent;
   venues?: Venue[];
   status: string;
   state: any;
+  eventName: string;
+  eventDescription: string;
+  images: EventImage[];
+  tags: string[];
+  childEvents: ChildEventProps[];
+  states: any;
 }
 
 export interface EventProps {
-  events: SubEventProps[];
+  events: EachEventProps[];
 }

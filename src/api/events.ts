@@ -156,14 +156,16 @@ export const useFetchEvents = (queryData?: Filters) => {
   const { setEvents } = useEventsContext();
 
   const { data, isLoading, isError, isFetching, error } = useQuery(["events", queryData], async () => {
-    const events = await EventsService.fetchAllEvents().then((res) => res?.data?.subEvents);
-
+    const events = await EventsService.list().then((res) => res?.data?.events);
     setEvents(events);
     return events;
   });
 
+  const filteredEventData =
+    data && data.filter((filteredEvent: any) => filteredEvent.states?.length > 0 && filteredEvent.venueData?.length > 0);
+
   return {
-    events: data || [],
+    events: filteredEventData || [],
     loading: isLoading,
     error: isError ? error : null,
     isFetching,
@@ -173,7 +175,7 @@ export const useFetchEvents = (queryData?: Filters) => {
 export function useEventDetailsBySlug(slug: string) {
   const { data, isLoading, isError, error } = useQuery(["events/slug", slug], async () => {
     const response = await EventsService.fetchSingleEventBySlug(slug);
-    return response?.data?.eventData?.[0];
+    return response?.data?.eventData;
   });
 
   const event = useMemo(() => data || {}, [data]);

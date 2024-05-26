@@ -4,46 +4,42 @@ import SelectField from "src/components/select-field/select-field";
 import withNiceSelect from "src/layouts/_common/nice-select/withNiceSelect";
 
 import EventTickets from "./event-tickets";
+import { checkIfUserIsAuthenticated } from "src/utils/helper";
 
-const EventBooking: React.FC<any> = ({ eventId, venues, state }) => {
-  console.log(eventId, venues, "EVENT BOOKING");
+const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData }) => {
+  const [statesOptions, setStatesOptions] = useState<any>([]);
+  const [selectedState, setSelectedState] = useState<any>(null);
+
   const [venuesOptions, setVenuesOptions] = useState<any>([]);
-  const [selectedVenue, setSelectedVenue] = useState<string>(venues?.[0]?.venueName);
-  console.log(selectedVenue, "selectedVenue====");
+  const [selectedVenue, setSelectedVenue] = useState<string>();
+
   const [eventDate, setEventDate] = useState<any>(
     moment(venues?.[0]?.eventDate).tz(venues?.[0]?.timeZone)?.format("DD MMM ddd, hh:mm A")
   );
   const [showTickets, setShowTickets] = useState<any>({});
 
-  // TODO: If there is multiple dates in array to select from
-  // const [venueDatesOptions, setVenueDatesOptions] = useState<any>(
-  //   venues?.[0]?.eventDate?.map((eachDate: string) => ({
-  //     value: eachDate,
-  //     label: moment(eachDate).tz(venues?.[0]?.timeZone).format("DD MMM ddd, hh:mm A"),
-  //   }))
-  // );
+  const handleSelectState = (value: any) => {
+    const venuesFound =
+      eventData && eventData.length > 0 && eventData.find((event: any) => event?.state?.stateName === value)?.venues;
+
+    if (venuesFound && venuesFound.length > 0) {
+      const venueList = venuesFound.map((eachVenue: any) => ({
+        id: eachVenue._id,
+        value: eachVenue.venueId?.venueName,
+        label: eachVenue.venueId?.venueName,
+      }));
+
+      setVenuesOptions([{ id: "", value: "", label: "Select Venue" }, ...venueList]);
+    }
+  };
 
   const handleVenueChange = (value: any) => {
-    console.log(value, "value ========== event booking");
     setSelectedVenue(value);
-
     const selectedEventVenue = venues.find((eachVenue: any) => eachVenue.venueId?.venueName === value);
-    console.log(selectedEventVenue, "selectedEventVenue ========== event booking");
+
     if (selectedVenue) {
-      // const selectedEventDate = moment(selectedEventVenue.eventDate).tz(state?.timeZone).format("DD MMM ddd, hh:mm A");
-
-      const selectedEventDate = moment(selectedEventVenue.eventDate).format("DD MMM ddd, hh:mm A");
-
-      console.log(selectedEventDate, "selectedEventDate ========== event booking");
-
+      const selectedEventDate = moment(selectedEventVenue?.eventDate).tz(state?.timeZone).format("DD MMM ddd, hh:mm A");
       setEventDate(selectedEventDate);
-
-      // setVenueDatesOptions(
-      //   selectedVenue?.eventDate?.map((eachDate: string) => ({
-      //     value: eachDate,
-      //     label: moment(eachDate).tz(selectedVenue.timeZone).format("DD MMM ddd, hh:mm A"),
-      //   }))
-      // );
     }
   };
 
@@ -56,22 +52,32 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state }) => {
   };
 
   useEffect(() => {
-    if (venues && venues.length > 0) {
-      const venueList = venues.map((eachVenue: any) => ({
-        id: eachVenue._id,
-        value: eachVenue.venueId?.venueName,
-        label: eachVenue.venueId?.venueName,
+    if (states && states.length > 0) {
+      const statesList = states.map((eachState: any) => ({
+        id: eachState._id,
+        value: eachState.stateName,
+        label: eachState.stateName,
       }));
 
-      setVenuesOptions(venueList);
-      setSelectedVenue(venueList[0]?.value);
-      setEventDate(moment(venues[0]?.eventDate).tz(venues[0]?.timeZone)?.format("DD MMM ddd, hh:mm A"));
+      setStatesOptions([{ id: "", value: "", label: "Select State" }, ...statesList]);
     }
-  }, [venues]);
+  }, [states]);
 
   return (
     <div className="booking-summery">
       <ul>
+        {/* Select State */}
+        <li>
+          <h6 className="subtitle">Select State:</h6>
+          <SelectField
+            className="info"
+            label="state"
+            options={statesOptions}
+            onSelectChange={(label: string, value: string) => {
+              handleSelectState(value);
+            }}
+          />
+        </li>
         {/* Select Venue */}
         <li>
           <h6 className="subtitle">Select Venue:</h6>
@@ -80,7 +86,6 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state }) => {
             label="venue"
             options={venuesOptions}
             onSelectChange={(label: string, value: string) => {
-              console.log("onSelectChange called with:", label, value);
               handleVenueChange(value);
             }}
           />
@@ -108,7 +113,12 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state }) => {
 
         {/* Tickets Type */}
         {showTickets && showTickets.selectedVenue && showTickets.state ? (
-          <EventTickets eventId={eventId} venueName={showTickets.selectedVenue} stateId={state?._id} />
+          <EventTickets
+            eventId={eventId}
+            venueName={showTickets.selectedVenue}
+            stateId={state?._id}
+            eventStatus={eventData?.status}
+          />
         ) : null}
       </ul>
     </div>
