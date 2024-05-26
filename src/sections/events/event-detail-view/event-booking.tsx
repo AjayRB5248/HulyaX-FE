@@ -6,7 +6,7 @@ import withNiceSelect from "src/layouts/_common/nice-select/withNiceSelect";
 import EventTickets from "./event-tickets";
 import { checkIfUserIsAuthenticated } from "src/utils/helper";
 
-const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData }) => {
+const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData, eventStatus }) => {
   const [statesOptions, setStatesOptions] = useState<any>([]);
   const [selectedState, setSelectedState] = useState<any>(null);
 
@@ -117,7 +117,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
             eventId={eventId}
             venueName={showTickets.selectedVenue}
             stateId={state?._id}
-            eventStatus={eventData?.status}
+            eventStatus={eventStatus}
           />
         ) : null}
       </ul>

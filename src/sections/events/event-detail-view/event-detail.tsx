@@ -63,6 +63,7 @@ const EventDetail = () => {
         eventData={event}
         state={eventDetail?.state}
         artists={eventDetail?.parentEvent?.artists}
+        eventStatus={eventDetail?.parentEvent?.status}
       />
     </>
   );
