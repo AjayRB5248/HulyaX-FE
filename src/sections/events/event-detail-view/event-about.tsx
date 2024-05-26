@@ -16,16 +16,26 @@ const EventAbout: React.FC<any> = ({
   states,
   eventData,
   artists,
+  eventStatus,
 }) => {
   return (
     <section className="movie-details-section padding-top padding-bottom">
       <div className="container-fluid">
         <div className="row justify-content-center flex-wrap-reverse mb--50 no-gutters">
-          <div className="col-lg-5 col-sm-10 col-md-6">
-            <EventBooking eventId={eventId} venues={venues} state={state} states={states} eventData={eventData} />
-          </div>
+          {eventStatus === "ONGOING" && (
+            <div className="col-lg-5 col-sm-10 col-md-6">
+              <EventBooking
+                eventId={eventId}
+                venues={venues}
+                state={state}
+                states={states}
+                eventData={eventData}
+                eventStatus={eventStatus}
+              />
+            </div>
+          )}
 
-          <div className="col-lg-7">
+          <div className={`${eventStatus === "ONGOING" ? "col-lg-7" : "col-lg-12"}`}>
             <div className="movie-details">
               <h3 className="title font-weight-bold mb-4">Gallery</h3>
               <SliderGallery eventImages={eventImages} />
