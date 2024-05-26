@@ -167,3 +167,25 @@ export function useupdateTicketSettings() {
     }
   );
 }
+
+export function useGetCustomerByEvent(datas?:any) {
+  const { data, isLoading, error, refetch } = useQuery(
+    ['getCustomerByEvent',],
+    async () => {
+      const res = await superAdminService.getCustomerByEvent(datas);
+      return res?.data;
+    },
+    {
+      keepPreviousData: true,
+    }
+  );
+
+  const customers = useMemo(() => data || [], [data]);
+
+  return {
+    customers:customers?.tickets,
+    loading: isLoading,
+    error,
+    refetch,
+  };
+}

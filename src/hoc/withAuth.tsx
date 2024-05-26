@@ -14,8 +14,17 @@ const withAuth = (
     const router = useRouter();
 
     const checkToken = async () => {
-      const user = JSON.parse(localStorage.getItem('user') || '');
+      const user =
+        localStorage.getItem('user') &&
+        JSON?.parse(localStorage.getItem('user') || '');
       const accessToken = localStorage.getItem('accessToken');
+
+      if (allowedUserTypes.length === 0 && accessToken !== null) {
+        return router.push('/');
+      } else if (allowedUserTypes.length === 0) {
+        setVerified(true);
+        return;
+      }
 
       if (!accessToken) {
         router.push('/login');
