@@ -120,6 +120,9 @@ export const paths = {
       edit: (id: string) => `${ROOTS.DASHBOARD}/companyEvent/${id}/edit`,
       update: (id: string) => `${ROOTS.DASHBOARD}/companyEvent/${id}/update`,
     },
+    companyCustomers: {
+      root: `${ROOTS.DASHBOARD}/customer`,
+    },
     user: {
       root: `${ROOTS.DASHBOARD}/user`,
       new: `${ROOTS.DASHBOARD}/user/new`,

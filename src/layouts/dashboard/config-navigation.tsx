@@ -77,6 +77,15 @@ export function useNavData() {
             ],
           },
           {
+            title: t('Customers'),
+            path: paths.dashboard.companyCustomers.root,
+            icon: ICONS.user,
+            show: user?.role === 'companyAdmin',
+            children: [
+              { title: t('list'), path: paths.dashboard.companyCustomers.root },
+            ],
+          },
+          {
             title: t('Events'),
             path: paths.dashboard.tour.root,
             icon: ICONS.tour,

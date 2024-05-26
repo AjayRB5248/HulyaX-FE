@@ -21,6 +21,8 @@ const superAdminService = {
     axiosInstance.post(endpoints.superAdmin.ticket.setupTicket,  data ),
   updateTicket: (data: any) =>
     axiosInstance.post(endpoints.superAdmin.ticket.updateTicket,  data ),
+  getCustomerByEvent:(data:any)=>
+    axiosInstance.post(endpoints.superAdmin.customer.list,  data ),
 };
 
 export default superAdminService;
