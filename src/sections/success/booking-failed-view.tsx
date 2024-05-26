@@ -13,7 +13,7 @@ const BookingFailed = () => {
           try again later. If you continue to experience issues, please contact{" "}
           <Link href="MailTo:info@hulyax.com.au">info@hulyax.com.au</Link> for assistance.
         </p>
-        <Link href={`http://localhost:8081/user/profile`}>
+        <Link href={`/user/profile`}>
           <button className="theme-button view-tickets-btn">View Your Tickets</button>
         </Link>
       </div>

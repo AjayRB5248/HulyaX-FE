@@ -13,7 +13,7 @@ const BookingSuccess = () => {
           you need before your arrival, please don't hesitate to reach out to your host!
         </p>
 
-        <Link href={`http://localhost:8081/user/profile`}>
+        <Link href={`/user/profile`}>
           <button className="theme-button view-tickets-btn">View Your Tickets</button>
         </Link>
       </div>
