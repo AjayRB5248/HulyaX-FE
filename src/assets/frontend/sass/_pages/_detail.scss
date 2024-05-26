@@ -153,7 +153,7 @@
 
 .book-section {
   padding: 47px 0;
-  background-image: -webkit-linear-gradient(0deg, rgb(4 120 166) 0%, rgb(67 188 255) 100%);
+  background-image: -webkit-linear-gradient(0deg, rgb(26 86 91) 0%, rgb(26 86 91 / 63%) 100%);
 
   .book-wrapper {
     @extend %flex;
@@ -395,6 +395,10 @@
         line-height: 1.5;
         font-weight: 400;
         text-align: justify;
+
+        @include breakpoint(lg) {
+          font-size: 14px!important;
+        }
       }
       margin-bottom: 40px;
       @include breakpoint(sm) {
