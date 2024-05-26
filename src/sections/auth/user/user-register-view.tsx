@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 
 import { LoadingButton } from '@mui/lab';
 import { MenuItem, Select } from '@mui/material';
-import parsePhoneNumber, { isValidPhoneNumber } from 'libphonenumber-js';
+import parsePhoneNumberFromString, { isValidPhoneNumber } from 'libphonenumber-js';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { useAuth } from 'src/auth/context/users/auth-context';
@@ -32,11 +32,11 @@ const UserRegisterView: React.FC = () => {
 
   const { user } = useAuth();
 
-  useEffect(() => {
-    if (user) {
-      router.push('/');
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     router.push('/');
+  //   }
+  // }, [user]);
 
   const RegisterSchema = Yup.object().shape({
     name: Yup.string().required('User Full Name required'),
@@ -102,13 +102,13 @@ const UserRegisterView: React.FC = () => {
     )?.countryCode;
 
     // Parse and format the phone number
-    const parsedPhoneNumber = parsePhoneNumber(
-      data.mobileNumber,
+    const parsedPhoneNumber = parsePhoneNumberFromString(
+      data?.mobileNumber,
       countryShortCode
     );
     const formattedPhoneNumber = parsedPhoneNumber
-      ? parsedPhoneNumber.formatInternational()
-      : data.mobileNumber;
+    ? parsedPhoneNumber.formatInternational().replace(/\s+/g, '')
+    : data.mobileNumber;
 
     try {
       const registerPayload = {
