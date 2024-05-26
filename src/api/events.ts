@@ -165,7 +165,7 @@ export const useFetchEvents = (queryData?: Filters) => {
     data && data.filter((filteredEvent: any) => filteredEvent.states?.length > 0 && filteredEvent.venueData?.length > 0);
 
   return {
-    events: filteredEventData || [],
+    events: data || [],
     loading: isLoading,
     error: isError ? error : null,
     isFetching,
