@@ -21,7 +21,10 @@ import { useAuth } from 'src/auth/context/users/auth-context';
 export default function AccountChangePassword() {
   const { enqueueSnackbar } = useSnackbar();
 
-  const password = useBoolean();
+  const password1 = useBoolean();
+  const password2 = useBoolean();
+  const password3 = useBoolean();
+
   const changePasswordMutation=useChangePassword()
 
   const ChangePassWordSchema = Yup.object().shape({
@@ -72,13 +75,13 @@ export default function AccountChangePassword() {
       <Stack component={Card} spacing={3} sx={{ p: 3 }}>
         <RHFTextField
           name="password"
-          type={password.value ? 'text' : 'password'}
+          type={password1.value ? 'text' : 'password'}
           label="Old Password"
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={password.onToggle} edge="end">
-                  <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                <IconButton onClick={password1.onToggle} edge="end">
+                  <Iconify icon={password1.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
                 </IconButton>
               </InputAdornment>
             ),
@@ -88,12 +91,12 @@ export default function AccountChangePassword() {
         <RHFTextField
           name="newPassword"
           label="New Password"
-          type={password.value ? 'text' : 'password'}
+          type={password2.value ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={password.onToggle} edge="end">
-                  <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                <IconButton onClick={password2.onToggle} edge="end">
+                  <Iconify icon={password2.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
                 </IconButton>
               </InputAdornment>
             ),
@@ -101,20 +104,20 @@ export default function AccountChangePassword() {
           helperText={
             <Stack component="span" direction="row" alignItems="center">
               <Iconify icon="eva:info-fill" width={16} sx={{ mr: 0.5 }} /> Password must be minimum
-              6+
+              8+
             </Stack>
           }
         />
 
         <RHFTextField
           name="confirmPassword"
-          type={password.value ? 'text' : 'password'}
+          type={password3.value ? 'text' : 'password'}
           label="Confirm New Password"
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={password.onToggle} edge="end">
-                  <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                <IconButton onClick={password3.onToggle} edge="end">
+                  <Iconify icon={password3.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
                 </IconButton>
               </InputAdornment>
             ),

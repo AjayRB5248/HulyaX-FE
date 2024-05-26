@@ -104,7 +104,7 @@ export default function Footer() {
       <div className="container">
         <div className="footer-top">
           <div className="logo">
-            <Link href="index-1.html">
+            <Link href="/">
               <Image width={50} src={FooterLogo} alt="Footer Image" />
             </Link>
           </div>
