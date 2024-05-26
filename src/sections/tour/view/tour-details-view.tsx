@@ -56,7 +56,7 @@ export default function TourDetailsView() {
         sx={{
           mb: { xs: 3, md: 5 },
         }}
-        action={<HeaderActions />}
+        // action={<HeaderActions />}
       />
 
     <TourDetailsContent event={event} isLoading={isLoading} />
