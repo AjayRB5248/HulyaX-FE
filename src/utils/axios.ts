@@ -147,5 +147,8 @@ export const endpoints = {
       updateTicket: `superadmin/update-ticket`,
       removeTicket: (id: string) => `superadmin/tickets/${id}`,
     },
+    customer:{
+      list: `superadmin/get-customer-by-event`,
+    }
   },
 };

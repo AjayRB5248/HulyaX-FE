@@ -10,6 +10,11 @@ export type IUserTableFilters = {
   status: string;
 };
 
+export type ICustomerTableFilters = {
+  name: string;
+  status: string;
+};
+
 // ----------------------------------------------------------------------
 
 export type IUserSocialLink = {
