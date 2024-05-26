@@ -9,8 +9,7 @@ const BookingSuccess = () => {
         <Image src={SuccessImg} alt={"Ticket Booking Success Image"} height={400} />
         <h3 className="confirmation-title mt-5">Booking confirmed successfully! 🎉 🎉</h3>
         <p className="message">
-          Thank you for choosing to book tickets with Hulya X! Your reservation is confirmed. If there's anything
-          you need before your arrival, please don't hesitate to reach out to your host!
+          Thank you for choosing to book tickets with Hulya X! Your reservation is confirmed. You can view your tickets in your profile page and download it or mail to your email account.
         </p>
 
         <Link href={`/user/profile`}>

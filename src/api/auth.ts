@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'src/routes/hook';
 import { useSnackbar } from 'notistack';
 import { useAuth } from 'src/auth/context/users/auth-context';
 import AuthService from 'src/services/auths';
@@ -28,6 +29,7 @@ export const useLogin = () => {
         return data;
       },
       onError: (error: any) => {
+        console.log({error})
         enqueueSnackbar(
           error?.response?.data?.message || 'Something went wrong',
           {
@@ -221,6 +223,7 @@ export const resetPassword = () => {
 export const useLogout = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { logout } = useAuth();
+  const router = useRouter();
 
   return useMutation(
     ['logout'],
@@ -230,6 +233,8 @@ export const useLogout = () => {
       clearTokens();
 
       logout();
+
+      router.push('/')
 
       return res.data;
     },
