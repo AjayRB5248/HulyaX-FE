@@ -27,8 +27,6 @@ const EventDetail = () => {
 
   const [eventDetail, setEventDetail] = useState(event?.[0]);
 
-  console.log(eventDetail, "eventDetail");
-
   useEffect(() => {
     setEventDetail(event?.[0]);
   }, [event]);

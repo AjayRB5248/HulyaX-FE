@@ -86,7 +86,6 @@ export const useFetchUserById = (id: string) => {
     ["users/id", id],
     async () => {
       const response = await UserService.fetchUserById(id);
-      console.log("setting updated user data");
       setUser(response?.data);
       return response?.data;
     },
