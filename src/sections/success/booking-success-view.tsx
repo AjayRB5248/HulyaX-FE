@@ -12,7 +12,7 @@ const BookingSuccess = () => {
           Thank you for choosing to book tickets with Hulya X! Your reservation is confirmed. You can view your tickets in your profile page and download it or mail to your email account.
         </p>
 
-        <Link href={`http://localhost:8081/user/profile`}>
+        <Link href={`/user/profile`}>
           <button className="theme-button view-tickets-btn">View Your Tickets</button>
         </Link>
       </div>
