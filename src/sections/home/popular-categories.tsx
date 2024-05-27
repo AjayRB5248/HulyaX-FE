@@ -126,14 +126,14 @@ const PopularCategories = () => {
                   <PlayButtonSVG />
                 </div>
 
-                <Image src={PopularCategory01} alt="Image" />
+                <Image src={PopularCategory01} alt="Image" width={1000} height={1000} />
                 <div className="overlay"></div>
                 <div className="position-absolute details-wrapper">
                   <ul className="tags-wrapper">
                     <li>Musical Concert</li>
                   </ul>
 
-                  <h3 className="event-title">Nepathya Live in Sydney</h3>
+                  <h3 className="event-title">Nepathya Live in Australia</h3>
 
                   {/* <Link href={`/events`}>
                     <button className="theme-button theme-button--sm">Reserve Seat for Events Now</button>

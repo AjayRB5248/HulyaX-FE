@@ -22,31 +22,73 @@ export default function FaqsHero() {
       sx={{
         ...bgGradient({
           color: alpha(theme.palette.grey[900], 0.9),
-          imgUrl: '/assets/images/faqs/hero.jpg',
+          imgUrl: "/assets/images/faqs/hero.jpg",
         }),
         height: { md: 560 },
         py: { xs: 10, md: 0 },
-        overflow: 'hidden',
-        position: 'relative',
+        overflow: "hidden",
+        position: "relative",
       }}
     >
       <Container component={MotionContainer}>
         <Box
           sx={{
-            bottom: { md: 100,marginTop:50,marginRight:25 },
-            position: { md: 'absolute' },
-            textAlign: { xs: 'center', md: 'unset' },
+            bottom: { md: 100, marginTop: 50, marginRight: 25 },
+            position: { md: "absolute" },
+            textAlign: { xs: "center", md: "unset" },
           }}
         >
           <div>
-            <TextAnimate text="How" sx={{ color: 'primary.main' }} variants={varFade().inRight} />
+            <TextAnimate
+              text="How"
+              sx={{
+                color: 'primary.main' ,
+                fontSize: {
+                  xs: "large",
+                },
+              }}
+              variants={varFade().inRight}
+            />
             <br />
 
-            <Stack spacing={2} display="inline-flex" direction="row" sx={{ color: 'common.white' }}>
-              <TextAnimate text="can" />
-              <TextAnimate text="we" />
-              <TextAnimate text="help" />
-              <TextAnimate text="you?" />
+            <Stack
+              spacing={2}
+              display="inline-flex"
+              direction="row"
+              sx={{ color: "common.white" }}
+            >
+              <TextAnimate
+                text="can"
+                sx={{
+                  fontSize: {
+                    xs: "large",
+                  },
+                }}
+              />
+              <TextAnimate
+                text="we"
+                sx={{
+                  fontSize: {
+                    xs: "large",
+                  },
+                }}
+              />
+              <TextAnimate
+                text="help"
+                sx={{
+                  fontSize: {
+                    xs: "large",
+                  },
+                }}
+              />
+              <TextAnimate
+                text="you?"
+                sx={{
+                  fontSize: {
+                    xs: "large",
+                  },
+                }}
+              />
             </Stack>
           </div>
 
@@ -56,21 +98,20 @@ export default function FaqsHero() {
               placeholder="support@hulyax.com.au"
               InputProps={{
                 startAdornment: (
-                  <InputAdornment position="start">
-                  </InputAdornment>
+                  <InputAdornment position="start"></InputAdornment>
                 ),
               }}
               disabled
               sx={{
-                fontSize:15,
-                color:'black',
+                fontSize: 15,
+                color: "black",
                 mt: 5,
                 maxWidth: 360,
                 [`& .${outlinedInputClasses.root}`]: {
-                  bgcolor: 'common.white',
+                  bgcolor: "common.white",
                 },
                 [`& .${outlinedInputClasses.input}`]: {
-                  typography: 'subtitle1',
+                  typography: "subtitle1",
                 },
               }}
             />
