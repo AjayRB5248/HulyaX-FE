@@ -45,7 +45,7 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
     <section className="details-banner bg_img" style={{ backgroundImage: `url(${bannerImg})` }}>
       <div className="container-fluid">
         <div className="details-banner-wrapper">
-          <div className="details-banner-thumb">
+          <div className="details-banner-thumb d-none">
             <Image src={featuredImage} alt="movie" width={300} height={200} />
             {videoUrl && (
               <Link href={videoUrl} className="video-popup">
@@ -53,7 +53,7 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
               </Link>
             )}
           </div>
-          <div className="details-banner-content offset-lg-3">
+          <div className="details-banner-content">
             <h2 className="title">{eventName}</h2>
             <div className="event-tags">
               {eventTags?.map((eventTag: any, index: number) => (

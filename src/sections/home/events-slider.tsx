@@ -20,9 +20,9 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
     dots: false,
     infinite: true,
     slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToScroll: 1,
     autoplay: true,
-    speed: 3000,
+    // speed: 3000,
     autoplaySpeed: 2000,
     cssEase: "linear",
     pauseOnHover: true,
@@ -77,11 +77,19 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
                   <div className="event-item">
                     <div className="event-top-card">
                       <div className="event-date">
-                        <h6 className="date-title">
-                          {/* Showing only parent event - date/venue name from the first - nearest */}
-                          {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}{" "}
-                          {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.month}
-                        </h6>
+                        {event.childEvents?.length > 0 && event.childEvents?.[0]?.venues?.length > 0 ? (
+                          <>
+                            <h6 className="date-title">
+                              {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}{" "}
+                              {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.month}
+                            </h6>
+                          </>
+                        ) : (
+                          <span className="text-capitalize">
+                            Coming <br></br> &nbsp; Soon
+                          </span>
+                        )}
+                        <h6 className="date-title"></h6>
                       </div>
                       <Image
                         src={event?.images?.[1]?.imageurl ?? event?.images?.[0]?.imageurl}
@@ -116,8 +124,8 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
                         <Image src={VenueIcon} alt="Venue icon" className="venue-icon" />
 
                         <div className="venue-name ml-4">
-                          {event?.childEvents?.[0]?.state?.stateName} {event?.childEvents?.[1] ? "," : ""}{" "}
-                          {event?.childEvents?.[1]?.state?.stateName}
+                          {event?.childEvents?.length == 0 ? "TBA" : event?.childEvents?.[0]?.state?.stateName}{" "}
+                          {event?.childEvents?.[1] ? "," : ""} {event?.childEvents?.[1]?.state?.stateName}
                         </div>
                       </div>
                     </div>
