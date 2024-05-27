@@ -54,7 +54,7 @@ const UserRegisterView: React.FC = () => {
         'Invalid mobile number',
         (value, context) => {
           const { countryCode } = context.parent;
-          const countryShortCode = countryCodeList.find(
+          const countryShortCode :any = countryCodeList.find(
             (item) => item.Iso === countryCode
           )?.countryCode;
           return isValidPhoneNumber(value, countryShortCode);
@@ -97,7 +97,7 @@ const UserRegisterView: React.FC = () => {
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    const countryShortCode = countryCodeList.find(
+    const countryShortCode :any = countryCodeList.find(
       (item) => item.Iso === data.countryCode
     )?.countryCode;
 

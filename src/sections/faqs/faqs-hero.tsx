@@ -33,7 +33,7 @@ export default function FaqsHero() {
       <Container component={MotionContainer}>
         <Box
           sx={{
-            bottom: { md: 100,marginTop:50 },
+            bottom: { md: 100,marginTop:50,marginRight:25 },
             position: { md: 'absolute' },
             textAlign: { xs: 'center', md: 'unset' },
           }}
