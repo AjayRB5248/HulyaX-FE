@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Slider from "react-slick";
 import moment from "moment-timezone";
 import Link from "next/link";
@@ -32,7 +32,14 @@ const Banner: React.FC<EventProps> = ({ events }) => {
         featuredEvents.map((featuredEvent) => {
           const posterImage = featuredEvent.images?.find((eventImg) => eventImg?.isPrimary)?.imageurl;
 
-          return <EventBanner key={featuredEvent.id} event={featuredEvent} posterImage={posterImage} />;
+          return (
+            <EventBanner
+              key={featuredEvent.id}
+              event={featuredEvent}
+              posterImage={posterImage}
+              mobilePosterImage={featuredEvent.images?.[1]?.imageurl}
+            />
+          );
         })}
     </Slider>
   );
@@ -41,16 +48,34 @@ const Banner: React.FC<EventProps> = ({ events }) => {
 interface EventBannerProps {
   event: EachEventProps;
   posterImage?: string;
+  mobilePosterImage?: string;
 }
 
-const EventBanner: React.FC<EventBannerProps> = React.memo(({ event, posterImage }) => {
+const EventBanner: React.FC<EventBannerProps> = React.memo(({ event, posterImage, mobilePosterImage }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const backgroundImage = isMobile ? mobilePosterImage : posterImage;
   const nearestDate = useMemo(() => {
     const now = moment();
-    const upcomingDates = event.childEvents?.flatMap(childEvent => 
-      childEvent.venues?.map(venue => venue.eventDate)
-    ).filter(date => moment(date).isSameOrAfter(now)) || [];
+    const upcomingDates =
+      event.childEvents
+        ?.flatMap((childEvent) => childEvent.venues?.map((venue) => venue.eventDate))
+        .filter((date) => moment(date).isSameOrAfter(now)) || [];
 
-    return upcomingDates.length > 0 ? moment.min(upcomingDates.map(date => moment(date))) : null;
+    return upcomingDates.length > 0 ? moment.min(upcomingDates.map((date) => moment(date))) : null;
   }, [event]);
 
   const eventStartDate = nearestDate ? nearestDate.format("MM/DD/YYYY HH:mm") : null;
@@ -59,7 +84,7 @@ const EventBanner: React.FC<EventBannerProps> = React.memo(({ event, posterImage
 
   return (
     <div className="banner-section">
-      <div className="banner-bg bg_img bg-fixed" style={{ backgroundImage: `url(${posterImage})` }}></div>
+      <div className="banner-bg bg_img bg-fixed" style={{ backgroundImage: `url(${backgroundImage})` }}></div>
       <div className="container">
         <div className="banner-content">
           <h1 className="title cd-headline clip">

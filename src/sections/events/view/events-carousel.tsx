@@ -214,14 +214,20 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
                           height={1200}
                         />
                       </Link>
-                      {event.childEvents?.length > 0 && event.childEvents?.[0]?.venues?.length > 0 && (
-                        <div className="event-date">
-                          <h6 className="date-title">
-                            {formatDate(event.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}
-                          </h6>
-                          <span>{formatDate(event.childEvents?.[0]?.venues?.[0]?.eventDate)?.month}</span>
-                        </div>
-                      )}
+                      <div className="event-date">
+                        {event.childEvents?.length > 0 && event.childEvents?.[0]?.venues?.length > 0 ? (
+                          <>
+                            <h6 className="date-title">
+                              {formatDate(event.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}
+                            </h6>
+                            <span>{formatDate(event.childEvents?.[0]?.venues?.[0]?.eventDate)?.month}</span>
+                          </>
+                        ) : (
+                          <span className="text-capitalize">
+                            Coming <br></br> &nbsp; Soon
+                          </span>
+                        )}
+                      </div>
                       <h5 className="event-title">
                         <Link href={`/events/${event.slug}`}>{event?.eventName}</Link>
                       </h5>
