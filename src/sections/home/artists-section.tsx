@@ -54,7 +54,7 @@ const Artists = () => {
               <div key={artist._id} className="d-flex flex-column align-items-center">
                 <div className="artist-profile">
                   {profileImage && (
-                    <Image src={profileImage} alt={artist?.artistName} width={150} height={150} />
+                    <Image src={profileImage} alt={artist?.artistName} width={400} height={400} />
                   )}
                 </div>
                 <div className="artist-desc">

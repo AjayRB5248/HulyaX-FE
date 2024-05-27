@@ -35,7 +35,7 @@ const VideoDialog: React.FC<VideoProps> = ({
           style={{
             objectFit: 'cover',
           }}
-          url='https://videos.pexels.com/video-files/3945446/3945446-uhd_4096_2160_25fps.mp4'
+          url='https://ticketing-app-au.s3.ap-southeast-2.amazonaws.com/landscape.mp4'
         />
       </DialogContent>
     </Dialog>

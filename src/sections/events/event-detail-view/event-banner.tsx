@@ -1,7 +1,7 @@
 import moment from "moment-timezone";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useMemo } from "react";
 
 // Hooks
 import { usePathname } from "src/routes/hook";
@@ -33,7 +33,13 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
 
   const featuredImage = eventImages?.[1]?.imageurl ?? eventImages?.[0]?.imageurl;
 
-  const timeRemaining = getRemainingTime(venues?.[0]?.eventDate, timeZone);
+  const nearestDate = useMemo(() => {
+    const now = moment();
+    const upcomingDates = venues?.map((venue:any) => moment(venue.eventDate)).filter((date:any) => date.isSameOrAfter(now)) || [];
+    return upcomingDates.length > 0 ? moment.min(upcomingDates) : null;
+  }, [venues]);
+
+  const timeRemaining = nearestDate ? getRemainingTime(nearestDate.toISOString(), timeZone) : null;
 
   return (
     <section className="details-banner bg_img" style={{ backgroundImage: `url(${bannerImg})` }}>
@@ -62,7 +68,7 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
                   <span className="mr-4">Starts From:</span>
                   <i className="fas fa-calendar-alt"></i>
                   {/* TODO: Earliest date ? */}
-                  <span>{moment(venues?.[0]?.eventDate)?.tz(timeZone)?.format("MMM DD, YYYY")}</span>
+                  <span>{moment(nearestDate)?.tz(timeZone)?.format("MMM DD, YYYY")}</span>
                 </div>
                 <div className="item">
                   <i className="far fa-clock"></i>

@@ -15,7 +15,6 @@ import { useRouter } from "src/routes/hook/use-router";
 
 const UserVerifyEmail = () => {
   const { user } = useAuth();
-  console.log(user, "User Fetched in Verify Email PAge");
 
   const verifyEmailMutation = verifyEmail();
 
@@ -24,7 +23,6 @@ const UserVerifyEmail = () => {
   const sendVerificationEmail = async () => {
     try {
       const verifiedEmailResponse = await verifyEmailMutation.mutateAsync(user);
-      console.log(verifiedEmailResponse, "verifiedEmailResponse");
     } catch (error) {
       console.error(error);
     }

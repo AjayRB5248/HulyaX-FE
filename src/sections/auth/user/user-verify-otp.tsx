@@ -52,10 +52,14 @@ const UserVerifyOTP = () => {
 
         verifiedOTPRes = await verifyOTPMutation.mutateAsync(payloadForGeneratingOTP);
       }
+      const pathToRedirect = localStorage.getItem('currentPath');
 
-      setTimeout(() => {
-        router.push("/");
-      }, 1000);
+      if (pathToRedirect) {
+        localStorage.removeItem('currentPath');
+        router.push(pathToRedirect);
+      } else {
+        router.push('/');
+      }
     } catch (error) {
       console.error(error);
     }

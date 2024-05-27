@@ -13,18 +13,16 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
   const [venuesOptions, setVenuesOptions] = useState<any>([]);
   const [selectedVenue, setSelectedVenue] = useState<string>();
 
-  const [eventDate, setEventDate] = useState<any>(
-    moment(venues?.[0]?.eventDate).tz(venues?.[0]?.timeZone)?.format("DD MMM ddd, hh:mm A")
-  );
+  const [eventDate, setEventDate] = useState<string>("");
   const [showTickets, setShowTickets] = useState<any>({});
 
   const handleSelectState = (value: any) => {
     const venuesFound =
-      eventData && eventData.length > 0 && eventData.find((event: any) => event?.state?._id === value)?.venues;
+      eventData && eventData?.length > 0 && eventData?.find((event: any) => event?.state?._id === value)?.venues;
 
-    if (venuesFound && venuesFound.length > 0) {
-      const venueList = venuesFound.map((eachVenue: any) => ({
-        id: eachVenue._id,
+    if (venuesFound && venuesFound?.length > 0) {
+      const venueList = venuesFound?.map((eachVenue: any) => ({
+        id: eachVenue?._id,
         value: eachVenue.venueId?.venueName,
         label: eachVenue.venueId?.venueName,
       }));
@@ -32,22 +30,23 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
       setVenuesOptions([{ id: "", value: "", label: "Select Venue" }, ...venueList]);
 
       setSelectedState(value);
+      setEventDate("")
     }
   };
 
   const handleVenueChange = (value: any) => {
-    setSelectedState((prevState: string) => prevState);
     setSelectedVenue(value);
-    const selectedEventVenue = venues.find((eachVenue: any) => eachVenue.venueId?.venueName === value);
+    const selectedEventVenue = venues?.find((eachVenue: any) => eachVenue?.venueId?.venueName === value);
 
     if (selectedEventVenue) {
       const selectedEventDate = moment(selectedEventVenue?.eventDate).tz(state?.timeZone).format("DD MMM ddd, hh:mm A");
       setEventDate(selectedEventDate);
+    } else {
+      setEventDate(""); 
     }
   };
 
   const handleEventDateChange = (value: any) => {
-    console.log("Selected Venue Date:", value);
   };
 
   const handleFindTickets = () => {
@@ -121,7 +120,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
         </button>
 
         {/* Tickets Type */}
-        {showTickets && showTickets.selectedVenue && showTickets.selectedState ? (
+        {showTickets && showTickets?.selectedVenue && showTickets?.selectedState ? (
           <EventTickets
             eventId={eventId}
             venueName={showTickets.selectedVenue}

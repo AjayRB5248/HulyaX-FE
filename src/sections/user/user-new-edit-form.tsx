@@ -101,7 +101,6 @@ export default function UserNewEditForm({ currentUser }: Props) {
       reset();
       enqueueSnackbar(currentUser ? 'Update success!' : 'Create success!');
       router.push(paths.dashboard.user.list);
-      console.info('DATA', data);
     } catch (error) {
       console.error(error);
     }

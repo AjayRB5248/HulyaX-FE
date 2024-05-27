@@ -170,8 +170,6 @@ export default function OrderListView() {
                     <OrderTableRow key={row._id} row={row} />
                   ))}
 
-                  <TableEmptyRows height={denseHeight} emptyRows={2} />
-
                   <TableNoData notFound={data?.count === 0} />
                 </TableBody>
               </Table>
