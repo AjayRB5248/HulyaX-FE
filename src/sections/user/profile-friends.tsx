@@ -94,12 +94,10 @@ function FriendCard({ friend }: FriendCardProps) {
 
   const handleDelete = () => {
     popover.onClose();
-    console.info('DELETE', name);
   };
 
   const handleEdit = () => {
     popover.onClose();
-    console.info('EDIT', name);
   };
 
   return (
