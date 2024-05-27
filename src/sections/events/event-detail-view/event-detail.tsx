@@ -22,10 +22,22 @@ const sponsors = [
 const EventDetail = () => {
   const params = useParams();
   let slug = params.slug as string;
-
   const { event, isLoading } = useEventDetailsBySlug(slug);
-
+  const [allVenues, setAllVenues] = useState([]);
   const [eventDetail, setEventDetail] = useState(event?.[0]);
+
+  useEffect(() => {
+    if (!isLoading && event) {
+      const venues = event.reduce((acc:any, currentEvent:any) => {
+        if (Array.isArray(currentEvent?.venues) && currentEvent?.venues?.length > 0) {
+          return acc.concat(currentEvent?.venues);
+        }
+        return acc;
+      }, []);
+      setAllVenues(venues);
+    }
+  }, [isLoading, event]);
+
 
   useEffect(() => {
     setEventDetail(event?.[0]);
@@ -45,7 +57,7 @@ const EventDetail = () => {
         eventTags={eventDetail?.tags}
         videoUrl={eventDetail?.videoUrl}
         eventImages={eventDetail?.images}
-        venues={eventDetail?.venues}
+        venues={allVenues}
         timeZone={eventDetail?.state?.timeZone}
       />
 
@@ -55,7 +67,7 @@ const EventDetail = () => {
         eventImages={eventDetail?.images}
         eventDescription={eventDetail?.eventDescription}
         sponsors={sponsors}
-        venues={eventDetail?.venues}
+        venues={allVenues}
         eventId={eventDetail?.parentEvent?._id}
         states={eventDetail?.parentEvent?.states}
         eventData={event}
