@@ -23,7 +23,6 @@ export default function HomeView() {
   return (
     <MainLayout>
       <Banner events={events} />
-      {/* <TicketSearch /> */}
       <EventsCarousel events={events} />
       <MobileApp />
       <EventsSlider events={events?.filter((event: any) => event.status !== EventStatusEnum.COMPLETED)} />

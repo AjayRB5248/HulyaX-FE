@@ -19,6 +19,7 @@ import { EachEventProps, EventProps, Venue } from "src/types/events";
 import Link from "next/link";
 import moment from "moment";
 import { formatDate } from "src/utils/format-date";
+import Slider from "react-slick";
 
 interface EventData {
   imageUrl: StaticImageData;
@@ -65,6 +66,43 @@ const getClosestEvent = (events: any): { event: EachEventProps; closestVenue: Ve
   return closestEvent;
 };
 
+const settings = {
+  dots: false,
+  infinite: true,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 2000,
+  cssEase: "linear",
+  pauseOnHover: true,
+  responsive: [
+    {
+      breakpoint: 1200,
+      settings: {
+        slidesToShow: 3,
+      },
+    },
+    {
+      breakpoint: 992,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+    {
+      breakpoint: 576,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+  ],
+};
+
 const EventsCarousel: React.FC<EventProps> = ({ events }) => {
   const [activeTab, setActiveTab] = useState<string>("Upcoming");
 
@@ -95,7 +133,7 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
           </ul>
         </div>
 
-        <div className="row events-row">
+        <div className="row events-row d-none">
           {/* Put Carousel Later - Only Featured and Closest Event */}
           {featuredEvent && (
             <div className="col-12 col-md-4 left-col">
@@ -157,6 +195,42 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
             </div>
           </div>
         </div>
+
+        <Slider {...settings} className="event-slider">
+          {filteredEvents &&
+            Array.isArray(filteredEvents) &&
+            filteredEvents.length > 0 &&
+            filteredEvents?.map((event: any) => {
+              return (
+                <div className="slider-item">
+                  <div className="event-grid">
+                    <div className="movie-thumb c-thumb">
+                      <div className="overlay"></div>
+                      <Link href={`/events/${event.slug}`}>
+                        <Image
+                          src={event?.images?.[1]?.imageurl ?? event?.images?.[0]?.imageurl}
+                          alt={event?.eventName}
+                          width={800}
+                          height={1200}
+                        />
+                      </Link>
+                      {event.childEvents?.length > 0 && event.childEvents?.[0]?.venues?.length > 0 && (
+                        <div className="event-date">
+                          <h6 className="date-title">
+                            {formatDate(event.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}
+                          </h6>
+                          <span>{formatDate(event.childEvents?.[0]?.venues?.[0]?.eventDate)?.month}</span>
+                        </div>
+                      )}
+                      <h5 className="event-title">
+                        <Link href={`/events/${event.slug}`}>{event?.eventName}</Link>
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+        </Slider>
       </div>
     </section>
   );

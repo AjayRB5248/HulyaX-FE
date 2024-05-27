@@ -47,11 +47,16 @@ import { AuthProvider } from "src/auth/context/users/auth-context";
 // import { AuthProvider, AuthConsumer } from 'src/auth/context/firebase';
 
 // ----------------------------------------------------------------------
+import { Open_Sans } from "@next/font/google";
+
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"], // Customize weights as needed
+});
 
 export const metadata = {
   title: "Hulya X",
-  description:
-    "Event Management Company in Australia",
+  description: "Event Management Company in Australia",
   keywords: "react,material,kit,application,dashboard,admin,template",
   // themeColor: "#000000",
   manifest: "/manifest.json",
@@ -86,7 +91,7 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="en" className={primaryFont.className}>
+    <html lang="en" className={openSans.className}>
       <body>
         <AuthProvider>
           {/* <ReduxProvider> */}
