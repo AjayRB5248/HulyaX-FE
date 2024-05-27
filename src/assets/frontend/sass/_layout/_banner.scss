@@ -50,10 +50,10 @@
 }
 .banner-section {
   position: relative;
-  height: calc(100vh - 30vh);
+  height: 66rem;
   display: flex;
   align-items: center;
-  padding-top: 12vh;
+  padding-top: 10rem;
 
   @include breakpoint(max-lg) {
     padding: 140px 0 110.38px;

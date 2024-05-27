@@ -2,6 +2,10 @@
   .events-slider-wrapper .event-item .event-bottom-card .artist .artist-name {
     max-width: 30%;
   }
+
+  .banner-section {
+    height: 60rem;
+  }
 }
 @media screen and (max-width: 992px) {
   .container {
@@ -9,6 +13,7 @@
   }
 
   .banner-section {
+    height: 54rem;
     padding: 150px 0 30.31px;
 
     .banner-bg {
@@ -60,7 +65,7 @@
   .events-row {
     height: auto;
   }
-  
+
   .footer-bottom p {
     font-size: 10px !important;
 
@@ -71,8 +76,22 @@
 }
 
 @media (max-width: 576px) {
+  .header-section .logo {
+    height: 70% !important;
+  }
+
+  .header-bar {
+    width: 20px;
+    height: 15px;
+
+    &.active {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
   .banner-section {
-    height: 60vh;
+    height: 52rem;
     padding: 120px 0 30.31px;
 
     .title {
@@ -91,7 +110,26 @@
     }
   }
 
-  .account-section {
+  .details-banner {
+    padding-top: 14rem;
+    background-position: center 13rem;
+  }
+
+  .details-banner-content .title {
+    font-size: 2rem;
+  }
+
+  .book-section {
+    padding: 2rem 0;
+
+    .book-wrapper .left-side .item .venue-icon,
+    .book-wrapper .left-side .item .contact-icon {
+      height: 20px;
+      width: 20px;
+    }
+  }
+
+  .book-section .account-section {
     .account-area .account-form .form-group .btn-loading {
       padding: 0 30px;
       width: 100%;
@@ -167,5 +205,20 @@
 @media (max-width: 425px) {
   .account-section .account-area {
     padding: 30px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .details-banner {
+    padding-bottom: 2rem;
+    .details-banner-content {
+      .title {
+        font-size: 2rem;
+      }
+
+      span {
+        font-size: 12px;
+      }
+    }
   }
 }
