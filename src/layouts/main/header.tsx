@@ -1,10 +1,10 @@
-import Navbar from "./nav";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import Logo from "src/assets/frontend/images/logo/HulyaLogo.png";
-import UserAccountPopover from "../_common/user-account-popover";
-import { useAuth } from "src/auth/context/users/auth-context";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import Logo from 'src/assets/frontend/images/logo/HulyaLogo.png';
+import { useAuth } from 'src/auth/context/users/auth-context';
+import UserAccountPopover from '../_common/user-account-popover';
+import Navbar from './nav';
 
 export default function Header() {
   const { user } = useAuth();
@@ -25,31 +25,35 @@ export default function Header() {
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
-  const headerClass = isScrolled ? "header-section header-active" : "header-section";
+  const headerClass = isScrolled
+    ? 'header-section header-active'
+    : 'header-section';
   return (
     <>
-      <div className={`overlay ${isToggleMenuActive ? "active" : ""}`}></div>
+      <div className={`overlay ${isToggleMenuActive ? 'active' : ''}`}></div>
       <header className={headerClass}>
-        <div className="container">
-          <div className="header-wrapper">
-            <div className="logo">
-              <Link href="/">
-                <Image width={200} src={Logo} alt="Logo" />
+        <div className='container'>
+          <div className='header-wrapper'>
+            <div className='logo'>
+              <Link href='/'>
+                <Image width={200} src={Logo} alt='Logo' />
               </Link>
             </div>
             <Navbar isToggleMenuActive={isToggleMenuActive} />
 
-            <div className="d-flex align-items-center">
+            <div className='d-flex align-items-center'>
               {user && <UserAccountPopover />}
               <div
-                className={`header-bar ml-4 d-lg-none ${isToggleMenuActive ? "active" : ""}`}
+                className={`header-bar ml-4 d-lg-none ${
+                  isToggleMenuActive ? 'active' : ''
+                }`}
                 onClick={handleToggleMenu}
               >
                 <span></span>
