@@ -62,7 +62,7 @@ export default function OrderListView() {
   });
   const [data, setData] = useState({ ticket: [], count: 0 });
   const [filter, setFilter] = useState({
-    limit: 2,
+    limit: 5,
     page: 0,
     // createdAt:'',
     eventName: '',

@@ -64,7 +64,7 @@ export default function FaqsCategory() {
       <>
         <AppBar position="absolute">
           <Toolbar>
-            <Button startIcon={<Iconify icon="solar:list-bold" />} onClick={nav.onTrue}>
+            <Button startIcon={<Iconify icon="solar:list-bold" />} onClick={nav.onTrue} sx={{color:'black'}}>
               Categories
             </Button>
           </Toolbar>
