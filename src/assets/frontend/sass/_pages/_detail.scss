@@ -1,9 +1,11 @@
 /******************* Event Details Styles Starts Here *******************/
 .details-banner {
-  padding-top: 275px;
-  padding-bottom: 20px;
+  padding-top: 20rem;
+  padding-bottom: 5rem;
   position: relative;
-  background-position: top center;
+  background-position: center 10rem;
+  height: auto;
+  background-size: contain;
 
   &:before {
     position: absolute;
@@ -12,7 +14,7 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba(0, 18, 50, 0.4);
+    background-image: -webkit-linear-gradient(93deg, rgb(0 0 0 / 49%) 0%, rgb(255 255 255 / 63%) 100%);
   }
   &.seat-plan-banner {
     &::before {
@@ -138,7 +140,7 @@
         padding: 0 5px;
         font-size: 14px;
         &:hover {
-          color: $theme-color;
+          color: $main-theme-color;
         }
       }
     }
@@ -262,7 +264,7 @@
     @include breakpoint(max-lg) {
       justify-content: center;
       .left-side {
-        justify-content: center;
+        // justify-content: center;
         @media screen and (max-width: 422px) {
           justify-content: space-between;
         }
@@ -347,7 +349,7 @@
           &::before {
             width: 100%;
             @extend %pa;
-            background: $theme-color;
+            background: $main-theme-color;
             height: 3px;
             left: 0;
             width: 0;
@@ -374,7 +376,7 @@
             }
           }
           &.active {
-            color: $theme-color;
+            color: $main-theme-color;
             &::after,
             &::before {
               width: 100%;
@@ -397,7 +399,7 @@
         text-align: justify;
 
         @include breakpoint(lg) {
-          font-size: 14px!important;
+          font-size: 14px !important;
         }
       }
       margin-bottom: 40px;
@@ -429,10 +431,10 @@
               @include transform(rotate(180deg));
             }
             &:hover {
-              color: $theme-color;
+              color: $main-theme-color;
             }
             &:last-child {
-              color: $theme-color;
+              color: $main-theme-color;
             }
           }
         }
@@ -469,10 +471,10 @@
     width: 130px;
     height: 130px;
     @include border-radius(50%);
-    border: 1px solid rgba($color: $theme-color, $alpha: 0.5);
+    border: 1px solid rgba($color: $main-theme-color, $alpha: 0.5);
     margin: none;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 3px;
     a {
       display: block;
       height: 100%;
@@ -482,7 +484,7 @@
       height: 100%;
       object-fit: none;
       @include border-radius(50%);
-      border: 4px solid $theme-color;
+      border: 4px solid $main-theme-color;
     }
   }
   .sponsors-content,
@@ -494,13 +496,13 @@
       margin-top: 1rem;
     }
     .cate {
-      color: $theme-color;
+      color: $main-theme-color;
       display: block;
       font-size: 12px;
       margin-bottom: 17px;
       line-height: 1.5;
       text-align: center;
-      
+
       &:last-child {
         margin-bottom: 0;
       }
@@ -734,7 +736,7 @@
     margin-bottom: 0;
     height: auto;
 
-    &.disabled{
+    &.disabled {
       background-color: #878787;
       cursor: not-allowed;
     }

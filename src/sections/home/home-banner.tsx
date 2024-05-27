@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import moment from "moment-timezone";
 import Link from "next/link";
@@ -32,7 +32,14 @@ const Banner: React.FC<EventProps> = ({ events }) => {
         featuredEvents.map((featuredEvent) => {
           const posterImage = featuredEvent.images?.find((eventImg) => eventImg?.isPrimary)?.imageurl;
 
-          return <EventBanner key={featuredEvent.id} event={featuredEvent} posterImage={posterImage} />;
+          return (
+            <EventBanner
+              key={featuredEvent.id}
+              event={featuredEvent}
+              posterImage={posterImage}
+              mobilePosterImage={featuredEvent.images?.[1]?.imageurl}
+            />
+          );
         })}
     </Slider>
   );
@@ -41,9 +48,28 @@ const Banner: React.FC<EventProps> = ({ events }) => {
 interface EventBannerProps {
   event: EachEventProps;
   posterImage?: string;
+  mobilePosterImage?: string;
 }
 
-const EventBanner: React.FC<EventBannerProps> = ({ event, posterImage }) => {
+const EventBanner: React.FC<EventBannerProps> = ({ event, posterImage, mobilePosterImage }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  console.log(isMobile, "isMobile");
+
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const backgroundImage = isMobile ? mobilePosterImage : posterImage;
+
   const nearestEvent: any = event?.childEvents?.[0];
   const _startDate = nearestEvent?.venues?.[0]?.eventDate ?? "";
   const timezone = event?.states?.find((state: any) => state._id === nearestEvent?.state?._id)?.timeZone;
@@ -54,7 +80,7 @@ const EventBanner: React.FC<EventBannerProps> = ({ event, posterImage }) => {
 
   return (
     <div className="banner-section">
-      <div className="banner-bg bg_img bg-fixed" style={{ backgroundImage: `url(${posterImage})` }}></div>
+      <div className="banner-bg bg_img bg-fixed" style={{ backgroundImage: `url(${backgroundImage})` }}></div>
       <div className="container">
         <div className="banner-content">
           <h1 className="title cd-headline clip">

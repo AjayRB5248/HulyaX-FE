@@ -13,7 +13,7 @@ const EventVenues: React.FC<any> = ({ eventData, states }) => {
   return (
     <section className="book-section">
       <div className="container-fluid">
-        <div className="book-wrapper offset-lg-3">
+        <div className="book-wrapper">
           <div className="left-side">
             {eventData &&
               eventData.length > 0 &&
