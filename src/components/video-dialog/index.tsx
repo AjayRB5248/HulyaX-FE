@@ -1,5 +1,5 @@
-import { Button } from "@mui/base";
-import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { Dialog, DialogContent } from '@mui/material';
+import ReactPlayer from 'react-player/lazy';
 
 interface VideoProps {
   title: string;
@@ -8,26 +8,36 @@ interface VideoProps {
   handleClose: () => void;
 }
 
-const VideoDialog: React.FC<VideoProps> = ({ title, videoUrl, open, handleClose }) => {
-  console.log(open, "open");
+const VideoDialog: React.FC<VideoProps> = ({
+  title,
+  videoUrl,
+  open,
+  handleClose,
+}) => {
   return (
-    <Dialog open={open} onClose={handleClose} aria-labelledby="video-dialog-title" maxWidth="md" fullWidth>
-      <DialogTitle id="video-dialog-title">{title}</DialogTitle>
-      <DialogContent>
-        <iframe
-          width="100%"
-          height="400"
-          src={videoUrl}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby='video-dialog-title'
+      maxWidth='md'
+      fullWidth
+    >
+      <DialogContent
+        style={{
+          padding: 0,
+          height: 'fit-content',
+        }}
+      >
+        <ReactPlayer
+          controls
+          width={'100%'}
+          height={'100%'}
+          style={{
+            objectFit: 'cover',
+          }}
+          url='https://videos.pexels.com/video-files/3945446/3945446-uhd_4096_2160_25fps.mp4'
+        />
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="primary" className="text-dark">
-          Close
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 };

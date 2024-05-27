@@ -80,7 +80,7 @@ header {
           }
           &::before {
             position: absolute;
-            content: "";
+            content: '';
             top: 0;
             left: 15px;
             @include transform(translateY(-100%));
@@ -128,7 +128,7 @@ header {
             background: $theme-color;
             top: calc(100% + 30px);
             position: absolute;
-            content: "";
+            content: '';
             @include transform(scaleX(0));
             @include transition($transition);
             transform-origin: left;
@@ -364,9 +364,9 @@ header {
 .menu-item-has-children {
   > a {
     &::after {
-      content: "\f107";
+      content: '\f107';
       font-weight: 600;
-      font-family: "Font Awesome 5 Free";
+      font-family: 'Font Awesome 5 Free';
       margin-left: 5px;
     }
   }
