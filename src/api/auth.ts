@@ -22,7 +22,7 @@ export const useLogin = () => {
 
       login(userData, accessToken, refreshToken);
 
-      // return res.data;
+      return res.data;
     },
     {
       onSuccess: (data: any) => {

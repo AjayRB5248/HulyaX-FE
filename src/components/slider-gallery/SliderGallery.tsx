@@ -66,7 +66,7 @@ const SliderGallery: React.FC<GalleryComponentProps> = ({ eventImages }) => {
         {eventImages && eventImages.map((image, index) => (
           <div className="thumb" key={image._id}>
             <div className="img-pop" onClick={() => lightbox.onOpen(image.imageurl)}>
-              <Image src={image.imageurl} alt="event" width={200} height={200} />
+              <Image src={image.imageurl} alt="event" width={500} height={500} />
             </div>
           </div>
         ))}

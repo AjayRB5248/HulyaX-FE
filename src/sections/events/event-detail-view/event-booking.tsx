@@ -47,7 +47,6 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
   };
 
   const handleEventDateChange = (value: any) => {
-    console.log("Selected Venue Date:", value);
   };
 
   const handleFindTickets = () => {
