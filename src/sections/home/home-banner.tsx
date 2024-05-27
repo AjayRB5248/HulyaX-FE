@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Slider from "react-slick";
 import moment from "moment-timezone";
 import Link from "next/link";
@@ -43,14 +43,19 @@ interface EventBannerProps {
   posterImage?: string;
 }
 
-const EventBanner: React.FC<EventBannerProps> = ({ event, posterImage }) => {
-  const nearestEvent: any = event?.childEvents?.[0];
-  const _startDate = nearestEvent?.venues?.[0]?.eventDate ?? "";
-  const timezone = event?.states?.find((state: any) => state._id === nearestEvent?.state?._id)?.timeZone;
+const EventBanner: React.FC<EventBannerProps> = React.memo(({ event, posterImage }) => {
+  const nearestDate = useMemo(() => {
+    const now = moment();
+    const upcomingDates = event.childEvents?.flatMap(childEvent => 
+      childEvent.venues?.map(venue => venue.eventDate)
+    ).filter(date => moment(date).isSameOrAfter(now)) || [];
 
-  const eventStartDate = moment(_startDate)?.tz(timezone)?.format("MM/DD/YYYY HH:mm");
+    return upcomingDates.length > 0 ? moment.min(upcomingDates.map(date => moment(date))) : null;
+  }, [event]);
 
-  const { days, hours, minutes, seconds } = useCountdownDate(new Date(eventStartDate));
+  const eventStartDate = nearestDate ? nearestDate.format("MM/DD/YYYY HH:mm") : null;
+
+  const { days, hours, minutes, seconds } = useCountdownDate(new Date(eventStartDate as any));
 
   return (
     <div className="banner-section">
@@ -81,8 +86,7 @@ const EventBanner: React.FC<EventBannerProps> = ({ event, posterImage }) => {
       </div>
     </div>
   );
-};
-
+});
 export default Banner;
 
 interface TimeBlockProps {
