@@ -285,7 +285,6 @@ export default function TourNewEditForm({ currentTour }: Props) {
   };
 
   const onUpdate = async (data: any) => {
-    console.log('this is data', data);
     try {
       const formData = new FormData();
       formData.append('eventName', data.eventName);

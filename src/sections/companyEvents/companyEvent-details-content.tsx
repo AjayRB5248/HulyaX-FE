@@ -40,7 +40,6 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
     createdAt,
     available,
   } = event[0];
-  console.log({ajjj:event})
 
   const [open, setOpen] = useState(false);
 
