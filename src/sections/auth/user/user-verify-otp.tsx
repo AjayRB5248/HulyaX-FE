@@ -118,7 +118,7 @@ const UserVerifyOTP = () => {
           </Typography>
 
           <Typography sx={{ color: "text.secondary", fontSize: "12px" }}>
-            We&apos;ve sent a 6-digit confirmation code to your phone number.
+            We&apos;ve sent a 8-digit confirmation code to your phone number.
             <br />
             Please enter the code in below box to verify your number.
           </Typography>
