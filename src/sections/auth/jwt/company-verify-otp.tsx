@@ -95,7 +95,7 @@ export default function CompanyVerifyOTP() {
         <Typography variant="h3">Please check your Phone!</Typography>
 
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          We have sent a 6-digit confirmation code to your Phone Number, please enter the code in below box to verify your
+          We have sent a 8-digit confirmation code to your Phone Number, please enter the code in below box to verify your
           Number.
         </Typography>
       </Stack>
