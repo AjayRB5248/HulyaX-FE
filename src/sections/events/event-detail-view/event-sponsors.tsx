@@ -9,21 +9,6 @@ const mockSponsors = [
   {
     imageUrl: Sponsor01,
   },
-  {
-    imageUrl: Sponsor02,
-  },
-  {
-    imageUrl: Sponsor01,
-  },
-  {
-    imageUrl: Sponsor02,
-  },
-  {
-    imageUrl: Sponsor01,
-  },
-  {
-    imageUrl: Sponsor02,
-  },
 ];
 
 const EventSponsors: React.FC<any> = ({ sponsors }) => {
