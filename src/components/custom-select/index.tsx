@@ -10,13 +10,22 @@ const customStyles = {
   }),
   dropdownIndicator: (provided: any) => ({
     ...provided,
-    color: "green",
+    color: "#1d575b",
   }),
   control: (provided: any, state: any) => ({
     ...provided,
     borderColor: "#1d575b!important",
     "&:hover": {
       borderColor: "#1d575b!important",
+    },
+  }),
+  option: (provided: any, state: any) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? "#1d575b" : state.isFocused ? "#1d575b8a" : "white",
+    color: state.isSelected ? "white" : "black",
+    border: state.isFocused ? "1px solid #1d575b2b" : "1px solid transparent",
+    "&:hover": {
+      backgroundColor: "#1d575b2b",
     },
   }),
 };
