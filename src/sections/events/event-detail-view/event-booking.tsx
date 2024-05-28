@@ -1,24 +1,17 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import SelectField from "src/components/select-field/select-field";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
-
-import withNiceSelect from "src/layouts/_common/nice-select/withNiceSelect";
-
 import EventTickets from "./event-tickets";
 import { enqueueSnackbar } from "notistack";
 import { EXTERNAL_EVENTS } from "../eventsLinkData";
 import EventsLink from "./events-link";
-
-const animatedComponents = makeAnimated();
+import { CustomSelect } from "src/components/custom-select";
 
 const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData, eventStatus }) => {
   const [statesOptions, setStatesOptions] = useState<any>([]);
   const [selectedState, setSelectedState] = useState<any>(null);
 
   const [venuesOptions, setVenuesOptions] = useState<any>([]);
-  const [selectedVenue, setSelectedVenue] = useState<string>();
+  const [selectedVenue, setSelectedVenue] = useState<any>();
 
   const [eventDate, setEventDate] = useState<string>("");
   const [showTickets, setShowTickets] = useState<any>(null);
@@ -103,28 +96,24 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
         {/* Select State */}
         <li>
           <h6 className="subtitle">Select State:</h6>
-          <Select
+          <CustomSelect
             aria-label="Select State"
-            closeMenuOnSelect={true}
-            components={animatedComponents}
             defaultValue={selectedState}
             options={statesOptions}
-            onChange={(e: any) => {
-              handleSelectState(e.label, e.value);
+            onSelectChange={(label: string, value: string) => {
+              handleSelectState(label, value);
             }}
           />
         </li>
         {/* Select Venue */}
         <li>
           <h6 className="subtitle">Select Venue:</h6>
-          <Select
+          <CustomSelect
             aria-label="Select Venue"
-            closeMenuOnSelect={true}
-            components={animatedComponents}
             defaultValue={selectedVenue}
             options={venuesOptions}
-            onChange={(e: any) => {
-              handleVenueChange(e.label, e.value);
+            onSelectChange={(label: string, value: string) => {
+              handleVenueChange(label, value);
             }}
           />
         </li>

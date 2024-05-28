@@ -24,11 +24,11 @@ const EventsLink: React.FC<IEventTickets> = ({ eventName, eventImage, eventDate,
   return (
     <>
       {getExternalLinkToTicket() ? (
-        <div className="events-external-link-wrapper row justify-content-center">
-          <div className="col-4 event-image-wrapper">
+        <div className="events-external-link-wrapper row no-gutters align-items-center justify-content-center">
+          <div className="col-12 col-md-4 event-image-wrapper">
             <Image src={eventImage} alt={eventName} height={150} width={150} />
           </div>
-          <div className="col-8 event-image-wrapper">
+          <div className="col-12 col-md-8 event-content-wrapper">
             <h3>{eventName}</h3>
             <p>
               {venue}, {state}
