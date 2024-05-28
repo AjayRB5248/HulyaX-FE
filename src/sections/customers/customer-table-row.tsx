@@ -40,8 +40,8 @@ export default function UserTableRow({
     <>
       <TableRow hover selected={selected}>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{customer?.name}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{customer?.mobileNumber}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{customer?.email}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{customer?.mobileNumber}</TableCell>
 
         <TableCell
           sx={{
