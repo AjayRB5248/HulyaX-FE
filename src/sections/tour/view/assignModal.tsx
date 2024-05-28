@@ -6,7 +6,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { DateTimePicker } from '@mui/x-date-pickers';
-import moment from 'moment';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useAssignCompany, useRemoveAssginedCompany } from 'src/api/superAdmin';
@@ -43,7 +42,7 @@ const AssignModal = ({
           (venue: any) => venue.state === state._id
         );
         const date = selectedEvent?.childEvents?.find(
-          (event: any) => event?.state === state._id
+          (event: any) => event?.state?._id === state._id
         )?.venues[0]?.eventDate;
 
         return {
@@ -110,7 +109,7 @@ const AssignModal = ({
               venues: [
                 {
                   _id: singleData?.venue,
-                  date: moment(singleData?.date).toISOString(),
+                  date: singleData?.date,
                 },
               ],
             };
@@ -121,7 +120,7 @@ const AssignModal = ({
               venues: [
                 {
                   _id: singleData?.venue,
-                  date: moment(singleData?.date).toISOString(),
+                  date: singleData?.date,
                 },
               ],
             };
