@@ -811,4 +811,38 @@
   }
 }
 
+.events-external-link-wrapper {
+  border: 1px solid #eaeaea;
+
+  .event-image-wrapper {
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+      padding: 10px;
+    }
+  }
+
+  .event-content-wrapper {
+    padding: 10px 14px!important;
+
+    h3 {
+      font-weight: bold;
+    }
+
+    p {
+      color: #525252;
+      margin-bottom: 3px;
+    }
+
+    a {
+      margin-top: 10px;
+
+      button {
+        text-transform: capitalize;
+      }
+    }
+  }
+}
+
 /*******************  Event Details Styles Ends Here *******************/

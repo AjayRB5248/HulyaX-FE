@@ -1,22 +1,30 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import SelectField from "src/components/select-field/select-field";
-import withNiceSelect from "src/layouts/_common/nice-select/withNiceSelect";
-
 import EventTickets from "./event-tickets";
 import { enqueueSnackbar } from "notistack";
+import { EXTERNAL_EVENTS } from "../eventsLinkData";
+import EventsLink from "./events-link";
+import { CustomSelect } from "src/components/custom-select";
 
 const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData, eventStatus }) => {
   const [statesOptions, setStatesOptions] = useState<any>([]);
   const [selectedState, setSelectedState] = useState<any>(null);
 
   const [venuesOptions, setVenuesOptions] = useState<any>([]);
-  const [selectedVenue, setSelectedVenue] = useState<string>();
+  const [selectedVenue, setSelectedVenue] = useState<any>();
 
   const [eventDate, setEventDate] = useState<string>("");
   const [showTickets, setShowTickets] = useState<any>(null);
 
-  const handleSelectState = (value: any) => {
+  const [selectedEvent, setSelectedEvent] = useState<any>({
+    state: "",
+    venue: "",
+  });
+  const [showEventExternalLink, setShowEventExternalLink] = useState<any>({});
+
+  const handleSelectState = (label: string, value: any) => {
+    setSelectedEvent({ state: label });
+
     const venuesFound =
       eventData && eventData?.length > 0 && eventData?.find((event: any) => event?.state?._id === value)?.venues;
 
@@ -27,15 +35,15 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
         label: eachVenue.venueId?.venueName,
       }));
 
-      setVenuesOptions([{ id: "", value: "", label: "Select Venue" }, ...venueList]);
+      setVenuesOptions([...venueList]);
 
       setSelectedState(value);
-      setShowTickets(null)
-      setEventDate("")
+      setShowTickets(null);
+      setEventDate("");
     }
   };
 
-  const handleVenueChange = (value: any) => {
+  const handleVenueChange = (label: string, value: any) => {
     setSelectedVenue(value);
     const selectedEventVenue = venues?.find((eachVenue: any) => eachVenue?.venueId?.venueName === value);
 
@@ -45,10 +53,14 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
     } else {
       setEventDate("");
     }
+
+    setSelectedEvent((prev: any) => ({
+      ...prev,
+      venue: label,
+    }));
   };
 
-  const handleEventDateChange = (value: any) => {
-  };
+  const handleEventDateChange = (value: any) => {};
 
   const handleFindTickets = () => {
     if (!selectedState || !selectedVenue) {
@@ -57,6 +69,12 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
       });
       return;
     }
+
+    if (EXTERNAL_EVENTS.includes(selectedEvent?.state)) {
+      setShowEventExternalLink(selectedEvent);
+      return;
+    }
+
     setShowTickets({ eventId, selectedVenue, selectedState });
   };
 
@@ -68,7 +86,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
         label: eachState.stateName,
       }));
 
-      setStatesOptions([{ id: "", value: "", label: "Select State" }, ...statesList]);
+      setStatesOptions([...statesList]);
     }
   }, [states]);
 
@@ -78,24 +96,24 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
         {/* Select State */}
         <li>
           <h6 className="subtitle">Select State:</h6>
-          <SelectField
-            className="info"
-            label="state"
+          <CustomSelect
+            aria-label="Select State"
+            defaultValue={selectedState}
             options={statesOptions}
             onSelectChange={(label: string, value: string) => {
-              handleSelectState(value);
+              handleSelectState(label, value);
             }}
           />
         </li>
         {/* Select Venue */}
         <li>
           <h6 className="subtitle">Select Venue:</h6>
-          <SelectField
-            className="info"
-            label="venue"
+          <CustomSelect
+            aria-label="Select Venue"
+            defaultValue={selectedVenue}
             options={venuesOptions}
             onSelectChange={(label: string, value: string) => {
-              handleVenueChange(value);
+              handleVenueChange(label, value);
             }}
           />
         </li>
@@ -129,9 +147,19 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
             eventStatus={eventStatus}
           />
         ) : null}
+
+        {showEventExternalLink && showEventExternalLink?.state && showEventExternalLink?.venue && (
+          <EventsLink
+            state={showEventExternalLink?.state}
+            venue={showEventExternalLink?.venue}
+            eventName={eventData?.[0]?.parentEvent?.eventName}
+            eventImage={eventData?.[0]?.parentEvent?.images?.[1]?.imageurl}
+            eventDate={eventDate}
+          />
+        )}
       </ul>
     </div>
   );
 };
 
-export default withNiceSelect(EventBooking);
+export default EventBooking;
