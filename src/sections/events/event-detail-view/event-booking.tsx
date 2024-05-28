@@ -11,7 +11,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
   const [selectedState, setSelectedState] = useState<any>(null);
 
   const [venuesOptions, setVenuesOptions] = useState<any>([]);
-  const [selectedVenue, setSelectedVenue] = useState<any>();
+  const [selectedVenue, setSelectedVenue] = useState<any>(null);
 
   const [eventDate, setEventDate] = useState<string>("");
   const [showTickets, setShowTickets] = useState<any>(null);
@@ -20,7 +20,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
     state: "",
     venue: "",
   });
-  const [showEventExternalLink, setShowEventExternalLink] = useState<any>({});
+  const [showEventExternalLink, setShowEventExternalLink] = useState<any>(null);
 
   const handleSelectState = (label: string, value: any) => {
     setSelectedEvent({ state: label });
@@ -38,7 +38,9 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
       setVenuesOptions([...venueList]);
 
       setSelectedState(value);
+      setSelectedVenue(null);
       setShowTickets(null);
+      setShowEventExternalLink(null);
       setEventDate("");
     }
   };
@@ -109,6 +111,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
         <li>
           <h6 className="subtitle">Select Venue:</h6>
           <CustomSelect
+            key={selectedState}
             aria-label="Select Venue"
             defaultValue={selectedVenue}
             options={venuesOptions}
