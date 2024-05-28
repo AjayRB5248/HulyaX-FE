@@ -14,7 +14,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
   const [selectedVenue, setSelectedVenue] = useState<string>();
 
   const [eventDate, setEventDate] = useState<string>("");
-  const [showTickets, setShowTickets] = useState<any>({});
+  const [showTickets, setShowTickets] = useState<any>(null);
 
   const handleSelectState = (value: any) => {
     const venuesFound =
@@ -30,6 +30,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
       setVenuesOptions([{ id: "", value: "", label: "Select Venue" }, ...venueList]);
 
       setSelectedState(value);
+      setShowTickets(null)
       setEventDate("")
     }
   };
@@ -42,7 +43,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
       const selectedEventDate = moment(selectedEventVenue?.eventDate).tz(state?.timeZone).format("DD MMM ddd, hh:mm A");
       setEventDate(selectedEventDate);
     } else {
-      setEventDate(""); 
+      setEventDate("");
     }
   };
 

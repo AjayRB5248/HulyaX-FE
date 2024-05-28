@@ -10,35 +10,32 @@ const EventVenues: React.FC<any> = ({ eventData, states }) => {
     const stateDetails = states && states.length > 0 && states.find((eachState: any) => eachState?._id === stateId);
     return stateDetails ?? {};
   };
+
+  const sortedEventData = eventData?.filter((eachEvent: any) => eachEvent?.venues && eachEvent?.venues?.length > 0)
+    .flatMap((eachEvent: any) => eachEvent.venues.map((eachVenue: any) => ({ ...eachVenue, stateName: getStateDetails(eachVenue?.venueId?.state)?.stateName })))
+    ?.sort((a: any, b: any) => moment(a.eventDate).diff(moment(b.eventDate)));
+
   return (
     <section className="book-section">
       <div className="container-fluid">
         <div className="book-wrapper">
           <div className="left-side">
-            {eventData &&
-              eventData.length > 0 &&
-              eventData?.map(
-                (eachEvent: any) =>
-                  eachEvent?.venues &&
-                  eachEvent?.venues?.length > 0 &&
-                  eachEvent?.venues?.map((eachVenue: any) => {
-                    const stateName = getStateDetails(eachVenue?.venueId?.state)?.stateName;
-                    return (
-                      <div className="item" key={eachVenue._id}>
-                        <div className="item-thumb">
-                          <Image src={VenueIcon} alt={eachVenue.venueId?.venueName} className="venue-icon" />
-                        </div>
-                        <div className="item-content">
-                          <span className="up">
-                            {eachVenue.venueId?.venueName}, {stateName}
-                          </span>
-                          <span>{eachVenue.city}</span>
-                          <div className="item-date">{moment(eachVenue.eventDate).format("MMM DD, YYYY")}</div>
-                        </div>
-                      </div>
-                    );
-                  })
-              )}
+            {sortedEventData &&
+              sortedEventData.length > 0 &&
+              sortedEventData.map((eachVenue: any) => (
+                <div className="item" key={eachVenue._id}>
+                  <div className="item-thumb">
+                    <Image src={VenueIcon} alt={eachVenue.venueId?.venueName} className="venue-icon" />
+                  </div>
+                  <div className="item-content">
+                    <span className="up">
+                      {eachVenue.venueId?.venueName}, {eachVenue.stateName}
+                    </span>
+                    <span>{eachVenue.city}</span>
+                    <div className="item-date">{moment(eachVenue.eventDate).format("MMM DD, YYYY")}</div>
+                  </div>
+                </div>
+              ))}
             <div className="item">
               <div className="item-thumb">
                 <Image src={ContactIcon} alt="Contact Icon" className="contact-icon" />
