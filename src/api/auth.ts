@@ -29,7 +29,6 @@ export const useLogin = () => {
         return data;
       },
       onError: (error: any) => {
-        console.log({error})
         enqueueSnackbar(
           error?.response?.data?.message || 'Something went wrong',
           {

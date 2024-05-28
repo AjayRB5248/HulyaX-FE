@@ -11,6 +11,7 @@ import EventBanner from "./event-banner";
 import { useRouter } from "src/routes/hook/use-router";
 import { useParams } from "src/routes/hook/use-params";
 import { CircularProgress } from "@mui/material";
+import { SplashScreen } from "src/components/loading-screen";
 
 const sponsors = [
   {
@@ -47,7 +48,7 @@ const EventDetail = () => {
 
   return Object.keys(event).length === 0 && isLoading ? (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "200px", margin: "50px" }}>
-      <CircularProgress />
+      <SplashScreen />
     </div>
   ) : (
     <>
