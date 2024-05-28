@@ -88,8 +88,7 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId, ev
       ?.filter(([ticketId, quantity]) => quantity > 0)
       ?.map(([ticketId, quantity]) => ({ ticketId, quantity }));
 
-
-    const totalQuantity = ticketsToBook?.reduce((total:any, ticket:any) => total + ticket?.quantity, 0);
+    const totalQuantity = ticketsToBook?.reduce((total: any, ticket: any) => total + ticket?.quantity, 0);
     if (totalQuantity && totalQuantity > 8) {
       enqueueSnackbar("Cannot Purchase more than 8 tickets!", {
         variant: "warning",
@@ -126,15 +125,19 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId, ev
                     <sup>$</sup>
                     {eachTicket.price}
                   </h2>
-                  <div className="quantity-selector d-flex align-items-center">
-                  <span className="t-button" onClick={() => handleDecrement(eachTicket._id)}>
-                      <i className="fas fa-minus"></i>
-                    </span>
-                    <span className="value">{ticketQuantities[eachTicket._id] || 0}</span>
-                    <span className="t-button" onClick={() => handleIncrement(eachTicket._id)}>
-                    <i className="fas fa-plus"></i>
-                    </span>
-                  </div>
+                  {eachTicket?.availableSeats > 0 ? (
+                    <div className="quantity-selector d-flex align-items-center">
+                      <span className="t-button" onClick={() => handleDecrement(eachTicket._id)}>
+                        <i className="fas fa-minus"></i>
+                      </span>
+                      <span className="value">{ticketQuantities[eachTicket._id] || 0}</span>
+                      <span className="t-button" onClick={() => handleIncrement(eachTicket._id)}>
+                        <i className="fas fa-plus"></i>
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="text-danger">Tickets All Sold out!</span>
+                  )}
                 </div>
               </div>
             </div>
