@@ -1,3 +1,4 @@
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Slider from "react-slick";
 import { useArtists } from "src/api/artists";
@@ -37,7 +38,15 @@ const settings = {
 };
 
 const Artists = () => {
-  const { artists } = useArtists();
+  const { artists, loading } = useArtists();
+  const sliderRef :any = useRef(null);
+
+  useEffect(() => {
+    if (sliderRef.current) {
+      sliderRef.current.slickGoTo(0);
+    }
+  }, [artists]);
+
 
   return (
     <section className="section-wrapper artists-section">
@@ -46,9 +55,9 @@ const Artists = () => {
         <p>Discover a world of art and innovation with renowned global artists.</p>
       </div>
       <div className="container-fluid">
-        <Slider {...settings}>
-          {artists?.artists?.map((artist:any) => {
-            const profileImage = artist?.images?.find((img:any) => img.isProfile)?.imageurl;
+        <Slider ref={sliderRef} {...settings}>
+          {artists?.artists?.map((artist: any) => {
+            const profileImage = artist?.images?.find((img: any) => img.isProfile)?.imageurl;
 
             return (
               <div key={artist._id} className="d-flex flex-column align-items-center">

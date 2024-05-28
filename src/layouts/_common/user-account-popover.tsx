@@ -31,7 +31,7 @@ const OPTIONS = [
 
   {
     label: 'View Purchased Tickets',
-    linkTo: '/user/profile',
+    linkTo: '/user/profile?tab=tickets',
   },
 ];
 
