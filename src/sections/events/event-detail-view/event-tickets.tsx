@@ -95,6 +95,14 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId, ev
       }
     }
 
+    const totalQuantity = ticketsToBook.reduce((total:any, ticket:any) => total + ticket.quantity, 0);
+    if (totalQuantity && totalQuantity > 8) {
+      enqueueSnackbar("Cannot Purchase more than 8 tickets!", {
+        variant: "warning",
+      });
+      return;
+    }
+
     if (ticketsToBook && ticketsToBook.length === 0) {
       enqueueSnackbar("Please Choose Tickets First!", {
         variant: "error",
@@ -125,12 +133,12 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId, ev
                     {eachTicket.price}
                   </h2>
                   <div className="quantity-selector d-flex align-items-center">
-                    <span className="t-button" onClick={() => handleIncrement(eachTicket._id)}>
-                      <i className="fas fa-plus"></i>
+                  <span className="t-button" onClick={() => handleDecrement(eachTicket._id)}>
+                      <i className="fas fa-minus"></i>
                     </span>
                     <span className="value">{ticketQuantities[eachTicket._id] || 0}</span>
-                    <span className="t-button" onClick={() => handleDecrement(eachTicket._id)}>
-                      <i className="fas fa-minus"></i>
+                    <span className="t-button" onClick={() => handleIncrement(eachTicket._id)}>
+                    <i className="fas fa-plus"></i>
                     </span>
                   </div>
                 </div>
