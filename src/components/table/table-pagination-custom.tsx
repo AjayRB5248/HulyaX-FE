@@ -32,21 +32,7 @@ export default function TablePaginationCustom({
           borderTopColor: 'transparent',
         }}
       />
-
-      {onChangeDense && (
-        <FormControlLabel
-          label='Dense'
-          control={<Switch checked={dense} onChange={onChangeDense} />}
-          sx={{
-            pl: 2,
-            py: 1.5,
-            top: 0,
-            position: {
-              sm: 'absolute',
-            },
-          }}
-        />
-      )}
+      
     </Box>
   );
 }
