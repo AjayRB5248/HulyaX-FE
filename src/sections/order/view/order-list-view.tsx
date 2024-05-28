@@ -15,7 +15,6 @@ import TableContainer from '@mui/material/TableContainer';
 import Scrollbar from 'src/components/scrollbar';
 import { useSettingsContext } from 'src/components/settings';
 import {
-  TableEmptyRows,
   TableHeadCustom,
   TableNoData,
   TablePaginationCustom,
@@ -23,6 +22,7 @@ import {
 } from 'src/components/table';
 // types
 //
+import { CircularProgress } from '@mui/material';
 import axiosInstance from 'src/utils/axios';
 import OrderTableRow from '../order-table-row';
 
@@ -72,14 +72,19 @@ export default function OrderListView() {
   const settings = useSettingsContext();
 
   const denseHeight = table.dense ? 52 : 72;
+  const [loading, setLoading] = useState(false);
 
   const fetchTickets = (filter: any) => {
+    setLoading(true);
     myPurchasedTicket(filter)
       .then((res: any) => {
         setData(res);
       })
       .catch((error) => {
         console.error('Failed to fetch tickets:', error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -96,102 +101,64 @@ export default function OrderListView() {
   return (
     <>
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-        {/* <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 15,
-          }}
-        >
-          {/* <select
-            style={{
-              width: 'fit-content',
-              paddingInline: 15,
-              color: 'black',
-              marginBottom: 20,
-              marginLeft: 20,
-            }}
-            onChange={(e) =>
-              setFilter((prev) => ({ ...prev, eventStatus: e?.target?.value }))
-            }
-          >
-            <option
-              key={'select'}
-              // selected={category === filter.eventStatus}
-              style={{ height: 40 }}
-              value={'select'}
-              disabled
-            >
-              select
-            </option>
-            {['PENDING', 'CONFIRMED', 'CANCELLED'].map((category) => (
-              <option
-                key={category}
-                selected={category === filter.eventStatus}
-                style={{ height: 40 }}
-                value={category}
-              >
-                {category}
-              </option>
-            ))}
-          </select> 
-
-          <input
-            type='text'
-            style={{ width: 280, color: 'black' }}
-            onChange={(e) =>
-              setFilter((prev) => ({
-                ...prev,
-                eventName: e?.target?.value,
-              }))
-            }
-            value={filter?.eventName}
-            placeholder='Event Name'
-          />
-        </div> */}
         <Card>
-          <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
-            <Scrollbar>
-              <Table
-                size={table.dense ? 'small' : 'medium'}
-                sx={{ minWidth: 960 }}
-              >
-                <TableHeadCustom
-                  order={table.order}
-                  orderBy={table.orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={data?.ticket.length}
-                  numSelected={table.selected.length}
-                  onSort={table.onSort}
-                />
+          {loading ? (
+            <div
+              style={{
+                display: 'grid',
+                height: 200,
+                width: '100%',
+                placeItems: 'center',
+              }}
+            >
+              <CircularProgress />
+            </div>
+          ) : (
+            <>
+              <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
+                <Scrollbar>
+                  <Table
+                    size={table.dense ? 'small' : 'medium'}
+                    sx={{ minWidth: 960 }}
+                  >
+                    <TableHeadCustom
+                      order={table.order}
+                      orderBy={table.orderBy}
+                      headLabel={TABLE_HEAD}
+                      rowCount={data?.ticket.length}
+                      numSelected={table.selected.length}
+                      onSort={table.onSort}
+                    />
 
-                <TableBody>
-                  {data?.ticket?.map((row: any) => (
-                    <OrderTableRow key={row._id} row={row} />
-                  ))}
+                    <TableBody>
+                      {data?.ticket?.map((row: any) => (
+                        <OrderTableRow key={row._id} row={row} />
+                      ))}
 
-                  <TableNoData notFound={data?.count === 0} />
-                </TableBody>
-              </Table>
-            </Scrollbar>
-          </TableContainer>
+                      <TableNoData notFound={data?.count === 0} />
+                    </TableBody>
+                  </Table>
+                </Scrollbar>
+              </TableContainer>
 
-          <TablePaginationCustom
-            count={data?.count}
-            page={filter?.page}
-            rowsPerPage={filter?.limit}
-            onPageChange={table.onChangePage}
-            onRowsPerPageChange={(event: any) =>
-              setFilter((prev) => ({
-                ...prev,
-                limit: parseInt(event.target.value, 10),
-              }))
-            }
-            //
-            dense={table.dense}
-            onChangeDense={table.onChangeDense}
-            rowsPerPageOptions={[1, 5, 10]}
-          />
+              <TablePaginationCustom
+                count={data?.count}
+                page={filter?.page}
+                rowsPerPage={filter?.limit}
+                onPageChange={table.onChangePage}
+                onRowsPerPageChange={(event: any) =>
+                  setFilter((prev) => ({
+                    ...prev,
+                    limit: parseInt(event.target.value, 10),
+                  }))
+                }
+                //
+                dense={table.dense}
+                onChangeDense={table.onChangeDense}
+                rowsPerPageOptions={[1, 5, 10]}
+              />
+            </>
+          )}
         </Card>
       </Container>
     </>

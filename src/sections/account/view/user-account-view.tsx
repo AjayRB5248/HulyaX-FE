@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 // @mui
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
@@ -59,6 +59,15 @@ export default function AccountView() {
     setCurrentTab(newValue);
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tab = urlParams.get('tab');
+      if (tab) {
+        setCurrentTab(tab);
+      }
+    }
+  }, []);
   return (
     <section className="user-profile-section">
       <Container maxWidth={settings.themeStretch ? false : "xl"} className="theme--container-xl user-profile--container">

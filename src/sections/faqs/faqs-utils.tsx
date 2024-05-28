@@ -13,7 +13,7 @@ export const _faqs = [
     {
       id: 3,
       heading: 'How will I receive my tickets?',
-      detail: 'Tickets will be emailed to you as a PDF attachment immediately after purchase. You can also download them from your account.',
+      detail: 'Tickets can be emailed through your account in Account > Profile > My Purchased Tickets. You can also download them from your account.',
     },
     {
       id: 4,
@@ -23,7 +23,7 @@ export const _faqs = [
     {
       id: 5,
       heading: 'Can I transfer my ticket to someone else?',
-      detail: 'Currently, tickets can not be transferred to another person. Will add this feature in upcoming events.',
+      detail: 'Yes, tickets can transferred to another person through your My purchased page. You can buy tickets and mail it to your loved ones',
     },
     {
       id: 6,
@@ -42,8 +42,8 @@ export const _faqs = [
     },
     {
       id: 9,
-      heading: 'Can I buy tickets for multiple events at once?',
-      detail: 'Yes, you can add tickets for multiple events to your cart and purchase them in a single transaction.',
+      heading: 'Can I buy multiple tickets at once?',
+      detail: 'Yes, you can add multiple tickets for same events to your cart and purchase them in a single transaction.',
     },
     {
       id: 10,

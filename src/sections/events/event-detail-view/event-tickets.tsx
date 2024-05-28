@@ -84,18 +84,12 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId, ev
       return;
     }
 
-    const ticketsToBook: any = [];
+    const ticketsToBook = Object?.entries(ticketQuantities)
+      ?.filter(([ticketId, quantity]) => quantity > 0)
+      ?.map(([ticketId, quantity]) => ({ ticketId, quantity }));
 
-    for (const ticketId in ticketQuantities) {
-      if (ticketQuantities.hasOwnProperty(ticketId)) {
-        ticketsToBook.push({
-          ticketId,
-          quantity: ticketQuantities[ticketId],
-        });
-      }
-    }
 
-    const totalQuantity = ticketsToBook.reduce((total:any, ticket:any) => total + ticket.quantity, 0);
+    const totalQuantity = ticketsToBook?.reduce((total:any, ticket:any) => total + ticket?.quantity, 0);
     if (totalQuantity && totalQuantity > 8) {
       enqueueSnackbar("Cannot Purchase more than 8 tickets!", {
         variant: "warning",
