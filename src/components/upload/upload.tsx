@@ -1,20 +1,20 @@
 import { useDropzone } from 'react-dropzone';
 // @mui
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 // assets
 import { UploadIllustration } from 'src/assets/illustrations';
 //
 import Iconify from '../iconify';
 //
-import { UploadProps } from './types';
 import RejectionFiles from './errors-rejection-files';
 import MultiFilePreview from './preview-multi-file';
 import SingleFilePreview from './preview-single-file';
+import { UploadProps } from './types';
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +35,13 @@ export default function Upload({
   sx,
   ...other
 }: UploadProps) {
-  const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone({
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragReject,
+    fileRejections,
+  } = useDropzone({
     multiple,
     disabled,
     ...other,
@@ -48,14 +54,19 @@ export default function Upload({
   const hasError = isDragReject || !!error;
 
   const renderPlaceholder = (
-    <Stack spacing={3} alignItems="center" justifyContent="center" flexWrap="wrap">
+    <Stack
+      spacing={3}
+      alignItems='center'
+      justifyContent='center'
+      flexWrap='wrap'
+    >
       <UploadIllustration sx={{ width: 1, maxWidth: 200 }} />
       <Stack spacing={1} sx={{ textAlign: 'center' }}>
-        <Typography variant="h6">Drop or Select file</Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        <Typography variant='h6'>Drop or Select file</Typography>
+        <Typography variant='body2' sx={{ color: 'text.secondary' }}>
           Drop files here or click
           <Box
-            component="span"
+            component='span'
             sx={{
               mx: 0.5,
               color: 'primary.main',
@@ -71,12 +82,14 @@ export default function Upload({
   );
 
   const renderSinglePreview = (
-    <SingleFilePreview imgUrl={typeof file === 'string' ? file : file?.preview} />
+    <SingleFilePreview
+      imgUrl={typeof file === 'string' ? file : file?.preview}
+    />
   );
 
   const removeSinglePreview = hasFile && onDelete && (
     <IconButton
-      size="small"
+      size='small'
       onClick={onDelete}
       sx={{
         top: 16,
@@ -90,29 +103,38 @@ export default function Upload({
         },
       }}
     >
-      <Iconify icon="mingcute:close-line" width={18} />
+      <Iconify icon='mingcute:close-line' width={18} />
     </IconButton>
   );
 
   const renderMultiPreview = hasFiles && (
     <>
       <Box sx={{ my: 3 }}>
-        <MultiFilePreview files={files} thumbnail={thumbnail} onRemove={onRemove} />
+        <MultiFilePreview
+          files={files}
+          thumbnail={thumbnail}
+          onRemove={onRemove}
+        />
       </Box>
 
-      <Stack direction="row" justifyContent="flex-end" spacing={1.5}>
+      <Stack direction='row' justifyContent='flex-end' spacing={1.5}>
         {onRemoveAll && (
-          <Button color="inherit" variant="outlined" size="small" onClick={onRemoveAll}>
+          <Button
+            color='inherit'
+            variant='outlined'
+            size='small'
+            onClick={onRemoveAll}
+          >
             Remove All
           </Button>
         )}
 
         {onUpload && (
           <Button
-            size="small"
-            variant="contained"
+            size='small'
+            variant='contained'
             onClick={onUpload}
-            startIcon={<Iconify icon="eva:cloud-upload-fill" />}
+            startIcon={<Iconify icon='eva:cloud-upload-fill' />}
           >
             Upload
           </Button>
@@ -133,8 +155,10 @@ export default function Upload({
           overflow: 'hidden',
           position: 'relative',
           bgcolor: (theme) => alpha(theme.palette.grey[500], 0.08),
-          border: (theme) => `1px dashed ${alpha(theme.palette.grey[500], 0.2)}`,
-          transition: (theme) => theme.transitions.create(['opacity', 'padding']),
+          border: (theme) =>
+            `1px dashed ${alpha(theme.palette.grey[500], 0.2)}`,
+          transition: (theme) =>
+            theme.transitions.create(['opacity', 'padding']),
           '&:hover': {
             opacity: 0.72,
           },
