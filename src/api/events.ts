@@ -1,10 +1,11 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useSnackbar } from "notistack";
-import { useMemo } from "react";
-import { useEventsContext } from "src/context/EventsContextProvider";
-import { useRouter } from "src/routes/hook";
-import { paths } from "src/routes/paths";
-import EventsService from "src/services/events";
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useSnackbar } from 'notistack';
+import { useMemo } from 'react';
+import { useEventsContext } from 'src/context/EventsContextProvider';
+import { useRouter } from 'src/routes/hook';
+import { paths } from 'src/routes/paths';
+import EventsService from 'src/services/events';
+import axiosInstance from 'src/utils/axios';
 
 interface Filters {
   eventName: string;
@@ -16,7 +17,7 @@ interface Filters {
 // router.push(paths.dashboard.tour.root);
 
 export function useEvent(id: any) {
-  const { data, isLoading, error } = useQuery(["events/id", id], async () => {
+  const { data, isLoading, error } = useQuery(['events/id', id], async () => {
     const res = await EventsService.details(id);
     return res?.data?.event;
   });
@@ -32,7 +33,7 @@ export function useEvent(id: any) {
 
 export function useEvents() {
   const { data, isLoading, error, refetch } = useQuery(
-    ["events"],
+    ['events'],
     async () => {
       const res = await EventsService.list();
       return res?.data?.events;
@@ -57,19 +58,19 @@ export function useCreateEvent() {
   const { enqueueSnackbar } = useSnackbar();
 
   return useMutation(
-    ["event/create"],
+    ['event/create'],
     async (formData: FormData) => {
       const response = await EventsService.create(formData);
       return response?.data;
     },
     {
       onError: (error: any) => {
-        enqueueSnackbar(error.response.data.message || "Error creating event", {
-          variant: "error",
+        enqueueSnackbar(error.response.data.message || 'Error creating event', {
+          variant: 'error',
         });
       },
       onSuccess: () => {
-        enqueueSnackbar("Event created successfully", { variant: "success" });
+        enqueueSnackbar('Event created successfully', { variant: 'success' });
         router.push(paths.dashboard.tour.root);
       },
     }
@@ -81,7 +82,7 @@ export function useUpdateEvent() {
   const { enqueueSnackbar } = useSnackbar();
 
   return useMutation(
-    ["event/update"],
+    ['event/update'],
     async (data: any) => {
       const { formData, id } = data;
 
@@ -90,8 +91,8 @@ export function useUpdateEvent() {
     },
     {
       onError: (error: any) => {
-        enqueueSnackbar(error.response.data.message || "Error creating event", {
-          variant: "error",
+        enqueueSnackbar(error.response.data.message || 'Error creating event', {
+          variant: 'error',
         });
       },
     }
@@ -101,17 +102,17 @@ export function useUpdateEvent() {
 export function useRemoveEvent() {
   const { enqueueSnackbar } = useSnackbar();
   return useMutation(
-    ["event/remove"],
+    ['event/remove'],
     async (eventId: string) => {
       const res = await EventsService.remove(eventId);
       return res?.data;
     },
     {
       onError: () => {
-        enqueueSnackbar("Error Removing Event", { variant: "error" });
+        enqueueSnackbar('Error Removing Event', { variant: 'error' });
       },
       onSuccess: () => {
-        enqueueSnackbar("Event Removed Successfully", { variant: "success" });
+        enqueueSnackbar('Event Removed Successfully', { variant: 'success' });
       },
     }
   );
@@ -120,7 +121,7 @@ export function useRemoveEvent() {
 export function useAddEventItem() {
   const { enqueueSnackbar } = useSnackbar();
   return useMutation(
-    ["event/addItem"],
+    ['event/addItem'],
     async (data: any) => {
       const { formData, id } = data;
 
@@ -129,7 +130,7 @@ export function useAddEventItem() {
     },
     {
       onError: () => {
-        enqueueSnackbar("Error Removing Event", { variant: "error" });
+        enqueueSnackbar('Error Removing Event', { variant: 'error' });
       },
     }
   );
@@ -137,7 +138,7 @@ export function useAddEventItem() {
 export function useRemoveEventItem() {
   const { enqueueSnackbar } = useSnackbar();
   return useMutation(
-    ["event/removeItem"],
+    ['event/removeItem'],
     async (data: any) => {
       const { formData, id } = data;
 
@@ -146,7 +147,7 @@ export function useRemoveEventItem() {
     },
     {
       onError: () => {
-        enqueueSnackbar("Error Removing Event", { variant: "error" });
+        enqueueSnackbar('Error Removing Event', { variant: 'error' });
       },
     }
   );
@@ -155,14 +156,23 @@ export function useRemoveEventItem() {
 export const useFetchEvents = (queryData?: Filters) => {
   const { setEvents } = useEventsContext();
 
-  const { data, isLoading, isError, isFetching, error } = useQuery(["events", queryData], async () => {
-    const events = await EventsService.list().then((res) => res?.data?.events);
-    setEvents(events);
-    return events;
-  });
+  const { data, isLoading, isError, isFetching, error } = useQuery(
+    ['events', queryData],
+    async () => {
+      const events = await EventsService.list().then(
+        (res) => res?.data?.events
+      );
+      setEvents(events);
+      return events;
+    }
+  );
 
   const filteredEventData =
-    data && data.filter((filteredEvent: any) => filteredEvent.states?.length > 0 && filteredEvent.venueData?.length > 0);
+    data &&
+    data.filter(
+      (filteredEvent: any) =>
+        filteredEvent.states?.length > 0 && filteredEvent.venueData?.length > 0
+    );
 
   return {
     events: data || [],
@@ -173,10 +183,13 @@ export const useFetchEvents = (queryData?: Filters) => {
 };
 
 export function useEventDetailsBySlug(slug: string) {
-  const { data, isLoading, isError, error } = useQuery(["events/slug", slug], async () => {
-    const response = await EventsService.fetchSingleEventBySlug(slug);
-    return response?.data?.eventData;
-  });
+  const { data, isLoading, isError, error } = useQuery(
+    ['events/slug', slug],
+    async () => {
+      const response = await EventsService.fetchSingleEventBySlug(slug);
+      return response?.data?.eventData;
+    }
+  );
 
   const event = useMemo(() => data || {}, [data]);
 
@@ -186,4 +199,33 @@ export function useEventDetailsBySlug(slug: string) {
     isError,
     error,
   };
+}
+
+export function useRemoveImage() {
+  const { enqueueSnackbar } = useSnackbar();
+
+  return useMutation(
+    async ({
+      id,
+      type,
+      typeId,
+    }: {
+      id: string;
+      type: string;
+      typeId: string;
+    }) => {
+      const res = await axiosInstance.delete(`/superadmin/images/${id}`, {
+        data: { type, typeId },
+      });
+      return res.data;
+    },
+    {
+      onError: () => {
+        enqueueSnackbar('Error Removing Image', { variant: 'error' });
+      },
+      onSuccess: () => {
+        enqueueSnackbar('Image Removed Successfully', { variant: 'success' });
+      },
+    }
+  );
 }

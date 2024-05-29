@@ -29,6 +29,7 @@ const VideoDialog: React.FC<VideoProps> = ({
         }}
       >
         <ReactPlayer
+          playing={true}
           controls
           width={'100%'}
           height={'100%'}

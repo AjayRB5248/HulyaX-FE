@@ -25,12 +25,7 @@ import {
 import { useSnackbar } from 'notistack';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useArtists } from 'src/api/artists';
-import {
-  useAddEventItem,
-  useCreateEvent,
-  useRemoveEventItem,
-  useUpdateEvent,
-} from 'src/api/events';
+import { useCreateEvent, useRemoveImage, useUpdateEvent } from 'src/api/events';
 import { useStates } from 'src/api/superAdmin';
 import Iconify from 'src/components/iconify';
 import { useRouter } from 'src/routes/hook';
@@ -53,9 +48,8 @@ const venueDefault = {
 
 export default function TourNewEditForm({ currentTour }: Props) {
   const eventMutation = useCreateEvent();
+  const removeImageMutaton = useRemoveImage();
   const eventUpdateMutation = useUpdateEvent();
-  const eventRemoveItemMutation = useRemoveEventItem();
-  const eventAddItemMutation = useAddEventItem();
   const { artistsData } = useArtists();
   const { stateList } = useStates();
 
@@ -87,7 +81,9 @@ export default function TourNewEditForm({ currentTour }: Props) {
         name: item?._id,
       })),
       posterImage: defaultPosterImage,
-      images: mappedImages?.map((item: any) => item?.imageurl),
+      images: mappedImages
+        ?.filter((item) => !item?.isPrimary)
+        .map((item: any) => item?.imageurl),
       tags:
         currentTour && currentTour?.tags?.length > 0
           ? currentTour?.tags[0].split(',')
@@ -119,10 +115,6 @@ export default function TourNewEditForm({ currentTour }: Props) {
     control,
     name: 'states',
   });
-
-  // const venueNames = (watch('venues') ?? [])
-  //   .filter((venue) => venue && venue.venueName)
-  //   .map((venue) => venue.venueName);
 
   const formValues = watch();
 
@@ -174,7 +166,26 @@ export default function TourNewEditForm({ currentTour }: Props) {
       const filtered =
         formValues.images &&
         formValues.images?.filter((file: any) => file !== inputFile);
-      setValue('images', filtered);
+
+      const selectedImage =
+        formValues.images &&
+        formValues.images?.find((file: any) => file === inputFile);
+
+      const selectedImageId = currentTour?.images.find(
+        (img) => img?.imageurl === selectedImage
+      )?._id;
+
+      if (selectedImageId) {
+        removeImageMutaton
+          .mutateAsync({
+            id: selectedImageId,
+            type: 'event',
+            typeId: currentTour?._id,
+          })
+          .then((res) => {
+            setValue('images', filtered);
+          });
+      }
     },
     [setValue, formValues.images]
   );
@@ -213,75 +224,6 @@ export default function TourNewEditForm({ currentTour }: Props) {
     } catch (error) {
       console.error(error);
     }
-  };
-
-  // getting new/updated/deletd actor
-  const handleChangesInActor = (newArray: any, oldArray: any) => {
-    const updatedActor: any[] = [];
-    const deletedActor: any = [];
-    const newActor: any[] = [];
-
-    oldArray.forEach((oldObj: any) => {
-      const newObj = newArray.find(
-        (newItem: any) => newItem._id === oldObj._id
-      );
-      if (newObj) {
-        if (
-          newObj?.name !== oldObj?.artistName ||
-          newObj?.category !== oldObj?.category ||
-          newObj?.genre !== oldObj?.genre
-        ) {
-          updatedActor.push({
-            'artist[_id]': newObj?._id,
-            'artist[artistName]': newObj?.name,
-            'artist[category]': newObj?.category,
-            'artist[genre]': newObj?.genre,
-          });
-        }
-      } else {
-        deletedActor.push({
-          artistId: oldObj?._id,
-        });
-      }
-    });
-
-    newArray.forEach((newObj: any) => {
-      if (!newObj._id) {
-        newActor.push({
-          'artist[artistName]': newObj.name,
-          'artist[category]': newObj.category,
-          'artist[genre]': newObj.genre,
-        });
-      }
-    });
-
-    return { updatedActor, deletedActor, newActor };
-  };
-
-  // getting new/deleted imaghe
-  const handleChangesImage = (newArray: any, oldArray: any) => {
-    const deletedImage: any = [];
-    const newImage: any[] = [];
-
-    oldArray.forEach((oldObj: any) => {
-      const newObj = newArray.find(
-        (newItem: any) => newItem === oldObj.imageurl
-      );
-      if (newObj) {
-      } else {
-        deletedImage.push({
-          eventImageId: oldObj?._id,
-        });
-      }
-    });
-
-    newArray.forEach((newObj: any) => {
-      if (typeof newObj !== 'string') {
-        newImage.push(newObj);
-      }
-    });
-
-    return { deletedImage, newImage };
   };
 
   const onUpdate = async (data: any) => {

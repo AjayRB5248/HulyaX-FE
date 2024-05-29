@@ -41,6 +41,7 @@ const myPurchasedTicket = (filter: any) => {
     axiosInstance
       .post('/tickets/show-purchased-ticket', {
         ...filter,
+        page: filter?.page + 1,
       })
       .then((response) => {
         if (response.status === 201) {
@@ -64,7 +65,6 @@ export default function OrderListView() {
   const [filter, setFilter] = useState({
     limit: 5,
     page: 0,
-    // createdAt:'',
     eventName: '',
     eventStatus: '',
   });
@@ -145,14 +145,19 @@ export default function OrderListView() {
                 count={data?.count}
                 page={filter?.page}
                 rowsPerPage={filter?.limit}
-                onPageChange={table.onChangePage}
+                onPageChange={(event: any, page) => {
+                  setFilter((prev) => ({
+                    ...prev,
+                    page: page,
+                  }));
+                }}
                 onRowsPerPageChange={(event: any) =>
                   setFilter((prev) => ({
                     ...prev,
                     limit: parseInt(event.target.value, 10),
+                    page: 0,
                   }))
                 }
-                //
                 dense={table.dense}
                 onChangeDense={table.onChangeDense}
                 rowsPerPageOptions={[1, 5, 10]}
