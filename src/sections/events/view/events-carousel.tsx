@@ -68,7 +68,7 @@ const getClosestEvent = (events: any): { event: EachEventProps; closestVenue: Ve
 
 const settings = {
   dots: false,
-  infinite: true,
+  infinite: false,
   slidesToShow: 3,
   slidesToScroll: 1,
   autoplay: true,
