@@ -136,7 +136,7 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId, ev
                       </span>
                     </div>
                   ) : (
-                    <span className="text-danger">Tickets All Sold out!</span>
+                    <span className="text-danger font-weight-bold">Sold out!</span>
                   )}
                 </div>
               </div>
