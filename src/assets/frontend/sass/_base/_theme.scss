@@ -32,7 +32,8 @@
 
     .menu {
       &.active {
-        background: $theme-white-color;
+        background: #f7f7f7;
+        margin-top: 15px;
       }
 
       li {

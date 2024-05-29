@@ -80,7 +80,7 @@ header {
           }
           &::before {
             position: absolute;
-            content: '';
+            content: "";
             top: 0;
             left: 15px;
             @include transform(translateY(-100%));
@@ -128,7 +128,7 @@ header {
             background: $theme-color;
             top: calc(100% + 30px);
             position: absolute;
-            content: '';
+            content: "";
             @include transform(scaleX(0));
             @include transition($transition);
             transform-origin: left;
@@ -255,14 +255,22 @@ header {
         }
         a {
           display: flex;
-          justify-content: space-between;
+          font-weight: bold;
           align-items: center;
           color: #e9eeff;
           text-transform: uppercase;
           padding-right: 20px;
           border-bottom: 1px solid rgba($color: $white-color, $alpha: 0.1);
-          padding-top: 7px;
-          padding-bottom: 7px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          font-size: 12px;
+
+          i {
+            color: $main-theme-color;
+            margin-right: 10px;
+            font-size: 18px;
+            width: 30px;
+          }
         }
         &.header-button {
           margin-top: 20px;
@@ -270,6 +278,9 @@ header {
 
           a {
             display: inline-flex;
+            width: 80%;
+            justify-content: center;
+            border-radius: 4px;
           }
         }
       }
@@ -364,9 +375,9 @@ header {
 .menu-item-has-children {
   > a {
     &::after {
-      content: '\f107';
+      content: "\f107";
       font-weight: 600;
-      font-family: 'Font Awesome 5 Free';
+      font-family: "Font Awesome 5 Free";
       margin-left: 5px;
     }
   }
