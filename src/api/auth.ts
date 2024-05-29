@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'src/routes/hook';
 import { useSnackbar } from 'notistack';
 import { useAuth } from 'src/auth/context/users/auth-context';
+import { useRouter } from 'src/routes/hook';
 import AuthService from 'src/services/auths';
 import { clearTokens, storeTokens } from 'src/utils/token-management';
 
@@ -233,7 +233,7 @@ export const useLogout = () => {
 
       logout();
 
-      router.push('/')
+      router.push('/');
 
       return res.data;
     },
