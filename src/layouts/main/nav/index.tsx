@@ -16,6 +16,7 @@ interface NavItem {
   href: string;
   className?: string;
   submenu?: SubmenuItem[];
+  icon?: any;
 }
 
 const eventCategories = EVENT_CATEGORIES.map((eachEventCategory: any) => {
@@ -29,6 +30,7 @@ const navigationItems: NavItem[] = [
   {
     label: "Home",
     href: "/",
+    icon: <i className="fa fa-home"></i>,
   },
   // {
   //   label: "Explore Events",
@@ -41,7 +43,7 @@ const navigationItems: NavItem[] = [
   //   submenu: eventCategories,
   // },
   // { label: "Trending Now", href: "/trending-now" },
-  { label: "FAQs", href: "/faqs" },
+  { label: "FAQs", href: "/faqs", icon: <i className="fa fa-question-circle"></i> },
 ];
 
 interface NavbarProps {
@@ -96,7 +98,10 @@ const Navbar: React.FC<NavbarProps> = ({ isToggleMenuActive }) => {
                 </>
               ) : (
                 <Link href={item.href} legacyBehavior>
-                  <a className={`${item.href === pathname ? "active" : ""}`}>{item.label}</a>
+                  <a className={`${item.href === pathname ? "active" : ""}`}>
+                    {isToggleMenuActive && item.icon}
+                    {item.label}
+                  </a>
                 </Link>
               )}
             </li>

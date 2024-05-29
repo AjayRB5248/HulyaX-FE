@@ -533,7 +533,7 @@
 .newslater-form {
   margin-bottom: 34px;
   input {
-    height: 50px;
+    // height: 50px;
     padding-right: 160px;
     color: rgb(153, 171, 226);
     &::placeholder {
@@ -4280,7 +4280,8 @@
     }
 
     .event-top-card {
-      height: 40rem;
+      // height: 40rem;
+      height: 34rem;
       position: relative;
 
       a {
@@ -4291,7 +4292,7 @@
       img {
         height: 100%;
         width: 100%;
-        object-fit: cover;
+        object-fit: contain;
         border-radius: inherit;
         object-position: top center;
       }
