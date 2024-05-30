@@ -14,6 +14,7 @@ import PopularCategories from "../popular-categories";
 import BannerSlider from "../banner-slider";
 import { EVENTS_MOCK_DATA } from "src/_mock/_events";
 import { EventStatusEnum } from "src/sections/tour/utils";
+import { SplashScreen } from "src/components/loading-screen";
 
 export default function HomeView() {
   const { events } = useFetchEvents();
