@@ -18,6 +18,10 @@ import { EventStatusEnum } from "src/sections/tour/utils";
 export default function HomeView() {
   const { events } = useFetchEvents();
 
+  if (!events || events?.length === 0) {
+    return <SplashScreen />;
+  }
+
   const EVENTS_MOCK = EVENTS_MOCK_DATA?.subEvents;
 
   return (
