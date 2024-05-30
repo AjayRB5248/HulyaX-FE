@@ -97,10 +97,12 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
                         width={800}
                         height={1200}
                       />
-                      <h4 className="event-title">{event?.eventName}</h4>
+                     
                     </div>
 
                     <div className="event-bottom-card d-flex flex-column p-4">
+                      <h4 className="event-title">{event?.eventName}</h4>
+
                       <div className="artist d-flex align-items-center">
                         <Image
                           src={event?.artists?.[0]?.images?.[0]?.imageurl}
