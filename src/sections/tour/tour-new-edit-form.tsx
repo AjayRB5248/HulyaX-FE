@@ -367,7 +367,7 @@ export default function TourNewEditForm({ currentTour }: Props) {
             multiple
             thumbnail
             name='images'
-            maxSize={3145728}
+            maxSize={10145728}
             onDrop={handleDrop}
             onRemove={handleRemoveFile}
             onRemoveAll={handleRemoveAllFiles}
