@@ -26,6 +26,7 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
     autoplaySpeed: 2000,
     cssEase: "linear",
     pauseOnHover: true,
+    draggable: true,
     responsive: [
       {
         breakpoint: 1200,
