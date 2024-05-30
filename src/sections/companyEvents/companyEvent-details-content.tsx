@@ -149,7 +149,7 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
       const eventDateTime = new Date(venue?.eventDate);
   
       return {
-        venueName: venue.venueId.venueName,
+        venueName: venue?.venueId?.venueName,
         date: eventDateTime.toLocaleDateString(),
         time: eventDateTime.toLocaleTimeString([], {
           hour: '2-digit',
@@ -206,14 +206,14 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
     const combinedDetails = venues?.map((venue: any) => {
       const eventDateTime = new Date(venue?.eventDate);
       const ticketsForVenue = ticketTypes?.filter(
-        (ticket: any) => ticket.venueName === venue.venueName
+        (ticket: any) => ticket?.venueName === venue?.venueName
       );
 
       return {
         venueId:venue?._id,
-        venueName: venue.venueName,
-        city: venue.city,
-        time: eventDateTime.toLocaleTimeString([], {
+        venueName: venue?.venueName,
+        city: venue?.city,
+        time: eventDateTime?.toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
         }),
@@ -248,16 +248,16 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
                       <Stack direction="column" spacing={2} alignItems="center">
                         <Iconify icon="ant-design:ticket-outlined" />
                         <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
-                          <Iconify icon="emojione:admission-tickets" sx={{ color: 'info.main',marginRight: '8px' }}/>  {ticket.type} - ${ticket.price}
+                          <Iconify icon="emojione:admission-tickets" sx={{ color: 'info.main',marginRight: '8px' }}/>  {ticket?.type} - ${ticket?.price}
                         </Typography>
                         <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
                          Available Seats: {ticket.availableSeats}
                         </Typography>
                         <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
-                         Sold Seats: {ticket.soldSeats}
+                         Sold Seats: {ticket?.soldSeats}
                         </Typography>
                         <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap:'4' }}>
-                         Total Seats: {ticket.totalSeats}
+                         Total Seats: {ticket?.totalSeats}
                         </Typography>
                       </Stack>
                     </Box>

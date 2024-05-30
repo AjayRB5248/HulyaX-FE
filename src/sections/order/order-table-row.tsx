@@ -125,6 +125,12 @@ export default function OrderTableRow({ row }: Props) {
             ?.map((item: any) => moment(item?.eventDate).format('MMMM DD, YYYY h:mm:ss A Z'))
             .join(', ')}
         </TableCell>
+        <TableCell>
+          {row?.ticketType}
+        </TableCell>
+        <TableCell>
+          AUD-{row?.perTicketPrice}
+        </TableCell>
 
         <TableCell>
           {row?.artistDetails

@@ -48,7 +48,7 @@ const HeaderActions = ({ campaign }: any) => {
   }, []);
 
   const handleOpen = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setOpen(event.currentTarget);
+    setOpen(event?.currentTarget);
   }, []);
 
   return (
@@ -64,12 +64,12 @@ const HeaderActions = ({ campaign }: any) => {
       </Button>
       <Menu id="simple-menu" anchorEl={isOpen} onClose={handleClose} open={Boolean(isOpen)}>
         {options
-          .filter((o) => o.show)
-          .map((option) => (
-            <MenuItem key={option.title} onClick={option.onClick}>
-              <ListItemIcon>{option.icon && <Iconify icon={option.icon} />}</ListItemIcon>
+          ?.filter((o) => o?.show)
+          ?.map((option) => (
+            <MenuItem key={option?.title} onClick={option?.onClick}>
+              <ListItemIcon>{option?.icon && <Iconify icon={option?.icon} />}</ListItemIcon>
               <Typography variant="body2" color="text.secondary">
-                {option.title}
+                {option?.title}
               </Typography>
             </MenuItem>
           ))}

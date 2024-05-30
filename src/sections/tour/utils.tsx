@@ -2,29 +2,18 @@ import EventsTicket from "src/assets/frontend/images/ticket/ticket-tab02.png";
 import SportsTicket from "src/assets/frontend/images/ticket/ticket-tab03.png";
 
 export const timeZones = [
-  { label: "ACT", value: "Australia/ACT" },
   { label: "Adelaide", value: "Australia/Adelaide" },
   { label: "Brisbane", value: "Australia/Brisbane" },
-  { label: "Broken Hill", value: "Australia/Broken_Hill" },
   { label: "Canberra", value: "Australia/Canberra" },
-  { label: "Currie", value: "Australia/Currie" },
   { label: "Darwin", value: "Australia/Darwin" },
-  { label: "Eucla", value: "Australia/Eucla" },
   { label: "Hobart", value: "Australia/Hobart" },
-  { label: "LHI", value: "Australia/LHI" },
-  { label: "Lindeman", value: "Australia/Lindeman" },
-  { label: "Lord Howe", value: "Australia/Lord_Howe" },
   { label: "Melbourne", value: "Australia/Melbourne" },
   { label: "NSW", value: "Australia/NSW" },
-  { label: "North", value: "Australia/North" },
   { label: "Perth", value: "Australia/Perth" },
   { label: "Queensland", value: "Australia/Queensland" },
-  { label: "South", value: "Australia/South" },
   { label: "Sydney", value: "Australia/Sydney" },
   { label: "Tasmania", value: "Australia/Tasmania" },
   { label: "Victoria", value: "Australia/Victoria" },
-  { label: "West", value: "Australia/West" },
-  { label: "Yancowinna", value: "Australia/Yancowinna" },
 ];
 
 export const EVENT_TAGS = [

@@ -151,7 +151,7 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
             const profileImage = artist?.images?.find((img:any) => img.isProfile)?.imageurl;
 
             return (
-              <div key={artist._id} className="d-flex flex-column align-items-center">
+              <div key={artist?._id} className="d-flex flex-column align-items-center">
                 <div className="artist-profile">
                   {profileImage && (
                     <Image src={profileImage} alt={artist?.artistName} width={150} height={150} />
@@ -180,7 +180,7 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
             <Card key={index} sx={{ minWidth: 275 }}>
               <CardHeader
                 avatar={<Iconify icon="ic:baseline-business" />}
-                title={item.companyName}
+                title={item?.companyName}
               />
               <CardContent>
                 <Stack direction="row" alignItems="center" spacing={1}>
@@ -190,7 +190,7 @@ export default function TourDetailsContent({ event, isLoading }: Props) {
                     color="textSecondary"
                     component="p"
                   >
-                    {item.stateName}
+                    {item?.stateName}
                   </Typography>
                 </Stack>
               </CardContent>

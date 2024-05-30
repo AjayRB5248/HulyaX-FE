@@ -52,8 +52,8 @@ export default function UpdateTicketSettingsForm({ currentEvent }: Props) {
     ),
   });
 
-  const currentTicket = currentEvent[0]?.ticketTypes
-  if (!currentTicket || currentTicket.length === 0) {
+  const currentTicket = currentEvent?.[0]?.ticketTypes
+  if (!currentTicket || currentTicket?.length === 0) {
     return <SplashScreen />;
   }
 
@@ -61,10 +61,10 @@ export default function UpdateTicketSettingsForm({ currentEvent }: Props) {
     () => ({
       ticketSettings: currentTicket
         ? currentTicket?.map((ticketType: any) => ({
-            ticketConfigId:ticketType._id,
-            type: ticketType.type,
-            price: ticketType.price,
-            totalSeats: ticketType.totalSeats,
+            ticketConfigId:ticketType?._id,
+            type: ticketType?.type,
+            price: ticketType?.price,
+            totalSeats: ticketType?.totalSeats,
           }))
         : [ticketDefault],
     }),
@@ -96,7 +96,7 @@ export default function UpdateTicketSettingsForm({ currentEvent }: Props) {
 
   const onUpdate = async (data: any) => {
     try {
-      const updatePromises = data?.ticketSettings.map((ticketSetting: any) =>
+      const updatePromises = data?.ticketSettings?.map((ticketSetting: any) =>
         updateTicketMutation.mutateAsync(ticketSetting)
       );
   
@@ -142,7 +142,7 @@ export default function UpdateTicketSettingsForm({ currentEvent }: Props) {
 const renderTicketSettings = (ticketSettings: any) => {
   return (
     <Stack spacing={3}>
-      {ticketSettings.fields.map((item: any, index: number) => (
+      {ticketSettings?.fields?.map((item: any, index: number) => (
         <Card key={item.id} sx={{ p: 2 }}>
           <Stack spacing={2}>
             <Typography variant='h6'>Ticket Setting {index + 1}</Typography>

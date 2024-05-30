@@ -89,10 +89,10 @@ export default function CompanyEventList() {
             onView={() => handleView(event?._id)}
             onEdit={() => handleEdit(event?._id)}
             onDelete={() => handleOpenDeleteModal(event?._id)}
-            onAssignVenue={() => handleAssign(event._id)}
-            onAddTicketSettings={() => handleAssignTicketSettings(event._id)}
+            onAssignVenue={() => handleAssign(event?._id)}
+            onAddTicketSettings={() => handleAssignTicketSettings(event?._id)}
             onEditTicketSettings={() =>
-              handleAssignEditTicketSettings(event._id)
+              handleAssignEditTicketSettings(event?._id)
             }
           />
         ))}

@@ -227,29 +227,21 @@ export const useLogout = () => {
   return useMutation(
     ['logout'],
     async (data: any) => {
-      const res = await AuthService.logout(data).then((res) => res.data);
-
-      clearTokens();
-
-      logout();
-
-      router.push('/');
-
-      return res.data;
+      try {
+        const res = await AuthService.logout(data).then((res) => res.data);
+        return res.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        clearTokens();
+        logout();
+        router.push('/');
+      }
     },
     {
       onSuccess: (data: any) => {
         enqueueSnackbar('Logout successful', { variant: 'success' });
         return data;
-      },
-      onError: (error: any) => {
-        enqueueSnackbar(
-          error?.response?.data?.message || 'Something went wrong',
-          {
-            variant: 'error',
-          }
-        );
-        return error;
       },
     }
   );

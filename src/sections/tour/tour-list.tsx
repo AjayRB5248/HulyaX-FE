@@ -93,12 +93,12 @@ export default function TourList({ tours }: Props) {
             key={event._id}
             event={event}
             onView={() => handleView(event?._id)}
-            onEdit={() => handleEdit(event._id)}
+            onEdit={() => handleEdit(event?._id)}
             onDelete={() => handleOpenDeleteModal(event?._id)}
             onAssignVenue={() => handleAssign(event?._id)}
-            onAddTicketSettings={() => handleAssignTicketSettings(event._id)}
+            onAddTicketSettings={() => handleAssignTicketSettings(event?._id)}
             onEditTicketSettings={() =>
-              handleAssignEditTicketSettings(event._id)
+              handleAssignEditTicketSettings(event?._id)
             }
           />
         ))}
