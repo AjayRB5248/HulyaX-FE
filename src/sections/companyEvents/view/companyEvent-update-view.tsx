@@ -25,7 +25,7 @@ export default function CompanyEventTicketUpdateView() {
 
   const { id } = params;
   const { eventList, loading} = useAssignedEvents(id)
-  if (!eventList || eventList.length === 0) {
+  if (!eventList || eventList?.length === 0) {
     return <SplashScreen />;
   }
 
