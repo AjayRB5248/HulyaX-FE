@@ -19,7 +19,7 @@ import { enqueueSnackbar } from "notistack";
 
 const ticketIcons: Record<string, StaticImageData> = {
   EARLY_BIRD: Ticket01,
-  PREMIUM: Ticket02,
+  FINAL_RELEASE: Ticket02,
   VIP: Ticket03,
 };
 
@@ -67,7 +67,7 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId, ev
   };
 
   const getTicketIcon = (type: string): StaticImageData => {
-    return ticketIcons[type?.toUpperCase()] || Ticket01;
+    return ticketIcons[type?.toUpperCase()?.replace(" ", "_")] || Ticket01;
   };
 
   const handlePurchaseTickets = async (
@@ -136,7 +136,7 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId, ev
                       </span>
                     </div>
                   ) : (
-                    <span className="text-danger font-weight-bold">Sold out!</span>
+                    <span className="sold-out-text text-danger font-weight-bold">Sold out!</span>
                   )}
                 </div>
               </div>

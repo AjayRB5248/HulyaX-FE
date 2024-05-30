@@ -367,7 +367,7 @@
         color: $body-color;
         margin-bottom: 5px;
         &::after {
-          content: '|';
+          content: "|";
           font-size: 14px;
           color: $body-color;
           margin: 0 15px;
@@ -583,7 +583,7 @@
     background: $main-theme-color;
     opacity: 0.8;
     position: absolute;
-    content: '';
+    content: "";
     top: 0;
     left: 0;
     bottom: 0;
@@ -815,19 +815,11 @@
   padding: 40px 30px;
   position: relative;
   &::before {
-    background-image: -moz-linear-gradient(
-      0deg,
-      rgb(15, 90, 224) 0%,
-      rgb(116, 0, 186) 100%
-    );
-    background-image: -webkit-linear-gradient(
-      0deg,
-      rgb(15, 90, 224) 0%,
-      rgb(116, 0, 186) 100%
-    );
+    background-image: -moz-linear-gradient(0deg, rgb(15, 90, 224) 0%, rgb(116, 0, 186) 100%);
+    background-image: -webkit-linear-gradient(0deg, rgb(15, 90, 224) 0%, rgb(116, 0, 186) 100%);
     opacity: 0.8;
     position: absolute;
-    content: '';
+    content: "";
     top: 0;
     left: 0;
     bottom: 0;
@@ -1092,7 +1084,7 @@
           }
         }
         &::after {
-          content: '|';
+          content: "|";
           margin-left: 20px;
         }
         i {
@@ -1109,10 +1101,10 @@
         span {
           margin-left: 8px;
           &::after {
-            content: ')';
+            content: ")";
           }
           &::before {
-            content: '(';
+            content: "(";
           }
         }
       }
@@ -1688,18 +1680,8 @@
       }
       &.active {
         border-color: none;
-        background: -webkit-linear-gradient(
-          169deg,
-          #5560ff 17%,
-          #aa52a1 63%,
-          #ff4343 100%
-        );
-        background: linear-gradient(
-          169deg,
-          #5560ff 17%,
-          #aa52a1 63%,
-          #ff4343 100%
-        );
+        background: -webkit-linear-gradient(169deg, #5560ff 17%, #aa52a1 63%, #ff4343 100%);
+        background: linear-gradient(169deg, #5560ff 17%, #aa52a1 63%, #ff4343 100%);
       }
     }
   }
@@ -1997,7 +1979,7 @@
           &::placeholder {
             color: $primary-color;
           }
-          &[type='submit'] {
+          &[type="submit"] {
             height: 50px;
             width: auto;
             padding: 0 30px;
@@ -2110,7 +2092,7 @@
       &::placeholder {
         color: $primary-color;
       }
-      &[type='submit'] {
+      &[type="submit"] {
         width: auto;
         padding: 0 40px;
         @include border-radius(20px);
@@ -2144,18 +2126,8 @@
       padding: 10px 30px;
       @include transition($transition);
       &.active {
-        background: -moz-linear-gradient(
-          169deg,
-          #5560ff 17%,
-          #aa52a1 63%,
-          #ff4343 100%
-        );
-        background: -webkit-linear-gradient(
-          169deg,
-          #5560ff 17%,
-          #aa52a1 63%,
-          #ff4343 100%
-        );
+        background: -moz-linear-gradient(169deg, #5560ff 17%, #aa52a1 63%, #ff4343 100%);
+        background: -webkit-linear-gradient(169deg, #5560ff 17%, #aa52a1 63%, #ff4343 100%);
         color: $white-color;
         border-color: #001232;
       }
@@ -2164,16 +2136,8 @@
 }
 .sponsor-slider {
   padding: 30px;
-  background-image: -moz-linear-gradient(
-    0deg,
-    rgb(116, 0, 186) 0%,
-    rgb(15, 90, 224) 100%
-  );
-  background-image: -webkit-linear-gradient(
-    0deg,
-    rgb(116, 0, 186) 0%,
-    rgb(15, 90, 224) 100%
-  );
+  background-image: -moz-linear-gradient(0deg, rgb(116, 0, 186) 0%, rgb(15, 90, 224) 100%);
+  background-image: -webkit-linear-gradient(0deg, rgb(116, 0, 186) 0%, rgb(15, 90, 224) 100%);
   .sponsor-thumb {
     text-align: center;
     @include border-radius(5px);
@@ -2463,12 +2427,7 @@
     top: 50px;
     left: 40px;
     background: linear-gradient(90deg, #5560ff 17%, #aa52a1 63%, #ff4343 100%);
-    background: -webkit-linear-gradient(
-      90deg,
-      #5560ff 17%,
-      #aa52a1 63%,
-      #ff4343 100%
-    );
+    background: -webkit-linear-gradient(90deg, #5560ff 17%, #aa52a1 63%, #ff4343 100%);
     z-index: 1;
   }
   &::before {
@@ -2640,7 +2599,7 @@
       margin-top: -17px;
       position: relative;
       &::after {
-        content: ':';
+        content: ":";
         position: absolute;
         top: -3px;
         right: -20px;
@@ -2882,8 +2841,7 @@
   padding: 30px;
   text-align: center;
   position: relative;
-  background: url(../../css/img/ticket-bg04.png) $white-color no-repeat center
-    top;
+  background: url(../../css/img/ticket-bg04.png) $white-color no-repeat center top;
   background-size: cover;
   border-radius: 20px;
   @include breakpoint(max-sm) {
@@ -2957,13 +2915,11 @@
     }
   }
   &.two {
-    background: url(../../css/img/ticket-bg05.png) $white-color no-repeat center
-      top;
+    background: url(../../css/img/ticket-bg05.png) $white-color no-repeat center top;
     background-size: cover;
   }
   &.three {
-    background: url(../../css/img/ticket-bg06.png) $white-color no-repeat center
-      top;
+    background: url(../../css/img/ticket-bg06.png) $white-color no-repeat center top;
     background-size: cover;
   }
   .hot {
@@ -3267,35 +3223,15 @@
     height: 100%;
     width: 100%;
     background: linear-gradient(90deg, #5560ff 17%, #aa52a1 63%, #ff4343 100%);
-    background: -moz-linear-gradient(
-      90deg,
-      #5560ff 17%,
-      #aa52a1 63%,
-      #ff4343 100%
-    );
-    background: -webkit-linear-gradient(
-      90deg,
-      #5560ff 17%,
-      #aa52a1 63%,
-      #ff4343 100%
-    );
+    background: -moz-linear-gradient(90deg, #5560ff 17%, #aa52a1 63%, #ff4343 100%);
+    background: -webkit-linear-gradient(90deg, #5560ff 17%, #aa52a1 63%, #ff4343 100%);
   }
   .cate {
     display: block;
     width: auto;
     background: linear-gradient(169deg, #5560ff 17%, #aa52a1 63%, #ff4343 100%);
-    background: -moz-linear-gradient(
-      169deg,
-      #5560ff 17%,
-      #aa52a1 63%,
-      #ff4343 100%
-    );
-    background: -webkit-linear-gradient(
-      169deg,
-      #5560ff 17%,
-      #aa52a1 63%,
-      #ff4343 100%
-    );
+    background: -moz-linear-gradient(169deg, #5560ff 17%, #aa52a1 63%, #ff4343 100%);
+    background: -webkit-linear-gradient(169deg, #5560ff 17%, #aa52a1 63%, #ff4343 100%);
     color: $white-color;
     z-index: 9;
     @include border-radius(0 30px 30px 0);
@@ -3884,16 +3820,8 @@
   @include transition($transition);
   &:hover,
   &.active {
-    background: -moz-linear-gradient(
-      120deg,
-      rgb(59, 38, 219) 1%,
-      rgb(123, 25, 203) 100%
-    );
-    background: -webkit-linear-gradient(
-      120deg,
-      rgb(59, 38, 219) 1%,
-      rgb(123, 25, 203) 100%
-    );
+    background: -moz-linear-gradient(120deg, rgb(59, 38, 219) 1%, rgb(123, 25, 203) 100%);
+    background: -webkit-linear-gradient(120deg, rgb(59, 38, 219) 1%, rgb(123, 25, 203) 100%);
     animation-name: fadeIn;
     -webkit-animation-name: fadeIn;
     -moz-animation-name: fadeIn;
@@ -3969,12 +3897,7 @@
     height: 50px;
     @include border-radius(50%);
     margin: 0 auto 28px;
-    background-image: -moz-linear-gradient(
-      169deg,
-      rgb(85, 96, 255) 17%,
-      rgb(170, 82, 161) 63%,
-      rgb(255, 67, 67) 100%
-    );
+    background-image: -moz-linear-gradient(169deg, rgb(85, 96, 255) 17%, rgb(170, 82, 161) 63%, rgb(255, 67, 67) 100%);
     background-image: -webkit-linear-gradient(
       169deg,
       rgb(85, 96, 255) 17%,
@@ -4008,16 +3931,8 @@
   @include transition($transition);
   &:hover,
   &.active {
-    background: -moz-linear-gradient(
-      120deg,
-      rgb(59, 38, 219) 1%,
-      rgb(123, 25, 203) 100%
-    );
-    background: -webkit-linear-gradient(
-      120deg,
-      rgb(59, 38, 219) 1%,
-      rgb(123, 25, 203) 100%
-    );
+    background: -moz-linear-gradient(120deg, rgb(59, 38, 219) 1%, rgb(123, 25, 203) 100%);
+    background: -webkit-linear-gradient(120deg, rgb(59, 38, 219) 1%, rgb(123, 25, 203) 100%);
     animation-name: fadeIn;
     -webkit-animation-name: fadeIn;
     -moz-animation-name: fadeIn;
@@ -4051,7 +3966,7 @@
       &::placeholder {
         color: rgb(76, 88, 143);
       }
-      &[type='submit'] {
+      &[type="submit"] {
         margin-top: 5px;
         @include breakpoint(sm) {
           margin-top: 15px;
@@ -4294,18 +4209,7 @@
         width: 100%;
         object-fit: contain;
         border-radius: inherit;
-        object-position: top center;
-      }
-
-      .event-title {
-        position: absolute;
-        bottom: 10px;
-        left: 20px;
-        right: 20px;
-        font-size: 24px;
-        color: #fff;
-        font-weight: 900;
-        text-shadow: $theme-text-shadow;
+        object-position: center;
       }
 
       .event-date {
@@ -4336,6 +4240,16 @@
     .event-bottom-card {
       color: $theme-text-color;
       gap: 10px;
+
+      .event-title {
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        color: $theme-text-color;
+        font-weight: 900;
+        text-shadow: 0 1px 2px rgb(188 188 188 / 38%);
+      }
 
       .artist {
         border-bottom: 1px dashed #a1a1a1;
@@ -4387,7 +4301,7 @@
     @include breakpoint(max-sm) {
       .artist {
         .artist-name {
-          font-size: 14px !important;
+          font-size: 12px !important;
 
           .artist-position {
             font-size: 12px !important;

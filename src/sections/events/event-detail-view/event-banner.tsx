@@ -35,7 +35,8 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
 
   const nearestDate = useMemo(() => {
     const now = moment();
-    const upcomingDates = venues?.map((venue:any) => moment(venue.eventDate)).filter((date:any) => date.isSameOrAfter(now)) || [];
+    const upcomingDates =
+      venues?.map((venue: any) => moment(venue.eventDate)).filter((date: any) => date.isSameOrAfter(now)) || [];
     return upcomingDates.length > 0 ? moment.min(upcomingDates) : null;
   }, [venues]);
 
@@ -68,14 +69,22 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
                   <span className="mr-4">Starts From:</span>
                   <i className="fas fa-calendar-alt"></i>
                   {/* TODO: Earliest date ? */}
-                  <span>{moment(nearestDate)?.tz(timeZone)?.format("MMM DD, YYYY")}</span>
+                  {nearestDate ? (
+                    <span>{moment(nearestDate)?.tz(timeZone)?.format("MMM DD, YYYY")}</span>
+                  ) : (
+                    <span>To be Announced</span>
+                  )}
                 </div>
-                <div className="item">
-                  <i className="far fa-clock"></i>
-                  <span>
-                    {timeRemaining?.days} days {timeRemaining?.hours} hours
-                  </span>
-                </div>
+                {timeRemaining && (
+                  <div className="item">
+                    <i className="far fa-clock"></i>
+
+                    <span>
+                      {timeRemaining?.days && timeRemaining?.days + `days`}{" "}
+                      {timeRemaining?.hours && timeRemaining?.hours + "hours"}
+                    </span>
+                  </div>
+                )}
               </div>
               {/* TODO: Add DOMAIN_NAME in ENV */}
               <SocialShare url={`${process.env.DOMAIN_NAME}/${pathname}`} />
