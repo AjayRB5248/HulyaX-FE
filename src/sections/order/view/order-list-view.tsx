@@ -30,6 +30,8 @@ const TABLE_HEAD = [
   { id: '_id', label: 'Ticket #', width: 116 },
   { id: 'eventData.eventName', label: 'Event Name' },
   { id: 'bookedDate', label: 'Date', width: 140 },
+  { id: 'ticketType', label: 'Type', width: 140 },
+  { id: 'perTicketPrice', label: 'Price', width: 140 },
   { id: 'eventData.artists', label: 'Artists', width: 140 },
   { id: 'eventData.venues', label: 'Venues', width: 140 },
   { id: 'eventData.status', label: 'Status', width: 110 },
