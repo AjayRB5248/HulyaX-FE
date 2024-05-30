@@ -36,7 +36,7 @@ export default function TourFiltersResult({
   const shortLabel = shortDateLabel(filters.startDate, filters.endDate);
 
   const handleRemoveServices = (inputValue: string) => {
-    const newValue = filters.services.filter((item) => item !== inputValue);
+    const newValue = filters?.services?.filter((item:any) => item !== inputValue);
     onFilters('services', newValue);
   };
 
@@ -46,7 +46,7 @@ export default function TourFiltersResult({
   };
 
   const handleRemoveTourGuide = (inputValue: ITourGuide) => {
-    const newValue = filters.tourGuides.filter(
+    const newValue = filters?.tourGuides?.filter(
       (item) => item.name !== inputValue.name
     );
     onFilters('tourGuides', newValue);

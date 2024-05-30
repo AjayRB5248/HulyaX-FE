@@ -89,7 +89,7 @@ export default function TourFilters({
         <Input
           type='text'
           name='venueName'
-          value={filters.venueName}
+          value={filters?.venueName}
           onChange={handelFieldChange}
         />
       </Stack>
@@ -104,7 +104,7 @@ export default function TourFilters({
         <Input
           type='text'
           name='artist'
-          value={filters.artist}
+          value={filters?.artist}
           onChange={handelFieldChange}
         />
       </Stack>

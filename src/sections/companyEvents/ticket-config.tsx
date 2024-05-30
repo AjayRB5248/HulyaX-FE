@@ -64,10 +64,10 @@ export default function TicketSettingsForm({ currentTicket }: Props) {
     () => ({
       ticketSettings: currentTicket
         ? currentTicket?.map((ticketType: any) => ({
-            venueInfo: ticketType.venueId,
-            type: ticketType.type,
-            price: ticketType.price,
-            totalSeats: ticketType.totalSeats,
+            venueInfo: ticketType?.venueId,
+            type: ticketType?.type,
+            price: ticketType?.price,
+            totalSeats: ticketType?.totalSeats,
           }))
         : [ticketDefault],
     }),
@@ -100,7 +100,7 @@ export default function TicketSettingsForm({ currentTicket }: Props) {
   const onSubmit = async (data: any) => {
     try {
       const payload = { eventId: params?.id };
-      const updatePromises = data.ticketSettings.map((ticketSetting: any) =>
+      const updatePromises = data?.ticketSettings?.map((ticketSetting: any) =>
       setupTicketMutation.mutateAsync({ ...payload, ...ticketSetting })
     );
 
@@ -121,7 +121,7 @@ export default function TicketSettingsForm({ currentTicket }: Props) {
           <Typography variant='h4' sx={{ mb: 3 }}>
             Ticket Settings
           </Typography>
-          {renderTicketSettings(ticketSettings, currentTicket[0])}
+          {renderTicketSettings(ticketSettings, currentTicket?.[0])}
         </Grid>
       </Stack>
 
@@ -181,7 +181,7 @@ const renderTicketSettings = (ticketSettings: any, currentTicket:any) => {
             <Button
               variant='outlined'
               color='error'
-              onClick={() => ticketSettings.remove(index)}
+              onClick={() => ticketSettings?.remove(index)}
             >
               Remove Ticket Setting
             </Button>
