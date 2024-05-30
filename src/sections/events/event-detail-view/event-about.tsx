@@ -17,6 +17,7 @@ const EventAbout: React.FC<any> = ({
   eventData,
   artists,
   eventStatus,
+  eventVideo,
 }) => {
   return (
     <section className="movie-details-section padding-top padding-bottom">
@@ -38,7 +39,7 @@ const EventAbout: React.FC<any> = ({
           <div className={`${eventStatus === "ONGOING" ? "col-lg-7" : "col-lg-12"}`}>
             <div className="movie-details">
               <h3 className="title font-weight-bold mb-4">Gallery</h3>
-              <SliderGallery eventImages={eventImages} />
+              <SliderGallery eventImages={eventImages} eventVideo={eventVideo} />
 
               <div className="tab summery-review">
                 <ul className="tab-menu">

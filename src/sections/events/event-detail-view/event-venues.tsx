@@ -11,8 +11,14 @@ const EventVenues: React.FC<any> = ({ eventData, states }) => {
     return stateDetails ?? {};
   };
 
-  const sortedEventData = eventData?.filter((eachEvent: any) => eachEvent?.venues && eachEvent?.venues?.length > 0)
-    .flatMap((eachEvent: any) => eachEvent.venues.map((eachVenue: any) => ({ ...eachVenue, stateName: getStateDetails(eachVenue?.venueId?.state)?.stateName })))
+  const sortedEventData = eventData
+    ?.filter((eachEvent: any) => eachEvent?.venues && eachEvent?.venues?.length > 0)
+    .flatMap((eachEvent: any) =>
+      eachEvent.venues.map((eachVenue: any) => ({
+        ...eachVenue,
+        stateName: getStateDetails(eachVenue?.venueId?.state)?.stateName,
+      }))
+    )
     ?.sort((a: any, b: any) => moment(a.eventDate).diff(moment(b.eventDate)));
 
   return (
@@ -20,8 +26,7 @@ const EventVenues: React.FC<any> = ({ eventData, states }) => {
       <div className="container-fluid">
         <div className="book-wrapper">
           <div className="left-side">
-            {sortedEventData &&
-              sortedEventData.length > 0 &&
+            {sortedEventData && sortedEventData.length > 0 ? (
               sortedEventData.map((eachVenue: any) => (
                 <div className="item" key={eachVenue._id}>
                   <div className="item-thumb">
@@ -35,14 +40,24 @@ const EventVenues: React.FC<any> = ({ eventData, states }) => {
                     <div className="item-date">{moment(eachVenue.eventDate).format("MMM DD, YYYY")}</div>
                   </div>
                 </div>
-              ))}
+              ))
+            ) : (
+              <div className="item">
+                <div className="item-thumb">
+                  <Image src={VenueIcon} alt={"Venue Icon"} className="venue-icon" />
+                </div>
+                <div className="item-content">
+                  <span className="font-weight-bold">Venues To be Announced Soon..</span>
+                </div>
+              </div>
+            )}
             <div className="item">
               <div className="item-thumb">
                 <Image src={ContactIcon} alt="Contact Icon" className="contact-icon" />
               </div>
               <div className="item-content">
                 <span className="up">Drop us a line:</span>
-                <Link href="MailTo:info@hulyax.com.au" className="d-block email-link">
+                <Link href="MailTo:info@hulyax.com.au" className="d-block email-link text-white">
                   info@hulyax.com.au
                 </Link>
               </div>

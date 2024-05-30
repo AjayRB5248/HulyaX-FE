@@ -105,7 +105,9 @@ const EventBanner: React.FC<EventBannerProps> = React.memo(({ event, posterImage
             <TimeBlock label="Seconds" value={seconds} />
           </Stack>
           <Link href={`/events/${event.slug}`}>
-            <button className="mt-5 theme-button">Buy Ticket Now</button>
+            <button className="theme-button" style={{ marginTop: "4rem" }}>
+              Buy Ticket Now
+            </button>
           </Link>
         </div>
       </div>

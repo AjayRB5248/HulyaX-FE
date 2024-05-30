@@ -66,6 +66,7 @@ const EventDetail = () => {
 
       <EventAbout
         eventImages={eventDetail?.images}
+        eventVideo={eventDetail?.videoUrl}
         eventDescription={eventDetail?.eventDescription}
         sponsors={sponsors}
         venues={allVenues}
