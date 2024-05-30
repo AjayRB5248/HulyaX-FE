@@ -3,7 +3,6 @@ import Slider from "react-slick";
 import Image from "next/image";
 
 import Lightbox, { useLightBox } from "../lightbox";
-
 interface EventImage {
   isPrimary: boolean;
   _id: string;
@@ -12,9 +11,10 @@ interface EventImage {
 
 interface GalleryComponentProps {
   eventImages: EventImage[];
+  eventVideo?: string;
 }
 
-const SliderGallery: React.FC<GalleryComponentProps> = ({ eventImages }) => {
+const SliderGallery: React.FC<GalleryComponentProps> = ({ eventImages, eventVideo }) => {
   const settings = {
     dots: false,
     arrows: false,
@@ -58,18 +58,44 @@ const SliderGallery: React.FC<GalleryComponentProps> = ({ eventImages }) => {
     src: slide.imageurl,
   }));
 
+  console.log(eventVideo, "eventVideo");
+  if (eventVideo) {
+    slides.unshift({
+      type: "video" as const,
+      width: 1280,
+      height: 720,
+      poster: eventImages?.[0]?.imageurl,
+      sources: [
+        {
+          src: eventVideo,
+          type: "video/mp4",
+        },
+      ],
+    });
+  }
+
   const lightbox = useLightBox(slides);
 
   return (
     <div>
       <Slider {...settings} className="details-photos">
-        {eventImages && eventImages.map((image, index) => (
-          <div className="thumb" key={image._id}>
-            <div className="img-pop" onClick={() => lightbox.onOpen(image.imageurl)}>
-              <Image src={image.imageurl} alt="event" width={500} height={500} />
+        {eventVideo && (
+          <div className="thumb" key={eventVideo}>
+            <div className="img-pop" onClick={() => lightbox.onOpen(eventVideo)}>
+              <video controls>
+                <source src={eventVideo} type="video/mp4" />
+              </video>
             </div>
           </div>
-        ))}
+        )}
+        {eventImages &&
+          eventImages.map((image, index) => (
+            <div className="thumb" key={image._id}>
+              <div className="img-pop" onClick={() => lightbox.onOpen(image.imageurl)}>
+                <Image src={image.imageurl} alt="event" width={500} height={500} />
+              </div>
+            </div>
+          ))}
       </Slider>
 
       <Lightbox index={lightbox.selected} slides={slides} open={lightbox.open} close={lightbox.onClose} />

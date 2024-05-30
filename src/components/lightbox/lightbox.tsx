@@ -1,17 +1,18 @@
-import ReactLightbox, { useLightboxState } from 'yet-another-react-lightbox';
-import Zoom from 'yet-another-react-lightbox/plugins/zoom';
-import Video from 'yet-another-react-lightbox/plugins/video';
-import Captions from 'yet-another-react-lightbox/plugins/captions';
-import Slideshow from 'yet-another-react-lightbox/plugins/slideshow';
-import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
-import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
+import ReactLightbox, { useLightboxState } from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import Video from "yet-another-react-lightbox/plugins/video";
+import Captions from "yet-another-react-lightbox/plugins/captions";
+import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 // @mui
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 //
-import Iconify from '../iconify';
+import Iconify from "../iconify";
 //
-import { LightBoxProps } from './types';
-import StyledLightbox from './styles';
+import { LightBoxProps } from "./types";
+import StyledLightbox from "./styles";
+import { useState } from "react";
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +32,8 @@ export default function Lightbox({
 }: LightBoxProps) {
   const totalItems = slides ? slides.length : 0;
 
+  console.log(slides, "slides===")
+
   return (
     <>
       <StyledLightbox />
@@ -42,7 +45,6 @@ export default function Lightbox({
         controller={{ closeOnBackdropClick: true }}
         plugins={getPlugins({
           disabledZoom,
-          disabledVideo,
           disabledCaptions,
           disabledSlideshow,
           disabledThumbnails,
@@ -56,10 +58,7 @@ export default function Lightbox({
           },
         }}
         toolbar={{
-          buttons: [
-            <DisplayTotal key={0} totalItems={totalItems} disabledTotal={disabledTotal} />,
-            'close',
-          ],
+          buttons: [<DisplayTotal key={0} totalItems={totalItems} disabledTotal={disabledTotal} />, "close"],
         }}
         render={{
           iconClose: () => <Iconify width={ICON_SIZE} icon="carbon:close" />,
@@ -109,6 +108,8 @@ export function getPlugins({
     plugins = plugins.filter((plugin) => plugin !== Video);
   }
 
+  console.log(plugins, "plugins====");
+
   return plugins;
 }
 
@@ -131,10 +132,10 @@ export function DisplayTotal({ totalItems, disabledTotal }: DisplayTotalProps) {
       component="span"
       className="yarl__button"
       sx={{
-        typography: 'body2',
-        alignItems: 'center',
-        display: 'inline-flex',
-        justifyContent: 'center',
+        typography: "body2",
+        alignItems: "center",
+        display: "inline-flex",
+        justifyContent: "center",
       }}
     >
       <strong> {currentIndex + 1} </strong> / {totalItems}
