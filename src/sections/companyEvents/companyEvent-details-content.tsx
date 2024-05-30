@@ -22,7 +22,7 @@ type Props = {
 };
 
 export default function CompanyEventDetailsContent({ event, isLoading }: Props) {
-  if (!event || event.length === 0) {
+  if (!event || event?.length === 0) {
     return <SplashScreen />;
   }
   const {
