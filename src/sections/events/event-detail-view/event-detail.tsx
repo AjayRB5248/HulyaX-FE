@@ -38,7 +38,7 @@ const EventDetail = () => {
       setAllVenues(venues);
     }
   }, [isLoading, event]);
-
+  
 
   useEffect(() => {
     setEventDetail(event?.[0]);
