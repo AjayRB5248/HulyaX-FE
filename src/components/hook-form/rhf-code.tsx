@@ -26,6 +26,10 @@ export default function RHFCode({ name, ...other }: RHFCodesProps) {
             TextFieldsProps={{
               error: !!error,
               placeholder: '-',
+              inputProps: {
+                inputMode: 'numeric',
+                pattern: '[0-9]*',
+              },
             }}
             {...other}
           />

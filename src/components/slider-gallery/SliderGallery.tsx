@@ -58,7 +58,6 @@ const SliderGallery: React.FC<GalleryComponentProps> = ({ eventImages, eventVide
     src: slide.imageurl,
   }));
 
-  console.log(eventVideo, "eventVideo");
   if (eventVideo) {
     slides.unshift({
       type: "video" as const,

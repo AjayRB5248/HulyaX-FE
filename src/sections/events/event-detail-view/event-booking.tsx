@@ -80,7 +80,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues, states, eventData, event
       return;
     }
 
-    if (EXTERNAL_EVENTS.includes(selectedEvent?.state)) {
+    if (EXTERNAL_EVENTS?.includes(selectedEvent?.state)) {
       setShowEventExternalLink(selectedEvent);
       return;
     }
@@ -89,11 +89,11 @@ const EventBooking: React.FC<any> = ({ eventId, venues, states, eventData, event
   };
 
   useEffect(() => {
-    if (states && states.length > 0) {
-      const statesList = states.map((eachState: any) => ({
-        id: eachState._id,
-        value: eachState._id,
-        label: eachState.stateName,
+    if (states && states?.length > 0) {
+      const statesList = states?.map((eachState: any) => ({
+        id: eachState?._id,
+        value: eachState?._id,
+        label: eachState?.stateName,
       }));
 
       setStatesOptions([...statesList]);
@@ -154,7 +154,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues, states, eventData, event
           {showTickets && showTickets?.selectedVenue && showTickets?.selectedState ? (
             <EventTickets
               eventId={eventId}
-              venueName={showTickets.selectedVenue}
+              venueName={showTickets?.selectedVenue}
               stateId={selectedState}
               eventStatus={eventStatus}
             />

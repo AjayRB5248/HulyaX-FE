@@ -39,6 +39,7 @@ const UserVerifyOTP = () => {
   const {
     handleSubmit,
     formState: { isSubmitting },
+    resetField,
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
@@ -62,6 +63,7 @@ const UserVerifyOTP = () => {
       }
     } catch (error) {
       console.error(error);
+      resetField("otp");
     }
   });
 
@@ -82,7 +84,7 @@ const UserVerifyOTP = () => {
 
   const renderForm = (
     <Stack spacing={3} alignItems="center">
-      <RHFCode name="otp" className="otp-code-input-wrapper" />
+      <RHFCode name="otp" className="otp-code-input-wrapper"/>
 
       <LoadingButton
         fullWidth

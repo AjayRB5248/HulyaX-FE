@@ -36,7 +36,7 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
   const nearestDate = useMemo(() => {
     const now = moment();
     const upcomingDates =
-      venues?.map((venue: any) => moment(venue.eventDate)).filter((date: any) => date.isSameOrAfter(now)) || [];
+      venues?.map((venue: any) => moment(venue?.eventDate)).filter((date: any) => date.isSameOrAfter(now)) || [];
     return upcomingDates.length > 0 ? moment.min(upcomingDates) : null;
   }, [venues]);
 

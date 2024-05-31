@@ -32,8 +32,6 @@ export default function Lightbox({
 }: LightBoxProps) {
   const totalItems = slides ? slides.length : 0;
 
-  console.log(slides, "slides===")
-
   return (
     <>
       <StyledLightbox />

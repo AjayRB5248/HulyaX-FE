@@ -7,7 +7,7 @@ import ContactIcon from "src/assets/frontend/images/event/icon/event-icon03.png"
 
 const EventVenues: React.FC<any> = ({ eventData, states }) => {
   const getStateDetails = (stateId: string) => {
-    const stateDetails = states && states.length > 0 && states.find((eachState: any) => eachState?._id === stateId);
+    const stateDetails = states && states?.length > 0 && states.find((eachState: any) => eachState?._id === stateId);
     return stateDetails ?? {};
   };
 
@@ -27,17 +27,17 @@ const EventVenues: React.FC<any> = ({ eventData, states }) => {
         <div className="book-wrapper">
           <div className="left-side">
             {sortedEventData && sortedEventData.length > 0 ? (
-              sortedEventData.map((eachVenue: any) => (
+              sortedEventData?.map((eachVenue: any) => (
                 <div className="item" key={eachVenue._id}>
                   <div className="item-thumb">
-                    <Image src={VenueIcon} alt={eachVenue.venueId?.venueName} className="venue-icon" />
+                    <Image src={VenueIcon} alt={eachVenue?.venueId?.venueName} className="venue-icon" />
                   </div>
                   <div className="item-content">
                     <span className="up">
-                      {eachVenue.venueId?.venueName}, {eachVenue.stateName}
+                      {eachVenue?.venueId?.venueName}, {eachVenue?.stateName}
                     </span>
                     <span>{eachVenue.city}</span>
-                    <div className="item-date">{moment(eachVenue.eventDate).format("MMM DD, YYYY")}</div>
+                    <div className="item-date">{moment(eachVenue?.eventDate).format("MMM DD, YYYY")}</div>
                   </div>
                 </div>
               ))
