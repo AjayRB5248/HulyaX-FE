@@ -5,7 +5,7 @@ import { useArtists } from "src/api/artists";
 
 const settings = {
   dots: false,
-  infinite: true,
+  infinite: false,
   slidesToShow: 6,
   slidesToScroll: 3,
   autoplay: true,
