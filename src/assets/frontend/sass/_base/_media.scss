@@ -115,6 +115,13 @@
     background-position: center 13rem;
   }
 
+  .events-slider-wrapper .event-item .event-top-card,
+  .section--popular-categories .event-item .event-top-card,
+  .event-section .event-item .event-top-card {
+    height: 24rem;
+    position: relative;
+  }
+
   .details-banner-content .title {
     font-size: 2rem;
   }
