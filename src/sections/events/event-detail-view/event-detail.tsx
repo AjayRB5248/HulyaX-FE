@@ -29,7 +29,7 @@ const EventDetail = () => {
 
   useEffect(() => {
     if (!isLoading && event) {
-      const venues = event.reduce((acc:any, currentEvent:any) => {
+      const venues = event.reduce((acc: any, currentEvent: any) => {
         if (Array.isArray(currentEvent?.venues) && currentEvent?.venues?.length > 0) {
           return acc.concat(currentEvent?.venues);
         }
@@ -38,7 +38,6 @@ const EventDetail = () => {
       setAllVenues(venues);
     }
   }, [isLoading, event]);
-  
 
   useEffect(() => {
     setEventDetail(event?.[0]);
@@ -73,7 +72,6 @@ const EventDetail = () => {
         eventId={eventDetail?.parentEvent?._id}
         states={eventDetail?.parentEvent?.states}
         eventData={event}
-        state={eventDetail?.state}
         artists={eventDetail?.parentEvent?.artists}
         eventStatus={eventDetail?.parentEvent?.status}
       />

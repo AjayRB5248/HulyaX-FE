@@ -7,7 +7,7 @@ import EventsLink from "./events-link";
 import { CustomSelect } from "src/components/custom-select";
 import useIsMobile from "src/hooks/use-isMobile";
 
-const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData, eventStatus }) => {
+const EventBooking: React.FC<any> = ({ eventId, venues, states, eventData, eventStatus }) => {
   const isMobile = useIsMobile();
 
   const [statesOptions, setStatesOptions] = useState<any>([]);
@@ -53,9 +53,12 @@ const EventBooking: React.FC<any> = ({ eventId, venues, state, states, eventData
   const handleVenueChange = (label: string, value: any) => {
     setSelectedVenue(value);
     const selectedEventVenue = venues?.find((eachVenue: any) => eachVenue?.venueId?.venueName === value);
+    const selectedEventState = states?.find((eachState: any) => eachState?._id === selectedState);
 
     if (selectedEventVenue) {
-      const selectedEventDate = moment(selectedEventVenue?.eventDate).tz(state?.timeZone).format("DD MMM ddd, hh:mm A");
+      const selectedEventDate = moment(selectedEventVenue?.eventDate)
+        .tz(selectedEventState?.timeZone)
+        .format("DD MMM ddd, hh:mm A");
       setEventDate(selectedEventDate);
     } else {
       setEventDate("");

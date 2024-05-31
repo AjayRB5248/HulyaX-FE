@@ -12,7 +12,6 @@ const EventAbout: React.FC<any> = ({
   eventImages,
   sponsors,
   venues,
-  state,
   states,
   eventData,
   artists,
@@ -28,7 +27,6 @@ const EventAbout: React.FC<any> = ({
               <EventBooking
                 eventId={eventId}
                 venues={venues}
-                state={state}
                 states={states}
                 eventData={eventData}
                 eventStatus={eventStatus}
