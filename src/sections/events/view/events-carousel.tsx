@@ -74,6 +74,7 @@ const settings = {
   autoplay: true,
   autoplaySpeed: 3000,
   cssEase: "linear",
+  // speed: 3000,
   pauseOnHover: true,
   responsive: [
     {

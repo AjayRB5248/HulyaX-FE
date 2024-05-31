@@ -5,10 +5,14 @@ import { useArtists } from "src/api/artists";
 
 const settings = {
   dots: false,
-  infinite: false,
-  speed: 500,
+  infinite: true,
   slidesToShow: 6,
-  slidesToScroll: 1,
+  slidesToScroll: 3,
+  autoplay: true,
+  speed: 3000,
+  autoplaySpeed: 2000,
+  cssEase: "linear",
+  pauseOnHover: true,
   responsive: [
     {
       breakpoint: 1200,
@@ -39,14 +43,13 @@ const settings = {
 
 const Artists = () => {
   const { artists, loading } = useArtists();
-  const sliderRef :any = useRef(null);
+  const sliderRef: any = useRef(null);
 
   useEffect(() => {
     if (sliderRef.current) {
       sliderRef.current.slickGoTo(0);
     }
   }, [artists]);
-
 
   return (
     <section className="section-wrapper artists-section">
@@ -62,9 +65,7 @@ const Artists = () => {
             return (
               <div key={artist._id} className="d-flex flex-column align-items-center">
                 <div className="artist-profile">
-                  {profileImage && (
-                    <Image src={profileImage} alt={artist?.artistName} width={400} height={400} />
-                  )}
+                  {profileImage && <Image src={profileImage} alt={artist?.artistName} width={400} height={400} />}
                 </div>
                 <div className="artist-desc">
                   <h3 className="name">{artist?.artistName}</h3>
