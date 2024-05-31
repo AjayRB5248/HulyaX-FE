@@ -20,6 +20,7 @@ import { useSnackbar } from 'notistack';
 // types
 // components
 import moment from 'moment';
+import 'moment-timezone';
 import { useState } from 'react';
 import { isValidEmail } from 'src/auth/context/jwt/utils';
 import Iconify from 'src/components/iconify';
@@ -122,7 +123,7 @@ export default function OrderTableRow({ row }: Props) {
 
         <TableCell>
           {row?.venues
-            ?.map((item: any) => moment(item?.eventDate).format('MMMM DD, YYYY h:mm:ss A Z'))
+            ?.map((item: any) => moment(item?.eventDate).tz(row?.stateData?.[0]?.timeZone).format('MMMM DD, YYYY h:mm:ss A '))
             .join(', ')}
         </TableCell>
         <TableCell>
