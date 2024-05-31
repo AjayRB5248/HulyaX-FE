@@ -53,7 +53,6 @@ const sendTicket = (data: any) => {
 };
 
 export default function OrderTableRow({ row }: Props) {
-  console.log({row})
   const [downloading, setDownloading] = useState(false);
   const [sending, setSending] = useState(false);
   const [sendTicketModal, setSendTicketModal] = useState(false);
