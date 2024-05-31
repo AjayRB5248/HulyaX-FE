@@ -108,9 +108,14 @@ const Navbar: React.FC<NavbarProps> = ({ isToggleMenuActive }) => {
           </>
         ))}
         {!user && (
-          <li className="header-button secondary-theme-btn pr-0 ml-5">
-            <Link href="/auth/user/login/">Login</Link>
-          </li>
+          <>
+            <li className="header-button login-btn pr-0 ml-5">
+              <Link href="/auth/user/login/">Login</Link>
+            </li>
+            <li className="header-button signup-btn pr-0 ml-1">
+              <Link href="/auth/user/register/">Signup</Link>
+            </li>
+          </>
         )}
         {/* Sign Up Link */}
         <li className="header-button primary-theme-btn pr-0 d-none">

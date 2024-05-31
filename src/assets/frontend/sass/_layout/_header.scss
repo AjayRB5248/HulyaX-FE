@@ -44,7 +44,7 @@ header {
 
         a {
           color: #e9eeff;
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 700;
           // text-transform: uppercase;
           padding: 5px;
@@ -172,10 +172,11 @@ header {
           //   rgb(255, 67, 67) 100%
           // );
           background-color: $main-theme-color;
-          padding: 10px 49px;
+          padding: 8px 30px;
           font-weight: 600;
           height: auto;
-          @include border-radius(25px);
+          text-transform: uppercase;
+          @include border-radius(20px);
 
           &:hover {
             box-shadow: $theme-color-box-shadow;
@@ -211,6 +212,29 @@ header {
             rgb(170, 82, 161) 63%,
             rgb(255, 67, 67) 100%
           );
+        }
+      }
+
+      &.login-btn a {
+        background: transparent;
+        color: $main-theme-color !important;
+        border: 1px solid $main-theme-color;
+        transition: all 0.3s;
+
+        &:hover {
+          background: $main-theme-color;
+          color: #fff !important;
+        }
+      }
+
+      &.signup-btn a {
+        transition: all 0.3s;
+
+        &:hover {
+          background: transparent;
+          color: $main-theme-color !important;
+          border: 1px solid $main-theme-color;
+          box-shadow: none;
         }
       }
     }
