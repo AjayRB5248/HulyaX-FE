@@ -1,3 +1,5 @@
+import 'moment-timezone';
+
 import { Card, FormLabel, MenuItem, Select } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -6,6 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { DateTimePicker } from '@mui/x-date-pickers';
+import moment from 'moment';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useAssignCompany, useRemoveAssginedCompany } from 'src/api/superAdmin';
@@ -45,6 +48,8 @@ const AssignModal = ({
           (event: any) => event?.state?._id === state._id
         )?.venues[0]?.eventDate;
 
+        const stateTimeZone = state?.timeZone;
+
         return {
           state: {
             name: state.stateName,
@@ -52,7 +57,13 @@ const AssignModal = ({
           },
           company: assignedCompany?._id ? assignedCompany.companyId : '',
           venue: venue?._id ? venue._id : '',
-          date: date ? new Date(date) : '',
+          date: date
+            ? new Date(
+                moment(formatDateToTimezone(date, stateTimeZone)).format(
+                  'YYYY-MM-DD HH:mm'
+                )
+              )
+            : '',
           deleteOption: assignedCompany?.companyId ? true : false,
         };
       });
@@ -85,8 +96,17 @@ const AssignModal = ({
 
   const onsubmit = async (data: any) => {
     setLoading(true);
+
     try {
       for (const singleData of data) {
+        const stateTimeZone = selectedEvent?.states.find(
+          (item: any) => item?._id === singleData?.state?._id
+        )?.timeZone;
+
+        const newDate = moment(
+          changeTimezone(singleData?.date, stateTimeZone).format()
+        );
+
         if (singleData?.company) {
           const data = {
             eventId: selectedEvent?._id,
@@ -99,6 +119,7 @@ const AssignModal = ({
           };
 
           let venueData = {};
+
           if (singleData?.deleteOption) {
             const subEventId = selectedEvent?.assignedCompany.find(
               (item: any) => item?.state === singleData?.state?._id
@@ -109,7 +130,7 @@ const AssignModal = ({
               venues: [
                 {
                   _id: singleData?.venue,
-                  date: singleData?.date,
+                  date: newDate,
                 },
               ],
             };
@@ -120,7 +141,7 @@ const AssignModal = ({
               venues: [
                 {
                   _id: singleData?.venue,
-                  date: singleData?.date,
+                  date: newDate,
                 },
               ],
             };
@@ -136,7 +157,7 @@ const AssignModal = ({
             venues: [
               {
                 _id: singleData?.venue,
-                date: singleData?.date,
+                date: newDate,
               },
             ],
           };
@@ -178,6 +199,33 @@ const AssignModal = ({
     setAssignModal(false);
     refetch();
   };
+
+  function changeTimezone(pickedDate: any, newTimezone: any) {
+    let date = moment(pickedDate);
+
+    let newDate = date.clone().tz(newTimezone, true);
+
+    return newDate;
+  }
+
+  function formatDateToTimezone(dateString: any, timeZone: any) {
+    const date: any = new Date(dateString);
+
+    if (isNaN(date)) {
+      throw new Error('Invalid date');
+    }
+
+    // Format the date to the desired timezone
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      timeZone: timeZone,
+    }).format(date);
+  }
 
   return (
     <Dialog
