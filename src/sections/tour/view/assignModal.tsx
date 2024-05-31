@@ -99,12 +99,12 @@ const AssignModal = ({
 
     try {
       for (const singleData of data) {
-        const stateTimeZone = selectedEvent?.states.find(
+        const stateTimeZone = selectedEvent?.states?.find(
           (item: any) => item?._id === singleData?.state?._id
         )?.timeZone;
 
         const newDate = moment(
-          changeTimezone(singleData?.date, stateTimeZone).format()
+          changeTimezone(singleData?.date, stateTimeZone)?.format()
         );
 
         if (singleData?.company) {
@@ -203,7 +203,7 @@ const AssignModal = ({
   function changeTimezone(pickedDate: any, newTimezone: any) {
     let date = moment(pickedDate);
 
-    let newDate = date.clone().tz(newTimezone, true);
+    let newDate = date?.clone()?.tz(newTimezone, true);
 
     return newDate;
   }
@@ -345,7 +345,7 @@ const AssignModal = ({
                   variant='outlined'
                   color='error'
                   onClick={() =>
-                    handleDeleteCompany(item?.state?._id, item.company)
+                    handleDeleteCompany(item?.state?._id, item?.company)
                   }
                 >
                   Remove Company

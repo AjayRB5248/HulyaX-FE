@@ -19,7 +19,7 @@ export default function TableNoData({ notFound, sx }: Props) {
         <TableCell colSpan={12}>
           <EmptyContent
             filled
-            title="No Data"
+            title="You have no history of purchasing tickets with us, Once you purchase the tickets and it will show here"
             sx={{
               py: 10,
               ...sx,

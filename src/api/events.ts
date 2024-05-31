@@ -91,7 +91,7 @@ export function useUpdateEvent() {
     },
     {
       onError: (error: any) => {
-        enqueueSnackbar(error.response.data.message || 'Error creating event', {
+        enqueueSnackbar(error?.response?.data?.message || 'Error creating event', {
           variant: 'error',
         });
       },

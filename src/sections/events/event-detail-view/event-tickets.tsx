@@ -112,26 +112,26 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId, ev
   return (
     <>
       <div className="book-ticket--area row justify-content-center">
-        {tickets && tickets.length > 0 ? (
-          tickets.map((eachTicket: any) => (
+        {tickets && tickets?.length > 0 ? (
+          tickets?.map((eachTicket: any) => (
             <div className="col-12">
               <div className="ticket-item">
                 <div className="ticket-thumb">
-                  <Image src={getTicketIcon(eachTicket.type?.toUpperCase()?.replace(" ", "_"))} alt="event" />
+                  <Image src={getTicketIcon(eachTicket?.type?.toUpperCase()?.replace(" ", "_"))} alt="event" />
                 </div>
                 <div className="ticket-content">
-                  <span className="ticket-title">{eachTicket.type} Ticket</span>
+                  <span className="ticket-title">{eachTicket?.type} Ticket</span>
                   <h2 className="amount">
                     <sup>$</sup>
                     {eachTicket.price}
                   </h2>
                   {eachTicket?.availableSeats > 0 ? (
                     <div className="quantity-selector d-flex align-items-center">
-                      <span className="t-button" onClick={() => handleDecrement(eachTicket._id)}>
+                      <span className="t-button" onClick={() => handleDecrement(eachTicket?._id)}>
                         <i className="fas fa-minus"></i>
                       </span>
                       <span className="value">{ticketQuantities[eachTicket._id] || 0}</span>
-                      <span className="t-button" onClick={() => handleIncrement(eachTicket._id)}>
+                      <span className="t-button" onClick={() => handleIncrement(eachTicket?._id)}>
                         <i className="fas fa-plus"></i>
                       </span>
                     </div>

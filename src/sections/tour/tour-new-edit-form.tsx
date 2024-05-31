@@ -133,7 +133,7 @@ export default function TourNewEditForm({ currentTour }: Props) {
 
   const handleDropSingleFile = useCallback(
     (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
+      const file = acceptedFiles?.[0];
       setFile(acceptedFiles);
       const newFile = Object.assign(file, {
         preview: URL.createObjectURL(file),
@@ -148,9 +148,9 @@ export default function TourNewEditForm({ currentTour }: Props) {
 
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
-      const files = formValues.images || [];
+      const files = formValues?.images || [];
 
-      const newFiles = acceptedFiles.map((file) =>
+      const newFiles = acceptedFiles?.map((file) =>
         Object.assign(file, {
           preview: URL.createObjectURL(file),
         })
@@ -158,18 +158,18 @@ export default function TourNewEditForm({ currentTour }: Props) {
 
       setValue('images', [...files, ...newFiles], { shouldValidate: true });
     },
-    [setValue, formValues.images]
+    [setValue, formValues?.images]
   );
 
   const handleRemoveFile = useCallback(
     (inputFile: File | string) => {
       const filtered =
-        formValues.images &&
-        formValues.images?.filter((file: any) => file !== inputFile);
+        formValues?.images &&
+        formValues?.images?.filter((file: any) => file !== inputFile);
 
       const selectedImage =
-        formValues.images &&
-        formValues.images?.find((file: any) => file === inputFile);
+        formValues?.images &&
+        formValues?.images?.find((file: any) => file === inputFile);
 
       const selectedImageId = currentTour?.images.find(
         (img) => img?.imageurl === selectedImage
@@ -196,12 +196,12 @@ export default function TourNewEditForm({ currentTour }: Props) {
 
   const onSubmit = async (data: any) => {
     const formData = new FormData();
-    formData.append('eventName', data.eventName);
-    formData.append('eventCategory', data.eventCategory);
-    formData.append('eventDescription', data.eventDescription);
-    formData.append('status', data.status);
-    formData.append('tags', data.tags);
-    formData.append('videoUrl', data.videoUrl);
+    formData.append('eventName', data?.eventName);
+    formData.append('eventCategory', data?.eventCategory);
+    formData.append('eventDescription', data?.eventDescription);
+    formData.append('status', data?.status);
+    formData.append('tags', data?.tags);
+    formData.append('videoUrl', data?.videoUrl);
 
     file && formData.append('posterImage', file[0]);
 
@@ -211,10 +211,10 @@ export default function TourNewEditForm({ currentTour }: Props) {
       }
     });
 
-    data.artists?.forEach((artist: any, index: any) => {
+    data?.artists?.forEach((artist: any, index: any) => {
       formData.append(`artists[${index}]`, artist.name);
     });
-    data.states?.forEach((state: any, index: any) => {
+    data?.states?.forEach((state: any, index: any) => {
       formData.append(`states[${index}]`, state.name);
     });
 
@@ -229,12 +229,12 @@ export default function TourNewEditForm({ currentTour }: Props) {
   const onUpdate = async (data: any) => {
     try {
       const formData = new FormData();
-      formData.append('eventName', data.eventName);
-      formData.append('eventCategory', data.eventCategory);
-      formData.append('eventDescription', data.eventDescription);
-      formData.append('status', data.status);
-      formData.append('videoUrl', data.videoUrl);
-      formData.append('posterImage', data.posterImage);
+      formData.append('eventName', data?.eventName);
+      formData.append('eventCategory', data?.eventCategory);
+      formData.append('eventDescription', data?.eventDescription);
+      formData.append('status', data?.status);
+      formData.append('videoUrl', data?.videoUrl);
+      formData.append('posterImage', data?.posterImage);
 
       // artists
       data?.artists.forEach((item: any, index: number) => {
@@ -276,9 +276,9 @@ export default function TourNewEditForm({ currentTour }: Props) {
 
         <Grid xs={12}>
           <RHFSelect name='eventCategory' label='Event Category'>
-            {EVENT_CATEGORIES.map((category) => (
-              <MenuItem key={category.value} value={category.value}>
-                {category.label}
+            {EVENT_CATEGORIES?.map((category) => (
+              <MenuItem key={category?.value} value={category?.value}>
+                {category?.label}
               </MenuItem>
             ))}
           </RHFSelect>
@@ -293,7 +293,7 @@ export default function TourNewEditForm({ currentTour }: Props) {
 
         <Grid xs={12}>
           <RHFSelect name='status' label='Event Status' required>
-            {Object.entries(EventStatusEnum).map(([key, value]) => (
+            {Object.entries(EventStatusEnum)?.map(([key, value]) => (
               <MenuItem key={key} value={key}>
                 {value}
               </MenuItem>
@@ -397,12 +397,12 @@ export default function TourNewEditForm({ currentTour }: Props) {
 const renderArtists = (artist: any, artistsData: any) => {
   return (
     <Stack spacing={3}>
-      {artist.fields.map((item: any, index: any) => (
+      {artist?.fields?.map((item: any, index: any) => (
         <Stack key={item.id} direction='row' spacing={2} alignItems='center'>
           <RHFSelect name={`artists[${index}].name`} label='Select Artist'>
             {artistsData?.map((item: any) => (
               <MenuItem key={item?._id} value={item?._id}>
-                {item.artistName}
+                {item?.artistName}
               </MenuItem>
             ))}
           </RHFSelect>
@@ -426,14 +426,14 @@ const renderArtists = (artist: any, artistsData: any) => {
 const renderStates = (states: any, stateList: any) => {
   return (
     <Stack spacing={3}>
-      {states.fields.map((item: any, index: any) => (
+      {states?.fields?.map((item: any, index: any) => (
         <Card sx={{ p: 2 }}>
           <Stack spacing={2}>
             <Typography variant='h6'>States {index + 1} </Typography>
             <RHFSelect name={`states[${index}.name]`} label='Name' required>
               {stateList?.map((item: any) => (
                 <MenuItem key={item?._id} value={item?._id}>
-                  {item.stateName}
+                  {item?.stateName}
                 </MenuItem>
               ))}
             </RHFSelect>

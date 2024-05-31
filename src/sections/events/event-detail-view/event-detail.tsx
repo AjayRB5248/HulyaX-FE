@@ -44,7 +44,7 @@ const EventDetail = () => {
     setEventDetail(event?.[0]);
   }, [event]);
 
-  const posterImage = eventDetail?.images?.find((eachEventImg: any) => eachEventImg.isPrimary).imageurl;
+  const posterImage = eventDetail?.images?.find((eachEventImg: any) => eachEventImg.isPrimary)?.imageurl;
 
   return Object.keys(event).length === 0 && isLoading ? (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "200px", margin: "50px" }}>

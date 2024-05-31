@@ -20,15 +20,15 @@ const EventArtists: React.FC<any> = ({ artists }) => {
           <div className='artists-item' key={index}>
             <div className='artists-thumb'>
               <Image
-                src={eachArtist.images?.[0]?.imageurl}
+                src={eachArtist?.images?.[0]?.imageurl}
                 height={500}
                 width={500}
-                alt={eachArtist.artistName}
+                alt={eachArtist?.artistName}
                 style={{ objectFit: 'cover' }}
               />
             </div>
             <div className='artists-content'>
-              <h5 className='title'>{eachArtist.artistName}</h5>
+              <h5 className='title'>{eachArtist?.artistName}</h5>
               <span className='cate'>{eachArtist?.category}</span>
             </div>
           </div>
