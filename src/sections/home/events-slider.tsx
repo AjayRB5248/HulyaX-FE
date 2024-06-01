@@ -12,7 +12,7 @@ import NeeteshPoster from "src/assets/frontend/images/event/NeeteshConcert.jpg";
 import Slider from "react-slick";
 import React from "react";
 import { EventProps } from "src/types/events";
-import { formatDate } from "src/utils/format-date";
+import { formatDate, getClosestEventDate } from "src/utils/format-date";
 import Link from "next/link";
 
 const EventsSlider: React.FC<EventProps> = ({ events }) => {
@@ -77,6 +77,9 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
 
               const displayedStateNames =
                 stateNames?.length > 3 ? stateNames?.slice(0, 3).join(", ") + " + more" : stateNames?.join(", ");
+
+              const closestDate = getClosestEventDate(event?.childEvents?.[0]?.venues);
+
               return (
                 <div className="slider-item">
                   <div className="event-item">
@@ -84,9 +87,12 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
                       <div className="event-date">
                         {event.childEvents?.length > 0 && event.childEvents?.[0]?.venues?.length > 0 ? (
                           <>
+                            <small>Starts from:</small>
                             <h6 className="date-title">
-                              {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}{" "}
-                              {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.month}
+                              {formatDate(closestDate)?.day} {""}
+                              {formatDate(closestDate)?.month}
+                              {/* {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}{" "}
+                              {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.month} */}
                             </h6>
                           </>
                         ) : (

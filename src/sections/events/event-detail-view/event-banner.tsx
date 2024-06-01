@@ -1,7 +1,7 @@
 import moment from "moment-timezone";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 
 // Hooks
 import { usePathname } from "src/routes/hook";
@@ -10,7 +10,8 @@ import VideoPlayButton from "src/assets/frontend/images/movie/video-button.png";
 
 // Sample Image
 import SocialShare from "src/components/social-share";
-import { getRemainingTime } from "src/utils/format-date";
+import { getClosestEventDate, getRemainingTime } from "src/utils/format-date";
+
 interface EventDetailBannerProps {
   bannerImg: string;
   eventName: string;
@@ -33,11 +34,17 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
 
   const featuredImage = eventImages?.[1]?.imageurl ?? eventImages?.[0]?.imageurl;
 
+  // const nearestDate = useMemo(() => {
+  //   const now = moment();
+  //   const upcomingDates =
+  //     venues?.map((venue: any) => moment(venue?.eventDate)).filter((date: any) => date.isSameOrAfter(now)) || [];
+  //   console.log(upcomingDates, "upcomingDates");
+  //   return upcomingDates.length > 0 ? moment.min(upcomingDates) : null;
+  // }, [venues]);
+
   const nearestDate = useMemo(() => {
-    const now = moment();
-    const upcomingDates =
-      venues?.map((venue: any) => moment(venue?.eventDate)).filter((date: any) => date.isSameOrAfter(now)) || [];
-    return upcomingDates.length > 0 ? moment.min(upcomingDates) : null;
+    const closestDate = getClosestEventDate(venues);
+    return venues.length > 0 ? moment(closestDate) : null;
   }, [venues]);
 
   const timeRemaining = nearestDate ? getRemainingTime(nearestDate.toISOString(), timeZone) : null;
@@ -70,7 +77,7 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
                   <i className="fas fa-calendar-alt"></i>
                   {/* TODO: Earliest date ? */}
                   {nearestDate ? (
-                    <span>{moment(nearestDate)?.tz(timeZone)?.format("MMM DD, YYYY")}</span>
+                    <span>{moment(nearestDate)?.format("MMM DD, YYYY")}</span>
                   ) : (
                     <span>To be Announced</span>
                   )}
