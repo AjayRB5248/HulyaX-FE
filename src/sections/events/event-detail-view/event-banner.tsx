@@ -87,8 +87,8 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
                       <span>COMPLETED</span>
                     ) : (
                       <span>
-                        {timeRemaining?.days && timeRemaining?.days + `days`}{" "}
-                        {timeRemaining?.hours && timeRemaining?.hours + "hours"}
+                        {timeRemaining?.days && timeRemaining?.days + ` days`}{" "}
+                        {timeRemaining?.hours && timeRemaining?.hours + " hours"}
                       </span>
                     )}
                   </div>
