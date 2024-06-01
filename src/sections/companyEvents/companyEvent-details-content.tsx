@@ -15,6 +15,8 @@ import { Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Paper 
 import { SplashScreen } from "src/components/loading-screen";
 import CarouselThumbnail from "../_examples/extra/carousel-view/carousel-thumbnail";
 import { useState } from "react";
+import moment from "moment";
+import 'moment-timezone';
 
 type Props = {
   event: any;
@@ -146,15 +148,12 @@ export default function CompanyEventDetailsContent({ event, isLoading }: Props) 
 
   function renderVenueDetails() {
     const combinedDetails = venues?.map((venue:any) => {
-      const eventDateTime = new Date(venue?.eventDate);
+      const eventDateTime = moment(venue?.eventDate)?.tz(`Australia/${state.stateName}`);
   
       return {
         venueName: venue?.venueId?.venueName,
-        date: eventDateTime.toLocaleDateString(),
-        time: eventDateTime.toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-        }),
+       date: eventDateTime?.format('L'),
+      time: eventDateTime?.format('LT'),
         icon: <Iconify icon="solar:calendar-date-bold" />,
       };
     });
