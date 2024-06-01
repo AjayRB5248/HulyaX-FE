@@ -18,8 +18,9 @@ import VenueIcon from "src/assets/frontend/images/event/icon/event-icon02.png";
 import { EachEventProps, EventProps, Venue } from "src/types/events";
 import Link from "next/link";
 import moment from "moment";
-import { formatDate } from "src/utils/format-date";
+import { formatDate, getClosestEvent } from "src/utils/format-date";
 import Slider from "react-slick";
+import { getStateDetails } from "src/utils/helper";
 
 interface EventData {
   imageUrl: StaticImageData;
@@ -44,26 +45,6 @@ const tabItems = [
 const statusMapper: any = {
   Upcoming: "PLANNED",
   "Past Events": "COMPLETED",
-};
-
-const getClosestEvent = (events: any): { event: EachEventProps; closestVenue: Venue } | null => {
-  const today = new Date();
-  let closestEvent: { event: EachEventProps; closestVenue: Venue } | null = null;
-
-  events.forEach((event: any) => {
-    event?.venues?.forEach((venue: Venue) => {
-      const eventDate = new Date(venue.eventDate);
-      if (
-        !closestEvent ||
-        Math.abs(eventDate.getTime() - today.getTime()) <
-          Math.abs(new Date(closestEvent.closestVenue.eventDate).getTime() - today.getTime())
-      ) {
-        closestEvent = { event, closestVenue: venue };
-      }
-    });
-  });
-
-  return closestEvent;
 };
 
 const settings = {
@@ -112,6 +93,8 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
   // const closestEvent = getClosestEvent(filteredEvents);
 
   const featuredEvent: any = filteredEvents?.find((event: EachEventProps) => event.tags?.includes("FEATURED"));
+  const closestFeaturedEventVenue = getClosestEvent(featuredEvent?.childEvents?.[0]?.venues);
+  const featuredEventStateDetail = getStateDetails(featuredEvent?.states, closestFeaturedEventVenue?.venueId?.state);
 
   const remainingEvents = featuredEvent
     ? filteredEvents.filter((event: any) => featuredEvent && event?._id !== featuredEvent?._id)
@@ -152,9 +135,11 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
 
                   <div className="event-date">
                     <h6 className="date-title">
-                      {formatDate(featuredEvent.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}
+                      {formatDate(closestFeaturedEventVenue?.eventDate, featuredEventStateDetail?.timeZone)?.day}
                     </h6>
-                    <span>{formatDate(featuredEvent.childEvents?.[0]?.venues?.[0]?.eventDate)?.month}</span>
+                    <span>
+                      {formatDate(closestFeaturedEventVenue?.eventDate, featuredEventStateDetail?.timeZone)?.month}
+                    </span>
                   </div>
                   <h5 className="event-title">
                     <Link href={`/events/${featuredEvent.slug}`}>{featuredEvent?.eventName}</Link>
@@ -167,32 +152,36 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
           <div className="col-12 col-md-8 right-col">
             <div className="row">
               {remainingEvents.length > 0 &&
-                remainingEvents.map((event: any) => (
-                  <div className="col-12 col-md-6">
-                    <div className="event-grid">
-                      <div className="movie-thumb c-thumb">
-                        <div className="overlay"></div>
-                        <Link href={`/events/${event.slug}`}>
-                          <Image
-                            src={event?.images?.[1]?.imageurl ?? event?.images?.[0]?.imageurl}
-                            alt={event?.eventName}
-                            width={800}
-                            height={1200}
-                          />
-                        </Link>
-                        <div className="event-date">
-                          <h6 className="date-title">
-                            {formatDate(event.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}
-                          </h6>
-                          <span>{formatDate(event.childEvents?.[0]?.venues?.[0]?.eventDate)?.month}</span>
+                remainingEvents.map((event: any) => {
+                  const closestEvent = getClosestEvent(event?.childEvents?.[0]?.venues);
+                  const stateDetail = getStateDetails(event?.states, closestEvent?.venueId?.state);
+                  return (
+                    <div className="col-12 col-md-6">
+                      <div className="event-grid">
+                        <div className="movie-thumb c-thumb">
+                          <div className="overlay"></div>
+                          <Link href={`/events/${event.slug}`}>
+                            <Image
+                              src={event?.images?.[1]?.imageurl ?? event?.images?.[0]?.imageurl}
+                              alt={event?.eventName}
+                              width={800}
+                              height={1200}
+                            />
+                          </Link>
+                          <div className="event-date">
+                            <h6 className="date-title">
+                              {formatDate(closestEvent?.eventDate, stateDetail?.timeZone)?.day}
+                            </h6>
+                            <span>{formatDate(closestEvent?.eventDate, stateDetail?.timeZone)?.month}</span>
+                          </div>
+                          <h5 className="event-title">
+                            <Link href={`/events/${event.slug}`}>{event?.eventName}</Link>
+                          </h5>
                         </div>
-                        <h5 className="event-title">
-                          <Link href={`/events/${event.slug}`}>{event?.eventName}</Link>
-                        </h5>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
             </div>
           </div>
         </div>
@@ -202,6 +191,8 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
             Array.isArray(filteredEvents) &&
             filteredEvents.length > 0 &&
             filteredEvents?.map((event: any) => {
+              const closestEvent = getClosestEvent(event?.childEvents?.[0]?.venues);
+              const stateDetail = getStateDetails(event?.states, closestEvent?.venueId?.state);
               return (
                 <div className="slider-item">
                   <div className="event-grid">
@@ -219,9 +210,9 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
                         {event.childEvents?.length > 0 && event.childEvents?.[0]?.venues?.length > 0 ? (
                           <>
                             <h6 className="date-title">
-                              {formatDate(event.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}
+                              {formatDate(closestEvent?.eventDate, stateDetail?.timeZone)?.day}
                             </h6>
-                            <span>{formatDate(event.childEvents?.[0]?.venues?.[0]?.eventDate)?.month}</span>
+                            <span>{formatDate(closestEvent?.eventDate, stateDetail?.timeZone)?.month}</span>
                           </>
                         ) : (
                           <span className="text-capitalize">

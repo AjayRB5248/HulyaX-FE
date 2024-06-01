@@ -1,9 +1,9 @@
 import moment from "moment";
 
-export const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const day = date.getDate();
-  const month = date.toLocaleString("default", { month: "short" });
+export const formatDate = (dateString: string, timeZone: string = "UTC") => {
+  const momentDate = moment.utc(dateString).tz(timeZone);
+  const day = momentDate.format("D");
+  const month = momentDate.format("MMM");
 
   return { day, month };
 };

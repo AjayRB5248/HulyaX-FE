@@ -12,7 +12,7 @@ import NeeteshPoster from "src/assets/frontend/images/event/NeeteshConcert.jpg";
 import Slider from "react-slick";
 import React from "react";
 import { EventProps } from "src/types/events";
-import { formatDate, getClosestEvent } from "src/utils/format-date";
+import { getClosestEvent } from "src/utils/format-date";
 import Link from "next/link";
 import moment from "moment-timezone";
 import { getStateDetails } from "src/utils/helper";
@@ -96,8 +96,6 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
                             <small>Starts from:</small>
                             <h6 className="date-title">
                               {moment(closestDate)?.tz(stateDetail?.timeZone)?.format("MMM DD")}
-                              {/* {formatDate(closestDate)?.day} {""}
-                              {formatDate(closestDate)?.month} */}
                             </h6>
                           </>
                         ) : (
