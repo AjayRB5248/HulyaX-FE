@@ -90,7 +90,12 @@ const EventBanner: React.FC<EventBannerProps> = React.memo(({ event, posterImage
           <h1 className="title cd-headline clip">
             <span className="d-block">{event.eventName}</span>
           </h1>
-          <p dangerouslySetInnerHTML={{ __html: event.eventDescription }} />
+          {/* TODO: Need to add sub-title or summary in BE as well */}
+          <p>
+            The countdown is on! AXIX, our cherished band, is gearing up to take on Australia with their 'Road to '24'
+            tour this July.
+          </p>
+          {/* <p dangerouslySetInnerHTML={{ __html: event.eventDescription }} /> */}
           <Stack
             direction="row"
             justifyContent="start"

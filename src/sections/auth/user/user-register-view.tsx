@@ -69,7 +69,7 @@ const UserRegisterView: React.FC = () => {
     password: '',
     confirmPassword: '',
     mobileNumber: '',
-    countryCode: '+977',
+    countryCode: '+61',
   };
 
   const methods = useForm<FormData>({
@@ -185,12 +185,12 @@ const UserRegisterView: React.FC = () => {
               <Controller
                 name='countryCode'
                 control={control}
-                defaultValue='+977'
+                defaultValue='+61'
                 render={({ field }) => (
-                  <Select {...field}>
+                  <Select {...field} className='mr-1'>
                     {countryCodeList
                       .filter((item) =>
-                        ['NP', 'AU'].includes(item?.countryCode)
+                        ['AU'].includes(item?.countryCode)
                       )
                       .map((item) => (
                         <MenuItem key={item.name} value={item?.Iso}>

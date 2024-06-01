@@ -12,7 +12,7 @@ import NeeteshPoster from "src/assets/frontend/images/event/NeeteshConcert.jpg";
 import Slider from "react-slick";
 import React from "react";
 import { EventProps } from "src/types/events";
-import { formatDate } from "src/utils/format-date";
+import { formatDate, getClosestEventDate } from "src/utils/format-date";
 import Link from "next/link";
 
 const EventsSlider: React.FC<EventProps> = ({ events }) => {
@@ -73,6 +73,13 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
             Array.isArray(events) &&
             events.length > 0 &&
             events?.map((event: any) => {
+              const stateNames = event?.childEvents?.map((childEvent: any) => childEvent?.state?.stateName) || [];
+
+              const displayedStateNames =
+                stateNames?.length > 3 ? stateNames?.slice(0, 3).join(", ") + " + more" : stateNames?.join(", ");
+
+              const closestDate = getClosestEventDate(event?.childEvents?.[0]?.venues);
+
               return (
                 <div className="slider-item">
                   <div className="event-item">
@@ -80,9 +87,12 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
                       <div className="event-date">
                         {event.childEvents?.length > 0 && event.childEvents?.[0]?.venues?.length > 0 ? (
                           <>
+                            <small>Starts from:</small>
                             <h6 className="date-title">
-                              {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}{" "}
-                              {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.month}
+                              {formatDate(closestDate)?.day} {""}
+                              {formatDate(closestDate)?.month}
+                              {/* {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}{" "}
+                              {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.month} */}
                             </h6>
                           </>
                         ) : (
@@ -98,7 +108,6 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
                         width={800}
                         height={1200}
                       />
-                     
                     </div>
 
                     <div className="event-bottom-card d-flex flex-column p-4">
@@ -127,8 +136,7 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
                         <Image src={VenueIcon} alt="Venue icon" className="venue-icon" />
 
                         <div className="venue-name ml-4">
-                          {event?.childEvents?.length == 0 ? "TBA" : event?.childEvents?.[0]?.state?.stateName}{" "}
-                          {event?.childEvents?.[1] ? "," : ""} {event?.childEvents?.[1]?.state?.stateName}
+                          {event?.childEvents?.length == 0 ? "TBA" : displayedStateNames}
                         </div>
                       </div>
                     </div>

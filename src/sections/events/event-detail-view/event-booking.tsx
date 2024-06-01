@@ -80,7 +80,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues, states, eventData, event
       return;
     }
 
-    if (EXTERNAL_EVENTS?.includes(selectedEvent?.state)) {
+    if (!EXTERNAL_EVENTS?.includes(selectedEvent?.state)) {
       setShowEventExternalLink(selectedEvent);
       return;
     }
@@ -165,7 +165,9 @@ const EventBooking: React.FC<any> = ({ eventId, venues, states, eventData, event
               state={showEventExternalLink?.state}
               venue={showEventExternalLink?.venue}
               eventName={eventData?.[0]?.parentEvent?.eventName}
-              eventImage={eventData?.[0]?.parentEvent?.images?.[1]?.imageurl}
+              eventImage={
+                eventData?.[0]?.parentEvent?.images?.[1]?.imageurl ?? eventData?.[0]?.parentEvent?.images?.[0]?.imageurl
+              }
               eventDate={eventDate}
             />
           )}
