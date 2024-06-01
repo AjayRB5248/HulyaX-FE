@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -23,6 +23,7 @@ const EventVenues: React.FC<any> = ({ eventData, states, eventStatus }) => {
         eachEvent.venues.map((eachVenue: any) => ({
           ...eachVenue,
           stateName: getStateDetails(eachVenue?.venueId?.state)?.stateName,
+          timeZone: getStateDetails(eachVenue?.venueId?.state)?.timeZone,
         }))
       )
       ?.sort((a: any, b: any) => moment(a.eventDate).diff(moment(b.eventDate)));
@@ -43,7 +44,9 @@ const EventVenues: React.FC<any> = ({ eventData, states, eventStatus }) => {
                       {eachVenue?.venueId?.venueName}, {eachVenue?.stateName}
                     </span>
                     <span>{eachVenue.city}</span>
-                    <div className="item-date">{moment(eachVenue?.eventDate).format("MMM DD, YYYY")}</div>
+                    <div className="item-date">
+                      {moment(eachVenue?.eventDate)?.tz(eachVenue?.timeZone)?.format("MMM DD, YYYY")}
+                    </div>
                   </div>
                 </div>
               ))

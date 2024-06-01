@@ -1,9 +1,9 @@
 import moment from "moment";
 
-export const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const day = date.getDate();
-  const month = date.toLocaleString("default", { month: "short" });
+export const formatDate = (dateString: string, timeZone: string = "UTC") => {
+  const momentDate = moment.utc(dateString).tz(timeZone);
+  const day = momentDate.format("D");
+  const month = momentDate.format("MMM");
 
   return { day, month };
 };
@@ -19,7 +19,7 @@ export const getRemainingTime = (eventDate: string, timeZone: string) => {
   return { days, hours };
 };
 
-export const getClosestEventDate = (venues: any) => {
+export const getClosestEvent = (venues: any) => {
   const now = new Date();
   let closestEvent: any = null;
   let closestDifference = Infinity;
@@ -34,5 +34,5 @@ export const getClosestEventDate = (venues: any) => {
     }
   });
 
-  return closestEvent ? closestEvent.eventDate : null;
+  return closestEvent ? closestEvent : null;
 };
