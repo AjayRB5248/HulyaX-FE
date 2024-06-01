@@ -14,15 +14,18 @@ const EventVenues: React.FC<any> = ({ eventData, states, eventStatus }) => {
     return stateDetails ?? {};
   };
 
-  const sortedEventData = eventData
-    ?.filter((eachEvent: any) => eachEvent?.venues && eachEvent?.venues?.length > 0)
-    .flatMap((eachEvent: any) =>
-      eachEvent.venues.map((eachVenue: any) => ({
-        ...eachVenue,
-        stateName: getStateDetails(eachVenue?.venueId?.state)?.stateName,
-      }))
-    )
-    ?.sort((a: any, b: any) => moment(a.eventDate).diff(moment(b.eventDate)));
+  const sortedEventData =
+    eventData &&
+    Array.isArray(eventData) &&
+    eventData
+      ?.filter((eachEvent: any) => eachEvent?.venues && eachEvent?.venues?.length > 0)
+      .flatMap((eachEvent: any) =>
+        eachEvent.venues.map((eachVenue: any) => ({
+          ...eachVenue,
+          stateName: getStateDetails(eachVenue?.venueId?.state)?.stateName,
+        }))
+      )
+      ?.sort((a: any, b: any) => moment(a.eventDate).diff(moment(b.eventDate)));
 
   return (
     <section className="book-section">
