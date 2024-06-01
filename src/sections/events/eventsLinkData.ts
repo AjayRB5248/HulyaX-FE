@@ -7,4 +7,4 @@ export const EVENTS_LINK = [
   },
 ];
 
-export const EXTERNAL_EVENTS = ["Sydney"];
+export const EXTERNAL_EVENTS = ["Perth"];
