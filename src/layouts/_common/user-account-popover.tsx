@@ -130,7 +130,7 @@ export default function UserAccountPopover() {
             </MenuItem>
           ))}
 
-          {user?.role === 'superAdmin' && (
+          {(user?.role === 'superAdmin' || user?.role === 'companyAdmin') && (
             <MenuItem
               key={'Dashboard'}
               onClick={() => handleClickItem(PATH_AFTER_LOGIN)}
