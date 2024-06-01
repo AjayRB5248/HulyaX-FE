@@ -80,7 +80,14 @@ const AssignModal = ({
         company: '',
         venue: selectedEvent?.venues[0]?.venueId?._id,
         date: selectedEvent?.venues[0]?.eventDate
-          ? new Date(selectedEvent?.venues[0]?.eventDate)
+          ? new Date(
+              moment(
+                formatDateToTimezone(
+                  selectedEvent?.venues[0]?.eventDate,
+                  `Australia/${selectedEvent?.state?.stateName}`
+                )
+              ).format('YYYY-MM-DD HH:mm')
+            )
           : '',
       };
       setData([data]);
@@ -91,6 +98,7 @@ const AssignModal = ({
     const updatedData: any = data.map((item: any, i) =>
       i === index ? { ...item, [field]: value } : item
     );
+
     setData(updatedData);
   };
 
@@ -152,6 +160,13 @@ const AssignModal = ({
         }
 
         if (user?.role === 'companyAdmin') {
+          const newDate = moment(
+            changeTimezone(
+              singleData?.date,
+              `Australia/${selectedEvent?.state?.stateName}`
+            )?.format()
+          );
+
           const venueData = {
             subEventId: selectedEvent?._id,
             venues: [
