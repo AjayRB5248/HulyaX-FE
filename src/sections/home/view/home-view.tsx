@@ -33,7 +33,7 @@ export default function HomeView() {
       <EventsSlider events={events?.filter((event: any) => event.status !== EventStatusEnum.COMPLETED)} />
       <PopularCategories />
       <Artists />
-      <BannerSlider />
+      <BannerSlider events={events} />
     </MainLayout>
   );
 }
