@@ -4,8 +4,11 @@ import Link from "next/link";
 
 import VenueIcon from "src/assets/frontend/images/event/icon/event-icon02.png";
 import ContactIcon from "src/assets/frontend/images/event/icon/event-icon03.png";
+import { EventStatusEnum } from "src/sections/tour/utils";
+import TicketIcon from "src/assets/frontend/images/event/icon/ticket-icon.png";
 
-const EventVenues: React.FC<any> = ({ eventData, states }) => {
+const EventVenues: React.FC<any> = ({ eventData, states, eventStatus }) => {
+  console.log(eventStatus, "eventStatus");
   const getStateDetails = (stateId: string) => {
     const stateDetails = states && states?.length > 0 && states.find((eachState: any) => eachState?._id === stateId);
     return stateDetails ?? {};
@@ -48,6 +51,21 @@ const EventVenues: React.FC<any> = ({ eventData, states }) => {
                 </div>
                 <div className="item-content">
                   <span className="font-weight-bold">Venues To be Announced Soon..</span>
+                </div>
+              </div>
+            )}
+            {eventStatus === EventStatusEnum.PLANNED && (
+              <div className="item">
+                <div className="item-thumb">
+                  <Image
+                    src={TicketIcon}
+                    alt="Contact Icon"
+                    className="ticket-icon"
+                    style={{ width: "auto", height: "40px" }}
+                  />
+                </div>
+                <div className="item-content">
+                  <span className="up font-weight-bold"> Tickets Opening Soon!!</span>
                 </div>
               </div>
             )}
