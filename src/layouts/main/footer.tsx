@@ -12,7 +12,7 @@ const socialIcons = [
     href: "https://www.facebook.com/profile.php?id=61555048269687&mibextid=LQQJ4d",
     target: "_blank",
   },
-  { iconClass: "fab fa-google", href: "mailto:info@hulyaevents.com.au", target: "_blank" },
+  { iconClass: "fab fa-google", href: "mailto:info@hulyax.com.au", target: "_blank" },
   {
     iconClass: "fab fa-instagram",
     href: "https://www.instagram.com/events.hulya?igshid=dDZsdWFmNmQ0b2tw&utm_source=qr",

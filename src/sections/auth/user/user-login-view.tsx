@@ -83,7 +83,7 @@ const UserRegisterView: React.FC = () => {
     >
       <div className='account-area'>
         <div className='section-header-3'>
-          <span className='cate'>Welcome to Hulya-X</span>
+          <span className='cate'>Welcome to HulyaX</span>
           <h4 className='title'>
             Elevate Your Experience – Login for Hassle-Free Ticketing!
           </h4>

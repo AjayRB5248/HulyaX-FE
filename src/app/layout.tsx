@@ -55,7 +55,7 @@ const openSans = Open_Sans({
 });
 
 export const metadata = {
-  title: "Hulya X",
+  title: "HulyaX",
   description: "Tickets available for every event of your dream.",
   keywords: "react,material,kit,application,dashboard,admin,template",
   // themeColor: "#000000",

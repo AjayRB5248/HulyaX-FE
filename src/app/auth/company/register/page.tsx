@@ -4,7 +4,7 @@ import { JwtRegisterView } from "src/sections/auth/jwt";
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: "Register with Hulya X",
+  title: "Register with HulyaX",
 };
 
 export default function RegisterPage() {

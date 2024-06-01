@@ -129,7 +129,7 @@ const UserRegisterView: React.FC = () => {
     <section className='account-section account-section--register d-flex align-items-center justify-content-center'>
       <div className='account-area'>
         <div className='section-header-3'>
-          <span className='cate'>Welcome to Hulya-X </span>
+          <span className='cate'>Welcome to HulyaX </span>
           <h4 className='title'>
             Elevate Your Experience – Register Today for Hassle-Free Event
             Ticketing!
