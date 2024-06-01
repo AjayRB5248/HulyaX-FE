@@ -56,7 +56,7 @@ const openSans = Open_Sans({
 
 export const metadata = {
   title: "Hulya X",
-  description: "Event Management Company in Australia",
+  description: "Tickets available for every event of your dream.",
   keywords: "react,material,kit,application,dashboard,admin,template",
   // themeColor: "#000000",
   manifest: "/manifest.json",
