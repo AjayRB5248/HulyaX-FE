@@ -11,6 +11,7 @@ import VideoPlayButton from "src/assets/frontend/images/movie/video-button.png";
 // Sample Image
 import SocialShare from "src/components/social-share";
 import { getClosestEventDate, getRemainingTime } from "src/utils/format-date";
+import { EventStatusEnum } from "src/sections/tour/utils";
 
 interface EventDetailBannerProps {
   bannerImg: string;
@@ -20,6 +21,7 @@ interface EventDetailBannerProps {
   eventImages: any;
   venues: any;
   timeZone: string;
+  eventStatus: string;
 }
 const EventBanner: React.FC<EventDetailBannerProps> = ({
   bannerImg,
@@ -29,6 +31,7 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
   eventImages,
   venues,
   timeZone,
+  eventStatus,
 }) => {
   const pathname = usePathname();
 
@@ -85,11 +88,14 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
                 {timeRemaining && (
                   <div className="item">
                     <i className="far fa-clock"></i>
-
-                    <span>
-                      {timeRemaining?.days && timeRemaining?.days + `days`}{" "}
-                      {timeRemaining?.hours && timeRemaining?.hours + "hours"}
-                    </span>
+                    {eventStatus === EventStatusEnum.COMPLETED ? (
+                      <span>COMPLETED</span>
+                    ) : (
+                      <span>
+                        {timeRemaining?.days && timeRemaining?.days + `days`}{" "}
+                        {timeRemaining?.hours && timeRemaining?.hours + "hours"}
+                      </span>
+                    )}
                   </div>
                 )}
               </div>

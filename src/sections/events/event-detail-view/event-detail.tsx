@@ -59,6 +59,7 @@ const EventDetail = () => {
         eventImages={eventDetail?.images}
         venues={allVenues}
         timeZone={eventDetail?.state?.timeZone}
+        eventStatus={eventDetail?.parentEvent?.status}
       />
 
       <EventVenues
