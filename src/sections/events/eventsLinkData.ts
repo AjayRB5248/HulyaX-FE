@@ -1,7 +1,7 @@
 export const EVENTS_LINK = [
   {
-    state: "Sydney",
-    venue: "Sydney Opera House Events",
+    state: "Perth",
+    venue: "Metro City",
     link: "https://premier.ticketek.com.au/shows/show.aspx?sh=SYDNEYOH",
     source: "Ticketek",
   },
