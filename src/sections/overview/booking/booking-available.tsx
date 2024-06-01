@@ -75,12 +75,12 @@ export default function BookingAvailable({ title, subheader, chart, ...other }: 
 
   return (
     <Card {...other}>
-      <CardHeader title={title} subheader={subheader} sx={{ mb: 8 }} />
+      <CardHeader title={title} subheader={subheader} sx={{ mb: 2}} />
 
-      <Chart type="radialBar" series={[chartSeries]} options={chartOptions} height={310}  width={"100%"} />
+      {/* <Chart type="radialBar" series={[chartSeries]} options={chartOptions} height={310}  width={"100%"} /> */}
 
       <Stack spacing={2} sx={{ p: 5 }}>
-        {series.map((item) => (
+        {series?.map((item) => (
           <Stack
             key={item.label}
             spacing={1}
@@ -101,8 +101,8 @@ export default function BookingAvailable({ title, subheader, chart, ...other }: 
                 }),
               }}
             />
-            <Box sx={{ color: 'text.secondary', flexGrow: 1 }}>{item.label}</Box>
-            {item.value} Tickets
+            <Box sx={{ color: 'text.secondary', flexGrow: 1 }}>{item?.label}</Box>
+            {item?.value} Tickets
           </Stack>
         ))}
       </Stack>
