@@ -10,8 +10,9 @@ import VideoPlayButton from "src/assets/frontend/images/movie/video-button.png";
 
 // Sample Image
 import SocialShare from "src/components/social-share";
-import { getClosestEventDate, getRemainingTime } from "src/utils/format-date";
+import { getClosestEvent, getRemainingTime } from "src/utils/format-date";
 import { EventStatusEnum } from "src/sections/tour/utils";
+import { getStateDetails } from "src/utils/helper";
 
 interface EventDetailBannerProps {
   bannerImg: string;
@@ -20,8 +21,8 @@ interface EventDetailBannerProps {
   videoUrl: string;
   eventImages: any;
   venues: any;
-  timeZone: string;
   eventStatus: string;
+  states: any;
 }
 const EventBanner: React.FC<EventDetailBannerProps> = ({
   bannerImg,
@@ -30,27 +31,21 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
   videoUrl,
   eventImages,
   venues,
-  timeZone,
   eventStatus,
+  states,
 }) => {
   const pathname = usePathname();
 
   const featuredImage = eventImages?.[1]?.imageurl ?? eventImages?.[0]?.imageurl;
 
-  // const nearestDate = useMemo(() => {
-  //   const now = moment();
-  //   const upcomingDates =
-  //     venues?.map((venue: any) => moment(venue?.eventDate)).filter((date: any) => date.isSameOrAfter(now)) || [];
-  //   console.log(upcomingDates, "upcomingDates");
-  //   return upcomingDates.length > 0 ? moment.min(upcomingDates) : null;
-  // }, [venues]);
+  const closestEvent = getClosestEvent(venues);
+  const stateDetail = getStateDetails(states, closestEvent?.venueId?.state);
 
   const nearestDate = useMemo(() => {
-    const closestDate = getClosestEventDate(venues);
-    return venues.length > 0 ? moment(closestDate) : null;
+    return closestEvent ? moment(closestEvent?.eventDate)?.tz(stateDetail?.timeZone) : null;
   }, [venues]);
 
-  const timeRemaining = nearestDate ? getRemainingTime(nearestDate.toISOString(), timeZone) : null;
+  const timeRemaining = nearestDate ? getRemainingTime(nearestDate.toISOString(), stateDetail?.timeZone) : null;
 
   return (
     <section className="details-banner bg_img" style={{ backgroundImage: `url(${bannerImg})` }}>
@@ -80,7 +75,7 @@ const EventBanner: React.FC<EventDetailBannerProps> = ({
                   <i className="fas fa-calendar-alt"></i>
                   {/* TODO: Earliest date ? */}
                   {nearestDate ? (
-                    <span>{moment(nearestDate)?.format("MMM DD, YYYY")}</span>
+                    <span>{moment(nearestDate)?.tz(stateDetail?.timeZone)?.format("MMM DD, YYYY")}</span>
                   ) : (
                     <span>To be Announced</span>
                   )}

@@ -12,8 +12,10 @@ import NeeteshPoster from "src/assets/frontend/images/event/NeeteshConcert.jpg";
 import Slider from "react-slick";
 import React from "react";
 import { EventProps } from "src/types/events";
-import { formatDate, getClosestEventDate } from "src/utils/format-date";
+import { formatDate, getClosestEvent } from "src/utils/format-date";
 import Link from "next/link";
+import moment from "moment-timezone";
+import { getStateDetails } from "src/utils/helper";
 
 const EventsSlider: React.FC<EventProps> = ({ events }) => {
   const settings = {
@@ -78,7 +80,11 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
               const displayedStateNames =
                 stateNames?.length > 3 ? stateNames?.slice(0, 3).join(", ") + " + more" : stateNames?.join(", ");
 
-              const closestDate = getClosestEventDate(event?.childEvents?.[0]?.venues);
+              const closestEvent = getClosestEvent(event?.childEvents?.[0]?.venues);
+
+              const stateDetail = getStateDetails(event?.states, closestEvent?.venueId?.state);
+
+              const closestDate = closestEvent?.eventDate;
 
               return (
                 <div className="slider-item">
@@ -89,10 +95,9 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
                           <>
                             <small>Starts from:</small>
                             <h6 className="date-title">
-                              {formatDate(closestDate)?.day} {""}
-                              {formatDate(closestDate)?.month}
-                              {/* {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.day}{" "}
-                              {formatDate(event?.childEvents?.[0]?.venues?.[0]?.eventDate)?.month} */}
+                              {moment(closestDate)?.tz(stateDetail?.timeZone)?.format("MMM DD")}
+                              {/* {formatDate(closestDate)?.day} {""}
+                              {formatDate(closestDate)?.month} */}
                             </h6>
                           </>
                         ) : (

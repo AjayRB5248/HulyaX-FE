@@ -19,7 +19,7 @@ export const getRemainingTime = (eventDate: string, timeZone: string) => {
   return { days, hours };
 };
 
-export const getClosestEventDate = (venues: any) => {
+export const getClosestEvent = (venues: any) => {
   const now = new Date();
   let closestEvent: any = null;
   let closestDifference = Infinity;
@@ -34,5 +34,5 @@ export const getClosestEventDate = (venues: any) => {
     }
   });
 
-  return closestEvent ? closestEvent.eventDate : null;
+  return closestEvent ? closestEvent : null;
 };

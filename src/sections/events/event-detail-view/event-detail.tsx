@@ -57,8 +57,8 @@ const EventDetail = () => {
         eventTags={eventDetail?.tags}
         videoUrl={eventDetail?.videoUrl}
         eventImages={eventDetail?.images}
+        states={eventDetail?.parentEvent?.states}
         venues={allVenues}
-        timeZone={eventDetail?.state?.timeZone}
         eventStatus={eventDetail?.parentEvent?.status}
       />
 

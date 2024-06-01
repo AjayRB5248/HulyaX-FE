@@ -9,3 +9,8 @@ export const checkIfUserIsAuthenticated = () => {
 
   return true;
 };
+
+export const getStateDetails = (states: any, stateId: string) => {
+  const stateDetails = states && states?.length > 0 && states.find((eachState: any) => eachState?._id === stateId);
+  return stateDetails ?? {};
+};
