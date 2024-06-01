@@ -89,7 +89,7 @@ export const endpoints = {
   events: {
     list: 'events/fetch-events',
     create: '/superadmin/add-new-event',
-    update: (id: string) => `superadmin/events/${id}`,
+    update: (id: string) => `superadmin/events/edit/${id}`,
     details: (id: any) => `/events/${id}`,
     remove: (id: string) => `superadmin/events/${id}`,
     removeItem: (id: string) => `/events/edit/remove-event-items/${id}`,
