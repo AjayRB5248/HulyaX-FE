@@ -106,7 +106,9 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
         <div className="section-header-2">
           <div className="left">
             <h2 className="title">events</h2>
-            <p>Be sure not to miss these Event today.</p>
+            <p className="event-sub-title">
+              Discover events with Hulya. Don't miss out on the events that everyone is talking.
+            </p>
           </div>
           <ul className="tab-menu">
             {tabItems.map((tabItem) => (

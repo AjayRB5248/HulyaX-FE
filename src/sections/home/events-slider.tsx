@@ -68,7 +68,7 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
       <div className="container-fluid">
         <div className="section-title">
           <h4 className="title">Trending Now</h4>
-          <p>Explore What's Trending Now: Stay ahead of the curve with the latest and hottest trends.</p>
+          <p className="event-sub-title">Stay Ahead of the Game: Discover the Latest Event Insights!</p>
         </div>
         <Slider {...settings}>
           {events &&

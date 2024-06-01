@@ -179,7 +179,7 @@
     align-items: center;
     margin: 0 -5px -10px;
     justify-content: flex-end;
-    width: calc(60% - 15px);
+    width: calc(40% - 15px);
     li {
       font-size: 12px;
       font-weight: bold;
@@ -200,7 +200,7 @@
     }
   }
   .left {
-    width: calc(40% - 15px);
+    width: calc(60% - 15px);
     .title {
       text-transform: uppercase;
       margin-bottom: 19px;

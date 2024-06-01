@@ -39,9 +39,8 @@ const PopularCategories = () => {
       <div className="container-fluid">
         <div className="section-title">
           <h4 className="title text-left">🔥 Popular Past Events</h4>
-          <p className="text-left">
-            Discover the past popular events that set the trend. Don't miss out on the events that everyone is talking
-            about.
+          <p className="text-left event-sub-title">
+            Rewind and Rediscover the Iconic Past Popular Events That Made Waves and Set the Stage on Fire!
           </p>
         </div>
 
