@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Slider from "react-slick";
 import PopularCategory01 from "src/assets/frontend/images/media/NepathyaVideoThumbnail.jpeg";
+import PopularCategory001 from "src/assets/frontend/images/media/NepathyaVideoThumbnail1.png";
 import PopularCategory02 from "src/assets/frontend/images/event/165919922762e55efbe71f1.webp";
 import PopularCategory03 from "src/assets/frontend/images/event/Nepathya.jpg";
 
@@ -125,7 +126,7 @@ const PopularCategories = () => {
                   <PlayButtonSVG />
                 </div>
 
-                <Image src={PopularCategory01} alt="Image" width={1000} height={1000} />
+                <Image src={PopularCategory001} alt="Image" width={1000} height={1000} />
                 <div className="overlay"></div>
                 <div className="position-absolute details-wrapper">
                   <ul className="tags-wrapper">
