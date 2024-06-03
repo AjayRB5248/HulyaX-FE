@@ -33,10 +33,16 @@ const EventTickets: React.FC<IEventTickets> = ({ eventId, venueName, stateId, ev
   const [ticketQuantities, setTicketQuantities] = useState<{ [key: string]: number }>({});
 
   const handleIncrement = (ticketId: string) => {
-    setTicketQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [ticketId]: (prevQuantities[ticketId] || 0) + 1,
-    }));
+    setTicketQuantities((prevQuantities) => {
+      const currentQuantity = prevQuantities[ticketId] || 0;
+      if (currentQuantity < 8) {
+        return {
+          ...prevQuantities,
+          [ticketId]: currentQuantity + 1,
+        };
+      }
+      return prevQuantities; 
+    });
   };
 
   const handleDecrement = (ticketId: string) => {
