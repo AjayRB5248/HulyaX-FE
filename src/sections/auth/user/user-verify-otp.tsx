@@ -53,13 +53,13 @@ const UserVerifyOTP = () => {
 
         verifiedOTPRes = await verifyOTPMutation.mutateAsync(payloadForGeneratingOTP);
       }
-      const pathToRedirect = localStorage.getItem('currentPath');
+      const pathToRedirect = localStorage.getItem("currentPath");
 
       if (pathToRedirect) {
-        localStorage.removeItem('currentPath');
+        localStorage.removeItem("currentPath");
         router.push(pathToRedirect);
       } else {
-        router.push('/');
+        router.push("/");
       }
     } catch (error) {
       console.error(error);
@@ -82,9 +82,14 @@ const UserVerifyOTP = () => {
     }
   };
 
+  const handleOtpComplete = async (otp: string) => {
+    methods.setValue("otp", otp);
+    onSubmit();
+  };
+
   const renderForm = (
     <Stack spacing={3} alignItems="center">
-      <RHFCode name="otp" className="otp-code-input-wrapper"/>
+      <RHFCode name="otp" className="otp-code-input-wrapper" onComplete={handleOtpComplete} />
 
       <LoadingButton
         fullWidth
