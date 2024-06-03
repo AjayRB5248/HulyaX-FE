@@ -80,7 +80,8 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
               const displayedStateNames =
                 stateNames?.length > 3 ? stateNames?.slice(0, 3).join(", ") + " + more" : stateNames?.join(", ");
 
-              const closestEvent = getClosestEvent(event?.childEvents?.[0]?.venues);
+              const childEventsVenues = event?.childEvents?.flatMap((childEvent: any) => childEvent?.venues);
+              const closestEvent = getClosestEvent(childEventsVenues);
 
               const stateDetail = getStateDetails(event?.states, closestEvent?.venueId?.state);
 
@@ -91,7 +92,7 @@ const EventsSlider: React.FC<EventProps> = ({ events }) => {
                   <div className="event-item">
                     <div className="event-top-card">
                       <div className="event-date">
-                        {event.childEvents?.length > 0 && event.childEvents?.[0]?.venues?.length > 0 ? (
+                        {event.childEvents?.length > 0 && childEventsVenues?.length > 0 ? (
                           <>
                             <small>Starts from:</small>
                             <h6 className="date-title">

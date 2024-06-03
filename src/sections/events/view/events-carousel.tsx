@@ -93,7 +93,9 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
   // const closestEvent = getClosestEvent(filteredEvents);
 
   const featuredEvent: any = filteredEvents?.find((event: EachEventProps) => event.tags?.includes("FEATURED"));
-  const closestFeaturedEventVenue = getClosestEvent(featuredEvent?.childEvents?.[0]?.venues);
+  const childEventsVenues = featuredEvent?.childEvents?.flatMap((childEvent: any) => childEvent?.venues);
+
+  const closestFeaturedEventVenue = getClosestEvent(childEventsVenues);
   const featuredEventStateDetail = getStateDetails(featuredEvent?.states, closestFeaturedEventVenue?.venueId?.state);
 
   const remainingEvents = featuredEvent
@@ -155,7 +157,8 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
             <div className="row">
               {remainingEvents.length > 0 &&
                 remainingEvents.map((event: any) => {
-                  const closestEvent = getClosestEvent(event?.childEvents?.[0]?.venues);
+                  const childEventsVenues = event?.childEvents?.flatMap((childEvent: any) => childEvent?.venues);
+                  const closestEvent = getClosestEvent(childEventsVenues);
                   const stateDetail = getStateDetails(event?.states, closestEvent?.venueId?.state);
                   return (
                     <div className="col-12 col-md-6">
@@ -193,7 +196,8 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
             Array.isArray(filteredEvents) &&
             filteredEvents.length > 0 &&
             filteredEvents?.map((event: any) => {
-              const closestEvent = getClosestEvent(event?.childEvents?.[0]?.venues);
+              const childEventsVenues = event?.childEvents?.flatMap((childEvent: any) => childEvent?.venues);
+              const closestEvent = getClosestEvent(childEventsVenues);
               const stateDetail = getStateDetails(event?.states, closestEvent?.venueId?.state);
               return (
                 <div className="slider-item">
@@ -209,7 +213,7 @@ const EventsCarousel: React.FC<EventProps> = ({ events }) => {
                         />
                       </Link>
                       <div className="event-date">
-                        {event.childEvents?.length > 0 && event.childEvents?.[0]?.venues?.length > 0 ? (
+                        {event.childEvents?.length > 0 && childEventsVenues?.length > 0 ? (
                           <>
                             <h6 className="date-title">
                               {formatDate(closestEvent?.eventDate, stateDetail?.timeZone)?.day}
