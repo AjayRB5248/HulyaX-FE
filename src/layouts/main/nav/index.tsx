@@ -43,7 +43,7 @@ const navigationItems: NavItem[] = [
   //   submenu: eventCategories,
   // },
   // { label: "Trending Now", href: "/trending-now" },
-  { label: "FAQs", href: "/faqs", icon: <i className="fa fa-question-circle"></i> },
+  { label: "FAQs", href: "/faqs/", icon: <i className="fa fa-question-circle"></i> },
 ];
 
 interface NavbarProps {
