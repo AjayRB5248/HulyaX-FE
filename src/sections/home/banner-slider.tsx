@@ -18,7 +18,7 @@ const BannerSlider: React.FC<EventProps> = ({ events }) => {
     <section className="section-wrapper ad-banner-section">
       <div className="container-fluid">
         <div className="banner-wrapper">
-          <Image src={bannerImage} alt="Banner" height={500} width={500} />
+          <Image src={bannerImage} alt="Banner" height={1200} width={1200} />
         </div>
       </div>
     </section>
