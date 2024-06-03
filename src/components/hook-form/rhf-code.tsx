@@ -1,16 +1,32 @@
-import { Controller, useFormContext } from 'react-hook-form';
-import { MuiOtpInput, MuiOtpInputProps } from 'mui-one-time-password-input';
+import { Controller, useFormContext } from "react-hook-form";
+import { MuiOtpInput, MuiOtpInputProps } from "mui-one-time-password-input";
 // @mui
-import FormHelperText from '@mui/material/FormHelperText';
+import FormHelperText from "@mui/material/FormHelperText";
+import { useEffect, useRef } from "react";
 
 // ----------------------------------------------------------------------
 
 type RHFCodesProps = MuiOtpInputProps & {
   name: string;
+  onComplete: (value: string) => void;
 };
 
-export default function RHFCode({ name, ...other }: RHFCodesProps) {
-  const { control } = useFormContext();
+export default function RHFCode({ name, onComplete, ...other }: RHFCodesProps) {
+  const { control, watch } = useFormContext();
+
+  const otpValue = watch(name);
+  const hasCalledOnComplete = useRef(false);
+
+  useEffect(() => {
+    if (otpValue?.length === 8 && !hasCalledOnComplete.current) {
+      hasCalledOnComplete.current = true;
+      onComplete(otpValue);
+    }
+  }, [otpValue, onComplete]);
+
+  useEffect(() => {
+    hasCalledOnComplete.current = false;
+  }, []);
 
   return (
     <Controller
@@ -25,10 +41,10 @@ export default function RHFCode({ name, ...other }: RHFCodesProps) {
             length={8}
             TextFieldsProps={{
               error: !!error,
-              placeholder: '-',
+              placeholder: "-",
               inputProps: {
-                inputMode: 'numeric',
-                pattern: '[0-9]*',
+                inputMode: "numeric",
+                pattern: "[0-9]*",
               },
             }}
             {...other}
