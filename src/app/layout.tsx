@@ -92,6 +92,9 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="en" className={openSans.className}>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+      </head>
       <body>
         <AuthProvider>
           {/* <ReduxProvider> */}
