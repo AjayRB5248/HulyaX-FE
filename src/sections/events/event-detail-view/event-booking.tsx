@@ -177,7 +177,7 @@ const EventBooking: React.FC<any> = ({ eventId, venues, states, eventData, event
       {isMobile && (
         <div className="mobile-booking-btn fixed">
           <button className="theme-button btn-book-ticket" onClick={() => setShowBookingPopup(!showBookingPopup)}>
-            Reserve Seat Now
+            Book Ticket Now
             <i className={`fa ${showBookingPopup ? "fa-angle-down" : "fa-angle-up"}`}></i>
           </button>
         </div>
