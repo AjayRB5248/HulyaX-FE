@@ -84,7 +84,7 @@ const AssignModal = ({
               moment(
                 formatDateToTimezone(
                   selectedEvent?.venues[0]?.eventDate,
-                  `Australia/${selectedEvent?.state?.stateName}`
+                  selectedEvent?.state?.timeZone
                 )
               ).format('YYYY-MM-DD HH:mm')
             )
@@ -163,7 +163,7 @@ const AssignModal = ({
           const newDate = moment(
             changeTimezone(
               singleData?.date,
-              `Australia/${selectedEvent?.state?.stateName}`
+              selectedEvent?.state?.timeZone
             )?.format()
           );
 
